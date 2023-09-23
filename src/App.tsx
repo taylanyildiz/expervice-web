@@ -1,11 +1,11 @@
-import Icons from "./assets/icons"
+import { Paper } from "@mui/material"
+
 
 function App() {
 
   return (
-    <>
-      {Icons.instagramBlack()}
-    </>
+    <Paper sx={{ height: 200, width: 200 }}>
+    </Paper>
   )
 }
 

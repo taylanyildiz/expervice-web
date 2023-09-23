@@ -27,7 +27,7 @@ type ImagesType = Record<string, ImagePropsType>;
  *  Asset Images
  * @param props given [width] - [height]
  */
-const Images: ImagesType = {
+const Images = {
 
     /**
      * Logo White
