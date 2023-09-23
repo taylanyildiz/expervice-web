@@ -1,9 +1,18 @@
-import { combineReducers, configureStore } from '@reduxjs/toolkit'
+import { combineReducers, configureStore, createSlice } from '@reduxjs/toolkit'
 import { persistStore, persistReducer, FLUSH, REGISTER, PURGE, PERSIST, PAUSE, REHYDRATE } from 'redux-persist'
-import storage from 'redux-persist/lib/storage' // defaults to localStorage for web
+import storage from 'redux-persist/lib/storage'
+
+
+const test = createSlice({
+    name: 'test',
+    initialState: {},
+    reducers: {}
+});
 
 /// Root Reducer
-const rootReducer = combineReducers({});
+const rootReducer = combineReducers({
+    test_reducer: test.reducer
+});
 
 /// Persist Configuration
 const rootPersistConfig = {
