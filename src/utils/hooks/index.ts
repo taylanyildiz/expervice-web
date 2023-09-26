@@ -2,10 +2,12 @@ import { combineReducers, configureStore } from '@reduxjs/toolkit'
 import { persistStore, persistReducer, FLUSH, REGISTER, PURGE, PERSIST, PAUSE, REHYDRATE } from 'redux-persist'
 import storage from 'redux-persist/lib/storage'
 import constant_hooks from './constant_hooks';
+import production_hooks from './production_hooks';
 
 /// Root Reducer
 const rootReducer = combineReducers({
-    constants: constant_hooks
+    constants: constant_hooks,
+    production: production_hooks,
 });
 
 /// Persist Configuration
@@ -13,7 +15,7 @@ const rootPersistConfig = {
     version: 1.0,
     key: 'root',
     storage,
-    whiteList: ["constants"],
+    whiteList: ["constants", "production"],
     blackList: [],
 }
 

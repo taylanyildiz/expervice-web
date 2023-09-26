@@ -1,5 +1,5 @@
 import { Button, Grid } from "@mui/material";
-import { ReactNode } from "react";
+import React, { ReactNode } from "react";
 
 /// Scalable button props
 interface ScalableButtonProps {
@@ -15,10 +15,11 @@ interface ScalableButtonProps {
     suffix?: ReactNode,
     prefix?: ReactNode,
     fontSize?: number | string
+    onClick?: React.MouseEventHandler<HTMLButtonElement>
 }
 
 function ScalableButton(props?: ScalableButtonProps) {
-    let { suffix, prefix, children, fontSize } = props ?? {};
+    let { suffix, prefix, children, fontSize, onClick } = props ?? {};
 
     /// With icon
     if (prefix || suffix) {
@@ -33,6 +34,7 @@ function ScalableButton(props?: ScalableButtonProps) {
 
     return (
         <Button
+            onClick={onClick}
             className="scale-button"
             href={props?.link}
             variant={props?.variant ?? "contained"}

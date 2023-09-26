@@ -6,11 +6,12 @@ import { useRef } from "react";
 function CommonPage() {
     const ref = useRef<HTMLDivElement | null>(null);
 
-
     return (
         <>
             <CommonAppBar />
-            <div ref={ref}><Outlet /></div>
+            <div ref={ref}>
+                <Outlet />
+            </div>
             <CommonFooter scrollRef={ref} />
         </>
     )
