@@ -1,6 +1,7 @@
 {
   "compilerOptions": {
-    "target": "ES2020",
+    "target": "ESNext",
+    "types": ["vite/client"],
     "useDefineForClassFields": true,
     "lib": ["ES2020", "DOM", "DOM.Iterable"],
     "module": "ESNext",
@@ -18,8 +19,20 @@
     "strict": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
-    "noFallthroughCasesInSwitch": true
+    "noFallthroughCasesInSwitch": true,
+
+    "baseUrl": "./src",
+    "paths": {
+      "@Assets/*": ["./assets/*"],
+      "@Components/*": ["./components/*"],
+      "@Features/*": ["./features/*"],
+      "@Utils/*": ["./utils/*"],
+      "@Routes/*": ["./routes/*"],
+      "@Models/*": ["./models/*"],
+      "@Themes/*": ["./themes/*"],
+      "@Repo/*": ["./repositories/*"]
+    }
   },
   "include": ["src", "src/assets"],
-  "references": [{ "path": "./tsconfig.node.json" }],
+  "references": [{ "path": "./tsconfig.node.json" }]
 }

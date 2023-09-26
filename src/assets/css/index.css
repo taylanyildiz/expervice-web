@@ -1,4 +1,49 @@
 body {
-    margin: 0;
-    padding: 0;
+  margin: 0;
+  padding: 0;
+  height: 100vh;
+}
+
+/* Link Router Style */
+.link-router {
+  text-decoration: none;
+}
+
+/* Link Text Hover Style */
+.link-router-typografy:hover {
+  color: #2d738f;
+}
+
+.link-router:active {
+  .menu-icon {
+    color: #2d738f;
+  }
+}
+
+.link-router:hover {
+  .menu-icon {
+    color: #2d738f;
+  }
+}
+
+/* Scalable Button Style Hover */
+.scale-button:hover {
+  transform: scale(1.1);
+  transition: 0.2s ease-in-out 0s;
+}
+
+/* Scalable Circle Button Style */
+.scalable-circle-button:hover {
+  cursor: pointer;
+  transform: scale(1.1);
+  transition: 0.2s ease-in-out 0s;
+}
+
+.linear-gradient {
+  background: rgb(220, 108, 105);
+  background: linear-gradient(
+    141deg,
+    rgba(220, 108, 105, 1) 75%,
+    rgba(190, 63, 84, 1) 75%
+  );
 }

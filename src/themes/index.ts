@@ -1,4 +1,5 @@
 import { createTheme } from "@mui/material";
+import Colors from "./colors";
 
 /// Application Theme
 const theme = createTheme({
@@ -23,7 +24,7 @@ const theme = createTheme({
         },
         background: {
             default: "#BE3F54",
-            paper: "#BE3F54",
+            paper: "#FFFFFF",
         },
         text: {
             primary: "#061940",
@@ -33,9 +34,92 @@ const theme = createTheme({
 
     },
     typography: {
-        body1: {}
+        body1: {
+            color: Colors.primaryDark,
+            fontSize: 15,
+            fontWeight: "bold",
+        },
+        button: {
+            color: "white",
+            fontWeight: "bold",
+            fontSize: 15,
+            textTransform: "none",
+        },
+        subtitle1: {
+            color: Colors.secodaryDark,
+            fontSize: 17,
+            fontWeight: "bold"
+        },
+        subtitle2: {
+            color: "black",
+            fontSize: 17,
+            fontWeight: "normal"
+        },
+        h1: {
+            color: Colors.primaryDark,
+            fontSize: 50,
+            fontWeight: "bold"
+        },
+        h2: {
+            color: "black",
+            fontSize: 35,
+            fontWeight: "normal"
+        },
+        h3: {
+            color: Colors.primaryDark,
+            fontSize: 30,
+            fontWeight: "normal"
+        }
     },
     components: {
+        // AppBar Theme
+        MuiAppBar: {
+            defaultProps: {
+                position: "sticky",
+                elevation: 3.0,
+            }
+        },
+
+        // Toolbar Theme
+        MuiToolbar: {
+            defaultProps: {
+                disableGutters: true,
+                sx: {
+                    paddingX: 10,
+                    paddingTop: 3,
+                    paddingBottom: 1,
+                    backgroundColor: 'white',
+                }
+            }
+        },
+
+        /// Container Theme
+        MuiContainer: {
+            defaultProps: {
+                sx: {
+                    backgroundColor: 'white'
+                }
+            }
+        },
+
+        // Link Theme
+        MuiLink: {
+            defaultProps: {
+                sx: {
+                    textDecoration: "none",
+                }
+            }
+        },
+
+        /// Button Theme
+        MuiButton: {
+            defaultProps: {
+                disableElevation: true,
+                disableFocusRipple: true,
+                disableRipple: true,
+                disableTouchRipple: true,
+            }
+        },
     }
 });
 
