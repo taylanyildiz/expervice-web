@@ -19,12 +19,7 @@ function LoginPage() {
 
   return (
     <Box className="login-page">
-      <Grid
-        container
-        justifyContent="center"
-        alignItems="center"
-        direction="column"
-      >
+      <Grid container alignItems="center" direction="column">
         <Grid
           item
           children={

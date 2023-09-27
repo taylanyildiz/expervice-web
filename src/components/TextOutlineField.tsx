@@ -25,6 +25,8 @@ interface TextOutlineFieldProps {
   minRows?: number;
   maxRows?: number;
   multiline?: boolean;
+  maxLength?: number;
+  minLength?: number;
   onChange?: React.ChangeEventHandler<HTMLInputElement | HTMLTextAreaElement>;
 }
 
@@ -44,6 +46,8 @@ function TextOutlineField(props?: TextOutlineFieldProps) {
     minRows,
     maxRows,
     multiline,
+    maxLength,
+    minLength,
     onChange,
   } = props ?? {};
 
@@ -76,7 +80,7 @@ function TextOutlineField(props?: TextOutlineFieldProps) {
 
   return (
     <FormControl fullWidth={fullWidth}>
-      <Typography children={label} />
+      <Typography children={label} fontSize={13} color="black" />
       <TextField
         value={value}
         fullWidth={fullWidth}
@@ -94,6 +98,10 @@ function TextOutlineField(props?: TextOutlineFieldProps) {
         InputProps={{
           startAdornment,
           endAdornment: endAdornment(),
+        }}
+        inputProps={{
+          maxLength: maxLength,
+          minLength: minLength,
         }}
       />
     </FormControl>
