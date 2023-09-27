@@ -3,6 +3,8 @@ import router from "@Routes/app_routes"
 import Aos from "aos";
 import { useEffect } from "react"
 import { RouterProvider } from "react-router-dom"
+import { SnackbarProvider } from 'notistack';
+
 
 
 function App() {
@@ -26,7 +28,9 @@ function App() {
 
   return (
     <>
-      <RouterProvider router={router} />
+      <SnackbarProvider>
+        <RouterProvider router={router} />
+      </SnackbarProvider>
     </>
   )
 }

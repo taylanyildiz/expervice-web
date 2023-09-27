@@ -20,6 +20,7 @@ export default defineConfig({
       { find: '@Models', replacement: resolve(__dirname, './src/models') },
       { find: '@Themes', replacement: resolve(__dirname, './src/themes') },
       { find: '@Repo', replacement: resolve(__dirname, './src/repositories') },
+      { find: '@Log', replacement: resolve(__dirname, './src/logs') },
     ]
   },
 })

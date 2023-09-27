@@ -1,4 +1,4 @@
-import { Button, Grid } from "@mui/material";
+import { Button } from "@mui/material";
 import React, { ReactNode } from "react";
 
 /// Scalable button props
@@ -21,17 +21,6 @@ interface ScalableButtonProps {
 function ScalableButton(props?: ScalableButtonProps) {
     let { suffix, prefix, children, fontSize, onClick } = props ?? {};
 
-    /// With icon
-    if (prefix || suffix) {
-        children = (
-            <Grid container columnSpacing={0.4}>
-                {prefix && <Grid item children={prefix} />}
-                <Grid item children={children} />
-                {suffix && <Grid item children={suffix} />}
-            </Grid>
-        )
-    }
-
     return (
         <Button
             onClick={onClick}
@@ -39,6 +28,8 @@ function ScalableButton(props?: ScalableButtonProps) {
             href={props?.link}
             variant={props?.variant ?? "contained"}
             children={children}
+            endIcon={suffix}
+            startIcon={prefix}
             sx={{
                 ":hover": { backgroundColor: props?.backgroundColor },
                 fontSize: fontSize,

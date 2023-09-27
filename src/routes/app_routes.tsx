@@ -1,4 +1,5 @@
 import CommonBasePage from "@Features/common/base";
+import ContactPage from "@Features/common/contact";
 import CommonPage from "@Features/common/layout";
 import PricingPage from "@Features/common/pricing";
 import { RouteObject, createBrowserRouter } from "react-router-dom";
@@ -12,22 +13,22 @@ const routes: RouteObject[] = [
     {
         path: "/",
         element: <CommonPage />,
-        children:[
+        children: [
             {
-                index:true,
-                element:<CommonBasePage/>
+                index: true,
+                element: <CommonBasePage />
             },
             {
-                path:"contact",
-                element:<p>Contact Page</p>
+                path: "contact",
+                element: <ContactPage />
             },
             {
-                path:"pricing",
-                element:<PricingPage/>
+                path: "pricing",
+                element: <PricingPage />
             },
             {
-                path:"product",
-                element:<p>Product Page</p>
+                path: "product",
+                element: <p>Product Page</p>
             }
         ]
     },

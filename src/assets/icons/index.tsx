@@ -1,5 +1,3 @@
-import test from "./social-media/facebook_black.png";
-
 /// Icon Props
 interface IconProps {
     height?: number;

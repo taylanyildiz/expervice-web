@@ -47,3 +47,12 @@ body {
     rgba(190, 63, 84, 1) 75%
   );
 }
+
+.contact-box-gradient {
+  background: rgb(6, 25, 64);
+  background: linear-gradient(
+    121deg,
+    rgba(6, 25, 64, 1) 65%,
+    rgba(6, 25, 64, 0) 73%
+  );
+}

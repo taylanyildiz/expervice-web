@@ -27,7 +27,7 @@ function CommonAppBar() {
                         <Grid container direction="column">
                             <Grid item>
                                 <Grid container justifyContent="end" alignItems="center">
-                                    <Grid item mb={1} children={<MenuTextLink title="Contact" to={ERouter.Contact} />} />
+                                    <Grid item children={<MenuTextLink title="Contact" to={ERouter.Contact} />} />
                                     <Grid item children={<ScalableButton link={ERouter.Login} color="black" backgroundColor="transparent" children="Login" prefix={<AccountCircleOutlinedIcon />} />} />
                                 </Grid>
 

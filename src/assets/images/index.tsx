@@ -70,6 +70,13 @@ const Images = {
     logoTextWithBlack: (props?: ImageProps) => {
         return <AssetImage src="./logo/logo_text_with_black.png" {...props} />
     },
+
+    /**
+    * Logo Text With Black
+    */
+    contactUs: (props?: ImageProps) => {
+        return <AssetImage src="./contact.jpeg" {...props} />
+    },
 }
 
 

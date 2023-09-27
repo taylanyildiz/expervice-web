@@ -30,7 +30,8 @@
       "@Routes/*": ["./routes/*"],
       "@Models/*": ["./models/*"],
       "@Themes/*": ["./themes/*"],
-      "@Repo/*": ["./repositories/*"]
+      "@Repo/*": ["./repositories/*"],
+      "@Log/*": ["./logs/*"]
     }
   },
   "include": ["src", "src/assets"],

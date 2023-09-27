@@ -36,8 +36,8 @@ const theme = createTheme({
     typography: {
         body1: {
             color: Colors.primaryDark,
-            fontSize: 15,
-            fontWeight: "bold",
+            fontSize: 16,
+            fontWeight: "normal",
         },
         button: {
             color: "white",
