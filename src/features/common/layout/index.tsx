@@ -4,17 +4,17 @@ import CommonFooter from "./components/CommonFooter";
 import { useRef } from "react";
 
 function CommonPage() {
-    const ref = useRef<HTMLDivElement | null>(null);
+  const ref = useRef<HTMLDivElement | null>(null);
 
-    return (
-        <>
-            <CommonAppBar />
-            <div ref={ref}>
-                <Outlet />
-            </div>
-            <CommonFooter scrollRef={ref} />
-        </>
-    )
+  return (
+    <>
+      <CommonAppBar />
+      <div ref={ref}>
+        <Outlet />
+      </div>
+      <CommonFooter scrollRef={ref} />
+    </>
+  );
 }
 
 export default CommonPage;

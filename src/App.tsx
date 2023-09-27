@@ -1,11 +1,9 @@
 import { ConstantRepository, ProductionRepository } from "@Repo/index";
-import router from "@Routes/app_routes"
+import router from "@Routes/app_routes";
 import Aos from "aos";
-import { useEffect } from "react"
-import { RouterProvider } from "react-router-dom"
-import { SnackbarProvider } from 'notistack';
-
-
+import { useEffect } from "react";
+import { RouterProvider } from "react-router-dom";
+import { SnackbarProvider } from "notistack";
 
 function App() {
   /// Constant repository
@@ -18,7 +16,7 @@ function App() {
   const getConstants = async () => {
     constantRepo.getLanguages();
     productionRepo.getProduction();
-  }
+  };
 
   /// Initialize Applicaiton
   useEffect(() => {
@@ -32,7 +30,7 @@ function App() {
         <RouterProvider router={router} />
       </SnackbarProvider>
     </>
-  )
+  );
 }
 
-export default App
+export default App;

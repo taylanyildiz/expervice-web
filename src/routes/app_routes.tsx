@@ -1,3 +1,4 @@
+import ForgotPasswordPage from "@Features/auth/forgot-password";
 import LoginPage from "@Features/auth/login";
 import CommonBasePage from "@Features/common/base";
 import ContactPage from "@Features/common/contact";
@@ -7,40 +8,44 @@ import { RouteObject, createBrowserRouter } from "react-router-dom";
 
 /// Router Options
 const options = {
-    basename: '/',
+  basename: "/",
 };
 
 const routes: RouteObject[] = [
-    {
-        path: "/",
-        element: <CommonPage />,
-        children: [
-            {
-                index: true,
-                element: <CommonBasePage />
-            },
-            {
-                path: "contact",
-                element: <ContactPage />
-            },
-            {
-                path: "pricing",
-                element: <PricingPage />
-            },
-            {
-                path: "product",
-                element: <p>Product Page</p>
-            }
-        ]
-    },
-    {
-        path: "/login",
-        element: <LoginPage />
-    },
-    {
-        path: "*",
-        element: <p>Page Not Found</p>
-    }
+  {
+    path: "/",
+    element: <CommonPage />,
+    children: [
+      {
+        index: true,
+        element: <CommonBasePage />,
+      },
+      {
+        path: "contact",
+        element: <ContactPage />,
+      },
+      {
+        path: "pricing",
+        element: <PricingPage />,
+      },
+      {
+        path: "product",
+        element: <p>Product Page</p>,
+      },
+    ],
+  },
+  {
+    path: "/login",
+    element: <LoginPage />,
+  },
+  {
+    path: "/forgot-password",
+    element: <ForgotPasswordPage />,
+  },
+  {
+    path: "*",
+    element: <p>Page Not Found</p>,
+  },
 ];
 
 /// Application Rotuer
