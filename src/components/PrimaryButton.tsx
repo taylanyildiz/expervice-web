@@ -16,13 +16,19 @@ interface PrimaryButtonProps {
     prefix?: ReactNode,
     onClick?: React.MouseEventHandler<HTMLButtonElement>;
     type?: "submit" | "button" | "reset";
+    width?: number | string,
+    height?: number | string,
+    fullWidth?: boolean,
+    fontWeight?: string | number,
+    fontSize?: string | number
 }
 
 function PrimaryButton(props?: PrimaryButtonProps) {
-    let { prefix, suffix, children, onClick, type } = props ?? {};
+    let { prefix, suffix, children, onClick, type, fullWidth, width, height, fontWeight, fontSize } = props ?? {};
 
     return (
         <Button
+            fullWidth={fullWidth}
             type={type}
             onClick={onClick}
             href={props?.link}
@@ -35,12 +41,16 @@ function PrimaryButton(props?: PrimaryButtonProps) {
             disableTouchRipple
             sx={{
                 ":hover": { backgroundColor: props?.backgroundColor },
+                height: height,
+                width: width,
                 backgroundColor: props?.backgroundColor,
                 color: props?.color ?? "black",
                 padding: props?.padding,
                 borderRadius: props?.radius,
                 paddingX: props?.paddingX,
                 paddingY: props?.paddingY,
+                fontWeight: fontWeight,
+                fontSize: fontSize,
             }}
         />
     )

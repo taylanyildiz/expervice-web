@@ -7,6 +7,7 @@ enum ERouter {
     Languages = "/languages",
     Contact = "/contact",
     Login = "/login",
+    ForgotPassword = "/forgot-password",
     Regiter = "/Register",
 }
 

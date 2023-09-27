@@ -72,10 +72,24 @@ const Images = {
     },
 
     /**
-    * Logo Text With Black
+    * Contact Image
     */
     contactUs: (props?: ImageProps) => {
         return <AssetImage src="./contact.jpeg" {...props} />
+    },
+
+    /**
+    * Google-Play Image
+    */
+    googlePlay: (props?: ImageProps) => {
+        return <AssetImage src="./store/google_store.svg" {...props} />
+    },
+
+    /**
+    * App-Store Image
+    */
+    appStore: (props?: ImageProps) => {
+        return <AssetImage src="./store/app_store.svg" {...props} />
     },
 }
 

@@ -56,3 +56,31 @@ body {
     rgba(6, 25, 64, 0) 73%
   );
 }
+
+.login-page {
+  background-color: #0f2e72;
+  height: 100vh;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+  display: flex;
+}
+
+.login-box {
+  background-color: white;
+  box-shadow: -1px 10px 10px 10px rgba(0, 0, 0, 0.163);
+  border-radius: 1%;
+  padding-left: 15%;
+  padding-right: 15%;
+  padding-top: 20%;
+  padding-bottom: 20%;
+}
+
+.bold-text {
+  color: blue;
+  font-weight: 500;
+}
+
+.bold-text:hover {
+  cursor: pointer;
+}

@@ -1,3 +1,4 @@
+import LoginPage from "@Features/auth/login";
 import CommonBasePage from "@Features/common/base";
 import ContactPage from "@Features/common/contact";
 import CommonPage from "@Features/common/layout";
@@ -31,6 +32,10 @@ const routes: RouteObject[] = [
                 element: <p>Product Page</p>
             }
         ]
+    },
+    {
+        path: "/login",
+        element: <LoginPage />
     },
     {
         path: "*",
