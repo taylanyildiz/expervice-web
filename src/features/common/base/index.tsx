@@ -1,10 +1,11 @@
-import { Box, Grid, Typography } from "@mui/material";
+import { Grid, Typography } from "@mui/material";
 import SolutionButtons from "./components/SolutionButtons";
 import InfoImageBox from "./components/InfoImageBox";
 import ScalableButton from "@Components/ScalableButton";
 import Colors from "@Themes/colors";
-import ReactPlayer from "react-player";
 import { Helmet } from "react-helmet";
+import VideoBox from "./components/VideoBox";
+import CustomerBox from "./components/CustomerBox";
 
 function CommonBasePage() {
   return (
@@ -57,33 +58,7 @@ function CommonBasePage() {
                 />
               </Grid>
             </Grid>
-            <Grid item xs={6}>
-              <Grid container justifyContent="end">
-                <Grid
-                  item
-                  xs={6}
-                  display="flex"
-                  justifyContent="center"
-                  alignItems="center"
-                >
-                  <Box
-                    className="linear-gradient"
-                    height={400}
-                    width={300}
-                    sx={{ borderRadius: 4 }}
-                  />
-                  <ReactPlayer
-                    loop
-                    playing
-                    volume={0}
-                    width={500}
-                    height={300}
-                    url="https://expervice.s3.eu-west-1.amazonaws.com/expervice_introduction.mp4"
-                    style={{ position: "absolute", marginRight: 100 }}
-                  />
-                </Grid>
-              </Grid>
-            </Grid>
+            <Grid item xs={6} children={<VideoBox />} />
           </Grid>
         </Grid>
         <Grid item xs={12} children={<SolutionButtons />} />
@@ -127,6 +102,7 @@ function CommonBasePage() {
             </Grid>
           </Grid>
         </Grid>
+        <Grid item xs={12} children={<CustomerBox />} />
       </Grid>
     </>
   );
