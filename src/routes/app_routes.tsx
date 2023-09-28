@@ -1,5 +1,6 @@
 import ForgotPasswordPage from "@Features/auth/forgot-password";
 import LoginPage from "@Features/auth/login";
+import RegisterPage from "@Features/auth/register";
 import CommonBasePage from "@Features/common/base";
 import ContactPage from "@Features/common/contact";
 import CommonPage from "@Features/common/layout";
@@ -41,6 +42,10 @@ const routes: RouteObject[] = [
   {
     path: "/forgot-password",
     element: <ForgotPasswordPage />,
+  },
+  {
+    path: "/register",
+    element: <RegisterPage />,
   },
   {
     path: "*",

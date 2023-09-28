@@ -66,7 +66,7 @@ function CommonAppBar() {
                     item
                     children={
                       <ScalableButton
-                        link={ERouter.Regiter}
+                        link={ERouter.Pricing}
                         children="Try it now"
                       />
                     }

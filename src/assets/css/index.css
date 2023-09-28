@@ -57,6 +57,13 @@ body {
   );
 }
 
+.contact-form {
+  background-color: white;
+  padding: 40px;
+  border-radius: 2%;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+}
+
 .login-page {
   background-color: #0f2e72;
   height: 100vh;
