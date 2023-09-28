@@ -17,7 +17,7 @@ interface TextOutlineFieldProps {
   prefix?: ReactNode;
   suffix?: ReactNode;
   secret?: boolean;
-  type?: "password" | "email" | "number" | "text" | "tel";
+  type?: "password" | "email" | "number" | "text" | "tel" | "url" | "date";
   value?: any;
   helperText?: ReactNode | null;
   error?: boolean;
@@ -28,6 +28,11 @@ interface TextOutlineFieldProps {
   maxLength?: number;
   minLength?: number;
   onChange?: React.ChangeEventHandler<HTMLInputElement | HTMLTextAreaElement>;
+  onFocus?: React.FocusEventHandler<HTMLInputElement | HTMLTextAreaElement>;
+  ref?:
+    | ((instance: HTMLDivElement | null) => void)
+    | React.RefObject<HTMLDivElement>;
+  children?: ReactNode;
 }
 
 function TextOutlineField(props?: TextOutlineFieldProps) {
@@ -48,7 +53,9 @@ function TextOutlineField(props?: TextOutlineFieldProps) {
     multiline,
     maxLength,
     minLength,
+    ref,
     onChange,
+    onFocus,
   } = props ?? {};
 
   /// Show password state
@@ -80,14 +87,22 @@ function TextOutlineField(props?: TextOutlineFieldProps) {
 
   return (
     <FormControl fullWidth={fullWidth}>
-      <Typography children={label} fontSize={13} color="black" />
+      <Typography
+        align="left"
+        children={label}
+        fontSize={12}
+        fontWeight="bold"
+        color="black"
+      />
       <TextField
+        ref={ref}
         value={value}
         fullWidth={fullWidth}
         multiline={multiline}
         maxRows={maxRows}
         minRows={minRows}
         onChange={onChange}
+        onFocus={onFocus}
         size="small"
         id={id}
         name={name}
@@ -103,6 +118,7 @@ function TextOutlineField(props?: TextOutlineFieldProps) {
           maxLength: maxLength,
           minLength: minLength,
         }}
+        children={props?.children}
       />
     </FormControl>
   );

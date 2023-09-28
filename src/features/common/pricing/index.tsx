@@ -1,12 +1,28 @@
 import { Grid, Typography } from "@mui/material";
 import { Helmet } from "react-helmet";
 import PricingBox from "./components/PricingBox";
-import { useSelector } from "react-redux";
-import { RootState } from "@Utils/hooks";
+import { useDispatch, useSelector } from "react-redux";
+import { AppDispatch, RootState } from "@Utils/hooks";
+import ProductionPlan from "@Models/products/production_plan";
+import { setAuthPlan } from "@Utils/hooks/auth_hooks";
+import { useNavigate } from "react-router-dom";
+import ERouter from "@Routes/router_enum";
 
 function PricingPage() {
   const { production } = useSelector((state: RootState) => state.production);
   const plans = production?.plans ?? [];
+
+  /// Dispatch
+  const dispatch = useDispatch<AppDispatch>();
+
+  /// Navigator
+  const navigate = useNavigate();
+
+  /// Select plan handle
+  const onSelectPlanHandle = (plan: ProductionPlan) => {
+    dispatch(setAuthPlan(plan));
+    navigate(ERouter.Regiter);
+  };
 
   return (
     <>
@@ -28,7 +44,7 @@ function PricingPage() {
         />
         <Grid item>
           <Grid container spacing={5} alignItems="end">
-            {plans.reverse().map((plan, index) => {
+            {plans.map((plan, index) => {
               return (
                 <Grid key={plan.id} item>
                   <PricingBox
@@ -39,7 +55,7 @@ function PricingPage() {
                     permissions={
                       plan?.options?.map((e) => e.translations!.name!.en!) ?? []
                     }
-                    onClick={() => {}}
+                    onClick={() => onSelectPlanHandle(plan)}
                   />
                 </Grid>
               );

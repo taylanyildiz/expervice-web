@@ -3,11 +3,13 @@ import { persistStore, persistReducer, FLUSH, REGISTER, PURGE, PERSIST, PAUSE, R
 import storage from 'redux-persist/lib/storage'
 import constant_hooks from './constant_hooks';
 import production_hooks from './production_hooks';
+import auth_hooks from './auth_hooks';
 
 /// Root Reducer
 const rootReducer = combineReducers({
     constants: constant_hooks,
     production: production_hooks,
+    auth: auth_hooks,
 });
 
 /// Persist Configuration
@@ -16,7 +18,7 @@ const rootPersistConfig = {
     key: 'root',
     storage,
     whiteList: ["constants", "production"],
-    blackList: [],
+    blackList: ["auth"],
 }
 
 /// Persisted Reducer
