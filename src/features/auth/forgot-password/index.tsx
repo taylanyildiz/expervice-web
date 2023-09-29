@@ -10,7 +10,7 @@ import { useState } from "react";
 import ForgotPasswordEmail from "./components/ForgotPasswordEmail";
 import ForgotPasswordConfirm from "./components/ForgotPasswordConfirm";
 import ForgotPasswordReset from "./components/ForgotPasswordReset";
-import ForgotPasswordSuccess from "./components/ForgotPasswordSuccess";
+import SuccessBox from "@Components/SuccessBox";
 
 function ForgotPasswordPage() {
   /// Active page
@@ -48,6 +48,15 @@ function ForgotPasswordPage() {
     setActive((value) => ++value);
   };
 
+  /// Forgot passsword pages
+  const views = [
+    ForgotPasswordEmail({ step: steps[active] }),
+    ForgotPasswordConfirm({ step: steps[active] }),
+    ForgotPasswordReset({ step: steps[active] }),
+  ];
+
+  const CurrentView = () => views[active];
+
   return (
     <Box className="forgot-password-page">
       <Grid container width="100%" alignItems="center" direction="column">
@@ -57,18 +66,19 @@ function ForgotPasswordPage() {
             children={Images.logoTextWhite({ width: 300 })}
           />
         </Grid>
-        <Grid item mt={3} xs={12} width="40%">
+        <Grid item mt={3} xs={12}>
           <ForgotPasswordStepperHeader steps={steps} active={active} />
         </Grid>
-        <Grid item xs={12} width={350} mt={2}>
+        <Grid item xs={12} width={350} mt={3}>
           <Box className="forgot-password-box">
             <Grid container rowSpacing={2}>
               <Grid item xs={12}>
                 {/* Stepper Content */}
-                {active === 0 && <ForgotPasswordEmail step={steps[active]} />}
-                {active === 1 && <ForgotPasswordConfirm step={steps[active]} />}
-                {active === 2 && <ForgotPasswordReset step={steps[active]} />}
-                {done && <ForgotPasswordSuccess />}
+                {!done && <Grid container children={<CurrentView />} />}
+
+                {done && (
+                  <SuccessBox message="Your password has been successfully updated" />
+                )}
               </Grid>
               <Grid item xs={12}>
                 <PrimaryButton

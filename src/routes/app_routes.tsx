@@ -1,3 +1,4 @@
+import RegisterActivationPage from "@Features/activations/register-activation";
 import ForgotPasswordPage from "@Features/auth/forgot-password";
 import LoginPage from "@Features/auth/login";
 import RegisterPage from "@Features/auth/register";
@@ -46,6 +47,10 @@ const routes: RouteObject[] = [
   {
     path: "/register",
     element: <RegisterPage />,
+  },
+  {
+    path: "/activation",
+    element: <RegisterActivationPage />,
   },
   {
     path: "*",

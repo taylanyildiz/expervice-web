@@ -20,6 +20,9 @@ abstract class SnackCustomBar {
     const success = statusCode === 200 || statusCode === 201;
     let message = response.data?.message;
     message ??= success ? "Success" : "An Error Occured";
+    if (response.status === 422) {
+      message = JSON.stringify(response.data.error);
+    }
     const variant = success ? "success" : "warning";
     enqueueSnackbar(message, {
       variant,
