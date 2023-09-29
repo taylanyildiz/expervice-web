@@ -5,7 +5,6 @@ import { useQuery } from "@Utils/functions";
 import { Box, CircularProgress, Grid, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import SuccessBox from "@Components/SuccessBox";
 
 function RegisterActivationPage() {
