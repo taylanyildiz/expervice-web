@@ -25,11 +25,9 @@ function App() {
   }, []);
 
   return (
-    <>
-      <SnackbarProvider>
-        <RouterProvider router={router} />
-      </SnackbarProvider>
-    </>
+    <SnackbarProvider>
+      <RouterProvider router={router} />
+    </SnackbarProvider>
   );
 }
 

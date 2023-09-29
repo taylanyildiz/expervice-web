@@ -9,12 +9,23 @@ import { Link, useNavigate } from "react-router-dom";
 import ERouter from "@Routes/router_enum";
 import RegisterStepperHeader from "./components/RegisterStepperHeader";
 import RegisterContact from "./components/RegisterContact";
-import PrimaryButton from "@Components/PrimaryButton";
 import RegisterBilling from "./components/RegisterBilling";
+import RegisterPassword from "./components/RegisterPassword";
+import RegisterActions from "./components/RegisterActions";
+import RegisterSuccess from "./components/RegisterSuccess";
 
 function RegisterPage() {
   /// Authentication store
   const { plan } = useSelector((state: RootState) => state.auth);
+
+  /// Active page
+  const [active, setActive] = useState(0);
+
+  /// Register pages
+  const views = [RegisterContact, RegisterBilling, RegisterPassword];
+
+  /// Current register view
+  const CurrentView = views[active];
 
   /// Navigator
   const navigate = useNavigate();
@@ -24,9 +35,6 @@ function RegisterPage() {
     if (!plan) navigate(ERouter.Base);
     return;
   });
-
-  /// Active page
-  const [active, setActive] = useState(0);
 
   /// Register steps
   const [steps, setSteps] = useState<RegisterStep[]>([
@@ -55,8 +63,20 @@ function RegisterPage() {
     const values = [...steps];
     values[active].completed = true;
     setSteps(values);
+    if (active === steps.length - 1) return;
     setActive((value) => ++value);
   };
+
+  /// Back step handle
+  const onBackHandle = () => {
+    if (active === 0) return;
+    const values = [...steps];
+    values[active - 1].completed = false;
+    setActive((value) => --value);
+  };
+
+  /// All complted
+  const completedAll = !steps.some((e) => !e.completed);
 
   return (
     <Box className="register-page">
@@ -64,42 +84,52 @@ function RegisterPage() {
         <Grid item xs={12}>
           <Link
             to={ERouter.Base}
-            children={Images.logoTextBlack({ height: 80 })}
+            children={Images.logoTextWithBlack({ height: 80 })}
           />
         </Grid>
-        <Grid item xs={12}>
-          <Typography variant="h1" fontSize={25} color={Colors.primaryLight}>
-            Create a Expervice account
-          </Typography>
-        </Grid>
-        <Grid item xs={12}>
-          <Typography>
-            Already an existing customer?{" "}
-            <b onClick={onClickLoginHandle} className="bold-text">
-              Log in
-            </b>
-          </Typography>
-        </Grid>
+        {/* <Grid item xs={12}>
+          <Grid container justifyContent="center">
+            <Grid item xs={12}>
+              <Typography
+                variant="h1"
+                fontSize={25}
+                color={Colors.primaryLight}
+              >
+                Create a Expervice account
+              </Typography>
+            </Grid>
+            <Grid item xs={12}>
+              <Typography>
+                Already an existing customer?{" "}
+                <b onClick={onClickLoginHandle} className="bold-text">
+                  Log in
+                </b>
+              </Typography>
+            </Grid>
+            <Grid item xs={6}>
+              <Grid container>
+                <Grid item xs={12} mt={4}>
+                  <RegisterStepperHeader steps={steps} active={active} />
+                </Grid>
+                <Grid item xs={12} children={<CurrentView />} />
+              </Grid>
+              <Grid
+                item
+                xs={12}
+                mt={2}
+                children={
+                  <RegisterActions
+                    onBack={onBackHandle}
+                    onNext={onNextHandle}
+                    active={active}
+                  />
+                }
+              />
+            </Grid>
+          </Grid>
+        </Grid> */}
         <Grid item xs={6}>
-          <Grid container>
-            <Grid
-              item
-              xs={12}
-              children={<RegisterStepperHeader steps={steps} active={active} />}
-            />
-            {/* <Grid item xs={12} children={<RegisterContact />} /> */}
-            <Grid item xs={12} children={<RegisterBilling />} />
-          </Grid>
-          <Grid item xs={12} mt={2} display="flex" justifyContent="end">
-            <PrimaryButton
-              onClick={onNextHandle}
-              children="Continue"
-              backgroundColor={Colors.primaryLight}
-              color="white"
-              fontWeight="normal"
-              fontSize={14}
-            />
-          </Grid>
+          <RegisterSuccess />
         </Grid>
       </Grid>
     </Box>

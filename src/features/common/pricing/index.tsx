@@ -1,5 +1,4 @@
 import { Grid, Typography } from "@mui/material";
-import { Helmet } from "react-helmet";
 import PricingBox from "./components/PricingBox";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "@Utils/hooks";
@@ -26,9 +25,6 @@ function PricingPage() {
 
   return (
     <>
-      <Helmet>
-        <title>Expervice Pricing</title>
-      </Helmet>
       <Grid container justifyContent="center" pt={5} px={20} rowSpacing={3}>
         <Grid
           item

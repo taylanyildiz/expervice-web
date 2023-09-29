@@ -21,6 +21,7 @@ interface PrimaryButtonProps {
   fullWidth?: boolean;
   fontWeight?: string | number;
   fontSize?: string | number;
+  border?: string;
 }
 
 function PrimaryButton(props?: PrimaryButtonProps) {
@@ -35,6 +36,7 @@ function PrimaryButton(props?: PrimaryButtonProps) {
     height,
     fontWeight,
     fontSize,
+    border,
   } = props ?? {};
 
   return (
@@ -55,6 +57,7 @@ function PrimaryButton(props?: PrimaryButtonProps) {
         height: height,
         width: width,
         backgroundColor: props?.backgroundColor,
+        border: border,
         color: props?.color ?? "black",
         padding: props?.padding,
         borderRadius: props?.radius,

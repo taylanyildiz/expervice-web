@@ -1,5 +1,4 @@
 import { Grid, Typography } from "@mui/material";
-import { ReactNode } from "react";
 import "aos/dist/aos.css";
 
 /// Info Image Props
@@ -7,7 +6,7 @@ interface InfoImageBoxProps {
   title: string;
   subTitle: string;
   position?: "left" | "right";
-  image?: ReactNode | string;
+  image: string;
 }
 
 function InfoImageBox(props: InfoImageBoxProps) {
@@ -38,18 +37,28 @@ function InfoImageBox(props: InfoImageBoxProps) {
           </Grid>
         </div>
       </Grid>
-      {!isLeft && <Grid xs={6} item children={<InfoImage image={image} />} />}
+      {!isLeft && (
+        <Grid item xs={6} children={<InfoImage end image={image} />} />
+      )}
     </Grid>
   );
 }
 
-function InfoImage(props: { image: string | ReactNode }) {
+function InfoImage(props: { image: string; end?: boolean }) {
+  const { image, end } = props;
   return (
     <>
-      <div data-aos="fade-up" data-aos-delay="200">
+      <div
+        data-aos="fade-up"
+        data-aos-delay="200"
+        style={{
+          justifyContent: end ? "end" : "start",
+          display: "flex",
+        }}
+      >
         <img
           style={{ position: "absolute" }}
-          src={props.image as string}
+          src={image}
           height={300}
           width={400}
         />

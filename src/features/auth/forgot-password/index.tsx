@@ -44,6 +44,7 @@ function ForgotPasswordPage() {
     const values = [...steps];
     values[active].completed = true;
     setSteps(values);
+    if (active === steps.length - 1) return;
     setActive((value) => ++value);
   };
 

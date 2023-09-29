@@ -3,16 +3,12 @@ import SolutionButtons from "./components/SolutionButtons";
 import InfoImageBox from "./components/InfoImageBox";
 import ScalableButton from "@Components/ScalableButton";
 import Colors from "@Themes/colors";
-import { Helmet } from "react-helmet";
 import VideoBox from "./components/VideoBox";
 import CustomerBox from "./components/CustomerBox";
 
 function CommonBasePage() {
   return (
     <>
-      <Helmet>
-        <title>Expervice Job Management</title>
-      </Helmet>
       <Grid container rowSpacing={15}>
         <Grid item xs={12}>
           <Grid container p={10} px={20}>

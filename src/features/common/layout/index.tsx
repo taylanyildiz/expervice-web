@@ -9,9 +9,7 @@ function CommonPage() {
   return (
     <>
       <CommonAppBar />
-      <div ref={ref}>
-        <Outlet />
-      </div>
+      <div ref={ref} children={<Outlet />} />
       <CommonFooter scrollRef={ref} />
     </>
   );
