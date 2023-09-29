@@ -7,3 +7,6 @@ export { default as CustomStepper } from "./CustomStepper";
 export { default as InputCustomMask } from "./InputCustomMask";
 export { default as CrediCard } from "./CrediCard";
 export { default as SucessBox } from "./SuccessBox";
+export { default as CountrySelect } from "./regions/CountrySelect";
+export { default as StateSelect } from "./regions/StateSelect";
+export { default as CitySelect } from "./regions/CitySelect";

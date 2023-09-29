@@ -16,7 +16,7 @@ class RegionRepository extends BaseRepository {
         const response = await this.get(path);
         const statusCode = response.status;
         if (statusCode !== 200) return;
-        const data = response.data['countries'];
+        const data = response.data['data']?.['countries'];
         store.dispatch(setCountries(data));
     }
 
@@ -29,7 +29,7 @@ class RegionRepository extends BaseRepository {
         const response = await this.get(path, { params: query });
         const statusCode = response.status;
         if (statusCode !== 200) return;
-        const data = response.data['states'];
+        const data = response.data['data']['states'];
         store.dispatch(setStates(data));
     }
 
@@ -42,7 +42,7 @@ class RegionRepository extends BaseRepository {
         const response = await this.get(path, { params: query });
         const statusCode = response.status;
         if (statusCode !== 200) return;
-        const data = response.data['cities'];
+        const data = response.data['data']['cities'];
         store.dispatch(setCities(data));
     }
 }

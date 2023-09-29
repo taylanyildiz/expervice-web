@@ -1,5 +1,8 @@
 import TextOutlineField from "@Components/TextOutlineField";
+import { CitySelect, CountrySelect, StateSelect } from "@Components/index";
+import { City, Country, State } from "@Models/index";
 import { Grid, Typography } from "@mui/material";
+import { useState } from "react";
 
 function RegisterContact() {
   return (
@@ -110,16 +113,23 @@ function BusinessInformation() {
 }
 
 function BusinessAddress() {
+  const [c, setC] = useState<Country | null | undefined>(null);
+  const [s, setS] = useState<State | null | undefined>(null);
+  const [ct, setCt] = useState<City | null | undefined>(null);
+
   return (
     <Grid container justifyContent="start" rowSpacing={2}>
       <Grid item>
         <Typography variant="h1" fontSize={20} children="Business Address" />
       </Grid>
       <Grid item xs={12}>
-        <TextOutlineField
+        <CountrySelect
           fullWidth
-          name="country"
-          type="text"
+          value={c}
+          onChanged={(c) => {
+            setC(c);
+            setS(null);
+          }}
           label="Country"
         />
       </Grid>
@@ -134,15 +144,22 @@ function BusinessAddress() {
       <Grid item xs={12}>
         <Grid container columnSpacing={2}>
           <Grid item xs={5}>
-            <TextOutlineField
+            <StateSelect
               fullWidth
-              name="state"
-              type="text"
+              countryId={c?.id}
+              value={s}
+              onChanged={(s) => setS(s)}
               label="State"
             />
           </Grid>
           <Grid item xs={4}>
-            <TextOutlineField fullWidth name="city" type="text" label="City" />
+            <CitySelect
+              fullWidth
+              stateId={s?.id}
+              value={ct}
+              onChanged={(c) => setCt(c)}
+              label="City"
+            />
           </Grid>
           <Grid item xs={3}>
             <TextOutlineField

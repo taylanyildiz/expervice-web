@@ -5,3 +5,6 @@ export type { default as ContactForm } from './contact_form';
 export type { default as AuthActivation } from './auth_activation';
 export type { default as User } from './user';
 export type { default as UserRole } from './user_role';
+export type { default as Country } from './regions/country';
+export type { default as State } from './regions/state';
+export type { default as City } from './regions/city';
