@@ -3,7 +3,7 @@ import { Grid, Typography } from "@mui/material";
 
 function RegisterPassword() {
   return (
-    <Grid container mt={3} rowSpacing={1}>
+    <Grid container mt={3}>
       <Grid item xs={12} justifyContent="start" display="flex">
         <Typography
           variant="h1"
@@ -11,7 +11,7 @@ function RegisterPassword() {
           children="Define Your Password"
         />
       </Grid>
-      <Grid item xs={7}>
+      <Grid item xs={7} mt={2}>
         <TextOutlineField
           fullWidth
           secret

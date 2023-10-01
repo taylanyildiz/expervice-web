@@ -6,7 +6,7 @@ import Colors from "@Themes/colors";
 import VideoBox from "./components/VideoBox";
 import CustomerBox from "./components/CustomerBox";
 
-function CommonBasePage() {
+function CommonPage() {
   return (
     <>
       <Grid container rowSpacing={15}>
@@ -104,4 +104,4 @@ function CommonBasePage() {
   );
 }
 
-export default CommonBasePage;
+export default CommonPage;

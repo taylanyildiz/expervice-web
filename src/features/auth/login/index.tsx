@@ -31,7 +31,7 @@ function LoginPage() {
         />
         <Grid mt={3} item width={350}>
           <Box className="login-box">
-            <Grid container rowSpacing={1} justifyContent="center">
+            <Grid container justifyContent="center">
               <Grid item xs={12}>
                 <TextOutlineField
                   fullWidth

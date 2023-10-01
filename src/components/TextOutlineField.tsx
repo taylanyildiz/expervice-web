@@ -33,6 +33,7 @@ interface TextOutlineFieldProps {
     | ((instance: HTMLDivElement | null) => void)
     | React.RefObject<HTMLDivElement>;
   children?: ReactNode;
+  height?: number;
 }
 
 function TextOutlineField(props?: TextOutlineFieldProps) {
@@ -56,6 +57,7 @@ function TextOutlineField(props?: TextOutlineFieldProps) {
     ref,
     onChange,
     onFocus,
+    height,
   } = props ?? {};
 
   /// Show password state
@@ -108,11 +110,12 @@ function TextOutlineField(props?: TextOutlineFieldProps) {
         name={name}
         variant="outlined"
         type={showPassword ? "text" : secret ? "password" : type ?? "text"}
-        helperText={helperText}
+        helperText={helperText ?? " "}
         error={error}
         InputProps={{
           startAdornment,
           endAdornment: endAdornment(),
+          sx: { height: height },
         }}
         inputProps={{
           maxLength: maxLength,

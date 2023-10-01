@@ -12,7 +12,7 @@ interface RegisterActionProps {
 function RegisterActions(props: RegisterActionProps) {
   const { active, onBack, onNext } = props;
   return (
-    <Grid container mt={10}>
+    <Grid container>
       <Grid container>
         <Grid item xs={6} justifyContent="start" display="flex">
           {active !== 0 && (

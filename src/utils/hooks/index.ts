@@ -6,6 +6,7 @@ import production_hooks from './production_hooks';
 import auth_hooks from './auth_hooks';
 import account_hooks from './account_hooks';
 import region_hooks from './region_hooks';
+import summary_hooks from './summary_hooks';
 
 /// Root Reducer
 const rootReducer = combineReducers({
@@ -14,6 +15,7 @@ const rootReducer = combineReducers({
     auth: auth_hooks,
     account: account_hooks,
     region: region_hooks,
+    summary: summary_hooks,
 });
 
 /// Persist Configuration
@@ -21,7 +23,7 @@ const rootPersistConfig = {
     version: 1.0,
     key: 'root',
     storage,
-    whiteList: ["constants", "production", "account", "region"],
+    whiteList: ["constants", "production", "account", "region", "summary"],
     blackList: ["auth"],
 }
 

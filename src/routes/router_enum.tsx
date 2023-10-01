@@ -9,6 +9,7 @@ enum ERouter {
   Login = "/login",
   ForgotPassword = "/forgot-password",
   Regiter = "/register",
+  Summary = "/summary",
 }
 
 export default ERouter;

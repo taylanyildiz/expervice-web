@@ -2,10 +2,12 @@ import RegisterActivationPage from "@Features/activations/register-activation";
 import ForgotPasswordPage from "@Features/auth/forgot-password";
 import LoginPage from "@Features/auth/login";
 import RegisterPage from "@Features/auth/register";
-import CommonBasePage from "@Features/common/base";
+import CommonPage from "@Features/common/base";
 import ContactPage from "@Features/common/contact";
-import CommonPage from "@Features/common/layout";
+import CommonLayout from "@Features/common/layout";
 import PricingPage from "@Features/common/pricing";
+import SummaryPage from "@Features/summary/base";
+import SummaryLayout from "@Features/summary/layout";
 import { RouteObject, createBrowserRouter } from "react-router-dom";
 
 /// Router Options
@@ -16,11 +18,11 @@ const options = {
 const routes: RouteObject[] = [
   {
     path: "/",
-    element: <CommonPage />,
+    element: <CommonLayout />,
     children: [
       {
         index: true,
-        element: <CommonBasePage />,
+        element: <CommonPage />,
       },
       {
         path: "contact",
@@ -51,6 +53,16 @@ const routes: RouteObject[] = [
   {
     path: "/activation",
     element: <RegisterActivationPage />,
+  },
+  {
+    path: "/summary",
+    element: <SummaryLayout />,
+    children: [
+      {
+        index: true,
+        element: <SummaryPage />,
+      },
+    ],
   },
   {
     path: "*",

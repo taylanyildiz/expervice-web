@@ -1,6 +1,6 @@
 import Icons from "@Assets/icons";
 import Images from "@Assets/images";
-import { Button, Grid, Typography } from "@mui/material";
+import { Button, Container, Grid, Paper, Typography } from "@mui/material";
 import { Link } from "react-router-dom";
 
 interface FooterProps {
@@ -17,15 +17,7 @@ function CommonFooter(props: FooterProps) {
   };
 
   return (
-    <Grid
-      container
-      justifyContent="space-between"
-      alignItems="end"
-      component="footer"
-      px={10}
-      pt={10}
-      pb={1}
-    >
+    <Grid container className="common-footer">
       <Grid item>
         <Grid container direction="column" justifyContent="start">
           <Grid

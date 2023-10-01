@@ -9,6 +9,7 @@ const Colors = {
     primaryLight: "#1F4DCE",
     secodary: "#62D5D6",
     secodaryDark: "#24596E",
+    appBarColor: "#235578",
     success: "#50B91F",
     info: "#1F66B9",
     error: "#B9281F",

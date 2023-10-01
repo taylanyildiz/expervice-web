@@ -4,6 +4,21 @@ body {
   height: 100vh;
 }
 
+.common-page {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.common-footer {
+  padding-top: 5em;
+  padding-bottom: 2em;
+  padding-left: 5em;
+  padding-right: 5em;
+  justify-content: space-between;
+  align-items: end;
+}
+
 /* Link Router Style */
 .link-router {
   text-decoration: none;

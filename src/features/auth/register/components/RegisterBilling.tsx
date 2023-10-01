@@ -25,7 +25,7 @@ function RegisterBilling() {
         />
       </Grid>
       <Grid item xs={6}>
-        <Grid container rowSpacing={1}>
+        <Grid container>
           <Grid item xs={12}>
             <TextOutlineField
               fullWidth

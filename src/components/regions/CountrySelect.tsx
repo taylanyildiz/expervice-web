@@ -12,15 +12,17 @@ import { RootState } from "@Utils/hooks";
 
 /// Country select props
 interface CountrySelectProps {
-  value?: Country | null;
-  onChanged?: (value?: Country | null) => void;
-  fullWidth?: boolean;
-  label?: string;
   id?: string;
+  label?: string;
+  value?: Country | null;
+  fullWidth?: boolean;
+  helperText?: string;
+  error?: boolean;
+  onChanged?: (value?: Country | null) => void;
 }
 
 function CountrySelect(props: CountrySelectProps) {
-  const { value, fullWidth, label, id, onChanged } = props;
+  const { value, fullWidth, label, id, helperText, error, onChanged } = props;
 
   /// Region store
   const { countries } = useSelector((state: RootState) => state.region);
@@ -76,7 +78,12 @@ function CountrySelect(props: CountrySelectProps) {
               fontWeight="bold"
               children={label}
             />
-            <TextField {...props} size="small" />
+            <TextField
+              {...props}
+              helperText={helperText ?? " "}
+              error={error}
+              size="small"
+            />
           </FormControl>
         );
       }}

@@ -39,7 +39,7 @@ function ContactFormBox() {
 
   return (
     <Box className="contact-form">
-      <Grid container rowSpacing={1}>
+      <Grid container>
         <Grid
           item
           xs={12}
@@ -47,7 +47,7 @@ function ContactFormBox() {
             <Typography variant="h1" fontSize={20} children="Contact Form" />
           }
         />
-        <Grid item xs={12}>
+        <Grid item xs={12} mt={2}>
           <TextOutlineField
             fullWidth
             label="Full Name"

@@ -18,11 +18,11 @@ export default RegisterContact;
 
 function PrimaryContact() {
   return (
-    <Grid container justifyContent="start" rowSpacing={2}>
+    <Grid container justifyContent="start">
       <Grid item>
         <Typography variant="h1" fontSize={20} children="Primary Contact" />
       </Grid>
-      <Grid item xs={12}>
+      <Grid item xs={12} mt={2}>
         <Grid container columnSpacing={2}>
           <Grid item xs={6}>
             <TextOutlineField
@@ -64,7 +64,7 @@ function PrimaryContact() {
 
 function BusinessInformation() {
   return (
-    <Grid container justifyContent="start" rowSpacing={2}>
+    <Grid container justifyContent="start">
       <Grid item>
         <Typography
           variant="h1"
@@ -72,7 +72,7 @@ function BusinessInformation() {
           children="Business Information"
         />
       </Grid>
-      <Grid item xs={12}>
+      <Grid item xs={12} mt={2}>
         <TextOutlineField
           fullWidth
           name="company_name"
@@ -118,11 +118,11 @@ function BusinessAddress() {
   const [ct, setCt] = useState<City | null | undefined>(null);
 
   return (
-    <Grid container justifyContent="start" rowSpacing={2}>
+    <Grid container justifyContent="start">
       <Grid item>
         <Typography variant="h1" fontSize={20} children="Business Address" />
       </Grid>
-      <Grid item xs={12}>
+      <Grid item xs={12} mt={2}>
         <CountrySelect
           fullWidth
           value={c}
