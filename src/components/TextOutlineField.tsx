@@ -34,6 +34,7 @@ interface TextOutlineFieldProps {
     | React.RefObject<HTMLDivElement>;
   children?: ReactNode;
   height?: number;
+  placeholder?: string;
 }
 
 function TextOutlineField(props?: TextOutlineFieldProps) {
@@ -58,6 +59,7 @@ function TextOutlineField(props?: TextOutlineFieldProps) {
     onChange,
     onFocus,
     height,
+    placeholder,
   } = props ?? {};
 
   /// Show password state
@@ -97,6 +99,7 @@ function TextOutlineField(props?: TextOutlineFieldProps) {
         color="black"
       />
       <TextField
+        placeholder={placeholder}
         ref={ref}
         value={value}
         fullWidth={fullWidth}

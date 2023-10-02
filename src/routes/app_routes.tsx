@@ -7,7 +7,10 @@ import ContactPage from "@Features/common/contact";
 import CommonLayout from "@Features/common/layout";
 import PricingPage from "@Features/common/pricing";
 import SummaryPage from "@Features/summary/base";
+import FormsPage from "@Features/summary/forms";
+import JobsPage from "@Features/summary/jobs/indes";
 import SummaryLayout from "@Features/summary/layout";
+import UnitsPage from "@Features/summary/units";
 import { RouteObject, createBrowserRouter } from "react-router-dom";
 
 /// Router Options
@@ -61,6 +64,18 @@ const routes: RouteObject[] = [
       {
         index: true,
         element: <SummaryPage />,
+      },
+      {
+        path: "units",
+        element: <UnitsPage />,
+      },
+      {
+        path: "forms",
+        element: <FormsPage />,
+      },
+      {
+        path: "jobs",
+        element: <JobsPage />,
       },
     ],
   },

@@ -1,3 +1,5 @@
+
+import type { } from '@mui/x-data-grid/themeAugmentation';
 import { createTheme } from "@mui/material";
 import Colors from "./colors";
 
@@ -120,6 +122,19 @@ const theme = createTheme({
                 disableTouchRipple: true,
             }
         },
+
+        MuiDataGrid: {
+
+            styleOverrides: {
+                root: {
+                    backgroundColor: "#F2F4F9",
+                },
+                columnHeader: {
+                    backgroundColor: "#F2F4F9",
+                },
+            },
+        }
+
     }
 });
 

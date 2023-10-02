@@ -6,21 +6,17 @@
 
 .summary-layout {
   background-color: #f1f4f9;
-  min-height: 100%;
   display: flex;
-  flex-grow: 1;
-  align-items: start;
-  gap: 1rem;
 }
 
 .summary-side-bar {
-  height: calc(100vh - 40px);
+  height: calc(100vh - 50px);
   background-color: white;
   position: sticky;
   transition: 0.1s ease-in-out 0s;
   margin-right: 1em;
   border-right: 1px solid rgb(205, 204, 204);
-  top: 40px;
+  top: 50px;
 }
 
 .side-bar-icon {
@@ -51,5 +47,33 @@
 
 .summary-app-bar {
   background-color: #235578;
-  height: 40px;
+  padding: 5px;
+  padding-left: 20px;
+  padding-right: 20px;
+  width: 100%;
+}
+
+.summary-base-layout {
+  width: 100%;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  margin-right: 5px;
+  display: flex;
+  flex-direction: row;
+  align-items: start;
+}
+
+.summary-base-page {
+  flex-grow: 5;
+  height: 100%;
+}
+
+.summary-base-groups {
+  top: 60px;
+  flex-grow: 1;
+  border-radius: 3px;
+  height: calc(100vh - 70px);
+  margin-left: 10px;
+  background-color: white;
+  position: sticky;
 }

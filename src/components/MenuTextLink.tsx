@@ -15,11 +15,13 @@ interface LinkChildren {
 interface LinkProps {
   title: string;
   to?: string;
+  color?: string;
+  hover?: boolean;
   children?: LinkChildren[];
 }
 
 function MenuTextLink(props: LinkProps) {
-  const { title, to, children } = props;
+  const { title, to, children, color } = props;
 
   /// Menu item target
   const [target, setTarget] = useState<HTMLElement | null>(null);
@@ -46,13 +48,22 @@ function MenuTextLink(props: LinkProps) {
             <Grid item>
               <Typography
                 className="link-router-typografy"
+                color={color}
+                sx={{
+                  ":hover": {
+                    color: color,
+                  },
+                }}
                 children={title}
                 variant="body1"
               />
             </Grid>
             {Boolean(children) && (
               <Grid item>
-                <KeyboardArrowDownIcon className="menu-icon" />
+                <KeyboardArrowDownIcon
+                  className="menu-icon"
+                  sx={{ color: color }}
+                />
               </Grid>
             )}
           </Grid>
@@ -66,7 +77,7 @@ function MenuTextLink(props: LinkProps) {
           open={open}
           anchorEl={target}
           onClose={onCloseMenuHandle}
-          MenuListProps={{ onMouseLeave: onCloseMenuHandle }}
+          // MenuListProps={{ onMouseLeave: onCloseMenuHandle }}
         >
           {children?.map((e) => (
             <MenuItem
