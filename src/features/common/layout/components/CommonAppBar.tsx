@@ -6,7 +6,7 @@ import { AppBar, Grid, Toolbar } from "@mui/material";
 import { Link } from "react-router-dom";
 import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
 import { useSelector } from "react-redux";
-import { RootState } from "@Utils/hooks";
+import { RootState } from "@Store/index";
 
 function CommonAppBar() {
   return (
@@ -98,7 +98,7 @@ function AppBarLinks() {
   /**
    * Langauges from Constant Store
    */
-  const { languages } = useSelector((state: RootState) => state.constants);
+  const { languages } = useSelector((state: RootState) => state.constant);
 
   return (
     <Grid container columnSpacing={5} mb={1}>

@@ -1,21 +1,23 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit'
 import { persistStore, persistReducer, FLUSH, REGISTER, PURGE, PERSIST, PAUSE, REHYDRATE } from 'redux-persist'
 import storage from 'redux-persist/lib/storage'
-import constant_hooks from './constant_hooks';
-import production_hooks from './production_hooks';
-import auth_hooks from './auth_hooks';
-import account_hooks from './account_hooks';
-import region_hooks from './region_hooks';
-import summary_hooks from './summary_hooks';
+import constant from './constant_store';
+import production from './production_store';
+import auth from './auth_store';
+import account from './account_store';
+import region from './region_store';
+import summary from './summary_store';
+import alert from './alert';
 
 /// Root Reducer
 const rootReducer = combineReducers({
-    constants: constant_hooks,
-    production: production_hooks,
-    auth: auth_hooks,
-    account: account_hooks,
-    region: region_hooks,
-    summary: summary_hooks,
+    constant,
+    production,
+    auth,
+    account,
+    region,
+    summary,
+    alert,
 });
 
 /// Persist Configuration
@@ -24,7 +26,7 @@ const rootPersistConfig = {
     key: 'root',
     storage,
     whiteList: ["constants", "production", "account", "region", "summary"],
-    blackList: ["auth"],
+    blackList: ["auth", "alert"],
 }
 
 /// Persisted Reducer

@@ -31,7 +31,8 @@
       "@Models/*": ["./models/*"],
       "@Themes/*": ["./themes/*"],
       "@Repo/*": ["./repositories/*"],
-      "@Log/*": ["./logs/*"]
+      "@Log/*": ["./logs/*"],
+      "@Store/*": ["./stores/*"]
     }
   },
   "include": ["src", "src/assets"],

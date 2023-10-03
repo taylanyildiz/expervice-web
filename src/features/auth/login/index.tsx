@@ -3,19 +3,15 @@ import PrimaryButton from "@Components/PrimaryButton";
 import TextOutlineField from "@Components/TextOutlineField";
 import ERouter from "@Routes/router_enum";
 import Colors from "@Themes/colors";
-import { Box, Grid, Typography } from "@mui/material";
-import { Link, useNavigate } from "react-router-dom";
+import { Box, Grid } from "@mui/material";
+import { Link } from "react-router-dom";
 import SocialMediaBox from "./components/SocialMediaBox";
 import StoreImageBox from "./components/StoreImageBox";
+import ForgotPasswordButton from "./components/ForgotPasswordButtons";
 
 function LoginPage() {
-  /// Navigator
-  const navigate = useNavigate();
-
-  /// Open forgot password page
-  const onForgotPasswordHandle = () => {
-    navigate(ERouter.ForgotPassword);
-  };
+  /// Login handle
+  const onClickLoginHandle = () => {};
 
   return (
     <Box className="login-page">
@@ -56,16 +52,11 @@ function LoginPage() {
                   children="Login"
                   backgroundColor={Colors.primaryDark}
                   color="white"
+                  onClick={onClickLoginHandle}
                 />
               </Grid>
               <Grid item xs={12} mt={2} justifyContent="center" display="flex">
-                <Typography>
-                  Forgot your{" "}
-                  <b className="bold-text" onClick={onForgotPasswordHandle}>
-                    password
-                  </b>{" "}
-                  ?
-                </Typography>
+                <ForgotPasswordButton />
               </Grid>
             </Grid>
           </Box>

@@ -21,6 +21,7 @@ export default defineConfig({
       { find: '@Themes', replacement: resolve(__dirname, './src/themes') },
       { find: '@Repo', replacement: resolve(__dirname, './src/repositories') },
       { find: '@Log', replacement: resolve(__dirname, './src/logs') },
+      { find: '@Store', replacement: resolve(__dirname, './src/stores') },
     ]
   },
 })

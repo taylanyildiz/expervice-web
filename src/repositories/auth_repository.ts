@@ -1,8 +1,8 @@
 import AuthActivation from "@Models/auth_activation";
 import BaseRepository from "./base_repository";
 import Auth from "./end-points/auth";
-import { store } from "@Utils/hooks";
-import { setAccount } from "@Utils/hooks/account_hooks";
+import { store } from "@Store/index";
+import { setAccount } from "@Store/account_store";
 
 class AuthRepository extends BaseRepository {
     constructor() {

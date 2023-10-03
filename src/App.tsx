@@ -4,6 +4,7 @@ import Aos from "aos";
 import { useEffect } from "react";
 import { RouterProvider } from "react-router-dom";
 import { SnackbarProvider } from "notistack";
+import DialogProvider from "@Utils/hooks/dialog_hook";
 
 function App() {
   /// Constant repository
@@ -26,7 +27,9 @@ function App() {
 
   return (
     <SnackbarProvider>
-      <RouterProvider router={router} />
+      <DialogProvider>
+        <RouterProvider router={router} />
+      </DialogProvider>
     </SnackbarProvider>
   );
 }

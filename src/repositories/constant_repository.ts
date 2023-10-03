@@ -1,7 +1,7 @@
-import { store } from "@Utils/hooks";
+import { store } from "@Store/index";
 import BaseRepository from "./base_repository";
-import { setLanguages } from "@Utils/hooks/constant_hooks";
 import Constants from "./end-points/constants";
+import { setLanguages } from "@Store/constant_store";
 
 class ConstantRepository extends BaseRepository {
     constructor() {
@@ -12,7 +12,7 @@ class ConstantRepository extends BaseRepository {
      * Get Languages
      */
     public async getLanguages(): Promise<void> {
-        const languages = store.getState().constants.languages;
+        const languages = store.getState().constant.languages;
         if (languages?.length) return; // Already exist
         const path = Constants.languages;
         const response = await this.get(path);

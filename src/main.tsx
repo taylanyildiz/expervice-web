@@ -5,8 +5,8 @@ import "./assets/css/index.css";
 import { Provider } from "react-redux";
 import { PersistGate } from "redux-persist/integration/react";
 import { ThemeProvider } from "@mui/material";
-import { persistor, store } from "@Utils/hooks/index.ts";
 import theme from "@Themes/index.ts";
+import { persistor, store } from "@Store/index.ts";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>

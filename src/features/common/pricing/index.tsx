@@ -1,11 +1,11 @@
 import { Grid, Typography } from "@mui/material";
 import PricingBox from "./components/PricingBox";
 import { useDispatch, useSelector } from "react-redux";
-import { AppDispatch, RootState } from "@Utils/hooks";
 import ProductionPlan from "@Models/products/production_plan";
-import { setAuthPlan } from "@Utils/hooks/auth_hooks";
 import { useNavigate } from "react-router-dom";
 import ERouter from "@Routes/router_enum";
+import { setAuthPlan } from "@Store/auth_store";
+import { AppDispatch, RootState } from "@Store/index";
 
 function PricingPage() {
   const { production } = useSelector((state: RootState) => state.production);

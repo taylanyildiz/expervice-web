@@ -1,5 +1,4 @@
 import logger from "@Log/logger";
-import SnackCustomBar from "@Utils/snack_custom_bar";
 import { Axios, AxiosResponse, InternalAxiosRequestConfig } from "axios";
 
 abstract class BaseRepository extends Axios {

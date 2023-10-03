@@ -1,7 +1,7 @@
-import { store } from "@Utils/hooks";
+import { store } from "@Store/index";
 import BaseRepository from "./base_repository";
 import Production from "./end-points/production";
-import { setProduct } from "@Utils/hooks/production_hooks";
+import { setProduct } from "@Store/production_store";
 
 class ProductionRepository extends BaseRepository {
 

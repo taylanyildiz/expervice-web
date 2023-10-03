@@ -1,5 +1,4 @@
 import Images from "@Assets/images";
-import { RootState } from "@Utils/hooks";
 import { Box, Grid } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
@@ -8,6 +7,7 @@ import { Link, useNavigate } from "react-router-dom";
 import ERouter from "@Routes/router_enum";
 import RegisterSuccess from "./components/RegisterSuccess";
 import RegisterStepper from "./components/RegisterStepper";
+import { RootState } from "@Store/index";
 
 function RegisterPage() {
   /// Authentication store

@@ -1,7 +1,8 @@
-import { store } from "@Utils/hooks";
+
+import { setCities, setCountries, setStates } from "@Store/region_store";
 import BaseRepository from "./base_repository";
 import Region from "./end-points/region";
-import { setCities, setCountries, setStates } from "@Utils/hooks/region_hooks";
+import { store } from "@Store/index";
 
 class RegionRepository extends BaseRepository {
     constructor() {
