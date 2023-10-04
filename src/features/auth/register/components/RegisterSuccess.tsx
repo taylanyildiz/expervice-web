@@ -17,8 +17,6 @@ function RegisterSuccess() {
   /// Timing
   const [time, setTimer] = useState<number>(60);
 
-  // if (!completedAll) return <></>;
-
   /// Initialize component
   /// Listen [completedAll]
   useEffect(() => {
@@ -33,6 +31,9 @@ function RegisterSuccess() {
     }, 1000);
     return () => clearInterval(interval);
   }, [completedAll]);
+
+  /// If not completed all
+  if (!completedAll) return <></>;
 
   return (
     <Box sx={{ boxShadow: 10, borderRadius: 4, px: 10, py: 10 }}>

@@ -31,7 +31,7 @@ function RegisterPage() {
             />
           </Grid>
 
-          {/* <Grid item xs={12} children={<RegisterStepper />} /> */}
+          <Grid item xs={12} children={<RegisterStepper />} />
           <Grid item xs={6} children={<RegisterSuccess />} />
         </Grid>
       </Box>
