@@ -1,18 +1,14 @@
 import CustomStepper from "@Components/CustomStepper";
-import { RegisterStep } from "../entities";
+import { useRegister } from "@Utils/hooks/register_hook";
 
-interface RegisterStepperProps {
-  steps: RegisterStep[];
-  active: number;
-}
+function RegisterStepperHeader() {
+  const { steps, step } = useRegister();
 
-function RegisterStepperHeader(props: RegisterStepperProps) {
-  const { steps, active } = props;
   return (
     <CustomStepper
       color="black"
       titles={steps}
-      activeStep={active}
+      activeStep={step}
       icon={{
         compltedIcon: { backgroundColor: "green", color: "white" },
         defaultIcon: { color: "grey" },

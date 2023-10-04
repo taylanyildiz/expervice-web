@@ -3,12 +3,33 @@ import BaseRepository from "./base_repository";
 import Auth from "./end-points/auth";
 import { store } from "@Store/index";
 import { setAccount } from "@Store/account_store";
+import UserLogin from "@Features/auth/login/entities/LoginUser";
+import SnackCustomBar from "@Utils/snack_custom_bar";
+import { RegisterAccount } from "@Features/auth/register/entities";
 
 class AuthRepository extends BaseRepository {
     constructor() {
         super({ tag: Auth.auth });
     }
 
+    /// Login
+    public async login(user: UserLogin): Promise<boolean> {
+        const path = Auth.login;
+        const response = await this.post(path, user);
+        const success = response.status === 200;
+        if (success) store.dispatch(setAccount(response.data['data']));
+        SnackCustomBar.status(response);
+        return success;
+    }
+
+    /// Register
+    public async register(account: RegisterAccount): Promise<boolean> {
+        const path = Auth.register;
+        const response = await this.post(path, account);
+        const statusCode = response.status;
+        SnackCustomBar.status(response);
+        return statusCode === 200;
+    }
 
     /**
      * Register Activation

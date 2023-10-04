@@ -42,6 +42,7 @@ type DialogContainerProps = DialogParams & {
   onKill: () => void;
 };
 
+/// Dialog Container
 function DialogContainer(props: DialogContainerProps) {
   const { children, open, onClose, onKill } = props;
 
@@ -52,6 +53,7 @@ function DialogContainer(props: DialogContainerProps) {
   );
 }
 
+/// Loading Dialog
 function LoadingDialog() {
   return (
     <Backdrop open sx={{ color: "#fff", backgroundColor: "transparent" }}>

@@ -5,10 +5,10 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import { useEffect, useState } from "react";
+import { ReactNode, useEffect, useState } from "react";
 import RegionRepository from "@Repo/region_repository";
 import { useSelector } from "react-redux";
-import { RootState } from "@Utils/hooks";
+import { RootState } from "@Store/index";
 
 /// State select props
 interface StateSelectProps {
@@ -17,7 +17,7 @@ interface StateSelectProps {
   countryId?: number;
   value?: State | null;
   fullWidth?: boolean;
-  helperText?: string;
+  helperText?: ReactNode;
   error?: boolean;
   onChanged?: (value?: State | null) => void;
 }
@@ -49,21 +49,26 @@ function StateSelect(props: StateSelectProps) {
     if (!countryId) {
       setOptions([]);
       setOption(null);
+      onChanged?.(null);
       return;
     }
     await regionRepo.getStates(countryId);
+    if (value?.country_id === countryId) {
+      onChanged?.(value);
+      return;
+    }
+    onChanged?.(null);
   };
 
   /// Initialize component
-  useEffect(() => {
-    setOption(value);
-  }, [value]);
-
+  /// Listen [value] - [states]
   useEffect(() => {
     setOptions(states);
-  }, [states]);
+    setOption(value);
+  }, [value, states]);
 
-  /// Initialize compnent
+  /// Initialize component
+  /// Listen [countryId]
   useEffect(() => {
     getStates();
   }, [countryId]);

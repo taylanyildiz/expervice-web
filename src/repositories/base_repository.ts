@@ -43,6 +43,16 @@ abstract class BaseRepository extends Axios {
             `PARAMS   => ${JSON.stringify(config.params)}\n` +
             "******************************\n"
         );
+
+        const data = config.data;
+        if (data) {
+            for (var [key, value] of Object.entries(data)) {
+                if (!value) {
+                    delete config.data[key];
+                }
+            }
+        }
+
         return config;
     }
 

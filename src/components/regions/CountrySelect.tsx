@@ -5,10 +5,10 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import { useEffect, useState } from "react";
+import { ReactNode, useEffect, useState } from "react";
 import RegionRepository from "@Repo/region_repository";
 import { useSelector } from "react-redux";
-import { RootState } from "@Utils/hooks";
+import { RootState } from "@Store/index";
 
 /// Country select props
 interface CountrySelectProps {
@@ -16,7 +16,7 @@ interface CountrySelectProps {
   label?: string;
   value?: Country | null;
   fullWidth?: boolean;
-  helperText?: string;
+  helperText?: ReactNode;
   error?: boolean;
   onChanged?: (value?: Country | null) => void;
 }
@@ -31,7 +31,7 @@ function CountrySelect(props: CountrySelectProps) {
   const regionRepo = new RegionRepository();
 
   /// Selected states
-  const [option, setOption] = useState<Country | null>();
+  const [option, setOption] = useState<Country | null | undefined>(null);
   const [options, setOptions] = useState<Country[]>([]);
 
   /// Get countries

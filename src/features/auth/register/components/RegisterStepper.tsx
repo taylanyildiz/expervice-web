@@ -1,29 +1,23 @@
 import { Grid, Typography } from "@mui/material";
 import RegisterStepperHeader from "./RegisterStepperHeader";
-import RegisterActions from "./RegisterActions";
 import Colors from "@Themes/colors";
 import { useNavigate } from "react-router-dom";
 import ERouter from "@Routes/router_enum";
-import { RegisterStep } from "../entities";
 import RegisterContact from "./RegisterContact";
 import RegisterBilling from "./RegisterBilling";
 import RegisterPassword from "./RegisterPassword";
+import { useRegister } from "@Utils/hooks/register_hook";
 
-interface RegisterStepperProps {
-  steps: RegisterStep[];
-  active: number;
-  onNext: () => void;
-  onBack: () => void;
-}
-
-function RegisterStepper(props: RegisterStepperProps) {
-  const { steps, active, onNext, onBack } = props;
+function RegisterStepper() {
+  /// Register hook
+  const { step, completedAll } = useRegister();
+  if (completedAll) return <></>; // all done
 
   /// Register pages
   const views = [RegisterContact, RegisterBilling, RegisterPassword];
 
   /// Current register view
-  const CurrentView = views[active];
+  const CurrentView = views[step];
 
   /// Navigator
   const navigate = useNavigate();
@@ -50,13 +44,8 @@ function RegisterStepper(props: RegisterStepperProps) {
       </Grid>
       <Grid item xs={6}>
         <Grid container>
-          <Grid item xs={12} mt={4}>
-            <RegisterStepperHeader steps={steps} active={active} />
-          </Grid>
+          <Grid item xs={12} mt={4} children={<RegisterStepperHeader />} />
           <Grid item xs={12} children={<CurrentView />} />
-        </Grid>
-        <Grid item xs={12} mt={2}>
-          <RegisterActions onBack={onBack} onNext={onNext} active={active} />
         </Grid>
       </Grid>
     </Grid>

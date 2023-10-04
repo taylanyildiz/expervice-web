@@ -5,10 +5,23 @@ import Colors from "@Themes/colors";
 import { AppBar, Grid, Toolbar } from "@mui/material";
 import { Link } from "react-router-dom";
 import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@Store/index";
+import { setAuthPlan } from "@Store/auth_store";
 
 function CommonAppBar() {
+  /// Production store
+  const { production } = useSelector((state: RootState) => state.production);
+
+  /// Application dispatch
+  const dispatch = useDispatch();
+
+  /// Select best pricing
+  const onClickDemoHandle = () => {
+    const plan = production?.plans?.[1];
+    dispatch(setAuthPlan(plan));
+  };
+
   return (
     <AppBar>
       <Toolbar>
@@ -56,6 +69,7 @@ function CommonAppBar() {
                     children={
                       <ScalableButton
                         link={ERouter.Regiter}
+                        onClick={onClickDemoHandle}
                         color={Colors.primary}
                         backgroundColor={Colors.secodary}
                         children="Schedule a demo"

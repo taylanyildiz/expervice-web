@@ -23,7 +23,7 @@ abstract class SnackCustomBar {
     if (response.status === 422) {
       message = JSON.stringify(response.data.error);
     }
-    const variant = success ? "success" : "warning";
+    const variant = success ? "success" : "error";
     enqueueSnackbar(message, {
       variant,
       anchorOrigin: { horizontal: "center", vertical: "top" },
@@ -31,6 +31,7 @@ abstract class SnackCustomBar {
       action: (id) => {
         return (
           <IconButton
+            sx={{ color: "white" }}
             onClick={() => closeSnackbar(id)}
             children={<CloseIcon sx={{ width: 20, height: 20 }} />}
           />

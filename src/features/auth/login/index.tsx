@@ -4,14 +4,47 @@ import TextOutlineField from "@Components/TextOutlineField";
 import ERouter from "@Routes/router_enum";
 import Colors from "@Themes/colors";
 import { Box, Grid } from "@mui/material";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import SocialMediaBox from "./components/SocialMediaBox";
 import StoreImageBox from "./components/StoreImageBox";
 import ForgotPasswordButton from "./components/ForgotPasswordButtons";
+import { useFormik } from "formik";
+import UserLogin from "./entities/LoginUser";
+import { loginValidationSchema } from "./validator/login_validator";
+import AuthRepository from "@Repo/auth_repository";
+import { useDialog } from "@Utils/hooks/dialog_hook";
 
 function LoginPage() {
+  /// Navigate
+  const navigate = useNavigate();
+
+  /// Auth repository
+  const authRepo = new AuthRepository();
+
+  /// Dialog hook
+  const { openLoading } = useDialog();
+
   /// Login handle
-  const onClickLoginHandle = () => {};
+  const onClickLoginHandle = () => {
+    formik.handleSubmit();
+  };
+
+  /// Submit handle
+  const onSubmitHandle = async (user: UserLogin): Promise<void> => {
+    const result = await openLoading(async () => {
+      return authRepo.login(user);
+    });
+    if (!result) return;
+    navigate(ERouter.Summary);
+  };
+
+  /// Formik
+  const initialValues: UserLogin = { email: "", password: "" };
+  const formik = useFormik({
+    initialValues,
+    validationSchema: loginValidationSchema,
+    onSubmit: onSubmitHandle,
+  });
 
   return (
     <Box className="login-page">
@@ -34,6 +67,10 @@ function LoginPage() {
                   label="Email"
                   name="email"
                   type="email"
+                  onChange={formik.handleChange}
+                  value={formik.values.email}
+                  helperText={formik.touched.email && formik.errors.email}
+                  error={Boolean(formik.errors.email && formik.touched.email)}
                 />
               </Grid>
               <Grid item xs={12}>
@@ -43,6 +80,12 @@ function LoginPage() {
                   label="Password"
                   name="password"
                   type="password"
+                  onChange={formik.handleChange}
+                  value={formik.values.password}
+                  helperText={formik.touched.password && formik.errors.password}
+                  error={Boolean(
+                    formik.errors.password && formik.touched.password
+                  )}
                 />
               </Grid>
               <Grid item xs={12} mt={3}>

@@ -5,10 +5,10 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import { useEffect, useState } from "react";
+import { ReactNode, useEffect, useState } from "react";
 import RegionRepository from "@Repo/region_repository";
 import { useSelector } from "react-redux";
-import { RootState } from "@Utils/hooks";
+import { RootState } from "@Store/index";
 
 /// City select props
 interface CitySelectProps {
@@ -17,7 +17,7 @@ interface CitySelectProps {
   stateId?: number;
   value?: City | null;
   fullWidth?: boolean;
-  helperText?: string;
+  helperText?: ReactNode;
   error?: boolean;
   onChanged?: (value?: City | null) => void;
 }
@@ -41,21 +41,26 @@ function StateSelect(props: CitySelectProps) {
     if (!stateId) {
       setOptions([]);
       setOption(null);
+      onChanged?.(null);
       return;
     }
     await regionRepo.getCities(stateId);
+
+    if (value?.state_id === stateId) {
+      onChanged?.(value);
+      return;
+    }
+    onChanged?.(null);
   };
 
   /// Initialize component
-  useEffect(() => {
-    setOption(value);
-  }, [value]);
-
+  /// Listen [value] - [cities]
   useEffect(() => {
     setOptions(cities);
-  }, [cities]);
+    setOption(value);
+  }, [value, cities]);
 
-  /// Initialize compnent
+  /// Listen when changed [stateId]
   useEffect(() => {
     getCities();
   }, [stateId]);

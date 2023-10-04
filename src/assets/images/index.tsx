@@ -2,6 +2,7 @@
 interface ImageProps {
   height?: number;
   width?: number;
+  style?: React.CSSProperties | undefined;
 }
 
 /// Image Props
@@ -9,12 +10,14 @@ interface AssetImageProps {
   height?: number;
   width?: number;
   src: string;
+  style?: React.CSSProperties | undefined;
 }
 
 function AssetImage(props: AssetImageProps) {
-  const { height, width, src } = props;
+  const { height, width, src, style } = props;
   return (
     <img
+      style={style}
       src={new URL(src, import.meta.url).href}
       width={width}
       height={height}

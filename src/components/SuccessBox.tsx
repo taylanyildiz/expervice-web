@@ -15,7 +15,13 @@ function SuccessBox(props?: SuccessBoxProps) {
       <Grid
         item
         children={
-          <Box p={0.1} sx={{ border: "solid 1px green", borderRadius: "100%" }}>
+          <Box
+            p={0.1}
+            sx={{
+              border: `solid 1px ${color ?? "green"}`,
+              borderRadius: "100%",
+            }}
+          >
             <CheckCircleIcon
               sx={{
                 width: width ?? 100,
