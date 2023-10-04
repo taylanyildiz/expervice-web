@@ -1,16 +1,36 @@
 import Images from "@Assets/images";
 import { Box, Grid } from "@mui/material";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Link, Navigate } from "react-router-dom";
 import ERouter from "@Routes/router_enum";
 import RegisterStepper from "./components/RegisterStepper";
 import { RootState } from "@Store/index";
 import RegisterProvider from "@Utils/hooks/register_hook";
 import RegisterSuccess from "./components/RegisterSuccess";
+import { useEffect } from "react";
+import { setAuthPlan } from "@Store/auth_store";
 
 function RegisterPage() {
   /// Authentication store
   const { plan } = useSelector((state: RootState) => state.auth);
+
+  /// Dispatch
+  const dispatch = useDispatch();
+
+  /// Reset store about register
+  const resetStorage = (force?: boolean) => {
+    sessionStorage.clear();
+    if (force) dispatch(setAuthPlan(null));
+  };
+
+  /// Initialize component
+  /// Clear session storage
+  useEffect(() => {
+    resetStorage();
+    return () => {
+      // resetStorage(true);
+    };
+  }, []);
 
   /// If not have plan
   if (!plan) return <Navigate to={ERouter.Pricing} />;

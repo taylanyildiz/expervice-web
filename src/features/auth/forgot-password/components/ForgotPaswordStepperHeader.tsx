@@ -1,20 +1,15 @@
-import { ForgotPasswordStep } from "../entities";
+import { useForgotPassword } from "@Utils/hooks/forgot_password_hook";
 import CustomStepper from "@Components/CustomStepper";
 
-interface ForgotPasswordStepperHeaderProps {
-  steps: ForgotPasswordStep[];
-  active: number;
-}
-
-function ForgotPasswordStepperHeader(props: ForgotPasswordStepperHeaderProps) {
-  const { steps, active } = props;
+function ForgotPasswordStepperHeader() {
+  const { steps, step } = useForgotPassword();
   return (
     <CustomStepper
       titles={steps.map((e) => ({
         title: e.title,
         completed: e.completed,
       }))}
-      activeStep={active}
+      activeStep={step}
       icon={{
         defaultIcon: { backgroundColor: "grey" },
       }}

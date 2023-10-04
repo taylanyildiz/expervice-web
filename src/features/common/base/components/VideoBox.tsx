@@ -24,7 +24,12 @@ function VideoBox() {
           width={500}
           height={300}
           url={import.meta.env.VITE_VIDEO_URL}
-          style={{ position: "absolute", marginRight: 100 }}
+          style={{
+            backgroundColor: "grey",
+            position: "absolute",
+            marginRight: 100,
+            borderRadius: 10,
+          }}
         />
       </Grid>
     </Grid>

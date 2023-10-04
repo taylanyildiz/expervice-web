@@ -7,8 +7,9 @@ import {
 } from "@mui/material";
 import { ReactNode, useEffect, useState } from "react";
 import RegionRepository from "@Repo/region_repository";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@Store/index";
+import { setCities } from "@Store/region_store";
 
 /// City select props
 interface CitySelectProps {
@@ -26,6 +27,9 @@ function StateSelect(props: CitySelectProps) {
   const { value, stateId, fullWidth, label, id, helperText, error, onChanged } =
     props;
 
+  /// Dispatch
+  const dispatch = useDispatch();
+
   /// Region store
   const { cities } = useSelector((state: RootState) => state.region);
 
@@ -42,6 +46,7 @@ function StateSelect(props: CitySelectProps) {
       setOptions([]);
       setOption(null);
       onChanged?.(null);
+      dispatch(setCities([]));
       return;
     }
     await regionRepo.getCities(stateId);

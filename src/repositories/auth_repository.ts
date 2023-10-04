@@ -47,6 +47,40 @@ class AuthRepository extends BaseRepository {
         return statusCode === 200 ? true : message;
     }
 
+    /**
+     * Forgot password
+     * send activation code
+     */
+    public async forgotPassword(props: { email: string }): Promise<boolean> {
+        const path = Auth.forgotPassword;
+        const response = await this.post(path, props);
+        const statusCode = response.status;
+        SnackCustomBar.status(response);
+        return statusCode === 200;
+    }
+
+    /**
+     * Check reset-code
+     */
+    public async checkResetCode(props: { email: string, code: string }): Promise<any> {
+        const path = Auth.forgotPasswordCheck;
+        const response = await this.post(path, props);
+        const statusCode = response.status;
+        SnackCustomBar.status(response);
+        return statusCode === 200;
+    }
+
+    /**
+     * Check reset-code
+     */
+    public async resetPassword(props: { email: string, password: string, code: string }): Promise<any> {
+        const path = Auth.forgotPassword;
+        const response = await this.put(path, props);
+        const statusCode = response.status;
+        SnackCustomBar.status(response);
+        return statusCode === 200;
+    }
+
 }
 
 export default AuthRepository;

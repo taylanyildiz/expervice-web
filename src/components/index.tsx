@@ -10,3 +10,4 @@ export { default as SucessBox } from "./SuccessBox";
 export { default as CountrySelect } from "./regions/CountrySelect";
 export { default as StateSelect } from "./regions/StateSelect";
 export { default as CitySelect } from "./regions/CitySelect";
+export { default as VisibilityComp } from "./VisibilityComp";
