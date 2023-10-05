@@ -58,11 +58,11 @@ const routes: RouteObject[] = [
     element: <RegisterActivationPage />,
   },
   {
-    path: "/summary",
+    path: "/",
     element: <SummaryLayout />,
     children: [
       {
-        index: true,
+        path: "summary",
         element: <SummaryPage />,
       },
       {

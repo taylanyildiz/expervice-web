@@ -1,10 +1,15 @@
 .jobs-layout {
-  width: 100%;
   padding: 10px;
+  display: flex;
+  flex-grow: 1;
+  flex-direction: column;
   background-color: white;
 }
 
 .jobs-grid {
-  height: 100%;
-  background-color: white;
+  margin-top: 10px;
+  width: 100%;
+  flex-grow: 1;
+  height: 0px;
+  background-color: turquoise;
 }

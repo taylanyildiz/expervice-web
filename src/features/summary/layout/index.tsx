@@ -1,6 +1,6 @@
 import { useSelector } from "react-redux";
 import "../../../assets/css/summary.css";
-import SummarySideBar from "./components/SummarySideBar";
+import SummarySideBar from "../base/components/SummarySideBar";
 import { Navigate, Outlet } from "react-router-dom";
 import SummaryAppBar from "./components/SummaryAppBar";
 import ERouter from "@Routes/router_enum";
@@ -16,10 +16,7 @@ function SummaryLayout() {
   return (
     <div className="summary">
       <SummaryAppBar />
-      <div className="summary-layout">
-        <SummarySideBar />
-        <Outlet />
-      </div>
+      <Outlet />
     </div>
   );
 }

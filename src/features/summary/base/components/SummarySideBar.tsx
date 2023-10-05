@@ -48,7 +48,7 @@ function SummarySideBar() {
         <Grid item xs={12} px={3} mt={1}>
           <Grid container alignItems="center">
             <Grid item sx={{ flexGrow: 1 }}>
-              <Typography children="Regions" fontSize={12} />
+              <Typography children="Regions" fontSize={14} />
             </Grid>
             <Grid item>
               <IconButton>

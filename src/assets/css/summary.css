@@ -1,12 +1,7 @@
 .summary {
   min-height: 100vh;
+  display: flex;
   flex-direction: column;
-  display: flex;
-}
-
-.summary-layout {
-  background-color: #f1f4f9;
-  display: flex;
 }
 
 .summary-side-bar {
@@ -51,6 +46,11 @@
   padding-left: 20px;
   padding-right: 20px;
   width: 100%;
+}
+
+.summary-layout {
+  background-color: #f1f4f9;
+  display: flex;
 }
 
 .summary-base-layout {

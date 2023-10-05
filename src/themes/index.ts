@@ -127,11 +127,13 @@ const theme = createTheme({
 
             styleOverrides: {
                 root: {
-                    backgroundColor: "#F2F4F9",
+                    backgroundColor: "white",
+                    color: "black",
                 },
                 columnHeader: {
                     backgroundColor: "#F2F4F9",
                 },
+
             },
         }
 
