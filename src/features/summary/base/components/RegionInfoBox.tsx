@@ -62,6 +62,13 @@ function RegionInfoBox() {
                 children={`${weather?.forecast?.[0].temp_c} °C`}
               />
             </Grid>
+            <Grid item ml={1}>
+              <Typography
+                variant="body2"
+                fontSize={18}
+                children={region?.state?.name}
+              />
+            </Grid>
           </Grid>
         </Grid>
       </Grid>

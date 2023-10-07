@@ -52,9 +52,9 @@ class CompanyRegionRepository extends BaseRepository {
      * Get group info
      */
     public async getGroupInfo(): Promise<void> {
-        const groupId = store.getState().compay_region.group?.id;
+        const group_id = store.getState().compay_region.group?.id;
         const path = CompanyRegion.groupInfo;
-        const response = await this.get(path, { params: { groupId } });
+        const response = await this.get(path, { params: { group_id } });
         const status = response.status;
         if (status !== 200) return;
         const data = response.data['data']['group'];

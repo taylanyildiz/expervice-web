@@ -9,7 +9,7 @@ function SummaryPage() {
   return (
     <div className="summary-layout">
       <SummarySideBar />
-      <Grid container>
+      <Grid container ml={1}>
         <Grid item xs={9} py={1.3}>
           <Box>
             <Grid container rowSpacing={2}>
