@@ -13,6 +13,35 @@ import SwapVertIcon from "@mui/icons-material/SwapVert";
 import "../../../../assets/css/summary.css";
 import { AppDispatch, RootState } from "@Store/index";
 import { setLeftSideBarStatus } from "@Store/summary_store";
+import RegionsList from "./RegionList";
+
+/// Animated arrow button
+function ArrowButton() {
+  /// Summary store
+  const { leftSideBarStatus } = useSelector(
+    (state: RootState) => state.summary
+  );
+  /// Dispatch
+  const dispatch = useDispatch<AppDispatch>();
+
+  /// Click arrow icon
+  /// Changed status of side bar
+  const onClickHandle = () => {
+    dispatch(setLeftSideBarStatus(!leftSideBarStatus));
+  };
+
+  const deg = leftSideBarStatus ? 0 : -180;
+
+  return (
+    <div
+      className="side-bar-icon"
+      style={{ transform: `rotate(${deg}deg)` }}
+      onClick={onClickHandle}
+    >
+      <ArrowLeftIcon sx={{ fontSize: 30 }} />
+    </div>
+  );
+}
 
 function SummarySideBar() {
   /// Summary store
@@ -65,36 +94,12 @@ function SummarySideBar() {
         <Grid item xs={12} px={3} mt={1}>
           <TextOutlineField fullWidth height={30} suffix={<SearchIcon />} />
         </Grid>
+        <Grid item xs={12}>
+          <RegionsList />
+        </Grid>
       </Grid>
     </Box>
   );
 }
 
 export default SummarySideBar;
-
-function ArrowButton() {
-  /// Summary store
-  const { leftSideBarStatus } = useSelector(
-    (state: RootState) => state.summary
-  );
-  /// Dispatch
-  const dispatch = useDispatch<AppDispatch>();
-
-  /// Click arrow icon
-  /// Changed status of side bar
-  const onClickHandle = () => {
-    dispatch(setLeftSideBarStatus(!leftSideBarStatus));
-  };
-
-  const deg = leftSideBarStatus ? 0 : -180;
-
-  return (
-    <div
-      className="side-bar-icon"
-      style={{ transform: `rotate(${deg}deg)` }}
-      onClick={onClickHandle}
-    >
-      <ArrowLeftIcon sx={{ fontSize: 30 }} />
-    </div>
-  );
-}

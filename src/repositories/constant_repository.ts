@@ -1,6 +1,6 @@
 import { store } from "@Store/index";
 import BaseRepository from "./base_repository";
-import Constants from "./end-points/constants";
+import Constant from "./end-points/constant";
 import { setLanguages } from "@Store/constant_store";
 
 class ConstantRepository extends BaseRepository {
@@ -14,7 +14,7 @@ class ConstantRepository extends BaseRepository {
     public async getLanguages(): Promise<void> {
         const languages = store.getState().constant.languages;
         if (languages?.length) return; // Already exist
-        const path = Constants.languages;
+        const path = Constant.languages;
         const response = await this.get(path);
         const statusCode = response.status;
         if (statusCode !== 200) return;

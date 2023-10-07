@@ -14,6 +14,7 @@ const Colors = {
     info: "#1F66B9",
     error: "#B9281F",
     warning: "#B9971F",
+    selected: "#E9F5FE",
 }
 
 export default Colors;

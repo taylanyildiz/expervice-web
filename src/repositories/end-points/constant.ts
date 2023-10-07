@@ -1,8 +1,8 @@
 /**
  * Constants End-Points
  */
-const Constants = {
+const Constant = {
     languages: "/languages",
 }
 
-export default Constants;
+export default Constant;

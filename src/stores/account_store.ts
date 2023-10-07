@@ -15,10 +15,10 @@ const account = createSlice({
     name: "account",
     initialState,
     reducers: {
-        setAccount: (state, { payload: { user, accessToken, refreshToken } }) => {
+        setAccount: (state, { payload: { user, access_token, refresh_token } }) => {
             state.user = user;
-            state.accessToken = accessToken;
-            state.refreshToken = refreshToken;
+            state.accessToken = access_token;
+            state.refreshToken = refresh_token;
         },
         setUser: (state, { payload }) => {
             state.user = payload;

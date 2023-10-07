@@ -1,4 +1,6 @@
 import logger from "@Log/logger";
+import { setAccessToken } from "@Store/account_store";
+import { store } from "@Store/index";
 import { Axios, AxiosResponse, InternalAxiosRequestConfig } from "axios";
 
 abstract class BaseRepository extends Axios {
@@ -16,6 +18,7 @@ abstract class BaseRepository extends Axios {
             headers: {
                 'Content-Type': 'application/json; charset=UTF-8',
                 "Access-Control-Allow-Origin": "*",
+                "x-access-token": store.getState().account.accessToken,
             },
             transformResponse: (e) => {
                 return JSON.parse(e);
@@ -26,7 +29,11 @@ abstract class BaseRepository extends Axios {
             validateStatus: (_) => true,
         });
 
-        /// Listen interceptors
+        // Bind the methods to the class instance
+        this.onRequest = this.onRequest.bind(this);
+        this.onResponse = this.onResponse.bind(this);
+
+        // Listen interceptors
         this.interceptors.request.use(this.onRequest);
         this.interceptors.response.use(this.onResponse);
     }
@@ -68,6 +75,33 @@ abstract class BaseRepository extends Axios {
             `BODY     => ${JSON.stringify(value.data)}\n` +
             "******************************\n"
         );
+
+        /// Refresh token
+        if (value.status === 401) {
+            const refresh_token = store.getState().account.refreshToken;
+            const response = await this.request({
+                baseURL: import.meta.env.VITE_API_URL,
+                url: "/users/token",
+                method: "POST",
+                data: { refresh_token },
+            });
+            if (response.status === 200) {
+                const access_token = response.data['data']['access_token'];
+                store.dispatch(setAccessToken(access_token));
+                value = await this.request({
+                    method: value.config.method,
+                    data: value.config.data,
+                    params: value.config.params,
+                    headers: {
+                        'Content-Type': 'application/json; charset=UTF-8',
+                        "Access-Control-Allow-Origin": "*",
+                        "x-access-token": access_token,
+                    },
+                });
+            }
+        }
+
+
         return value;
     }
 }

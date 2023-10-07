@@ -123,6 +123,32 @@ const theme = createTheme({
             }
         },
 
+        /// List Button Theme
+        MuiListItemButton: {
+            styleOverrides: {
+                root: {
+                    height: 30,
+                    backgroundColor: "transparent",
+                    '&.Mui-selected': {
+                        backgroundColor: Colors.selected,
+                    },
+                    ":hover": {
+                        backgroundColor: Colors.selected,
+                    }
+                },
+            }
+        },
+
+        MuiListItemText: {
+            styleOverrides: {
+                primary: {
+                    color: "black",
+                    fontSize: 14,
+                },
+            }
+        },
+
+        /// Data Grid Theme
         MuiDataGrid: {
 
             styleOverrides: {
