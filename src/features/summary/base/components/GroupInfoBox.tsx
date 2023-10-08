@@ -1,20 +1,33 @@
 import CompanyRegionRepository from "@Repo/company_region_repository";
 import { RootState } from "@Store/index";
 import { Box, Divider, Grid, Stack, Typography } from "@mui/material";
-import { useEffect } from "react";
+import { ReactNode, useEffect } from "react";
 import { useSelector } from "react-redux";
+import WorkIcon from "@mui/icons-material/Work";
+import AssignmentIndIcon from "@mui/icons-material/AssignmentInd";
 
 interface InfoProps {
   title: string;
   count: number | null | undefined;
+  icon?: ReactNode;
 }
 
 function InfoBox(props: InfoProps) {
-  const { title, count } = props;
+  const { title, count, icon } = props;
   return (
     <Grid container rowSpacing={2} direction="column" alignItems="center">
       <Grid item>
-        <Typography variant="h1" fontSize={15} color="grey" children={title} />
+        <Grid container alignItems="center" columnSpacing={1}>
+          {icon && <Grid item children={icon} />}
+          <Grid item>
+            <Typography
+              variant="h1"
+              fontSize={15}
+              color="grey"
+              children={title}
+            />
+          </Grid>
+        </Grid>
       </Grid>
       <Grid item>
         <Typography variant="body1" fontSize={15} children={count} />
@@ -58,8 +71,20 @@ function GroupInfoBox() {
             spacing={2}
           >
             <InfoBox title="Units" count={groupInfo?.unit_count} />
-            <InfoBox title="Jobs" count={groupInfo?.job_count} />
-            <InfoBox title="Technicians" count={groupInfo?.technician_count} />
+            <InfoBox
+              title="Jobs"
+              count={groupInfo?.job_count}
+              icon={<WorkIcon sx={{ height: 20, width: 20, color: "grey" }} />}
+            />
+            <InfoBox
+              title="Technicians"
+              count={groupInfo?.technician_count}
+              icon={
+                <AssignmentIndIcon
+                  sx={{ height: 20, width: 20, color: "grey" }}
+                />
+              }
+            />
           </Stack>
         </Grid>
       </Grid>

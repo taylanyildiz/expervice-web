@@ -85,3 +85,17 @@ export function dateToFormat(
   }
   return date.toLocaleString("en-US", options);
 }
+
+/**
+ * Caption
+ * @param value
+ * @returns
+ */
+export function caption(value?: string) {
+  if (!value) return null;
+  const splitValue = value.split(" ");
+  if (splitValue.length === 1) {
+    return value[0].toUpperCase();
+  }
+  return `${splitValue[0][0].toUpperCase()}${splitValue[1][0].toUpperCase()}`;
+}

@@ -37,7 +37,13 @@ function SelectedRegionBox() {
         <Grid item xs={10}>
           <Grid container>
             <Grid item xs={12}>
-              <Typography children={region?.name} />
+              <Typography
+                children={region?.name}
+                sx={{
+                  overflow: "clip",
+                  textOverflow: "ellipsis",
+                }}
+              />
             </Grid>
             <Grid item xs={12}>
               <Typography

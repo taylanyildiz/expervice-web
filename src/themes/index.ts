@@ -144,6 +144,8 @@ const theme = createTheme({
                 primary: {
                     color: "black",
                     fontSize: 14,
+                    overflow: "clip",
+                    textOverflow: "ellipsis"
                 },
             }
         },

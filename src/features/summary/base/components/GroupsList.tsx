@@ -15,12 +15,17 @@ import VisibilityComp from "@Components/VisibilityComp";
 import SelectedGroupBox from "./SelectedGroupBox";
 import { CompanyGroup } from "@Models/index";
 import { setSelectedGroup } from "@Store/company_region_store";
+import { useDialog } from "@Utils/hooks/dialog_hook";
+import GroupDialog from "../dialogs/GroupDialog";
 
 function GroupsList() {
   /// Company region store
   const { groups, group, region } = useSelector(
     (state: RootState) => state.compay_region
   );
+
+  /// Dialog hook
+  const { openDialog } = useDialog();
 
   /// Dispatch
   const dispatch: AppDispatch = useDispatch<AppDispatch>();
@@ -43,6 +48,11 @@ function GroupsList() {
     dispatch(setSelectedGroup(group));
   };
 
+  /// Create group handle
+  const onCreateGroupHandle = () => {
+    openDialog(<GroupDialog />, "xs");
+  };
+
   return (
     <Grid container>
       <Grid item xs={12}>
@@ -51,7 +61,7 @@ function GroupsList() {
             <Typography variant="h1" fontSize={19} children="Groups" />
           </Grid>
           <Grid item>
-            <IconButton>
+            <IconButton onClick={onCreateGroupHandle}>
               <AddIcon />
             </IconButton>
           </Grid>

@@ -20,7 +20,7 @@ import CompanyRegionRepository from "@Repo/company_region_repository";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "@Store/index";
 import { setEditRegion } from "@Store/company_region_store";
-import { dateToFormat } from "@Utils/functions";
+import { caption, dateToFormat } from "@Utils/functions";
 
 function RegionDialog() {
   /// Region store
@@ -29,6 +29,9 @@ function RegionDialog() {
 
   /// Is edit or create dialog
   const isEdit = Boolean(editRegion);
+
+  /// Dialog title depends on [isEdit]
+  const title = isEdit ? "Region Edit" : "Region Create";
 
   /// Dispatch
   const dispatch: AppDispatch = useDispatch<AppDispatch>();
@@ -153,7 +156,7 @@ function RegionDialog() {
 
   return (
     <>
-      <DialogCustomTitle title="Create Region" />
+      <DialogCustomTitle title={title} />
       <DialogContent>
         <Grid
           container
@@ -240,7 +243,7 @@ function RegionDialog() {
       </DialogContent>
       <DialogCustomActions
         leading={{
-          visibility: Boolean(editRegion),
+          visibility: isEdit,
           children: (
             <Grid container alignItems="center" columnSpacing={1}>
               <Grid item>
@@ -260,7 +263,7 @@ function RegionDialog() {
                     color: "white",
                     backgroundColor: "grey",
                   }}
-                  children="test"
+                  children={caption(creatorDisplayName)}
                 />
               </Grid>
               <Grid item>

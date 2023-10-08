@@ -29,7 +29,7 @@ function DialogCustomActions(props: DialogCustomActionProps) {
 
   return (
     <DialogActions>
-      <Grid container rowSpacing={rowSpace}>
+      <Grid container rowSpacing={rowSpace ?? 1}>
         <Grid
           item
           flexGrow={1}

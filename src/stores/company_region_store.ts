@@ -13,6 +13,7 @@ interface Props {
     group?: CompanyGroup | null;
     groupInfo?: CompanyGroupInfo | null;
     editRegion: CompanyRegion | null;
+    editGroup: CompanyGroup | null;
 }
 
 /// Initial values
@@ -24,6 +25,7 @@ const initialState: Props = {
     group: null,
     groupInfo: null,
     editRegion: null,
+    editGroup: null,
 }
 
 /// Company region slice
@@ -59,6 +61,9 @@ const companyRegion = createSlice({
         setGroupInfo: (state, { payload }) => {
             state.groupInfo = payload;
         },
+        setEditGroup: (state, { payload }) => {
+            state.editGroup = payload;
+        }
     }
 });
 
@@ -71,4 +76,5 @@ export const {
     setSelectedGroup,
     setGroupInfo,
     setEditRegion,
+    setEditGroup,
 } = companyRegion.actions;
