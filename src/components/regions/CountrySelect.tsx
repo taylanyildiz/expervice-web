@@ -2,6 +2,7 @@ import { Country } from "@Models/index";
 import {
   Autocomplete,
   FormControl,
+  FormHelperText,
   TextField,
   Typography,
 } from "@mui/material";
@@ -80,10 +81,17 @@ function CountrySelect(props: CountrySelectProps) {
             />
             <TextField
               {...props}
-              helperText={helperText ?? " "}
+              helperText={null}
               error={error}
               size="small"
             />
+            <FormHelperText
+              error={error}
+              sx={{ p: 0, m: 0 }}
+              id="my-helper-text"
+            >
+              {helperText ?? " "}
+            </FormHelperText>
           </FormControl>
         );
       }}

@@ -2,14 +2,14 @@ import { useEffect } from "react";
 import CompanyRegionRepository from "@Repo/company_region_repository";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "@Store/index";
-import { List, ListItemButton, ListItemText } from "@mui/material";
+import { Box, List, ListItemButton, ListItemText } from "@mui/material";
 import { CompanyRegion } from "@Models/index";
 import { setSelectedRegion } from "@Store/company_region_store";
 import SelectedRegionBox from "./SelectedRegionBox";
 import VisibilityComp from "@Components/VisibilityComp";
 
 /// Regions list
-function RegionsList() {
+function RegionsList(props: { scale: string }) {
   /// Region repository
   const companyRegionRepo = new CompanyRegionRepository();
 
@@ -38,23 +38,25 @@ function RegionsList() {
   };
 
   return (
-    <>
+    <div style={{ scale: props.scale }} className="region-list">
       <VisibilityComp
         visibility={Boolean(region)}
         children={<SelectedRegionBox />}
       />
-      <List>
-        {rows?.map((item: CompanyRegion, index) => (
-          <ListItemButton
-            selected={item.id === region?.id}
-            onClick={() => onSelectRegion(item)}
-            key={index}
-          >
-            <ListItemText primary={item.name} />
-          </ListItemButton>
-        ))}
-      </List>
-    </>
+      <Box sx={{ overflowY: "scroll", height: "110%" }}>
+        <List>
+          {rows?.map((item: CompanyRegion, index) => (
+            <ListItemButton
+              selected={item.id === region?.id}
+              onClick={() => onSelectRegion(item)}
+              key={index}
+            >
+              <ListItemText primary={item.name} />
+            </ListItemButton>
+          ))}
+        </List>
+      </Box>
+    </div>
   );
 }
 

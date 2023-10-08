@@ -1,5 +1,6 @@
 import {
   FormControl,
+  FormHelperText,
   IconButton,
   InputAdornment,
   TextField,
@@ -113,7 +114,7 @@ function TextOutlineField(props?: TextOutlineFieldProps) {
         name={name}
         variant="outlined"
         type={showPassword ? "text" : secret ? "password" : type ?? "text"}
-        helperText={helperText ?? " "}
+        helperText={null}
         error={error}
         InputProps={{
           startAdornment,
@@ -126,6 +127,9 @@ function TextOutlineField(props?: TextOutlineFieldProps) {
         }}
         children={props?.children}
       />
+      <FormHelperText error={error} sx={{ p: 0, m: 0 }} id="my-helper-text">
+        {helperText ?? " "}
+      </FormHelperText>
     </FormControl>
   );
 }

@@ -9,7 +9,7 @@ import SocialMediaBox from "./components/SocialMediaBox";
 import StoreImageBox from "./components/StoreImageBox";
 import ForgotPasswordButton from "./components/ForgotPasswordButtons";
 import { useFormik } from "formik";
-import UserLogin from "./entities/LoginUser";
+import UserLogin from "./entities/user_login";
 import { loginValidationSchema } from "./validator/login_validator";
 import AuthRepository from "@Repo/auth_repository";
 import { useDialog } from "@Utils/hooks/dialog_hook";

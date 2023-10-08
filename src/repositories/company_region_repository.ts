@@ -1,12 +1,14 @@
-import { CompanyRegionFilter } from "@Models/index";
+import { CompanyRegion, CompanyRegionFilter } from "@Models/index";
 import BaseRepository from "./base_repository";
-import CompanyRegion from "./end-points/company_region";
+import CompanyRegionConst from "./end-points/company_region";
 import { store } from "@Store/index";
-import { setGroupInfo, setGroups, setRegions, setWeather } from "@Store/company_region_store";
+import { setGroupInfo, setGroups, setRegions, setSelectedRegion, setWeather } from "@Store/company_region_store";
+import RegionProcess from "@Features/summary/base/entities/region_process";
+import SnackCustomBar from "@Utils/snack_custom_bar";
 
 class CompanyRegionRepository extends BaseRepository {
     constructor() {
-        super({ tag: CompanyRegion.regions });
+        super({ tag: CompanyRegionConst.regions });
     }
 
     /**
@@ -26,7 +28,7 @@ class CompanyRegionRepository extends BaseRepository {
     public async getRegionWeather(): Promise<void> {
         const region = store.getState().compay_region.region;
         if (!region) return;
-        const path = CompanyRegion.weather(region.id!);
+        const path = CompanyRegionConst.weather(region.id!);
         const response = await this.get(path);
         const status = response.status;
         if (status !== 200) return;
@@ -40,7 +42,7 @@ class CompanyRegionRepository extends BaseRepository {
     public async getRegionGroups(): Promise<void> {
         const region = store.getState().compay_region.region;
         if (!region) return;
-        const path = CompanyRegion.groups(region.id!);
+        const path = CompanyRegionConst.groups(region.id!);
         const response = await this.get(path);
         const status = response.status;
         if (status !== 200) return;
@@ -53,12 +55,77 @@ class CompanyRegionRepository extends BaseRepository {
      */
     public async getGroupInfo(): Promise<void> {
         const group_id = store.getState().compay_region.group?.id;
-        const path = CompanyRegion.groupInfo;
+        const path = CompanyRegionConst.groupInfo;
         const response = await this.get(path, { params: { group_id } });
         const status = response.status;
         if (status !== 200) return;
         const data = response.data['data']['group'];
         store.dispatch(setGroupInfo(data));
+    }
+
+    /**
+     * Create Company region
+     */
+    public async createRegion(region: RegionProcess): Promise<CompanyRegion | null> {
+        const regions = store.getState().compay_region.regions;
+        let count = regions.count;
+        const path = "/";
+        const response = await this.post(path, region);
+        const success = response.status === 200;
+        if (!success) return null;
+        SnackCustomBar.status(response);
+        const data = response.data['data']['region'];
+        store.dispatch(setRegions({
+            rows: [...regions.rows, data],
+            count: ++count,
+        }));
+        return data;
+    }
+
+    /**
+     * Update Company region
+     */
+    public async updateRegion(region: RegionProcess): Promise<CompanyRegion | null> {
+        const { regions, region: selected } = store.getState().compay_region;
+        if (!region.id) return null;
+        const path = `/${region.id}`;
+        const response = await this.put(path, region);
+        const success = response.status === 200;
+        if (!success) return null;
+        SnackCustomBar.status(response);
+        const data = response.data['data']['region'];
+        const values = [...regions.rows];
+        const index = values.findIndex(e => e.id === data.id);
+        if (index != -1) {
+            values[index] = data;
+            store.dispatch(setRegions({
+                ...regions,
+                rows: values,
+            }));
+        }
+        if (selected?.id === region.id) {
+            store.dispatch(setSelectedRegion(data));
+        }
+        return data;
+    }
+
+    /**
+     * Delete Company region
+     */
+    public async deleteRegion(id: number): Promise<boolean> {
+        const regions = store.getState().compay_region.regions;
+        let count = regions.count;
+        const path = `/${id}`;
+        const response = await this.delete(path);
+        const success = response.status === 200;
+        if (!success) return false;
+        SnackCustomBar.status(response);
+        const values = [...regions.rows.filter((e) => e.id !== id)];
+        store.dispatch(setRegions({
+            rows: values,
+            count: --count,
+        }));
+        return true;
     }
 }
 

@@ -52,3 +52,36 @@ export function cardNumberMaskParse(cardNumber?: string): string | null {
   const parseData = cardNumber.replace(pattern, "");
   return parseData;
 }
+
+/**
+ * Delay method
+ * @params ms
+ * default [1000] ms
+ */
+export async function wait(ms?: number): Promise<void> {
+  ms ??= 1000;
+  await new Promise((resolve) => {
+    setTimeout(resolve, ms);
+  });
+}
+
+/**
+ * Date to Format string
+ */
+export function dateToFormat(
+  date: string | Date | null | undefined
+): string | null {
+  if (date == null) return null;
+  const options: Intl.DateTimeFormatOptions = {
+    weekday: "short",
+    month: "short",
+    day: "numeric",
+    hour: "numeric",
+    minute: "numeric",
+    timeZone: "UTC",
+  };
+  if (typeof date === "string") {
+    date = new Date(date);
+  }
+  return date.toLocaleString("en-US", options);
+}

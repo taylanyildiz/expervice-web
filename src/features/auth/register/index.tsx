@@ -24,11 +24,14 @@ function RegisterPage() {
   };
 
   /// Initialize component
-  /// Clear session storage
   useEffect(() => {
     resetStorage();
+  }, []);
+
+  /// Destroy component
+  useEffect(() => {
     return () => {
-      // resetStorage(true);
+      resetStorage(true);
     };
   }, []);
 

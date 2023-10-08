@@ -2,6 +2,7 @@ import { State } from "@Models/index";
 import {
   Autocomplete,
   FormControl,
+  FormHelperText,
   TextField,
   Typography,
 } from "@mui/material";
@@ -49,40 +50,37 @@ function StateSelect(props: StateSelectProps) {
   const [options, setOptions] = useState<State[]>([]);
 
   /// Get states
-  const getStates = async () => {
+  useEffect(() => {
     if (!countryId) {
-      setOptions([]);
-      setOption(null);
-      onChanged?.(null);
       dispatch(setStates([]));
+      onChangeHandle(null);
       return;
     }
-    await regionRepo.getStates(countryId);
-    if (value?.country_id === countryId) {
-      onChanged?.(value);
-      return;
+    if (option && countryId !== option?.country_id) {
+      onChangeHandle(null);
     }
-    onChanged?.(null);
-  };
-
-  /// Initialize component
-  /// Listen [value] - [states]
-  useEffect(() => {
-    setOptions(states);
-    setOption(value);
-  }, [value, states]);
-
-  /// Initialize component
-  /// Listen [countryId]
-  useEffect(() => {
-    getStates();
+    regionRepo.getStates(countryId);
   }, [countryId]);
 
+  /// Initialize states
+  useEffect(() => {
+    setOptions(states);
+  }, [states]);
+
+  /// Initialize selected
+  useEffect(() => {
+    setOption(value);
+  }, [value]);
+
+  /// Destroy
+  useEffect(() => {
+    return () => {
+      dispatch(setStates(null));
+    };
+  }, []);
+
   /// Changed handle
-  const onChangeHandle = (
-    _?: React.SyntheticEvent<Element, Event>,
-    value?: State | null
-  ) => {
+  const onChangeHandle = (value?: State | null) => {
     onChanged?.(value);
   };
 
@@ -93,7 +91,7 @@ function StateSelect(props: StateSelectProps) {
       value={option}
       options={options}
       loading
-      onChange={onChangeHandle}
+      onChange={(_, v) => onChangeHandle(v)}
       getOptionLabel={(option) => option.name ?? ""}
       isOptionEqualToValue={(option, value) => option?.id === value?.id}
       renderInput={(props) => {
@@ -108,10 +106,17 @@ function StateSelect(props: StateSelectProps) {
             />
             <TextField
               {...props}
-              helperText={helperText ?? " "}
+              helperText={null}
               error={error}
               size="small"
             />
+            <FormHelperText
+              error={error}
+              sx={{ p: 0, m: 0 }}
+              id="my-helper-text"
+            >
+              {helperText ?? " "}
+            </FormHelperText>
           </FormControl>
         );
       }}

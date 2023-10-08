@@ -14,6 +14,8 @@ import "../../../../assets/css/summary.css";
 import { AppDispatch, RootState } from "@Store/index";
 import { setLeftSideBarStatus } from "@Store/summary_store";
 import RegionsList from "./RegionList";
+import { useDialog } from "@Utils/hooks/dialog_hook";
+import RegionDialog from "../dialogs/RegionDialog";
 
 /// Animated arrow button
 function ArrowButton() {
@@ -45,25 +47,38 @@ function ArrowButton() {
 
 function SummarySideBar() {
   /// Summary store
-  const { leftSideBarStatus } = useSelector(
+  const { leftSideBarStatus: open } = useSelector(
     (state: RootState) => state.summary
   );
 
-  const width = leftSideBarStatus ? 250 : 25;
-  const scale = leftSideBarStatus ? 1.0 : 0.0;
+  /// Dialog hooks
+  const { openDialog } = useDialog();
+
+  const width = open ? 280 : 25;
+  const scale = open ? 1.0 : 0.0;
+
+  /// Create new reigon dialog open
+  const onClickNewRegionHandle = () => {
+    openDialog(<RegionDialog />, "md");
+  };
 
   return (
     <Box className="summary-side-bar" sx={{ width: width }}>
       <ArrowButton />
-      <Grid container className="side-child" sx={{ scale: `calc(${scale})` }}>
+      <Grid
+        container
+        px={3}
+        className="side-child"
+        sx={{ scale: `calc(${scale})` }}
+      >
         <Grid item>
           <Link
             to={ERouter.Summary}
-            children={Images.logoTextWithBlack({ height: 50 })}
+            children={Images.logoTextWithBlack({ height: 70 })}
           />
         </Grid>
         <Grid item xs={12} children={<Divider />} />
-        <Grid item xs={12} px={3} mt={2}>
+        <Grid item xs={12} mt={2}>
           <PrimaryButton
             height={30}
             fullWidth
@@ -72,9 +87,10 @@ function SummarySideBar() {
             fontWeight="normal"
             fontSize={13}
             backgroundColor={Colors.primaryLight}
+            onClick={onClickNewRegionHandle}
           />
         </Grid>
-        <Grid item xs={12} px={3} mt={1}>
+        <Grid item xs={12} mt={1}>
           <Grid container alignItems="center">
             <Grid item sx={{ flexGrow: 1 }}>
               <Typography children="Regions" fontSize={14} />
@@ -91,13 +107,11 @@ function SummarySideBar() {
             </Grid>
           </Grid>
         </Grid>
-        <Grid item xs={12} px={3} mt={1}>
+        <Grid item xs={12} mt={1}>
           <TextOutlineField fullWidth height={30} suffix={<SearchIcon />} />
         </Grid>
-        <Grid item xs={12}>
-          <RegionsList />
-        </Grid>
       </Grid>
+      <RegionsList scale={`calc(${scale})`} />
     </Box>
   );
 }

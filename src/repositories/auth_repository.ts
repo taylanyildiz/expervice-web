@@ -3,7 +3,7 @@ import BaseRepository from "./base_repository";
 import Auth from "./end-points/auth";
 import { store } from "@Store/index";
 import { setAccount } from "@Store/account_store";
-import UserLogin from "@Features/auth/login/entities/LoginUser";
+import UserLogin from "@Features/auth/login/entities/user_login";
 import SnackCustomBar from "@Utils/snack_custom_bar";
 import { RegisterAccount } from "@Features/auth/register/entities";
 

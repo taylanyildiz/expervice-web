@@ -4,6 +4,7 @@ import GroupsOutlinedIcon from "@mui/icons-material/GroupsOutlined";
 import NotificationsNoneOutlinedIcon from "@mui/icons-material/NotificationsNoneOutlined";
 import AddOutlinedIcon from "@mui/icons-material/AddOutlined";
 import MenuTextLink from "@Components/MenuTextLink";
+import ERouter from "@Routes/router_enum";
 
 function SummaryAppBar() {
   return (
@@ -21,6 +22,10 @@ function SummaryAppBar() {
                 title="Jobs"
                 children={[
                   {
+                    title: "All",
+                    onClick: () => {},
+                  },
+                  {
                     title: "Maintenaces",
                     onClick: () => {},
                   },
@@ -32,10 +37,10 @@ function SummaryAppBar() {
               />
             </Grid>
             <Grid item>
-              <MenuTextLink color="white" to="" title="Forms" />
+              <MenuTextLink color="white" to={ERouter.Forms} title="Forms" />
             </Grid>
             <Grid item>
-              <MenuTextLink color="white" to="" title="Units" />
+              <MenuTextLink color="white" to={ERouter.Units} title="Units" />
             </Grid>
           </Grid>
         </Grid>

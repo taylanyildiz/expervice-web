@@ -20,13 +20,13 @@ const region = createSlice({
     initialState,
     reducers: {
         setCountries: (state, { payload }) => {
-            state.countries = payload;
+            state.countries = payload ?? [];
         },
         setStates: (state, { payload }) => {
-            state.states = payload;
+            state.states = payload ?? [];
         },
         setCities: (state, { payload }) => {
-            state.cities = payload;
+            state.cities = payload ?? [];
         }
     },
 });

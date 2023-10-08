@@ -1,36 +1,55 @@
 import {
   Backdrop,
+  Breakpoint,
   CircularProgress,
   Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+  Grid,
+  IconButton,
   Stack,
   Typography,
 } from "@mui/material";
-import { ReactNode, createContext, useContext, useRef, useState } from "react";
+import CloseIcon from "@mui/icons-material/Close";
+import {
+  Fragment,
+  ReactNode,
+  createContext,
+  useContext,
+  useState,
+} from "react";
+import PrimaryButton from "@Components/PrimaryButton";
 
 /// Empty function
 const empty = () => {};
 const emptyPromise = async () => {};
+const emptyPromiseBoolean = async () => false;
 
-type openDialog = (children: ReactNode) => void;
-type openLoading = (onBuild?: () => Promise<any>) => Promise<any>;
-type closeDialog = () => void;
+interface ProviderContext {
+  openDialog: (children: ReactNode, width?: Breakpoint) => void;
+  openLoading: (onBuild?: () => Promise<any>) => Promise<any>;
+  closeDialog: () => void;
+  openConfirm: (
+    title: ReactNode | string,
+    content: ReactNode | string
+  ) => Promise<boolean>;
+}
 
-/// Provider consxt
-type ProviderContext = readonly [openDialog, openLoading, closeDialog];
+/// Dialog Context
+const DialogContext = createContext<ProviderContext>({
+  openDialog: empty,
+  openLoading: emptyPromise,
+  closeDialog: empty,
+  openConfirm: emptyPromiseBoolean,
+});
 
-const DialogContext = createContext<ProviderContext>([
-  empty,
-  emptyPromise,
-  empty,
-]);
-
-export const useDialog = () => {
-  const c = useContext(DialogContext);
-  return { openDialog: c[0], openLoading: c[1], closeDialog: c[2] };
-};
+/// Dailog Hooks
+export const useDialog = () => useContext(DialogContext);
 
 type DialogParams = {
   children: ReactNode;
+  width?: Breakpoint;
   open: boolean;
   key?: string | number;
   onClose?: Function;
@@ -44,10 +63,16 @@ type DialogContainerProps = DialogParams & {
 
 /// Dialog Container
 function DialogContainer(props: DialogContainerProps) {
-  const { children, open, onClose, onKill } = props;
+  const { children, width, open, onClose, onKill } = props;
 
   return (
-    <Dialog open={open} onClose={onClose} onTransitionExited={onKill}>
+    <Dialog
+      fullWidth
+      open={open}
+      maxWidth={width}
+      onClose={onClose}
+      onTransitionExited={onKill}
+    >
       {children}
     </Dialog>
   );
@@ -65,18 +90,72 @@ function LoadingDialog() {
   );
 }
 
+/// Confirm Dialog
+function ConfirmDialog(props: {
+  onProcess: (result: boolean) => void;
+  title: ReactNode | string;
+  content: ReactNode | string;
+}) {
+  const { onProcess, title, content } = props;
+
+  const onClickHandle = (result: boolean) => {
+    onProcess(result);
+  };
+
+  return (
+    <Fragment>
+      <DialogTitle>
+        <Grid container alignItems="center">
+          <Grid item flexGrow={1}>
+            <Typography variant="h1" fontSize={17} children={title} />
+          </Grid>
+          <Grid item>
+            <IconButton onClick={() => onClickHandle(false)}>
+              <CloseIcon />
+            </IconButton>
+          </Grid>
+        </Grid>
+      </DialogTitle>
+      <DialogContent sx={{ backgroundColor: "white" }}>
+        <Grid
+          container
+          p={2}
+          mt={1}
+          sx={{ borderRadius: 1, backgroundColor: "white" }}
+        >
+          <Grid item xs={12}>
+            <Typography children={content} />
+          </Grid>
+        </Grid>
+      </DialogContent>
+      <DialogActions sx={{ boxShadow: "none" }}>
+        <PrimaryButton
+          height={30}
+          fontWeight="normal"
+          color="black"
+          children="Close"
+          variant="outlined"
+          onClick={() => onClickHandle(false)}
+        />
+        <PrimaryButton
+          height={30}
+          fontWeight="normal"
+          color="white"
+          children="Confirm"
+          onClick={() => onClickHandle(true)}
+        />
+        ,
+      </DialogActions>
+    </Fragment>
+  );
+}
+
 export default function DialogProvider(props: { children: ReactNode }) {
-  const [dialogs, setDialogs] = useState<DialogParams[]>([
-    {
-      children: <LoadingDialog />,
-      open: false,
-      key: "loading-dialog",
-    },
-  ]);
+  const [dialogs, setDialogs] = useState<DialogParams[]>([]);
 
   /// Create dialog
-  const createDialog = (children: ReactNode) => {
-    const dialog = { ...{ children }, open: true };
+  const openDialog = (children: ReactNode, width?: Breakpoint) => {
+    const dialog = { ...{ children }, open: true, width: width };
     setDialogs((dialogs) => [...dialogs, dialog]);
   };
 
@@ -86,38 +165,47 @@ export default function DialogProvider(props: { children: ReactNode }) {
       const latestDialog = dialogs.pop();
       if (!latestDialog) return dialogs;
       if (latestDialog.onClose) latestDialog.onClose();
-      return [...dialogs].concat({ ...latestDialog, open: false });
+      return [...dialogs];
     });
   };
 
   /// Open loading dialog
-  const openLoadingDialog = async (
-    onBuild?: () => Promise<any>
-  ): Promise<any> => {
-    onChangedLoading();
+  const openLoading = async (onBuild?: () => Promise<any>): Promise<any> => {
+    openDialog(<LoadingDialog />);
     const result = await onBuild?.();
-    onChangedLoading(false);
+    closeDialog();
     return result;
   };
 
-  /// Close loading
-  const onChangedLoading = (value?: boolean) => {
-    const index = dialogs.findIndex((e) => e.key === "loading-dialog");
-    if (index === -1) return;
-    const values = [...dialogs];
-    values[index].open = value ?? true;
-    setDialogs(values);
+  /// Open loading dialog
+  const openConfirm = async (
+    title: ReactNode | string,
+    content: ReactNode | string
+  ): Promise<boolean> => {
+    return await new Promise((resolve) => {
+      openDialog(
+        <ConfirmDialog
+          onProcess={(result: boolean) => {
+            closeDialog();
+            resolve(result);
+          }}
+          content={content}
+          title={title}
+        />
+      );
+    });
   };
 
   /// Context values
-  const contextValue = useRef([
-    createDialog,
-    openLoadingDialog,
+  const contextValue: ProviderContext = {
+    openDialog,
     closeDialog,
-  ] as const);
+    openLoading,
+    openConfirm,
+  };
 
   return (
-    <DialogContext.Provider value={contextValue.current}>
+    <DialogContext.Provider value={contextValue}>
       {props.children}
 
       {/* Dialogs */}

@@ -79,9 +79,9 @@ function MenuTextLink(props: LinkProps) {
           onClose={onCloseMenuHandle}
           // MenuListProps={{ onMouseLeave: onCloseMenuHandle }}
         >
-          {children?.map((e) => (
+          {children?.map((e, index) => (
             <MenuItem
-              key={e.title}
+              key={index}
               sx={{ minWidth: 150 }}
               onClick={() => {
                 onCloseMenuHandle();

@@ -150,7 +150,6 @@ const theme = createTheme({
 
         /// Data Grid Theme
         MuiDataGrid: {
-
             styleOverrides: {
                 root: {
                     backgroundColor: "white",
@@ -161,6 +160,38 @@ const theme = createTheme({
                 },
 
             },
+        },
+
+        /// Dialog Content theme
+        MuiDialogContent: {
+            styleOverrides: {
+                root: {
+                    padding: 10,
+                    backgroundColor: Colors.pageBackground
+                }
+            }
+        },
+
+        /// Dialog Title theme
+        MuiDialogTitle: {
+            styleOverrides: {
+                root: {
+                    padding: 0,
+                    paddingLeft: 10,
+                    paddingRight: 1,
+                    backgroundColor: "white"
+                }
+            }
+        },
+
+        /// Dialog Actions theme
+        MuiDialogActions: {
+            styleOverrides: {
+                root: {
+                    boxShadow: "1px 1px 5px 1px #000023",
+                    backgroundColor: "white"
+                }
+            }
         }
 
     }

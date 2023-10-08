@@ -12,6 +12,7 @@ interface Props {
     groups: { rows: CompanyGroup[], count: number };
     group?: CompanyGroup | null;
     groupInfo?: CompanyGroupInfo | null;
+    editRegion: CompanyRegion | null;
 }
 
 /// Initial values
@@ -22,6 +23,7 @@ const initialState: Props = {
     groups: { rows: [], count: 0 },
     group: null,
     groupInfo: null,
+    editRegion: null,
 }
 
 /// Company region slice
@@ -39,12 +41,15 @@ const companyRegion = createSlice({
         setSelectedRegion: (state, { payload }) => {
             state.region = payload;
         },
+        setEditRegion: (state, { payload }) => {
+            state.editRegion = payload;
+        },
         setWeather: (state, { payload }) => {
             state.weather = payload;
         },
         setGroups: (state, { payload }) => {
             state.groups = payload;
-            if (state.groups.rows.length != 0) {
+            if (state.groups.rows && state.groups.rows?.length != 0) {
                 state.group = state.groups.rows[0];
             }
         },
@@ -53,7 +58,7 @@ const companyRegion = createSlice({
         },
         setGroupInfo: (state, { payload }) => {
             state.groupInfo = payload;
-        }
+        },
     }
 });
 
@@ -65,4 +70,5 @@ export const {
     setGroups,
     setSelectedGroup,
     setGroupInfo,
+    setEditRegion,
 } = companyRegion.actions;
