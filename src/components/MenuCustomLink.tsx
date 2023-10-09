@@ -1,4 +1,11 @@
-import { Grid, ListItemText, Menu, MenuItem, Typography } from "@mui/material";
+import {
+  Grid,
+  ListItemIcon,
+  ListItemText,
+  Menu,
+  MenuItem,
+  Typography,
+} from "@mui/material";
 import { ReactNode, useState } from "react";
 import { Link } from "react-router-dom";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
@@ -13,15 +20,17 @@ interface LinkChildren {
 
 /// Menu text link
 interface LinkProps {
-  title: string;
+  title: string | ReactNode;
   to?: string;
   color?: string;
   hover?: boolean;
   children?: LinkChildren[];
+  withIcon?: boolean;
 }
 
-function MenuTextLink(props: LinkProps) {
-  const { title, to, children, color } = props;
+function MenuCustomLink(props: LinkProps) {
+  let { title, to, children, color, withIcon } = props;
+  withIcon ??= true;
 
   /// Menu item target
   const [target, setTarget] = useState<HTMLElement | null>(null);
@@ -44,7 +53,7 @@ function MenuTextLink(props: LinkProps) {
     <>
       <div onClick={onOpenMenuHandle}>
         <Link className="link-router" to={to ?? "#"}>
-          <Grid container>
+          <Grid container alignItems="center">
             <Grid item>
               <Typography
                 className="link-router-typografy"
@@ -58,11 +67,11 @@ function MenuTextLink(props: LinkProps) {
                 variant="body1"
               />
             </Grid>
-            {Boolean(children) && (
-              <Grid item>
+            {Boolean(children && withIcon) && (
+              <Grid item alignContent="end" display="flex">
                 <KeyboardArrowDownIcon
                   className="menu-icon"
-                  sx={{ color: color }}
+                  sx={{ color: color, width: 20, height: 20 }}
                 />
               </Grid>
             )}
@@ -88,6 +97,7 @@ function MenuTextLink(props: LinkProps) {
                 e.onClick?.();
               }}
             >
+              {e.prefix && <ListItemIcon children={e.prefix} />}
               <ListItemText children={e.title} />
               <Typography
                 variant="body2"
@@ -102,4 +112,4 @@ function MenuTextLink(props: LinkProps) {
   );
 }
 
-export default MenuTextLink;
+export default MenuCustomLink;

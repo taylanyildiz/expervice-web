@@ -5,6 +5,8 @@ import { store } from "@Store/index";
 import { setGroupInfo, setGroups, setRegions, setSelectedGroup, setSelectedRegion, setWeather } from "@Store/company_region_store";
 import RegionProcess from "@Features/summary/base/entities/region_process";
 import SnackCustomBar from "@Utils/snack_custom_bar";
+import Unit from "@Models/units/unit";
+import { setGroupUnits } from "@Store/unit_store";
 
 class CompanyRegionRepository extends BaseRepository {
     constructor() {
@@ -192,6 +194,18 @@ class CompanyRegionRepository extends BaseRepository {
             count: --count,
         }));
         return true;
+    }
+
+    /**
+     * Get Group Units
+     */
+    public async getGroupUnits(id: number): Promise<Unit[] | null> {
+        const path = CompanyRegionConst.groupUnits(id);
+        const response = await this.get(path);
+        if (!response.success) return null;
+        const data = response.data['data']['units'];
+        store.dispatch(setGroupUnits(data));
+        return null;
     }
 
 }

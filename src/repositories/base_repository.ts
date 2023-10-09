@@ -1,7 +1,11 @@
 import logger from "@Log/logger";
 import { setAccessToken } from "@Store/account_store";
 import { store } from "@Store/index";
-import { Axios, AxiosResponse, InternalAxiosRequestConfig } from "axios";
+import { Axios, AxiosRequestConfig, AxiosResponse, InternalAxiosRequestConfig } from "axios";
+
+interface SuccessParams {
+    success: boolean;
+}
 
 abstract class BaseRepository extends Axios {
 
@@ -64,7 +68,7 @@ abstract class BaseRepository extends Axios {
     }
 
     /// On reponse listen
-    private async onResponse(value: AxiosResponse): Promise<AxiosResponse<any>> {
+    private async onResponse(value: AxiosResponse): Promise<AxiosResponse<any> & { success: boolean }> {
         logger.info(
             "\n******************************\n" +
             "RESPONSE INFO \n" +
@@ -102,7 +106,66 @@ abstract class BaseRepository extends Axios {
         }
 
 
-        return value;
+        const successCodes = [200, 201];
+        const success = successCodes.includes(value.status);
+        return Object.assign({}, value, { success });
+    }
+
+
+    /**
+     * Get Request
+     * @param url 
+     * @param config 
+     * @returns 
+     */
+    public async get<T = any, R = AxiosResponse<T, any>, D = any>(url: string, config?: AxiosRequestConfig<D> | undefined): Promise<R & SuccessParams> {
+        return await this.request({
+            url,
+            ...config
+        });
+    }
+
+    /**
+     * Post Request
+     * @param url 
+     * @param data 
+     * @param config 
+     * @returns 
+     */
+    public async post<T = any, R = AxiosResponse<T, any>, D = any>(url: string, data?: D | undefined, config?: AxiosRequestConfig<D> | undefined): Promise<R & SuccessParams> {
+        return await this.request({
+            url,
+            data: data,
+            ...config,
+        });
+    }
+
+    /**
+     * Update Request
+     * @param url 
+     * @param data 
+     * @param config 
+     * @returns 
+     */
+    public async put<T = any, R = AxiosResponse<T, any>, D = any>(url: string, data?: D | undefined, config?: AxiosRequestConfig<D> | undefined): Promise<R & SuccessParams> {
+        return await this.request({
+            url,
+            data: data,
+            ...config
+        });
+    }
+
+    /**
+     * Delete Request
+     * @param url 
+     * @param config 
+     * @returns 
+     */
+    public async delete<T = any, R = AxiosResponse<T, any>, D = any>(url: string, config?: AxiosRequestConfig<D> | undefined): Promise<R & SuccessParams> {
+        return await this.request({
+            url,
+            ...config
+        });
     }
 }
 

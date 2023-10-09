@@ -1,5 +1,4 @@
-import Colors from "@Themes/colors";
-import { Grid, Typography } from "@mui/material";
+import EmptyGrid from "@Components/EmptyGrid";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
 
 function JobsTable() {
@@ -45,7 +44,7 @@ function JobsTable() {
       field: "region",
       align: "center",
       headerName: "Region Name",
-      flex: 1,
+      minWidth: 150,
     },
   ];
 
@@ -62,31 +61,15 @@ function JobsTable() {
         slots={{
           noRowsOverlay: EmptyGrid,
         }}
-        sx={
-          {
-            // "& .MuiDataGrid-columnHeader, .MuiDataGrid-cell": {
-            //   borderRight: `1px solid #CBCBCB`,
-            // },
-          }
-        }
+        sx={{
+          // "& .MuiDataGrid-columnHeader, .MuiDataGrid-cell": {
+          //   borderRight: `1px solid #CBCBCB`,
+          // },
+          border: "none",
+        }}
       />
     </div>
   );
 }
-
-const EmptyGrid = () => (
-  <Grid
-    container
-    justifyContent="center"
-    alignItems="center"
-    height="100%"
-    flexGrow={1}
-    sx={{ backgroundColor: "whtie" }}
-  >
-    <Grid item>
-      <Typography children="Empty" />
-    </Grid>
-  </Grid>
-);
 
 export default JobsTable;

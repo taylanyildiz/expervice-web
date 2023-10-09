@@ -1,16 +1,14 @@
-.jobs-layout {
+.units-layout {
   display: flex;
-  flex-direction: column;
-  overflow: hidden;
   flex: 1;
+  flex-direction: column;
   background-color: white;
 }
 
-.jobs-grid {
-  height: 0;
-  width: 100%;
+.units-grid {
   margin-top: 10px;
-  overflow: hidden;
+  width: 100%;
   flex-grow: 1;
+  height: 0px;
   background-color: transparent;
 }

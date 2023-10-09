@@ -145,7 +145,7 @@ const theme = createTheme({
                     color: "black",
                     fontSize: 14,
                     overflow: "clip",
-                    textOverflow: "ellipsis"
+                    textOverflow: "ellipsis",
                 },
             }
         },
@@ -154,12 +154,22 @@ const theme = createTheme({
         MuiDataGrid: {
             styleOverrides: {
                 root: {
+                    borderRadius: 0,
                     backgroundColor: "white",
                     color: "black",
                 },
                 columnHeader: {
-                    backgroundColor: "#F2F4F9",
+
                 },
+                columnHeaderTitleContainer: {
+                    justifyContent: "center",
+                },
+                columnHeaders: {
+                    width: "100%",
+                    paddingLeft: 10,
+                    paddingRight: 10,
+                    backgroundColor: "#F2F4F9"
+                }
 
             },
         },

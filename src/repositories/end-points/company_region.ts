@@ -1,10 +1,11 @@
 const CompanyRegion = {
     regions: "/companies/regions",
-    region: (regionId: number) => `/${regionId}`,
-    weather: (regionId: number) => `${regionId}/weather`,
-    groups: (regionId: number) => `${regionId}/groups`,
+    region: (id: number) => `/${id}`,
+    weather: (id: number) => `${id}/weather`,
+    groups: (id: number) => `${id}/groups`,
     groupInfo: "groups/info",
-    group: (groupId: number) => `/groups/${groupId}`,
+    group: (id: number) => `/groups/${id}`,
+    groupUnits: (id: number) => `/groups/${id}/units`,
 }
 
 export default CompanyRegion;

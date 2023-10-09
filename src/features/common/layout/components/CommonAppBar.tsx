@@ -1,5 +1,5 @@
 import Images from "@Assets/images";
-import { MenuTextLink, ScalableButton } from "@Components/index";
+import { MenuCustomLink, ScalableButton } from "@Components/index";
 import ERouter from "@Routes/router_enum";
 import Colors from "@Themes/colors";
 import { AppBar, Grid, Toolbar } from "@mui/material";
@@ -42,7 +42,7 @@ function CommonAppBar() {
                   <Grid
                     item
                     children={
-                      <MenuTextLink title="Contact" to={ERouter.Contact} />
+                      <MenuCustomLink title="Contact" to={ERouter.Contact} />
                     }
                   />
                   <Grid
@@ -118,24 +118,24 @@ function AppBarLinks() {
     <Grid container columnSpacing={5} mb={1}>
       <Grid
         item
-        children={<MenuTextLink title="Product" to={ERouter.Product} />}
+        children={<MenuCustomLink title="Product" to={ERouter.Product} />}
       />
       <Grid
         item
-        children={<MenuTextLink title="Pricing" to={ERouter.Pricing} />}
+        children={<MenuCustomLink title="Pricing" to={ERouter.Pricing} />}
       />
       <Grid
         item
-        children={<MenuTextLink title="Resources" to={ERouter.Resources} />}
+        children={<MenuCustomLink title="Resources" to={ERouter.Resources} />}
       />
       <Grid
         item
-        children={<MenuTextLink title="Support" to={ERouter.Support} />}
+        children={<MenuCustomLink title="Support" to={ERouter.Support} />}
       />
       <Grid
         item
         children={
-          <MenuTextLink
+          <MenuCustomLink
             title="Languages"
             children={languages.map((e) => ({
               title: e.native,

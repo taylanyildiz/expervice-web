@@ -8,6 +8,7 @@ import account from './account_store';
 import region from './region_store';
 import summary from './summary_store';
 import compay_region from './company_region_store';
+import unit from './unit_store';
 
 /// Root Reducer
 const rootReducer = combineReducers({
@@ -18,6 +19,7 @@ const rootReducer = combineReducers({
     region,
     summary,
     compay_region,
+    unit,
 });
 
 /// Persist Configuration

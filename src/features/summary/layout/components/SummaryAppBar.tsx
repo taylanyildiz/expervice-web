@@ -3,8 +3,17 @@ import { AppBar, Avatar, Grid, IconButton, Tooltip } from "@mui/material";
 import GroupsOutlinedIcon from "@mui/icons-material/GroupsOutlined";
 import NotificationsNoneOutlinedIcon from "@mui/icons-material/NotificationsNoneOutlined";
 import AddOutlinedIcon from "@mui/icons-material/AddOutlined";
-import MenuTextLink from "@Components/MenuTextLink";
-import ERouter from "@Routes/router_enum";
+import MenuCustomLink from "@Components/MenuCustomLink";
+import ElevatorIcon from "@mui/icons-material/Elevator";
+import EscalatorIcon from "@mui/icons-material/Escalator";
+import FeedIcon from "@mui/icons-material/Feed";
+import ContactsIcon from "@mui/icons-material/Contacts";
+import WorkIcon from "@mui/icons-material/Work";
+import SettingsIcon from "@mui/icons-material/Settings";
+import ReportIcon from "@mui/icons-material/Report";
+import DevicesIcon from "@mui/icons-material/Devices";
+import LogoutIcon from "@mui/icons-material/Logout";
+import AccountBoxIcon from "@mui/icons-material/AccountBox";
 
 function SummaryAppBar() {
   return (
@@ -17,19 +26,22 @@ function SummaryAppBar() {
         <Grid item sx={{ flexGrow: 1 }}>
           <Grid container columnSpacing={5}>
             <Grid item>
-              <MenuTextLink
+              <MenuCustomLink
                 color="white"
                 title="Jobs"
                 children={[
                   {
-                    title: "All",
+                    prefix: <WorkIcon />,
+                    title: "All Jobs",
                     onClick: () => {},
                   },
                   {
+                    prefix: <SettingsIcon />,
                     title: "Maintenaces",
                     onClick: () => {},
                   },
                   {
+                    prefix: <ReportIcon />,
                     title: "Faults",
                     onClick: () => {},
                   },
@@ -37,21 +49,60 @@ function SummaryAppBar() {
               />
             </Grid>
             <Grid item>
-              <MenuTextLink color="white" to={ERouter.Forms} title="Forms" />
+              <MenuCustomLink
+                color="white"
+                title="Forms"
+                children={[
+                  {
+                    prefix: <FeedIcon />,
+                    title: "All Forms",
+                    onClick: () => {},
+                  },
+                  {
+                    prefix: <ContactsIcon />,
+                    title: "Customer Forms",
+                    onClick: () => {},
+                  },
+                ]}
+              />
             </Grid>
             <Grid item>
-              <MenuTextLink color="white" to={ERouter.Units} title="Units" />
+              <MenuCustomLink
+                color="white"
+                title="Units"
+                children={[
+                  {
+                    prefix: <DevicesIcon />,
+                    title: "All Units",
+                    onClick: () => {},
+                  },
+                  {
+                    prefix: <ElevatorIcon />,
+                    title: "Elevators",
+                    onClick: () => {},
+                  },
+                  {
+                    prefix: <EscalatorIcon />,
+                    title: "Escalators",
+                    onClick: () => {},
+                  },
+                ]}
+              />
             </Grid>
           </Grid>
         </Grid>
         <Grid item>
           <Grid container alignItems="center">
             <Grid item>
-              <Tooltip title="Add">
-                <IconButton size="small">
-                  <AddOutlinedIcon sx={{ color: "white" }} />
-                </IconButton>
-              </Tooltip>
+              <MenuCustomLink
+                title={
+                  <Tooltip title="Add">
+                    <IconButton size="small">
+                      <AddOutlinedIcon sx={{ color: "white" }} />
+                    </IconButton>
+                  </Tooltip>
+                }
+              />
             </Grid>
             <Grid item>
               <Tooltip title="Notifications">
@@ -61,21 +112,59 @@ function SummaryAppBar() {
               </Tooltip>
             </Grid>
             <Grid item>
-              <Tooltip title="Users">
-                <IconButton size="small">
-                  <GroupsOutlinedIcon sx={{ color: "white" }} />
-                </IconButton>
-              </Tooltip>
+              <MenuCustomLink
+                color="white"
+                title={
+                  <Tooltip title="Users">
+                    <IconButton size="small">
+                      <GroupsOutlinedIcon sx={{ color: "white" }} />
+                    </IconButton>
+                  </Tooltip>
+                }
+                children={[
+                  {
+                    title: "Internal Users",
+                  },
+                  {
+                    title: "Customer Users",
+                  },
+                  {
+                    title: "Technician Users",
+                  },
+                ]}
+              />
             </Grid>
             <Grid item>
-              <Tooltip title="Profile">
-                <IconButton size="small">
-                  <Avatar
-                    children="T"
-                    sx={{ width: 30, height: 30, fontSize: 12, color: "white" }}
-                  />
-                </IconButton>
-              </Tooltip>
+              <MenuCustomLink
+                withIcon={false}
+                title={
+                  <Tooltip title="Profile">
+                    <IconButton size="small">
+                      <Avatar
+                        children="TY"
+                        sx={{
+                          width: 30,
+                          height: 30,
+                          fontSize: 12,
+                          color: "white",
+                        }}
+                      />
+                    </IconButton>
+                  </Tooltip>
+                }
+                children={[
+                  {
+                    prefix: <AccountBoxIcon />,
+                    title: "Profile",
+                    onClick: () => {},
+                  },
+                  {
+                    prefix: <LogoutIcon />,
+                    title: "Logout",
+                    onClick: () => {},
+                  },
+                ]}
+              />
             </Grid>
           </Grid>
         </Grid>
