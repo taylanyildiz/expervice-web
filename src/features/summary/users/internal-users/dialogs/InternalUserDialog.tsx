@@ -38,10 +38,7 @@ function InternalUserDialog() {
   /// Get permission resources
   const getPermissions = async () => {
     openLoading(async () => {
-      await Promise.all([
-        conantRepo.getPermissionResources(),
-        conantRepo.getRolePermissions(),
-      ]);
+      await Promise.all([conantRepo.getPermissionResources()]);
     });
   };
 
