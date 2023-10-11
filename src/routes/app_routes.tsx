@@ -11,6 +11,7 @@ import FormsPage from "@Features/summary/forms";
 import JobsPage from "@Features/summary/jobs/indes";
 import SummaryLayout from "@Features/summary/layout";
 import UnitsPage from "@Features/summary/units";
+import InternalUsersPage from "@Features/summary/users/internal-users";
 import { RouteObject, createBrowserRouter } from "react-router-dom";
 
 /// Router Options
@@ -76,6 +77,10 @@ const routes: RouteObject[] = [
       {
         path: "jobs",
         element: <JobsPage />,
+      },
+      {
+        path: "internal-users",
+        element: <InternalUsersPage />,
       },
     ],
   },

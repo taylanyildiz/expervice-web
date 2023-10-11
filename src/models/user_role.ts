@@ -1,8 +1,9 @@
-import { TransitionsOptions } from "@mui/material";
+import { TranslationOption } from ".";
+import UserRoleType from "./user_role_type";
 
 interface Translations {
-    role?: TransitionsOptions;
-    description?: TransitionsOptions;
+    role?: TranslationOption;
+    description?: TranslationOption;
 }
 
 interface UserRole {
@@ -11,6 +12,7 @@ interface UserRole {
     role?: string;
     description?: string;
     translations?: Translations;
+    role_type?: UserRoleType;
     created_at?: string;
     updated_at?: string;
     deleted_at?: string;

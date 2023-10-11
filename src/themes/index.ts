@@ -1,5 +1,6 @@
 
 import type { } from '@mui/x-data-grid/themeAugmentation';
+import type { } from '@mui/lab/themeAugmentation';
 import { createTheme } from "@mui/material";
 import Colors from "./colors";
 
@@ -162,7 +163,7 @@ const theme = createTheme({
 
                 },
                 columnHeaderTitleContainer: {
-                    justifyContent: "center",
+                    // justifyContent: "center",
                 },
                 columnHeaders: {
                     width: "100%",
@@ -204,8 +205,65 @@ const theme = createTheme({
                     backgroundColor: "white"
                 }
             }
-        }
+        },
 
+        MuiTab: {
+            defaultProps: {
+                sx: {
+                    fontSize: 14,
+                    color: "black",
+                    fontWeight: "normal"
+                }
+            },
+            styleOverrides: {
+                root: {
+                    textTransform: "capitalize",
+                    '&.Mui-selected': {
+                        fontSize: 14,
+                        color: "blue",
+                    }
+                },
+            }
+        },
+
+        MuiTabs: {
+            styleOverrides: {
+                indicator: {
+                    display: "none"
+                },
+                root: {
+                    "& .Mui-selected": {
+                        borderRadius: "5px 5px 0 0",
+                        backgroundColor: "white",
+                        transition: "0s",
+                    },
+                }
+            }
+        },
+
+        MuiTabPanel: {
+            defaultProps: {
+                sx: {
+                    p: "15px",
+                    m: 0,
+                }
+            },
+            styleOverrides: {
+                root: {
+                    backgroundColor: "white"
+                }
+            }
+        },
+
+        MuiCheckbox: {},
+
+        MuiFormControlLabel: {
+            styleOverrides: {
+                label: {
+                    fontSize: 13,
+                }
+            }
+        }
     }
 });
 

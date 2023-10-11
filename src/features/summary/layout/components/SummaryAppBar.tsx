@@ -14,8 +14,22 @@ import ReportIcon from "@mui/icons-material/Report";
 import DevicesIcon from "@mui/icons-material/Devices";
 import LogoutIcon from "@mui/icons-material/Logout";
 import AccountBoxIcon from "@mui/icons-material/AccountBox";
+import GroupOutlinedIcon from "@mui/icons-material/GroupOutlined";
+import EngineeringOutlinedIcon from "@mui/icons-material/EngineeringOutlined";
+import ERouter from "@Routes/router_enum";
+import { useNavigate } from "react-router-dom";
+import { clearAll } from "@Store/index";
 
 function SummaryAppBar() {
+  /// Navigate
+  const navigate = useNavigate();
+
+  /// Logout handle
+  const onLogoutHandle = () => {
+    clearAll();
+    navigate(ERouter.Base);
+  };
+
   return (
     <AppBar
       className="summary-app-bar"
@@ -74,7 +88,7 @@ function SummaryAppBar() {
                   {
                     prefix: <DevicesIcon />,
                     title: "All Units",
-                    onClick: () => {},
+                    to: ERouter.Units,
                   },
                   {
                     prefix: <ElevatorIcon />,
@@ -123,12 +137,16 @@ function SummaryAppBar() {
                 }
                 children={[
                   {
+                    to: ERouter.InternalUsers,
+                    prefix: <GroupOutlinedIcon />,
                     title: "Internal Users",
                   },
                   {
+                    prefix: <ContactsIcon />,
                     title: "Customer Users",
                   },
                   {
+                    prefix: <EngineeringOutlinedIcon />,
                     title: "Technician Users",
                   },
                 ]}
@@ -161,7 +179,7 @@ function SummaryAppBar() {
                   {
                     prefix: <LogoutIcon />,
                     title: "Logout",
-                    onClick: () => {},
+                    onClick: onLogoutHandle,
                   },
                 ]}
               />

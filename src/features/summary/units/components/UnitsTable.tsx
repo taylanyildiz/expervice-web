@@ -85,12 +85,8 @@ function UnitsTable() {
         columns={columns}
         rowCount={0}
         rows={[]}
-        slots={{
-          noRowsOverlay: EmptyGrid,
-        }}
-        sx={{
-          border: "none",
-        }}
+        slots={{ noRowsOverlay: EmptyGrid }}
+        sx={{ border: "none" }}
       />
     </div>
   );

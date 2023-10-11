@@ -13,6 +13,7 @@ import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 /// Menu link item
 interface LinkChildren {
   title?: string;
+  to?: string;
   prefix?: ReactNode;
   suffix?: ReactNode;
   onClick?: () => void;
@@ -88,24 +89,32 @@ function MenuCustomLink(props: LinkProps) {
           onClose={onCloseMenuHandle}
           // MenuListProps={{ onMouseLeave: onCloseMenuHandle }}
         >
-          {children?.map((e, index) => (
-            <MenuItem
-              key={index}
-              sx={{ minWidth: 150 }}
-              onClick={() => {
-                onCloseMenuHandle();
-                e.onClick?.();
-              }}
-            >
-              {e.prefix && <ListItemIcon children={e.prefix} />}
-              <ListItemText children={e.title} />
-              <Typography
-                variant="body2"
-                color="text.secondary"
-                children={e.suffix}
-              />
-            </MenuItem>
-          ))}
+          {children?.map((e, index) => {
+            const comp = (
+              <MenuItem
+                key={index}
+                sx={{ minWidth: 150 }}
+                onClick={() => {
+                  onCloseMenuHandle();
+                  e.onClick?.();
+                }}
+              >
+                {e.prefix && <ListItemIcon children={e.prefix} />}
+                <ListItemText children={e.title} />
+                <Typography
+                  variant="body2"
+                  color="text.secondary"
+                  children={e.suffix}
+                />
+              </MenuItem>
+            );
+            if (e.to) {
+              return (
+                <Link className="link-router" to={e.to!} children={comp} />
+              );
+            }
+            return comp;
+          })}
         </Menu>
       )}
     </>

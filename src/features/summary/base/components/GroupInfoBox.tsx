@@ -25,6 +25,8 @@ function InfoBox(props: InfoProps) {
               fontSize={15}
               color="grey"
               children={title}
+              overflow="clip"
+              textOverflow="ellipsis"
             />
           </Grid>
         </Grid>
@@ -59,7 +61,13 @@ function GroupInfoBox() {
     <Box p={4} sx={{ backgroundColor: "white", borderRadius: 1 }}>
       <Grid container rowSpacing={1}>
         <Grid item xs={12}>
-          <Typography variant="h1" fontSize={18} children={group?.name} />
+          <Typography
+            variant="h1"
+            fontSize={18}
+            children={group?.name}
+            overflow="clip"
+            textOverflow="ellipsis"
+          />
         </Grid>
         <Grid item xs={12} children={<Divider />} />
         <Grid item xs={12} mt={2}>

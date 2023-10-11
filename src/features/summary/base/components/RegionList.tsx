@@ -43,7 +43,7 @@ function RegionsList(props: { scale: string }) {
         visibility={Boolean(region)}
         children={<SelectedRegionBox />}
       />
-      <Box sx={{ overflowY: "scroll", height: "110%" }}>
+      <Box sx={{ overflowY: "scroll", height: "100%" }}>
         <List>
           {rows?.map((item: CompanyRegion, index) => (
             <ListItemButton

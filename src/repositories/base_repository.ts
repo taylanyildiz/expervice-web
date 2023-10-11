@@ -120,6 +120,7 @@ abstract class BaseRepository extends Axios {
      */
     public async get<T = any, R = AxiosResponse<T, any>, D = any>(url: string, config?: AxiosRequestConfig<D> | undefined): Promise<R & SuccessParams> {
         return await this.request({
+            method: "get",
             url,
             ...config
         });
@@ -134,6 +135,7 @@ abstract class BaseRepository extends Axios {
      */
     public async post<T = any, R = AxiosResponse<T, any>, D = any>(url: string, data?: D | undefined, config?: AxiosRequestConfig<D> | undefined): Promise<R & SuccessParams> {
         return await this.request({
+            method: "post",
             url,
             data: data,
             ...config,
@@ -149,6 +151,7 @@ abstract class BaseRepository extends Axios {
      */
     public async put<T = any, R = AxiosResponse<T, any>, D = any>(url: string, data?: D | undefined, config?: AxiosRequestConfig<D> | undefined): Promise<R & SuccessParams> {
         return await this.request({
+            method: "put",
             url,
             data: data,
             ...config
@@ -163,6 +166,7 @@ abstract class BaseRepository extends Axios {
      */
     public async delete<T = any, R = AxiosResponse<T, any>, D = any>(url: string, config?: AxiosRequestConfig<D> | undefined): Promise<R & SuccessParams> {
         return await this.request({
+            method: "delete",
             url,
             ...config
         });

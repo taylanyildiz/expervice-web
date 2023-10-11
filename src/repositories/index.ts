@@ -5,3 +5,4 @@ export { default as AuthRepository } from "./auth_repository";
 export { default as RegionRepository } from "./region_repository";
 export { default as CompanyRegionRepository } from "./company_region_repository";
 export { default as UnitRepository } from "./unit_repository";
+export { default as InternalUserRepository } from "./internal_user_repositoy";

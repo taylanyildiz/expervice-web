@@ -152,3 +152,12 @@ body {
   border-radius: 100%;
   padding: 3px;
 }
+
+.grid-selectable {
+  color: blue;
+}
+
+.grid-selectable:hover {
+  cursor: pointer;
+  text-decoration-line: underline;
+}

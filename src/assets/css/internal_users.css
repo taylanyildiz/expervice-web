@@ -1,0 +1,19 @@
+.internal-users-layout {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  background-color: white;
+}
+
+.internal-users-grid {
+  margin-top: 10px;
+  width: 100%;
+  flex-grow: 1;
+  height: 0px;
+  background-color: transparent;
+}
+
+.permission-header {
+  padding: 8px 10px 8px;
+  background-color: #eef2ff;
+}

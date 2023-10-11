@@ -99,3 +99,32 @@ export function caption(value?: string) {
   }
   return `${splitValue[0][0].toUpperCase()}${splitValue[1][0].toUpperCase()}`;
 }
+
+/**
+ * Expand list
+ * @param list
+ * @param key
+ * @returns
+ */
+export function expand(list: any[], key: string): any[] {
+  const combinedItems = list.reduce((accumulator, currentObject) => {
+    // currentObject'un "items" özelliği varsa ve bir dizi ise, accumulator dizisine ekleyin
+    if (Array.isArray(currentObject[key])) {
+      accumulator = accumulator.concat(currentObject[key]);
+    }
+    return accumulator;
+  }, []);
+  return combinedItems;
+}
+
+/* 
+
+// Tüm içerideki listeleri tek bir dizi içinde toplamak için reduce kullanabilirsiniz
+const combinedItems = objectList.reduce((accumulator, currentObject) => {
+  // currentObject'un "items" özelliği varsa ve bir dizi ise, accumulator dizisine ekleyin
+  if (Array.isArray(currentObject.items)) {
+    accumulator = accumulator.concat(currentObject.items);
+  }
+  return accumulator;
+}, []);
+*/

@@ -71,8 +71,7 @@ class CompanyRegionRepository extends BaseRepository {
     public async createRegion(region: RegionProcess): Promise<CompanyRegion | null> {
         const regions = store.getState().compay_region.regions;
         let count = regions.count;
-        const path = "/";
-        const response = await this.post(path, region);
+        const response = await this.post("/", region);
         const success = response.status === 200;
         SnackCustomBar.status(response);
         if (!success) return null;
@@ -156,7 +155,7 @@ class CompanyRegionRepository extends BaseRepository {
     public async updateGroup(name: string): Promise<CompanyGroup | null> {
         const { groups, editGroup, group } = store.getState().compay_region;
         const path = CompanyRegionConst.group(editGroup!.id!);
-        const response = await this.post(path, { name });
+        const response = await this.put(path, { name });
         const success = response.status === 200;
         SnackCustomBar.status(response);
         if (!success) return null;
