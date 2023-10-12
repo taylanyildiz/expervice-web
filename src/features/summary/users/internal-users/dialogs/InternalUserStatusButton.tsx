@@ -7,12 +7,17 @@ import { useEffect, useState } from "react";
 import { dateToFormat } from "@Utils/functions";
 import VisibilityComp from "@Components/VisibilityComp";
 
-function InternalUserStatusButton(props: {
+interface InternalUserStatusButtonProps {
   formik: FormikProps<InternalUser>;
-}) {
+}
+
+function InternalUserStatusButton(props: InternalUserStatusButtonProps) {
   const { formik } = props;
+
   const status = formik.values.status;
-  const visibilityButton = status !== EInternalStatus.Active;
+  const values = formik.values;
+  const userStatus = values.is_active;
+  const visibilityButton = status !== EInternalStatus.Active && userStatus;
   const isInvited = Boolean(formik.values.invited_at);
 
   useEffect(() => {
@@ -39,7 +44,11 @@ function InternalUserStatusButton(props: {
         title = `Invite Accepted ${dateToFormat(formik.values.accepted_at)}`;
         break;
       case EInternalStatus.Inactive:
-        title = "User has not been invited";
+        title = "User Inactive";
+        if (userStatus) {
+          title = "User has not been invited";
+          button = "Invite User";
+        }
         break;
       case EInternalStatus.NotInvited:
         title = "User has not been invited";
@@ -71,6 +80,9 @@ function InternalUserStatusButton(props: {
         break;
       case EInternalStatus.ReSend:
         formik.setFieldValue("status", oldStatus);
+        break;
+      case EInternalStatus.Inactive:
+        formik.setFieldValue("status", EInternalStatus.ReSend);
         break;
       case EInternalStatus.Invited:
         if (isInvited)

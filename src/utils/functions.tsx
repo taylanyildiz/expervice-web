@@ -127,7 +127,6 @@ export function equalInterface<T extends Record<string, any>>(
   o1: T | null,
   o2: T | null
 ): boolean {
-  let result = true;
   if (!o1 || !o2) return false;
   const keys1 = Object.keys(o1);
   const keys2 = Object.keys(o2);
@@ -137,13 +136,31 @@ export function equalInterface<T extends Record<string, any>>(
 
   /// Value of key check
   for (const key of keys1) {
-    if (typeof o1[key] === "object" && o1[key]) {
-      result = equalInterface(o1[key], o2[key]);
-    }
-    if (o1[key] !== o2[key]) {
-      return false;
+    const isObject = typeof o1[key] === "object" && o1[key];
+    const isArray = Array.isArray(o1[key]);
+    if (isObject) {
+      if (isArray) {
+        if (!equalArray(o1[key], o2[key])) return false;
+      } else {
+        if (!equalInterface(o1[key], o2[key])) return false;
+      }
+    } else {
+      if (o1[key] !== o2[key]) {
+        return false;
+      }
     }
   }
 
-  return result;
+  return true;
+}
+
+/**
+ * Check equal array
+ * @param a1
+ * @param a2
+ * @returns
+ */
+export function equalArray(a1?: any[], a2?: any[]) {
+  /* WARNING: arrays must not contain {objects} or behavior may be undefined */
+  return JSON.stringify(a1) == JSON.stringify(a2);
 }

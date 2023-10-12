@@ -5,7 +5,7 @@ import { DialogCustomActions, DialogCustomTitle } from "@Components/dialogs";
 import { EActionType } from "@Components/dialogs/DialogCustomActions";
 import { AppDispatch, RootState } from "@Store/index";
 import { setInternalUser } from "@Store/internal_user_store";
-import { Box, DialogContent } from "@mui/material";
+import { Avatar, Box, DialogContent, Grid, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import OverViewContent from "./InternalUserOverviewContent";
@@ -24,7 +24,8 @@ import InternalUserProcess from "../entities/internal_user_process";
 import InternalUserRepository from "@Repo/internal_user_repositoy";
 import InternalUserUpdate from "../entities/internal_user_update";
 import InternalUserPermission from "../entities/internal_user_permission";
-import { equalInterface } from "@Utils/functions";
+import { caption, dateToFormat, equalInterface } from "@Utils/functions";
+import { useInternalOld } from "../helper/internal_user_helper";
 
 function InternalUserDialog() {
   /// Internal user store
@@ -32,18 +33,13 @@ function InternalUserDialog() {
     (state: RootState) => state.internalUser
   );
   const isEdit = Boolean(internalUser);
+  const creatorDisplayName = `${internalUser?.creator?.first_name} ${internalUser?.creator?.last_name}`;
 
-  /// Old update internaluser-permission
-  const [oldUser, setOldUser] = useState<InternalUserUpdate | null>(null);
-  const [oldPermission, setOldPermission] =
-    useState<InternalUserPermission | null>(null);
-  const [oldStatus, setOldStatus] = useState<boolean | null>(null);
-  const [oldInvite, setOldInvite] = useState<number>(
-    EInternalStatus.NotInvited
-  );
+  /// Internal olds hook
+  const { oldInfo, oldInvite, oldStatus, oldPermissions } = useInternalOld();
 
   /// Dialog hook
-  const { openLoading, closeDialog } = useDialog();
+  const { openLoading, closeDialog, openConfirm } = useDialog();
 
   /// Constant repository
   const conantRepo = new ConstantRepository();
@@ -61,8 +57,18 @@ function InternalUserDialog() {
   const [actionType, setActionType] = useState<number | null>(null);
 
   /// Click action
-  const onChangedAction = (type: EActionType) => {
+  const onChangedAction = async (type: EActionType) => {
     if (type === EActionType.Delete) {
+      const confirm = await openConfirm(
+        "Delete Internal User",
+        "Are you sure to delete user?"
+      );
+      if (confirm) {
+        const result = await openLoading(async () => {
+          return await internalRepo.deleteInternalUser();
+        });
+        if (result) closeDialog();
+      }
       return;
     }
     setActionType(type);
@@ -76,28 +82,6 @@ function InternalUserDialog() {
     });
   };
 
-  /// Set olds
-  const setOld = () => {
-    if (!internalUser) return;
-    const updated: InternalUserUpdate = {
-      id: internalUser.id!,
-      email: internalUser.email,
-      first_name: internalUser.first_name,
-      last_name: internalUser.last_name,
-      phone: internalUser.phone,
-    };
-    const permissions: InternalUserPermission = {
-      id: internalUser.id!,
-      role_id: internalUser.role_id!,
-      access_regions: internalUser.regions?.map((e) => e.id!),
-      permissions: internalUser.permission_sub_resources?.map((e) => e.id!),
-    };
-    setOldInvite(internalUser.status!);
-    setOldStatus(internalUser.is_active);
-    setOldPermission(permissions);
-    setOldUser(updated);
-  };
-
   /// Initialize component
   useEffect(() => {
     getPermissions();
@@ -106,7 +90,6 @@ function InternalUserDialog() {
   /// Initialize values
   useEffect(() => {
     if (!internalUser) return;
-    setOld();
     for (let [k, v] of Object.entries(internalUser)) {
       formik.setFieldValue(k, v);
     }
@@ -120,13 +103,15 @@ function InternalUserDialog() {
   }, []);
 
   /// Process internal user
-  const process = async (value: InternalUserProcess): Promise<boolean> => {
+  const process = async (
+    value: InternalUserProcess
+  ): Promise<InternalUser | null> => {
     const result = await openLoading(async () => {
       let result: InternalUser | null = null;
 
       // Create internal user
       if (!isEdit) result = await internalRepo.createInternalUser(value);
-      /// Update internal user
+      // Update internal user
       else {
         const updateInternal: InternalUserUpdate = {
           id: value.id!,
@@ -137,7 +122,7 @@ function InternalUserDialog() {
         };
 
         /// Update user
-        const canUpdate = equalInterface(updateInternal, oldUser);
+        const canUpdate = equalInterface(updateInternal, oldInfo);
         if (!canUpdate) {
           result = await internalRepo.updateInternalUser(updateInternal);
         }
@@ -149,13 +134,15 @@ function InternalUserDialog() {
           access_regions: value.access_regions,
           permissions: value.permissions,
         };
-        const canPermission = equalInterface(oldPermission, permissions);
+        const canPermission = equalInterface(oldPermissions, permissions);
         if (!canPermission) {
           result = await internalRepo.updateInternalPermissions(permissions);
         }
 
+        /// Update status
         const status = value.is_active;
-        if (status !== oldStatus) {
+        const caStatus = status !== oldStatus;
+        if (caStatus) {
           result = await internalRepo.updateInternalStatus(status, value.id!);
         }
 
@@ -166,14 +153,18 @@ function InternalUserDialog() {
   };
 
   /// Send invite
-  const sendInvite = async (
-    status: EInternalStatus
-  ): Promise<InternalUser | null> => {
-    const canSend =
-      (isEdit && oldInvite !== status) ||
-      (!isEdit && status == EInternalStatus.Invited);
-    if (!canSend) return null;
-    return await internalRepo.sendInvite();
+  const sendInvite = async (): Promise<void> => {
+    if (!internalUser) return;
+    await openLoading(async () => {
+      const status = formik.values.status;
+      const invited = [
+        EInternalStatus.Invited,
+        EInternalStatus.ReSend,
+      ].includes(status!);
+      const canSend = oldInvite !== status && invited;
+      if (!canSend) return;
+      await internalRepo.sendInvite();
+    });
   };
 
   /// Submit handle
@@ -191,9 +182,9 @@ function InternalUserDialog() {
     };
     let result = await process(values);
     if (!result) return;
-    result = await openLoading(async () => {
-      return await sendInvite(value.status!);
-    });
+    dispatch(setInternalUser(result));
+    await sendInvite();
+
     switch (actionType) {
       case EActionType.SaveClose:
         closeDialog();
@@ -241,7 +232,7 @@ function InternalUserDialog() {
       <DialogCustomActions
         actions={[
           <VisibilityComp
-            visibility={false}
+            visibility={isEdit}
             children={
               <PrimaryButton
                 height={30}
@@ -275,6 +266,41 @@ function InternalUserDialog() {
             onClick={() => onChangedAction(EActionType.SaveClose)}
           />,
         ]}
+        leading={{
+          visibility: isEdit,
+          children: (
+            <Grid container alignItems="center" columnSpacing={1}>
+              <Grid item>
+                <Typography
+                  variant="body1"
+                  fontSize={12}
+                  color="grey"
+                  children={`Created by ${creatorDisplayName}`}
+                />
+              </Grid>
+              <Grid item>
+                <Avatar
+                  sx={{
+                    height: 30,
+                    width: 30,
+                    fontSize: 12,
+                    color: "white",
+                    backgroundColor: "grey",
+                  }}
+                  children={caption(creatorDisplayName)}
+                />
+              </Grid>
+              <Grid item>
+                <Typography
+                  variant="body1"
+                  fontSize={12}
+                  color="grey"
+                  children={dateToFormat(internalUser?.created_at)}
+                />
+              </Grid>
+            </Grid>
+          ),
+        }}
       />
     </>
   );

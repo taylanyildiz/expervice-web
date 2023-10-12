@@ -7,6 +7,7 @@ import SnackCustomBar from "@Utils/snack_custom_bar";
 import InternalUserUpdate from "@Features/summary/users/internal-users/entities/internal_user_update";
 import InternalUserPermission from "@Features/summary/users/internal-users/entities/internal_user_permission";
 import InternalUser from "@Models/internal-user/internal_user";
+import InternalUserFilter from "@Models/internal-user/internal_user_filter";
 
 class InternalUserRepository extends BaseRepository {
     constructor() {
@@ -16,9 +17,9 @@ class InternalUserRepository extends BaseRepository {
     /**
      * Get Company internal user
      */
-    public async getInternalUsers(): Promise<boolean> {
+    public async getInternalUsers(filter?: InternalUserFilter): Promise<boolean> {
         store.dispatch(setInternalUserLayz(true));
-        const response = await this.get("/");
+        const response = await this.get("/", { params: filter });
         store.dispatch(setInternalUserLayz(false));
         if (response.success) {
             const data = response.data['data']['internal_users'];
@@ -110,16 +111,17 @@ class InternalUserRepository extends BaseRepository {
     /**
      * Send Invite Internal user
      */
-    public async sendInvite(): Promise<InternalUser> {
+    public async sendInvite(): Promise<InternalUser | null> {
         const { internalUsers, internalUser: user } = store.getState().internalUser;
+        if (!user) return null;
         let count = internalUsers.count;
         const path = InternalUserConst.invite(user!.id!)
         const response = await this.post(path);
         SnackCustomBar.status(response, { display: !response.success });
         if (!response.success) return user!;
+        const data = response.data['data']['internal_user'];
         const values = [...internalUsers.rows];
         const index = values.findIndex(e => e.id === user!.id);
-        const data = response.data['data']['internal_user'];
         if (index !== -1) {
             values[index] = data;
             store.dispatch(setInternalUsers({ rows: values, count }));
@@ -132,18 +134,17 @@ class InternalUserRepository extends BaseRepository {
 
 
     /**
-     * Update Internal user
+     * Delete Internal user
      */
-    public async deleteInternalUser(id: number): Promise<boolean> {
+    public async deleteInternalUser(): Promise<boolean> {
         const { internalUsers, internalUser } = store.getState().internalUser;
+        if (!internalUser) return false;
         let count = internalUsers.count;
-        const response = await this.post(`/${id!}`);
+        const response = await this.delete(`/${internalUser.id!}`);
         SnackCustomBar.status(response);
         if (!response.success) return false;
-        if (id === internalUser?.id) {
-            store.dispatch(setInternalUser(null));
-        }
-        const values = [...internalUsers.rows].filter(e => e.id !== id);
+        store.dispatch(setInternalUser(null));
+        const values = [...internalUsers.rows].filter(e => e.id !== internalUser.id);
         store.dispatch(setInternalUsers({ rows: values, count: --count }))
         return true;
     }

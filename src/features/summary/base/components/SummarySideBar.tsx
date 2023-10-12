@@ -64,7 +64,6 @@ function SummarySideBar() {
 
   return (
     <Box className="summary-side-bar" sx={{ width: width }}>
-      <ArrowButton />
       <Grid
         container
         px={3}
@@ -112,6 +111,7 @@ function SummarySideBar() {
         </Grid>
       </Grid>
       <RegionsList scale={`calc(${scale})`} />
+      <ArrowButton />
     </Box>
   );
 }

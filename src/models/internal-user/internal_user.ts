@@ -22,7 +22,7 @@ interface InternalUser {
     creator?: Creator;
     regions?: CompanyRegion[] | null;
     permission_sub_resources?: PermissionSubResource[] | null;
-    creted_at?: string;
+    created_at?: string;
     updated_at?: string;
 }
 

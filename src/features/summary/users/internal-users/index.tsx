@@ -7,21 +7,8 @@ import { useDialog } from "@Utils/hooks/dialog_hook";
 import InternalUserDialog from "./dialogs/InternalUserDialog";
 
 function InternalUsersPage() {
-  /// Internal user repository
-  const internalUserRepo = new InternalUserRepository();
-
   /// Dialog hook
   const { openDialog } = useDialog();
-
-  /// Get internal users
-  const getInternalUsers = async () => {
-    await internalUserRepo.getInternalUsers();
-  };
-
-  /// Initialize component
-  useEffect(() => {
-    getInternalUsers();
-  }, []);
 
   /// Add handle
   const onAddHandle = () => {

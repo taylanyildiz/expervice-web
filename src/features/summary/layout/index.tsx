@@ -1,6 +1,5 @@
 import { useSelector } from "react-redux";
 import "../../../assets/css/summary.css";
-import SummarySideBar from "../base/components/SummarySideBar";
 import { Navigate, Outlet } from "react-router-dom";
 import SummaryAppBar from "./components/SummaryAppBar";
 import ERouter from "@Routes/router_enum";
