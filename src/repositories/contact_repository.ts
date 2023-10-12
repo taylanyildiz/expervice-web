@@ -9,12 +9,11 @@ class ContactRespository extends BaseRepository {
      * Send Contact Form
      * @param props 
      */
-    public async sendContactForm(props: ContactForm) {
+    public async sendContactForm(props: ContactForm): Promise<boolean> {
         const path = Contact.contacts;
         const response = await this.post(path, props);
-        const statusCode = response.status;
-        if (statusCode !== 200) return;
         SnackCustomBar.status(response);
+        return response.success;
     }
 }
 

@@ -28,7 +28,7 @@ const GroupItems = styled("ul")({
 
 interface SelectUserRoleProps {
   roleType?: number;
-  value?: UserRole | null;
+  value?: UserRole | number | null;
   label?: string;
   fullWidth?: boolean;
   helperText?: ReactNode;
@@ -56,8 +56,13 @@ function SelectUserRole(props: SelectUserRoleProps) {
 
   /// Initialize value
   useEffect(() => {
+    if (typeof value === "number") {
+      const role = options.find((e) => e.id === value);
+      setOption(role);
+      return;
+    }
     setOption(value);
-  }, [value]);
+  }, [value, options]);
 
   /// Set options
   useEffect(() => {
@@ -67,7 +72,8 @@ function SelectUserRole(props: SelectUserRoleProps) {
 
   return (
     <Autocomplete
-      value={option}
+      disableClearable
+      value={option!}
       fullWidth={fullWidth}
       options={options}
       renderInput={(props) => {

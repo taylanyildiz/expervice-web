@@ -7,10 +7,14 @@ import ContactRespository from "@Repo/contact_repository";
 import ContactForm from "@Models/contact_form";
 import { useFormik } from "formik";
 import { contactFormSchema } from "../validations/contact_form_validation";
+import { useDialog } from "@Utils/hooks/dialog_hook";
 
 function ContactFormBox() {
   /// Contact repository
   const contactRepo = new ContactRespository();
+
+  /// Dialog hook
+  const { openLoading } = useDialog();
 
   /// Send Form
   const onSendFormHandle = async () => {
@@ -19,7 +23,10 @@ function ContactFormBox() {
 
   /// Submit handle
   const onSubmitHandle = async (value: ContactForm) => {
-    await contactRepo.sendContactForm(value);
+    const result = await openLoading(async () => {
+      return await contactRepo.sendContactForm(value);
+    });
+    if (!result) return;
     formik.resetForm();
   };
 

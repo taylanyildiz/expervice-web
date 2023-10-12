@@ -128,6 +128,7 @@ function SummaryAppBar() {
             <Grid item>
               <MenuCustomLink
                 color="white"
+                withIcon={false}
                 title={
                   <Tooltip title="Users">
                     <IconButton size="small">

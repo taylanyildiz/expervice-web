@@ -12,7 +12,7 @@ interface InternalUser {
     email?: string;
     phone?: string;
     status?: number;
-    is_active?: number;
+    is_active: boolean;
     disabled_at?: string;
     enabled_at?: string;
     invited_at?: string;
@@ -20,8 +20,8 @@ interface InternalUser {
     internal_user?: User;
     role?: UserRole;
     creator?: Creator;
-    regions?: CompanyRegion[];
-    permission_sub_resources?: PermissionSubResource[];
+    regions?: CompanyRegion[] | null;
+    permission_sub_resources?: PermissionSubResource[] | null;
     creted_at?: string;
     updated_at?: string;
 }

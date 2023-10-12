@@ -1,12 +1,13 @@
-import { RootState } from "@Store/index";
 import { Box, Grid, Typography } from "@mui/material";
-import { useSelector } from "react-redux";
 import InternalUserPermission from "./InternalUserPermission";
 import SelectUserRole from "@Components/SelectUserRole";
+import { FormikProps } from "formik";
+import InternalUser from "@Models/internal-user/internal_user";
 
-function InternalUserPermissionsContent() {
-  /// Constant store
-  const {} = useSelector((state: RootState) => state.constant);
+function InternalUserPermissionsContent(props: {
+  formik: FormikProps<InternalUser>;
+}) {
+  const { formik } = props;
 
   return (
     <Grid container>
@@ -16,10 +17,17 @@ function InternalUserPermissionsContent() {
           fullWidth
           label="Role"
           roleType={3}
-          onChanged={(value) => {}}
+          value={formik.values.role_id}
+          helperText={formik.touched.role_id && formik.errors.role_id}
+          error={Boolean(formik.touched.role_id && formik.errors.role_id)}
+          onChanged={(value) => {
+            formik.setFieldValue("role_id", value?.id);
+          }}
         />
       </Grid>
-      <Grid item xs={12} children={<InternalUserPermission roleId={5} />} />
+      <Grid item xs={12}>
+        <InternalUserPermission formik={formik} />
+      </Grid>
     </Grid>
   );
 }

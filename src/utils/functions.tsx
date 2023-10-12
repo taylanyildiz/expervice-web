@@ -117,14 +117,33 @@ export function expand(list: any[], key: string): any[] {
   return combinedItems;
 }
 
-/* 
+/**
+ * Check equal object
+ * @param o1
+ * @param o2
+ * @returns
+ */
+export function equalInterface<T extends Record<string, any>>(
+  o1: T | null,
+  o2: T | null
+): boolean {
+  let result = true;
+  if (!o1 || !o2) return false;
+  const keys1 = Object.keys(o1);
+  const keys2 = Object.keys(o2);
 
-// Tüm içerideki listeleri tek bir dizi içinde toplamak için reduce kullanabilirsiniz
-const combinedItems = objectList.reduce((accumulator, currentObject) => {
-  // currentObject'un "items" özelliği varsa ve bir dizi ise, accumulator dizisine ekleyin
-  if (Array.isArray(currentObject.items)) {
-    accumulator = accumulator.concat(currentObject.items);
+  /// Keys length check
+  if (keys1.length !== keys2.length) return false;
+
+  /// Value of key check
+  for (const key of keys1) {
+    if (typeof o1[key] === "object" && o1[key]) {
+      result = equalInterface(o1[key], o2[key]);
+    }
+    if (o1[key] !== o2[key]) {
+      return false;
+    }
   }
-  return accumulator;
-}, []);
-*/
+
+  return result;
+}

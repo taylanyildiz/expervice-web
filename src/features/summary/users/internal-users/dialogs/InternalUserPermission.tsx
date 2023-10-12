@@ -1,31 +1,53 @@
 import SelectRegions from "@Components/SelectRegions";
 import VisibilityComp from "@Components/VisibilityComp";
-import PermissionResource from "@Models/permission/permission_resource";
+import InternalUser from "@Models/internal-user/internal_user";
 import PermissionSubResource from "@Models/permission/permission_sub_resource";
 import RolePermission from "@Models/permission/role_permission";
 import { RootState } from "@Store/index";
-import { expand } from "@Utils/functions";
 import { Checkbox, FormControlLabel, Grid, Typography } from "@mui/material";
+import { FormikProps } from "formik";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 
 interface InternalUserPermissionProps {
-  roleId: number;
+  formik: FormikProps<InternalUser>;
 }
 
 function InternalUserPermission(props: InternalUserPermissionProps) {
-  const { roleId } = props;
+  const { formik } = props;
+  const [roleId, setRoleId] = useState(formik.values.role_id);
 
   /// Constat store
   const { permissions } = useSelector((state: RootState) => state.constant);
 
   /// Selecteds sub-resource [sub-permission]
-  const [selecteds, setSelecteds] = useState<number[]>([]);
+  const selecteds = formik.values.permission_sub_resources ?? [];
+
+  useEffect(() => {
+    if (roleId === formik.values.role_id) return;
+    setRoleId(formik.values.role_id);
+    formik.setFieldValue("permission_sub_resources", null);
+    formik.setFieldValue("regions", null);
+  }, [formik.values.role_id]);
+
+  useEffect(() => {
+    const selecteds = formik.values.permission_sub_resources;
+    if (!selecteds) return;
+    if (selecteds.some((e) => e.id === 6)) {
+      formik.setFieldValue("regions", null);
+    }
+  }, [formik.values.permission_sub_resources]);
+
+  /// Is selected
+  const isSelected = (sub: PermissionSubResource) =>
+    selecteds.map((e) => e.id!).includes(sub.id!);
 
   /// Check default check
-  const defaultCheckHandle = (rolePermissions: RolePermission[]): boolean => {
+  const defaultCheckHandle = (sub: PermissionSubResource): boolean => {
+    const rolePermissions = sub.role_permissions!;
     const index = rolePermissions.findIndex((e) => e.role_id === roleId);
-    return index !== -1 && (rolePermissions[index].is_selected ?? false);
+    const value = index !== -1 && (rolePermissions[index].is_selected ?? false);
+    return value || isSelected(sub);
   };
 
   /// Check disabled
@@ -38,26 +60,21 @@ function InternalUserPermission(props: InternalUserPermissionProps) {
   const checkRegionVisibility = (sub: PermissionSubResource): boolean => {
     const id = sub.id!;
     const roles = sub.role_permissions;
-    return (
-      !selecteds.includes(id) && sub.id === 6 && !disabledCheckHandle(roles!)
-    );
+    return !isSelected(sub) && id === 6 && !disabledCheckHandle(roles!);
   };
-
-  /// Initialize component
-  useEffect(() => {}, []);
 
   /// Changed sub permission
   const onChangedSubHandle = (
     checked: boolean,
     subPermission: PermissionSubResource
   ) => {
-    let values = [...selecteds];
+    let values = [...(formik.values.permission_sub_resources ?? [])];
     if (checked) {
-      values.push(subPermission.id!);
+      values.push(subPermission);
     } else {
-      values = [...selecteds.filter((e) => e !== subPermission.id)];
+      values = [...values.filter((e) => e.id !== subPermission.id)];
     }
-    setSelecteds(values);
+    formik.setFieldValue("permission_sub_resources", values);
   };
 
   return (
@@ -79,16 +96,13 @@ function InternalUserPermission(props: InternalUserPermissionProps) {
                   const rolePermissions = e.role_permissions;
                   return (
                     <>
-                      <Grid key={index} item xs={12}>
+                      <Grid key={e.id} item xs={12}>
                         <FormControlLabel
-                          value={selecteds.includes(e.id!)}
+                          checked={defaultCheckHandle(e)}
                           onChange={(_, v) => onChangedSubHandle(v, e)}
                           control={
                             <Checkbox
                               disabled={disabledCheckHandle(rolePermissions!)}
-                              defaultChecked={defaultCheckHandle(
-                                rolePermissions!
-                              )}
                               size="small"
                             />
                           }
@@ -98,9 +112,19 @@ function InternalUserPermission(props: InternalUserPermissionProps) {
                       <VisibilityComp visibility={checkRegionVisibility(e)}>
                         <Grid item xs={12}>
                           <SelectRegions
+                            key={index}
                             fullWidth
                             label="Regions"
-                            onChanged={(values) => {}}
+                            values={formik.values.regions}
+                            helperText={
+                              formik.touched.regions && formik.errors.regions
+                            }
+                            error={Boolean(
+                              formik.touched.regions && formik.errors.regions
+                            )}
+                            onChanged={(values) => {
+                              formik.setFieldValue("regions", values);
+                            }}
                           />
                         </Grid>
                       </VisibilityComp>
