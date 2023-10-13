@@ -26,6 +26,7 @@ import InternalUserUpdate from "../entities/internal_user_update";
 import InternalUserPermission from "../entities/internal_user_permission";
 import { caption, dateToFormat, equalInterface } from "@Utils/functions";
 import { useInternalOld } from "../helper/internal_user_helper";
+import InternalUserInfo from "./InternalUserInfo";
 
 function InternalUserDialog() {
   /// Internal user store
@@ -218,6 +219,7 @@ function InternalUserDialog() {
     <>
       <DialogCustomTitle title={title} />
       <DialogContent>
+        <InternalUserInfo />
         <Box mt={1} sx={{ backgroundColor: "transparent" }}>
           <TabBar
             tabs={["Overview", "Permissions", "Security & Login"]}

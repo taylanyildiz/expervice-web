@@ -41,3 +41,7 @@ export function useInternalOld() {
 
   return { oldInfo, oldPermissions, oldInvite, oldStatus };
 }
+
+export function useInternal() {
+  return useSelector((state: RootState) => state.internalUser);
+}

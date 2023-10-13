@@ -16,4 +16,5 @@ export { default as StatusBox } from "./StatusBox";
 export { default as TabBar } from "./TabBar";
 export { default as SelectUserRole } from "./SelectUserRole";
 export { default as SelectRegions } from "./SelectRegions";
+export { default as RichText } from "./RichText";
 export { DialogCustomTitle, DialogCustomActions } from "./dialogs";
