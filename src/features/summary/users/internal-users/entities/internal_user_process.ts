@@ -10,6 +10,7 @@ interface InternalUserProcess {
     is_active: boolean;
     access_regions?: number[];
     permissions?: number[];
+    send_invite: boolean;
 }
 
 export default InternalUserProcess;

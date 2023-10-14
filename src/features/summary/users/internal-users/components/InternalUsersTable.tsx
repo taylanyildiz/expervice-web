@@ -1,15 +1,19 @@
 import EmptyGrid from "@Components/EmptyGrid";
 import { DataGrid, GridPaginationModel } from "@mui/x-data-grid";
 import columns from "../entities/grid_columns";
-import { useSelector } from "react-redux";
-import { RootState } from "@Store/index";
+import { useDispatch, useSelector } from "react-redux";
+import { AppDispatch, RootState } from "@Store/index";
 import InternalUserRepository from "@Repo/internal_user_repositoy";
 import { useEffect, useMemo, useState } from "react";
 import InternalUserFilter from "@Models/internal-user/internal_user_filter";
+import { setFilter } from "@Store/internal_user_store";
 
 function InternalUsersTable() {
   /// Internal user repository
   const internalUserRepo = new InternalUserRepository();
+
+  /// Dispatch
+  const dispatch: AppDispatch = useDispatch<AppDispatch>();
 
   /// Pagination mode
   const [paginationMode, setPaginationMode] = useState<GridPaginationModel>({
@@ -34,11 +38,12 @@ function InternalUsersTable() {
 
   /// Get internal users
   const getInternalUsers = async () => {
-    await internalUserRepo.getInternalUsers(filter);
+    await internalUserRepo.getInternalUsers();
   };
 
   /// Initialize component
   useEffect(() => {
+    dispatch(setFilter(filter));
     getInternalUsers();
   }, [filter]);
 

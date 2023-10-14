@@ -180,7 +180,7 @@ const theme = createTheme({
         MuiDialogContent: {
             styleOverrides: {
                 root: {
-                    padding: 0,
+                    padding: 10,
                     backgroundColor: Colors.pageBackground
                 }
             }

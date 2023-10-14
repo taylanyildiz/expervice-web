@@ -2,10 +2,9 @@
 import BaseRepository from "./base_repository";
 import SnackCustomBar from "@Utils/snack_custom_bar";
 import { store } from "@Store/index";
-import { setCustomers, setLayzLoading } from "@Store/customer_user_store";
+import { setCustomer, setCustomers, setLayzLoading } from "@Store/customer_user_store";
 import Customer from "./end-points/customer_user";
 import CustomerUser from "@Models/customer/customer";
-import CustomerFilter from "@Models/customer/customer_filter";
 import CustomerUpdate from "@Features/summary/users/customer-users/entities/customer_update";
 
 class CustomerUserRepository extends BaseRepository {
@@ -16,7 +15,8 @@ class CustomerUserRepository extends BaseRepository {
     /**
      * Get company customer user
      */
-    public async getCustomers(filter?: CustomerFilter): Promise<boolean> {
+    public async getCustomers(): Promise<boolean> {
+        const { filter } = store.getState().customer;
         store.dispatch(setLayzLoading(true));
         const response = await this.get("/", { params: filter });
         if (response.success) {
@@ -53,8 +53,9 @@ class CustomerUserRepository extends BaseRepository {
     /**
      * Update customer group
      */
-    public async updateCustomerGroup(id: number, group: number): Promise<CustomerUser | null> {
-        const path = Customer.group(id);
+    public async updateCustomerGroup(group: number): Promise<CustomerUser | null> {
+        const { customer } = store.getState().customer;
+        const path = Customer.group(customer!.id!);
         const response = await this.put(path, { group_id: group });
         SnackCustomBar.status(response);
         if (!response.success) return null;
@@ -65,8 +66,9 @@ class CustomerUserRepository extends BaseRepository {
     /**
      * Update customer status
      */
-    public async updateCustomeStatus(id: number, status: boolean): Promise<CustomerUser | null> {
-        const path = Customer.status(id);
+    public async updateCustomeStatus(status: boolean): Promise<CustomerUser | null> {
+        const { customer } = store.getState().customer;
+        const path = Customer.status(customer!.id!);
         const response = await this.put(path, { is_active: status });
         SnackCustomBar.status(response);
         if (!response.success) return null;
@@ -77,8 +79,9 @@ class CustomerUserRepository extends BaseRepository {
     /**
      * Send customer invite
      */
-    public async sendInvite(id: number): Promise<CustomerUser | null> {
-        const path = Customer.invite(id);
+    public async sendInvite(): Promise<CustomerUser | null> {
+        const { customer } = store.getState().customer;
+        const path = Customer.invite(customer!.id!);
         const response = await this.post(path);
         SnackCustomBar.status(response);
         if (!response.success) return null;
@@ -89,11 +92,13 @@ class CustomerUserRepository extends BaseRepository {
     /**
      * Delete Customer user
      */
-    public async deleteCustomer(id: number): Promise<boolean> {
-        const path = Customer.invite(id);
+    public async deleteCustomer(): Promise<boolean> {
+        const { customer } = store.getState().customer;
+        const path = Customer.invite(customer!.id!);
         const response = await this.post(path);
         SnackCustomBar.status(response);
         if (response.success) {
+            store.dispatch(setCustomer(null));
         }
         return response.success;
     }

@@ -116,7 +116,7 @@ function ConfirmDialog(props: {
           </Grid>
         </Grid>
       </DialogTitle>
-      <DialogContent sx={{ backgroundColor: "white" }}>
+      <DialogContent sx={{ p: 0 }}>
         <Grid
           container
           p={2}
@@ -191,7 +191,8 @@ export default function DialogProvider(props: { children: ReactNode }) {
           }}
           content={content}
           title={title}
-        />
+        />,
+        "xs"
       );
     });
   };

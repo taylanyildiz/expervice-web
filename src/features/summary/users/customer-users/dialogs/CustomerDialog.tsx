@@ -51,32 +51,27 @@ function CustomerDialog() {
   useEffect(() => {
     return () => {
       dispatch(setCustomer(null));
+      customerRepo.getCustomers();
     };
   }, []);
 
   /// Process
-  const process = async (value: Customer): Promise<Customer | null> => {
+  const process = async (): Promise<Customer | null> => {
     const result = await openLoading(async () => {
       let result: Customer | null = null;
       if (!isEdit) result = await customerRepo.createCustomer(customerProcess!);
       else {
-        if (customerUpdate) {
-          result = await customerRepo.updateCustomer(customerUpdate);
+        if (info) {
+          result = await customerRepo.updateCustomer(info);
         }
-        if (updateGroup) {
-          result = await customerRepo.updateCustomerGroup(
-            value.id!,
-            updateGroup
-          );
+        if (group) {
+          result = await customerRepo.updateCustomerGroup(group);
         }
-        if (updateStatus) {
-          result = await customerRepo.updateCustomeStatus(
-            value.id!,
-            updateStatus
-          );
+        if (activate) {
+          result = await customerRepo.updateCustomeStatus(activate);
         }
-        if (updateInvite) {
-          result = await customerRepo.sendInvite(value.id!);
+        if (status) {
+          result = await customerRepo.sendInvite();
         }
       }
       return result;
@@ -85,8 +80,8 @@ function CustomerDialog() {
   };
 
   /// Submit handle
-  const onSubmitHandle = async (value: Customer) => {
-    const result = await process(value);
+  const onSubmitHandle = async () => {
+    const result = await process();
     if (!result) return;
     switch (actionType) {
       case EActionType.Save:
@@ -114,8 +109,10 @@ function CustomerDialog() {
   const customerProcess = useCustomerCreate(formik);
 
   /// Customer update hook
-  const { customerUpdate, updateGroup, updateStatus, updateInvite, anyUpdate } =
-    useCustomerUpdate(customer, formik);
+  const { info, group, activate, status, anyUpdate } = useCustomerUpdate(
+    customer,
+    formik
+  );
 
   /// Changed action handle
   const onChangedAction = async (type: EActionType) => {
@@ -126,7 +123,7 @@ function CustomerDialog() {
       );
       if (confirm) {
         const result = await openLoading(async () => {
-          return customerRepo.deleteCustomer(customer!.id!);
+          return customerRepo.deleteCustomer();
         });
         if (result) closeDialog();
       }

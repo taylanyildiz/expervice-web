@@ -1,5 +1,18 @@
 import PermissionSubResource from "@Models/permission/permission_sub_resource";
 import { CompanyRegion, Creator, User, UserRole } from "..";
+import { EInternalStatus, EInternalUserRole } from "@Features/summary/users/internal-users/entities/internal_user_enums";
+
+export const defaultInternal = {
+    first_name: "",
+    last_name: "",
+    email: "",
+    phone: "",
+    is_active: true,
+    permission_sub_resources: null,
+    regions: null,
+    status: EInternalStatus.NotInvited,
+    role_id: EInternalUserRole.OfficeManager,
+}
 
 interface InternalUser {
     id?: number;

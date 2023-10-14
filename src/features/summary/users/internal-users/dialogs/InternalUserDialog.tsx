@@ -13,29 +13,26 @@ import InternalUserPermissionsContent from "./InternalUserPermissionsContent";
 import ConstantRepository from "@Repo/constant_repository";
 import { useDialog } from "@Utils/hooks/dialog_hook";
 import { useFormik } from "formik";
-import InternalUser from "@Models/internal-user/internal_user";
-import {
-  EInternalStatus,
-  EInternalUserRole,
-} from "../entities/internal_user_enums";
+import InternalUser, {
+  defaultInternal,
+} from "@Models/internal-user/internal_user";
 import InternalUserSecurityContent from "./InternalUserSecurityContent";
 import { internalUserValidator } from "../validator/internal_user_validator";
-import InternalUserProcess from "../entities/internal_user_process";
 import InternalUserRepository from "@Repo/internal_user_repositoy";
-import InternalUserUpdate from "../entities/internal_user_update";
-import InternalUserPermission from "../entities/internal_user_permission";
-import { caption, dateToFormat, equalInterface } from "@Utils/functions";
-import { useInternal, useInternalOld } from "../helper/internal_user_helper";
+import { caption, dateToFormat } from "@Utils/functions";
+import {
+  useInternal,
+  useInternalCreate,
+  useInternalUpdate,
+} from "../helper/internal_user_helper";
 import InternalUserInfo from "./InternalUserInfo";
+import Colors from "@Themes/colors";
 
 function InternalUserDialog() {
   /// Internal user store
   const { internalUser } = useInternal();
   const isEdit = Boolean(internalUser);
   const creatorDisplayName = `${internalUser?.creator?.first_name} ${internalUser?.creator?.last_name}`;
-
-  /// Internal olds hook
-  const { oldInfo, oldInvite, oldStatus, oldPermissions } = useInternalOld();
 
   /// Dialog hook
   const { openLoading, closeDialog, openConfirm } = useDialog();
@@ -98,51 +95,40 @@ function InternalUserDialog() {
   useEffect(() => {
     return () => {
       dispatch(setInternalUser(null));
+      internalRepo.getInternalUsers();
     };
   }, []);
 
   /// Process internal user
-  const process = async (
-    value: InternalUserProcess
-  ): Promise<InternalUser | null> => {
+  const process = async (): Promise<InternalUser | null> => {
     const result = await openLoading(async () => {
       let result: InternalUser | null = null;
 
       // Create internal user
-      if (!isEdit) result = await internalRepo.createInternalUser(value);
+      if (!isEdit) {
+        result = await internalRepo.createInternalUser(internalProcess!);
+      }
+
       // Update internal user
       else {
-        const updateInternal: InternalUserUpdate = {
-          id: value.id!,
-          first_name: value.first_name,
-          last_name: value.last_name,
-          email: value.email,
-          phone: value.phone,
-        };
-
         /// Update user
-        const canUpdate = equalInterface(updateInternal, oldInfo);
-        if (!canUpdate) {
-          result = await internalRepo.updateInternalUser(updateInternal);
+        if (info) {
+          result = await internalRepo.updateInternalUser(info!);
         }
 
         /// Update permission
-        const permissions: InternalUserPermission = {
-          id: value.id!,
-          role_id: value.role_id!,
-          access_regions: value.access_regions,
-          permissions: value.permissions,
-        };
-        const canPermission = equalInterface(oldPermissions, permissions);
-        if (!canPermission) {
-          result = await internalRepo.updateInternalPermissions(permissions);
+        if (permission) {
+          result = await internalRepo.updateInternalPermissions(permission);
         }
 
         /// Update status
-        const status = value.is_active;
-        const caStatus = status !== oldStatus;
-        if (caStatus) {
-          result = await internalRepo.updateInternalStatus(status, value.id!);
+        if (activate) {
+          result = await internalRepo.updateInternalStatus(activate);
+        }
+
+        /// Send invite
+        if (status) {
+          result = await internalRepo.sendInvite();
         }
       }
       return result;
@@ -150,38 +136,11 @@ function InternalUserDialog() {
     return result ?? internalUser;
   };
 
-  /// Send invite
-  const sendInvite = async (user: InternalUser): Promise<void> => {
-    if (!user) return;
-    await openLoading(async () => {
-      const status = formik.values.status;
-      const invited = [
-        EInternalStatus.Invited,
-        EInternalStatus.ReSend,
-      ].includes(status!);
-      const canSend = oldInvite !== status && invited;
-      if (!canSend) return;
-      await internalRepo.sendInvite(user.id!);
-    });
-  };
-
   /// Submit handle
-  const onSubmitHandle = async (value: InternalUser) => {
-    const values: InternalUserProcess = {
-      id: value.id,
-      first_name: value.first_name!,
-      last_name: value.last_name!,
-      email: value.email,
-      phone: value.phone,
-      access_regions: value.regions?.map((e) => e.id!),
-      permissions: value.permission_sub_resources?.map((e) => e.id!),
-      is_active: value.is_active,
-      role_id: value.role_id!,
-    };
-    let result = await process(values);
+  const onSubmitHandle = async () => {
+    let result = await process();
     if (!result) return;
     dispatch(setInternalUser(result));
-    await sendInvite(result);
 
     switch (actionType) {
       case EActionType.SaveClose:
@@ -195,26 +154,34 @@ function InternalUserDialog() {
   };
 
   /// Formik
-  const initialValues: InternalUser = {
-    first_name: "",
-    last_name: "",
-    email: "",
-    phone: "",
-    is_active: true,
-    permission_sub_resources: null,
-    regions: null,
-    status: EInternalStatus.NotInvited,
-    role_id: EInternalUserRole.OfficeManager,
-  };
+  const initialValues: InternalUser = defaultInternal;
   const formik = useFormik({
     initialValues,
     validationSchema: internalUserValidator,
     onSubmit: onSubmitHandle,
   });
 
+  /// Create internal hook
+  const internalProcess = useInternalCreate(formik);
+
+  /// Update internal hook
+  const { info, permission, activate, status, anyUpdate } = useInternalUpdate(
+    internalUser,
+    formik
+  );
+
   return (
     <>
       <DialogCustomTitle title={title} />
+      <VisibilityComp visibility={anyUpdate}>
+        <Box pl={1} m={0} sx={{ backgroundColor: Colors.warning }}>
+          <Typography
+            fontSize={13}
+            color="white"
+            children="Plese click save to save changes"
+          />
+        </Box>
+      </VisibilityComp>
       <DialogContent>
         <InternalUserInfo />
         <Box mt={1} sx={{ backgroundColor: "transparent" }}>

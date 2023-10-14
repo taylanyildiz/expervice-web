@@ -5,6 +5,9 @@ import { useEffect, useMemo, useState } from "react";
 import { useCustomer } from "../helpers/customer_user_helper";
 import CustomerUserRepository from "@Repo/customer_user_repository";
 import CustomerFilter from "@Models/customer/customer_filter";
+import { setFilter } from "@Store/customer_user_store";
+import { AppDispatch } from "@Store/index";
+import { useDispatch } from "react-redux";
 
 function CustomerUsersTable() {
   /// customer store
@@ -15,6 +18,9 @@ function CustomerUsersTable() {
 
   /// Customer repository
   const customerRepo = new CustomerUserRepository();
+
+  /// Dispatch
+  const dispatch: AppDispatch = useDispatch<AppDispatch>();
 
   /// Pagination mode
   const [paginationMode, setPaginationMode] = useState<GridPaginationModel>({
@@ -33,7 +39,8 @@ function CustomerUsersTable() {
 
   /// Initialize component
   useEffect(() => {
-    customerRepo.getCustomers(filter);
+    dispatch(setFilter(filter));
+    customerRepo.getCustomers();
   }, [filter]);
 
   return (

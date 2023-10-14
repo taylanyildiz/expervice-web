@@ -18,48 +18,45 @@ export function useCustomer() {
 }
 
 /**
- * Customer process create
+ * Customer create hook
  */
 export function useCustomerCreate(formik: FormikProps<Customer>) {
-  const [customerProcess, setCustomer] = useState<CustomerProcess | null>(null);
+  const [customer, setCustomer] = useState<CustomerProcess | null>(null);
   useEffect(() => {
-    const customer = { ...formik.values };
-    const process: CustomerProcess = {
-      group_id: customer.group?.id,
-      display_name: customer.display_name,
-      is_active: customer.is_active!,
-      cell_phone: customer.cell_phone,
-      email: customer.email,
-      first_name: customer.first_name,
-      last_name: customer.last_name,
-      phone: customer.phone,
-      country_id: customer.country?.id,
-      state_id: customer.state?.id,
-      city_id: customer.city?.id,
-      street_address: customer.street_address,
-      zip_code: customer.zip_code,
-      send_invite: customer.status === ECustomerStatus.Invited,
+    const values = { ...formik.values };
+    const customer: CustomerProcess = {
+      group_id: values.group?.id,
+      display_name: values.display_name,
+      is_active: values.is_active!,
+      cell_phone: values.cell_phone,
+      email: values.email,
+      first_name: values.first_name,
+      last_name: values.last_name,
+      phone: values.phone,
+      country_id: values.country?.id,
+      state_id: values.state?.id,
+      city_id: values.city?.id,
+      street_address: values.street_address,
+      zip_code: values.zip_code,
+      send_invite: values.status === ECustomerStatus.Invited,
     };
-    setCustomer(process);
+    setCustomer(customer);
   }, [formik.values]);
 
-  return customerProcess;
+  return customer;
 }
 
 /**
- * Update customer hook
- * @param customer
- * @param formik
- * @returns
+ * Customer update hook
  */
 export function useCustomerUpdate(
-  customer: Customer | null,
+  user: Customer | null,
   formik: FormikProps<Customer>
 ) {
-  const [customerUpdate, setCustomer] = useState<CustomerUpdate | null>(null);
-  const [updateGroup, setGroup] = useState<number | null | undefined>(null);
-  const [updateStatus, setStatus] = useState<boolean | null>(null);
-  const [updateInvite, setInvite] = useState<number | null>(null);
+  const [info, setInfo] = useState<CustomerUpdate | null>(null);
+  const [group, setGroup] = useState<number | null | undefined>(null);
+  const [activate, setActivate] = useState<boolean | null>(null);
+  const [status, setStatus] = useState<ECustomerStatus | null>(null);
   const [anyUpdate, setAnyUpdate] = useState<boolean>(false);
 
   useEffect(() => {
@@ -67,10 +64,11 @@ export function useCustomerUpdate(
     setCustomer(null);
     setGroup(null);
     setStatus(null);
-    setInvite(null);
+    setActivate(null);
     setAnyUpdate(false);
-    const newCustomer: CustomerUpdate = {
-      id: customer?.id,
+
+    const newInfo: CustomerUpdate = {
+      id: user?.id,
       display_name: value.display_name,
       first_name: value.first_name,
       last_name: value.last_name,
@@ -83,45 +81,49 @@ export function useCustomerUpdate(
       zip_code: value.zip_code,
       street_address: value.street_address,
     };
-    const oldCustoer: CustomerUpdate = {
-      id: customer?.id,
-      first_name: customer?.first_name,
-      last_name: customer?.last_name,
-      display_name: customer?.display_name,
-      cell_phone: customer?.cell_phone,
-      phone: customer?.phone,
-      email: customer?.email,
-      city_id: customer?.city?.id,
-      state_id: customer?.state?.id,
-      country_id: customer?.country?.id,
-      zip_code: customer?.zip_code,
-      street_address: customer?.street_address,
+    const oldInfo: CustomerUpdate = {
+      id: user?.id,
+      first_name: user?.first_name,
+      last_name: user?.last_name,
+      display_name: user?.display_name,
+      cell_phone: user?.cell_phone,
+      phone: user?.phone,
+      email: user?.email,
+      city_id: user?.city?.id,
+      state_id: user?.state?.id,
+      country_id: user?.country?.id,
+      zip_code: user?.zip_code,
+      street_address: user?.street_address,
     };
-    const availableInfo = !equalInterface(oldCustoer, newCustomer);
+
+    const availableInfo = !equalInterface(newInfo, oldInfo);
     if (availableInfo) {
-      setCustomer(newCustomer);
+      setInfo(newInfo);
     }
-    const availableGroup = value.group?.id !== customer?.group?.id;
+
+    const availableGroup = value.group?.id !== user?.group?.id;
     if (availableGroup) {
       setGroup(value.group?.id);
     }
-    const availableActivate = value.is_active !== customer?.is_active;
+
+    const availableActivate = value.is_active !== user?.is_active;
     if (availableActivate) {
-      setStatus(value.is_active!);
+      setActivate(value.is_active!);
     }
-    const availableStatus = value.status !== customer?.status;
+    const availableStatus = value.status !== user?.status;
     if (availableStatus) {
       const available = [ECustomerStatus.Invited, ECustomerStatus.ReSend];
       if (available.includes(value.status!)) {
-        setInvite(value.status!);
+        setStatus(value.status!);
       }
     }
     const available =
       availableStatus || availableActivate || availableGroup || availableInfo;
-    const anyUpdate = Boolean(customer && available);
+    const anyUpdate = Boolean(user && available);
     setAnyUpdate(anyUpdate);
-  }, [customer, formik.values]);
-  return { customerUpdate, updateGroup, updateStatus, anyUpdate, updateInvite };
+  }, [user, formik.values]);
+
+  return { info, group, status, activate, anyUpdate };
 }
 
 /**

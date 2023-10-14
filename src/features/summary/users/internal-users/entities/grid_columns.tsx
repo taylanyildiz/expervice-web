@@ -1,10 +1,7 @@
 import StatusBox from "@Components/StatusBox";
 import InternalUser from "@Models/internal-user/internal_user";
-import { setInternalUser } from "@Store/internal_user_store";
-import { useDialog } from "@Utils/hooks/dialog_hook";
 import { GridColDef } from "@mui/x-data-grid";
-import { useDispatch } from "react-redux";
-import InternalUserDialog from "../dialogs/InternalUserDialog";
+import { useInternalDialog } from "../helper/internal_user_helper";
 
 /// Grid columns
 const columns: GridColDef<InternalUser>[] = [
@@ -17,16 +14,9 @@ const columns: GridColDef<InternalUser>[] = [
       const row = params.row;
       const firstName = row.first_name;
       const lastName = row.last_name;
-      const dispatch = useDispatch();
-      const { openDialog } = useDialog();
+      const openInternalDialog = useInternalDialog();
       return (
-        <p
-          className="grid-selectable"
-          onClick={() => {
-            dispatch(setInternalUser(row));
-            openDialog(<InternalUserDialog />, "md");
-          }}
-        >
+        <p className="grid-selectable" onClick={() => openInternalDialog(row)}>
           {firstName} {lastName}
         </p>
       );

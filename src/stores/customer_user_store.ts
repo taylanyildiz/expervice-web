@@ -1,16 +1,19 @@
 import Customer from "@Models/customer/customer";
+import CustomerFilter from "@Models/customer/customer_filter";
 import { createSlice } from "@reduxjs/toolkit";
 
 /// Customer props
 interface Props {
-    layzLoading: boolean,
-    customers: { rows: Customer[], count: number },
+    layzLoading: boolean;
+    filter: CustomerFilter | null;
+    customers: { rows: Customer[], count: number };
     customer: Customer | null;
 }
 
 /// Cutomer initial states
 const initialState: Props = {
     layzLoading: true,
+    filter: { limit: 10, offset: 0 },
     customers: { rows: [], count: 0 },
     customer: null,
 }
@@ -28,6 +31,9 @@ const customer = createSlice({
         },
         setCustomer: (state, { payload }) => {
             state.customer = payload;
+        },
+        setFilter: (state, { payload }) => {
+            state.filter = payload;
         }
     }
 });
@@ -38,4 +44,5 @@ export const {
     setLayzLoading,
     setCustomers,
     setCustomer,
+    setFilter,
 } = customer.actions;
