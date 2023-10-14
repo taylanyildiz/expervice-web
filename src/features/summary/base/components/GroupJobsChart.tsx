@@ -6,7 +6,7 @@ import { useSelector } from "react-redux";
 
 function GroupJobsChart() {
   /// Company region store
-  const { groupInfo } = useSelector((state: RootState) => state.compay_region);
+  const { groupInfo } = useSelector((state: RootState) => state.companyRegion);
 
   /// Data set of chart
   const [dataset, setDataset] = useState([{}]);

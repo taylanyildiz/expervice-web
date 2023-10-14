@@ -21,11 +21,11 @@ const columns: GridColDef<InternalUser>[] = [
       const { openDialog } = useDialog();
       return (
         <p
+          className="grid-selectable"
           onClick={() => {
             dispatch(setInternalUser(row));
             openDialog(<InternalUserDialog />, "md");
           }}
-          className="grid-selectable"
         >
           {firstName} {lastName}
         </p>

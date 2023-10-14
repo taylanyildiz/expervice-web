@@ -143,10 +143,12 @@ function SummaryAppBar() {
                     title: "Internal Users",
                   },
                   {
+                    to: ERouter.CustomerUsers,
                     prefix: <ContactsIcon />,
                     title: "Customer Users",
                   },
                   {
+                    to: ERouter.TechnicianUsers,
                     prefix: <EngineeringOutlinedIcon />,
                     title: "Technician Users",
                   },

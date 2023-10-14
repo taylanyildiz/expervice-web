@@ -10,7 +10,7 @@ import GroupDialog from "../dialogs/GroupDialog";
 
 function SelectedGroupBox() {
   /// Company Region stroe
-  const { group } = useSelector((state: RootState) => state.compay_region);
+  const { group } = useSelector((state: RootState) => state.companyRegion);
 
   /// Dispatch
   const dispatch: AppDispatch = useDispatch();

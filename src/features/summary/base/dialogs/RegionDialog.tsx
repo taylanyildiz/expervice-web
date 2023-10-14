@@ -24,7 +24,7 @@ import { caption, dateToFormat } from "@Utils/functions";
 
 function RegionDialog() {
   /// Region store
-  const { editRegion } = useSelector((state: RootState) => state.compay_region);
+  const { editRegion } = useSelector((state: RootState) => state.companyRegion);
   const creatorDisplayName = `${editRegion?.creator?.first_name} ${editRegion?.creator?.last_name}`;
 
   /// Is edit or create dialog

@@ -28,7 +28,7 @@ class CompanyRegionRepository extends BaseRepository {
      * Get region groups
      */
     public async getRegionWeather(): Promise<void> {
-        const region = store.getState().compay_region.region;
+        const region = store.getState().companyRegion.region;
         if (!region) return;
         const path = CompanyRegionConst.weather(region.id!);
         const response = await this.get(path);
@@ -42,7 +42,7 @@ class CompanyRegionRepository extends BaseRepository {
      * Get region groups
      */
     public async getRegionGroups(): Promise<void> {
-        const region = store.getState().compay_region.region;
+        const region = store.getState().companyRegion.region;
         if (!region) return;
         const path = CompanyRegionConst.groups(region.id!);
         const response = await this.get(path);
@@ -56,7 +56,7 @@ class CompanyRegionRepository extends BaseRepository {
      * Get group info
      */
     public async getGroupInfo(): Promise<void> {
-        const group_id = store.getState().compay_region.group?.id;
+        const group_id = store.getState().companyRegion.group?.id;
         const path = CompanyRegionConst.groupInfo;
         const response = await this.get(path, { params: { group_id } });
         const status = response.status;
@@ -69,7 +69,7 @@ class CompanyRegionRepository extends BaseRepository {
      * Create Company region
      */
     public async createRegion(region: RegionProcess): Promise<CompanyRegion | null> {
-        const regions = store.getState().compay_region.regions;
+        const regions = store.getState().companyRegion.regions;
         let count = regions.count;
         const response = await this.post("/", region);
         const success = response.status === 200;
@@ -87,7 +87,7 @@ class CompanyRegionRepository extends BaseRepository {
      * Update Company region
      */
     public async updateRegion(region: RegionProcess): Promise<CompanyRegion | null> {
-        const { regions, region: selected } = store.getState().compay_region;
+        const { regions, region: selected } = store.getState().companyRegion;
         if (!region.id) return null;
         const path = CompanyRegionConst.region(region.id);
         const response = await this.put(path, region);
@@ -114,7 +114,7 @@ class CompanyRegionRepository extends BaseRepository {
      * Delete Company region
      */
     public async deleteRegion(id: number): Promise<boolean> {
-        const regions = store.getState().compay_region.regions;
+        const regions = store.getState().companyRegion.regions;
         let count = regions.count;
         const path = CompanyRegionConst.region(id);
         const response = await this.delete(path);
@@ -133,7 +133,7 @@ class CompanyRegionRepository extends BaseRepository {
      * Create group
      */
     public async createGroup(name: string): Promise<CompanyGroup | null> {
-        const { groups: { count, rows }, region } = store.getState().compay_region;
+        const { groups: { count, rows }, region } = store.getState().companyRegion;
         const path = CompanyRegionConst.groups(region!.id!);
         let total = count;
         const response = await this.post(path, { name });
@@ -153,7 +153,7 @@ class CompanyRegionRepository extends BaseRepository {
      * Update group
      */
     public async updateGroup(name: string): Promise<CompanyGroup | null> {
-        const { groups, editGroup, group } = store.getState().compay_region;
+        const { groups, editGroup, group } = store.getState().companyRegion;
         const path = CompanyRegionConst.group(editGroup!.id!);
         const response = await this.put(path, { name });
         const success = response.status === 200;
@@ -180,7 +180,7 @@ class CompanyRegionRepository extends BaseRepository {
      * Delete Company group
      */
     public async deleteGroup(id: number): Promise<boolean> {
-        const groups = store.getState().compay_region.groups;
+        const groups = store.getState().companyRegion.groups;
         let count = groups.count;
         const path = CompanyRegionConst.group(id);
         const response = await this.delete(path);

@@ -12,7 +12,9 @@ enum ERouter {
   Summary = "/summary",
   Forms = "/forms",
   Units = "/units",
-  InternalUsers = "/internal-users",
+  InternalUsers = "/users/internal-users",
+  CustomerUsers = "/users/customer-users",
+  TechnicianUsers = "/users/technician-users",
 }
 
 export default ERouter;

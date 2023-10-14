@@ -16,7 +16,7 @@ import { object, string } from "yup";
 
 function GroupDialog() {
   /// Company region store
-  const { editGroup } = useSelector((state: RootState) => state.compay_region);
+  const { editGroup } = useSelector((state: RootState) => state.companyRegion);
   const creatorDisplayName = `${editGroup?.creator?.first_name} ${editGroup?.creator?.last_name}`;
 
   /// Is edit dialog depends on [editGroup]

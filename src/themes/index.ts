@@ -158,6 +158,7 @@ const theme = createTheme({
                     borderRadius: 0,
                     backgroundColor: "white",
                     color: "black",
+                    border: "none",
                 },
                 columnHeader: {
 
@@ -179,7 +180,7 @@ const theme = createTheme({
         MuiDialogContent: {
             styleOverrides: {
                 root: {
-                    padding: 10,
+                    padding: 0,
                     backgroundColor: Colors.pageBackground
                 }
             }

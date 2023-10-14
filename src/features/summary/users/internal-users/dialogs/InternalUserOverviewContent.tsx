@@ -17,7 +17,6 @@ function OverViewContent(props: { formik: FormikProps<InternalUser> }) {
               <TextOutlineField
                 fullWidth
                 name="first_name"
-                type="text"
                 label="First Name"
                 value={formik.values.first_name}
                 helperText={
@@ -33,7 +32,6 @@ function OverViewContent(props: { formik: FormikProps<InternalUser> }) {
               <TextOutlineField
                 fullWidth
                 name="last_name"
-                type="text"
                 label="Last Name"
                 value={formik.values.last_name}
                 helperText={formik.touched.last_name && formik.errors.last_name}

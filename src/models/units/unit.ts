@@ -1,5 +1,5 @@
 import { City, CompanyGroup, Country, State } from "..";
-import Customer from "./customer";
+import Customer from "../customer/customer";
 import UnitLabel from "./unit_label";
 import UnitSubType from "./unit_sub_type";
 

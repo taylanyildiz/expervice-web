@@ -10,7 +10,7 @@ import RegionDialog from "../dialogs/RegionDialog";
 
 function SelectedRegionBox() {
   /// Company Region stroe
-  const { region } = useSelector((state: RootState) => state.compay_region);
+  const { region } = useSelector((state: RootState) => state.companyRegion);
 
   /// Dialog hooks
   const { openDialog } = useDialog();

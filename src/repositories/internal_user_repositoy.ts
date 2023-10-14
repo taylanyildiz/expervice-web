@@ -111,24 +111,25 @@ class InternalUserRepository extends BaseRepository {
     /**
      * Send Invite Internal user
      */
-    public async sendInvite(): Promise<InternalUser | null> {
-        const { internalUsers, internalUser: user } = store.getState().internalUser;
-        if (!user) return null;
+    public async sendInvite(id: number): Promise<boolean> {
+        const { internalUsers } = store.getState().internalUser;
+        if (!id) return false;
         let count = internalUsers.count;
-        const path = InternalUserConst.invite(user!.id!)
+        const path = InternalUserConst.invite(id)
         const response = await this.post(path);
         SnackCustomBar.status(response, { display: !response.success });
-        if (!response.success) return user!;
-        const data = response.data['data']['internal_user'];
-        const values = [...internalUsers.rows];
-        const index = values.findIndex(e => e.id === user!.id);
-        if (index !== -1) {
-            values[index] = data;
-            store.dispatch(setInternalUsers({ rows: values, count }));
-            store.dispatch(setInternalUser(data));
-            return data;
+        if (response.success) {
+            const data = response.data['data']['internal_user'];
+            const values = [...internalUsers.rows];
+            const index = values.findIndex(e => e.id === id);
+            if (index !== -1) {
+                values[index] = data;
+                store.dispatch(setInternalUsers({ rows: values, count }));
+                store.dispatch(setInternalUser(data));
+                return data;
+            }
         }
-        return user!;
+        return response.success;
     }
 
 

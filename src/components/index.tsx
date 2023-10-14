@@ -17,4 +17,5 @@ export { default as TabBar } from "./TabBar";
 export { default as SelectUserRole } from "./SelectUserRole";
 export { default as SelectRegions } from "./SelectRegions";
 export { default as RichText } from "./RichText";
+export { default as SelectUserGroup } from "./SelectUserGroup";
 export { DialogCustomTitle, DialogCustomActions } from "./dialogs";

@@ -29,8 +29,8 @@ function SelectRegions(props: SelectRegionProps) {
 
   /// Region Store
   const {
-    regions: { rows, count },
-  } = useSelector((state: RootState) => state.compay_region);
+    regions: { rows },
+  } = useSelector((state: RootState) => state.companyRegion);
 
   ///
   const [options, setOptions] = useState<CompanyRegion[]>([]);

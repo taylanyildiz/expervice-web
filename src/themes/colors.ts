@@ -13,7 +13,7 @@ const Colors = {
     success: "#50B91F",
     info: "#1F66B9",
     error: "#B9281F",
-    warning: "#B9971F",
+    warning: "#FF8A00",
     selected: "#E9F5FE",
 }
 

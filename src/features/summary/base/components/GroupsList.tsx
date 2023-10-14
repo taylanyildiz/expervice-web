@@ -21,7 +21,7 @@ import GroupDialog from "../dialogs/GroupDialog";
 function GroupsList() {
   /// Company region store
   const { groups, group, region } = useSelector(
-    (state: RootState) => state.compay_region
+    (state: RootState) => state.companyRegion
   );
 
   /// Dialog hook

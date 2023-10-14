@@ -42,11 +42,6 @@ function InternalUsersTable() {
     getInternalUsers();
   }, [filter]);
 
-  useEffect(() => {
-    // const { pageSize, page } = paginationMode;
-    console.log(paginationMode);
-  }, [paginationMode]);
-
   return (
     <div className="internal-users-grid">
       <DataGrid
@@ -61,7 +56,6 @@ function InternalUsersTable() {
         slots={{ noRowsOverlay: EmptyGrid }}
         paginationModel={paginationMode}
         onPaginationModelChange={setPaginationMode}
-        sx={{ border: "none" }}
       />
     </div>
   );

@@ -7,9 +7,11 @@ import auth from './auth_store';
 import account from './account_store';
 import region from './region_store';
 import summary from './summary_store';
-import compay_region from './company_region_store';
+import companyRegion from './company_region_store';
 import unit from './unit_store';
 import internalUser from './internal_user_store';
+import customer from './customer_user_store';
+import user from './user_store';
 
 /// Root Reducer
 const appReducer = combineReducers({
@@ -19,9 +21,11 @@ const appReducer = combineReducers({
     account,
     region,
     summary,
-    compay_region,
+    companyRegion,
     unit,
     internalUser,
+    customer,
+    user,
 });
 
 /// Persist Configuration
@@ -29,8 +33,8 @@ const rootPersistConfig = {
     version: 1.0,
     key: 'root',
     storage,
-    whiteList: ["constants", "production", "region", "summary", "internalUser"],
-    blackList: ["auth", "account", "compay_region"],
+    whiteList: [constant, production, region, summary, internalUser, customer, user],
+    blackList: [auth, account, companyRegion],
 }
 
 /// Persisted Reducer

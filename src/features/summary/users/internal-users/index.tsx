@@ -1,8 +1,6 @@
 import InternalUsersTable from "./components/InternalUsersTable";
 import "../../../../assets/css/internal_users.css";
 import GridTableHeader from "@Components/GridTableHeader";
-import { useEffect } from "react";
-import InternalUserRepository from "@Repo/internal_user_repositoy";
 import { useDialog } from "@Utils/hooks/dialog_hook";
 import InternalUserDialog from "./dialogs/InternalUserDialog";
 

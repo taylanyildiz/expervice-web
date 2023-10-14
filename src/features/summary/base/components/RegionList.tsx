@@ -17,7 +17,7 @@ function RegionsList(props: { scale: string }) {
   const {
     regions: { rows },
     region,
-  } = useSelector((state: RootState) => state.compay_region);
+  } = useSelector((state: RootState) => state.companyRegion);
 
   /// Dispatch
   const dispatch: AppDispatch = useDispatch<AppDispatch>();

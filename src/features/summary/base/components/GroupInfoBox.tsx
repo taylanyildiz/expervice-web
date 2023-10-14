@@ -41,7 +41,7 @@ function InfoBox(props: InfoProps) {
 function GroupInfoBox() {
   /// Company region store
   const { group, groupInfo } = useSelector(
-    (state: RootState) => state.compay_region
+    (state: RootState) => state.companyRegion
   );
 
   /// Company region repository

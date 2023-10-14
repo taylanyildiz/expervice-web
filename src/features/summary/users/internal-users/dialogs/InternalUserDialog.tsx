@@ -3,11 +3,11 @@ import TabBar from "@Components/TabBar";
 import VisibilityComp from "@Components/VisibilityComp";
 import { DialogCustomActions, DialogCustomTitle } from "@Components/dialogs";
 import { EActionType } from "@Components/dialogs/DialogCustomActions";
-import { AppDispatch, RootState } from "@Store/index";
+import { AppDispatch } from "@Store/index";
 import { setInternalUser } from "@Store/internal_user_store";
 import { Avatar, Box, DialogContent, Grid, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import OverViewContent from "./InternalUserOverviewContent";
 import InternalUserPermissionsContent from "./InternalUserPermissionsContent";
 import ConstantRepository from "@Repo/constant_repository";
@@ -25,14 +25,12 @@ import InternalUserRepository from "@Repo/internal_user_repositoy";
 import InternalUserUpdate from "../entities/internal_user_update";
 import InternalUserPermission from "../entities/internal_user_permission";
 import { caption, dateToFormat, equalInterface } from "@Utils/functions";
-import { useInternalOld } from "../helper/internal_user_helper";
+import { useInternal, useInternalOld } from "../helper/internal_user_helper";
 import InternalUserInfo from "./InternalUserInfo";
 
 function InternalUserDialog() {
   /// Internal user store
-  const { internalUser } = useSelector(
-    (state: RootState) => state.internalUser
-  );
+  const { internalUser } = useInternal();
   const isEdit = Boolean(internalUser);
   const creatorDisplayName = `${internalUser?.creator?.first_name} ${internalUser?.creator?.last_name}`;
 
@@ -146,16 +144,15 @@ function InternalUserDialog() {
         if (caStatus) {
           result = await internalRepo.updateInternalStatus(status, value.id!);
         }
-
-        return result;
       }
+      return result;
     });
-    return result;
+    return result ?? internalUser;
   };
 
   /// Send invite
-  const sendInvite = async (): Promise<void> => {
-    if (!internalUser) return;
+  const sendInvite = async (user: InternalUser): Promise<void> => {
+    if (!user) return;
     await openLoading(async () => {
       const status = formik.values.status;
       const invited = [
@@ -164,7 +161,7 @@ function InternalUserDialog() {
       ].includes(status!);
       const canSend = oldInvite !== status && invited;
       if (!canSend) return;
-      await internalRepo.sendInvite();
+      await internalRepo.sendInvite(user.id!);
     });
   };
 
@@ -184,7 +181,7 @@ function InternalUserDialog() {
     let result = await process(values);
     if (!result) return;
     dispatch(setInternalUser(result));
-    await sendInvite();
+    await sendInvite(result);
 
     switch (actionType) {
       case EActionType.SaveClose:

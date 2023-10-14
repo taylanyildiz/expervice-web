@@ -7,7 +7,7 @@ import { useSelector } from "react-redux";
 function RegionInfoBox() {
   /// Company region store
   const { region, weather } = useSelector(
-    (state: RootState) => state.compay_region
+    (state: RootState) => state.companyRegion
   );
 
   /// Creator display name - email
