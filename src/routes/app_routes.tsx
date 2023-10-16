@@ -13,6 +13,7 @@ import SummaryLayout from "@Features/summary/layout";
 import UnitsPage from "@Features/summary/units";
 import CustomerUsersPage from "@Features/summary/users/customer-users";
 import InternalUsersPage from "@Features/summary/users/internal-users";
+import TechnicianUsersPage from "@Features/summary/users/technician-users";
 import { Outlet, RouteObject, createBrowserRouter } from "react-router-dom";
 
 /// Router Options
@@ -90,6 +91,10 @@ const routes: RouteObject[] = [
           {
             path: "customer-users",
             element: <CustomerUsersPage />,
+          },
+          {
+            path: "technician-users",
+            element: <TechnicianUsersPage />,
           },
         ],
       },

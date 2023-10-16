@@ -63,14 +63,20 @@ export function useInternalUpdate(
   useEffect(() => {
     const value = { ...formik.values };
 
-    const oldInfo: InternalUserUpdate = {
+    setInfo(null);
+    setPermission(null);
+    setStatus(null);
+    setActivate(null);
+    setAnyUpdate(false);
+
+    const newInfo: InternalUserUpdate = {
       id: value.id!,
       first_name: value.first_name,
       last_name: value.last_name,
       email: value.email,
       phone: value.phone,
     };
-    const newInfo: InternalUserUpdate = {
+    const oldInfo: InternalUserUpdate = {
       id: user?.id!,
       first_name: user?.first_name,
       last_name: user?.last_name,
@@ -78,17 +84,17 @@ export function useInternalUpdate(
       phone: user?.phone,
     };
 
-    const availalbeInfo = !equalInterface(oldInfo, newInfo);
-    if (availalbeInfo) {
+    const availableInfo = !equalInterface(oldInfo, newInfo);
+    if (availableInfo) {
       setInfo(newInfo);
     }
 
-    const oldPermission: InternalUserPermission = {
+    const newPermission: InternalUserPermission = {
       role_id: value.role_id!,
       access_regions: value.regions?.map((e) => e.id!),
       permissions: value.permission_sub_resources?.map((e) => e.id!),
     };
-    const newPermission = {
+    const oldPermission = {
       role_id: user?.role_id!,
       access_regions: user?.regions?.map((e) => e.id!),
       permissions: user?.permission_sub_resources?.map((e) => e.id!),
@@ -113,7 +119,7 @@ export function useInternalUpdate(
     }
 
     const available =
-      availalbeInfo ||
+      availableInfo ||
       availalbePermission ||
       availableActivate ||
       availableStatus;

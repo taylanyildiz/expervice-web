@@ -11,7 +11,6 @@ import { Box, Grid, Typography } from "@mui/material";
 import { FormikProps } from "formik";
 import { useCustomer } from "../helpers/customer_user_helper";
 import CustomerStatusButton from "./CustomerStatusButton";
-import { ChangeEvent } from "react";
 
 interface Props {
   formik: FormikProps<Customer>;
@@ -50,15 +49,6 @@ function Header(props: { formik: FormikProps<Customer> }) {
 function CustomerContactInformation(props: Props) {
   const { formik } = props;
 
-  /// Changed input handle
-  const onChangedHandle = (
-    e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) => {
-    const name = e.target.name;
-    const value = e.target.value;
-    formik.setFieldValue(name, value.length === 0 ? null : value);
-  };
-
   return (
     <>
       <Header formik={formik} />
@@ -70,7 +60,7 @@ function CustomerContactInformation(props: Props) {
                 fullWidth
                 name="first_name"
                 label="First Name"
-                onChange={onChangedHandle}
+                onChange={formik.handleChange}
                 value={formik.values.first_name}
                 helperText={
                   formik.touched.first_name && formik.errors.first_name
@@ -85,7 +75,7 @@ function CustomerContactInformation(props: Props) {
                 fullWidth
                 name="last_name"
                 label="Last Name"
-                onChange={onChangedHandle}
+                onChange={formik.handleChange}
                 value={formik.values.last_name}
                 helperText={formik.touched.last_name && formik.errors.last_name}
                 error={Boolean(
@@ -98,7 +88,7 @@ function CustomerContactInformation(props: Props) {
                 fullWidth
                 name="display_name"
                 label="Display Name"
-                onChange={onChangedHandle}
+                onChange={formik.handleChange}
                 value={formik.values.display_name}
                 helperText={
                   formik.touched.display_name && formik.errors.display_name
@@ -126,7 +116,7 @@ function CustomerContactInformation(props: Props) {
                 name="email"
                 label="Email"
                 type="email"
-                onChange={onChangedHandle}
+                onChange={formik.handleChange}
                 value={formik.values.email}
                 helperText={formik.touched.email && formik.errors.email}
                 error={Boolean(formik.touched.email && formik.errors.email)}
@@ -138,7 +128,7 @@ function CustomerContactInformation(props: Props) {
                 name="phone"
                 label="Phone"
                 type="tel"
-                onChange={onChangedHandle}
+                onChange={formik.handleChange}
                 value={formik.values.phone}
                 helperText={formik.touched.phone && formik.errors.phone}
                 error={Boolean(formik.touched.phone && formik.errors.phone)}
@@ -150,7 +140,7 @@ function CustomerContactInformation(props: Props) {
                 name="cell_phone"
                 label="Cell Phone"
                 type="tel"
-                onChange={onChangedHandle}
+                onChange={formik.handleChange}
                 value={formik.values.cell_phone}
                 helperText={
                   formik.touched.cell_phone && formik.errors.cell_phone
@@ -168,7 +158,7 @@ function CustomerContactInformation(props: Props) {
                 fullWidth
                 name="street_address"
                 label="Street Address"
-                onChange={onChangedHandle}
+                onChange={formik.handleChange}
                 value={formik.values.street_address}
                 helperText={
                   formik.touched.street_address && formik.errors.street_address
@@ -221,7 +211,7 @@ function CustomerContactInformation(props: Props) {
                 fullWidth
                 name="zip_code"
                 label="Zip Code"
-                onChange={onChangedHandle}
+                onChange={formik.handleChange}
                 value={formik.values.zip_code}
                 helperText={formik.touched.zip_code && formik.errors.zip_code}
                 error={Boolean(

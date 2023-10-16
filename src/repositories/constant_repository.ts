@@ -1,11 +1,11 @@
 import { store } from "@Store/index";
 import BaseRepository from "./base_repository";
 import Constant from "./end-points/constant";
-import { setLanguages, setPermissions, setRolePermissions, setUserRoleTypes, setUserRoles } from "@Store/constant_store";
+import { setGroupRoles, setLanguages, setPermissions, setRolePermissions, setUserRoleTypes, setUserRoles } from "@Store/constant_store";
 
 class ConstantRepository extends BaseRepository {
     constructor() {
-        super({ tag: "/constants" });
+        super({ tag: Constant.constants });
     }
 
     /**
@@ -65,6 +65,17 @@ class ConstantRepository extends BaseRepository {
         if (statusCode !== 200) return;
         const data = response.data['data']['user_roles'];
         store.dispatch(setUserRoles(data));
+    }
+
+    /**
+     * Get Group Roles
+     */
+    public async getGroupRoles(): Promise<void> {
+        const path = Constant.groupRoles;
+        const response = await this.get(path);
+        if (!response.success) return;
+        const data = response.data['data']['group_roles'];
+        store.dispatch(setGroupRoles(data));
     }
 
 }

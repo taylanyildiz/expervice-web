@@ -7,3 +7,4 @@ export { default as CompanyRegionRepository } from "./company_region_repository"
 export { default as UnitRepository } from "./unit_repository";
 export { default as InternalUserRepository } from "./internal_user_repositoy";
 export { default as CustomerUserRepository } from "./customer_user_repository";
+export { default as TechnicianRepository } from "./technician_repository";

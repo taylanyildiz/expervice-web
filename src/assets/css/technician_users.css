@@ -1,0 +1,15 @@
+.technicians-layout {
+  flex: 1;
+  background-color: transparent;
+  display: flex;
+  flex-direction: column;
+}
+
+.technicians-grid {
+  margin-top: 10px;
+  width: 100%;
+  flex-grow: 1;
+  height: 0px;
+  overflow-y: hidden;
+  background-color: transparent;
+}

@@ -1,6 +1,7 @@
 import { Language, UserRole } from "@Models/index";
 import PermissionResource from "@Models/permission/permission_resource";
 import RolePermission from "@Models/permission/role_permission";
+import GroupRole from "@Models/technician-user/group_role";
 import UserRoleType from "@Models/user_role_type";
 import { createSlice } from "@reduxjs/toolkit"
 
@@ -11,6 +12,7 @@ interface Props {
     rolePermissons: RolePermission[],
     userRoles: UserRole[],
     userRoleTypes: UserRoleType[],
+    groupRoles: GroupRole[],
 }
 
 /// Constant Initial States
@@ -20,6 +22,7 @@ const initialStates: Props = {
     userRoles: [],
     userRoleTypes: [],
     rolePermissons: [],
+    groupRoles: [],
 }
 
 /// Constants slice
@@ -41,6 +44,9 @@ const constants = createSlice({
         },
         setRolePermissions: (state, { payload }) => {
             state.rolePermissons = payload;
+        },
+        setGroupRoles: (state, { payload }) => {
+            state.groupRoles = payload;
         }
     },
 });
@@ -52,5 +58,6 @@ export const {
     setPermissions,
     setRolePermissions,
     setUserRoleTypes,
-    setUserRoles
+    setUserRoles,
+    setGroupRoles,
 } = constants.actions;

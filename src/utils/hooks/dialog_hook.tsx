@@ -116,13 +116,8 @@ function ConfirmDialog(props: {
           </Grid>
         </Grid>
       </DialogTitle>
-      <DialogContent sx={{ p: 0 }}>
-        <Grid
-          container
-          p={2}
-          mt={1}
-          sx={{ borderRadius: 1, backgroundColor: "white" }}
-        >
+      <DialogContent sx={{ p: 1, backgroundColor: "white" }}>
+        <Grid container sx={{ borderRadius: 1 }}>
           <Grid item xs={12}>
             <Typography children={content} />
           </Grid>

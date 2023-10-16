@@ -12,6 +12,7 @@ import unit from './unit_store';
 import internalUser from './internal_user_store';
 import customer from './customer_user_store';
 import user from './user_store';
+import technician from './technician_store';
 
 /// Root Reducer
 const appReducer = combineReducers({
@@ -26,6 +27,7 @@ const appReducer = combineReducers({
     internalUser,
     customer,
     user,
+    technician,
 });
 
 /// Persist Configuration
@@ -33,7 +35,7 @@ const rootPersistConfig = {
     version: 1.0,
     key: 'root',
     storage,
-    whiteList: [constant, production, region, summary, internalUser, customer, user],
+    whiteList: [constant, production, region, summary, internalUser, customer, user, technician],
     blackList: [auth, account, companyRegion],
 }
 

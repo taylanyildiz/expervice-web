@@ -111,22 +111,16 @@ function InternalUserDialog() {
 
       // Update internal user
       else {
-        /// Update user
         if (info) {
           result = await internalRepo.updateInternalUser(info!);
+          dispatch(setInternalUser(result));
         }
-
-        /// Update permission
         if (permission) {
           result = await internalRepo.updateInternalPermissions(permission);
         }
-
-        /// Update status
-        if (activate) {
+        if (activate !== null) {
           result = await internalRepo.updateInternalStatus(activate);
         }
-
-        /// Send invite
         if (status) {
           result = await internalRepo.sendInvite();
         }

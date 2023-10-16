@@ -5,6 +5,21 @@ import { Box, Grid, Typography } from "@mui/material";
 import { FormikProps } from "formik";
 import InternalUserStatusButton from "./InternalUserStatusButton";
 
+function Header(props: { formik: FormikProps<InternalUser> }) {
+  const { formik } = props;
+
+  return (
+    <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
+      <Grid container alignItems="center" mb={1}>
+        <Grid item flexGrow={1}>
+          <Typography variant="h1" fontSize={15} children="Overview" />
+        </Grid>
+        <Grid item children={<InternalUserStatusButton formik={formik} />} />
+      </Grid>
+    </Box>
+  );
+}
+
 function OverViewContent(props: { formik: FormikProps<InternalUser> }) {
   const { formik } = props;
   return (
@@ -82,21 +97,6 @@ function OverViewContent(props: { formik: FormikProps<InternalUser> }) {
         </Grid>
       </Grid>
     </div>
-  );
-}
-
-function Header(props: { formik: FormikProps<InternalUser> }) {
-  const { formik } = props;
-
-  return (
-    <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
-      <Grid container alignItems="center" mb={1}>
-        <Grid item flexGrow={1}>
-          <Typography variant="h1" fontSize={15} children="Overview" />
-        </Grid>
-        <Grid item children={<InternalUserStatusButton formik={formik} />} />
-      </Grid>
-    </Box>
   );
 }
 

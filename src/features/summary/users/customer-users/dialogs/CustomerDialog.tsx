@@ -63,11 +63,12 @@ function CustomerDialog() {
       else {
         if (info) {
           result = await customerRepo.updateCustomer(info);
+          dispatch(setCustomer(result));
         }
         if (group) {
           result = await customerRepo.updateCustomerGroup(group);
         }
-        if (activate) {
+        if (activate !== null) {
           result = await customerRepo.updateCustomeStatus(activate);
         }
         if (status) {

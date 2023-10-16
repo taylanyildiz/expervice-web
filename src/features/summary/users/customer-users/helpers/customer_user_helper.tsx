@@ -61,7 +61,7 @@ export function useCustomerUpdate(
 
   useEffect(() => {
     const value = { ...formik.values };
-    setCustomer(null);
+    setInfo(null);
     setGroup(null);
     setStatus(null);
     setActivate(null);

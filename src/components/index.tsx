@@ -18,4 +18,5 @@ export { default as SelectUserRole } from "./SelectUserRole";
 export { default as SelectRegions } from "./SelectRegions";
 export { default as RichText } from "./RichText";
 export { default as SelectUserGroup } from "./SelectUserGroup";
+export { default as SelectGroupRole } from "./SelectGroupRole";
 export { DialogCustomTitle, DialogCustomActions } from "./dialogs";
