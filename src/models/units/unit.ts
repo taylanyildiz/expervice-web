@@ -1,7 +1,28 @@
-import { City, CompanyGroup, Country, State } from "..";
+import Job from "@Models/job/job";
+import { City, CompanyGroup, Country, Creator, State } from "..";
 import Customer from "../customer/customer";
 import UnitLabel from "./unit_label";
 import UnitSubType from "./unit_sub_type";
+
+export const defaultValue: Unit = {
+    group: undefined,
+    name: "",
+    imei: "",
+    identity_number: "",
+    qr_code: "",
+    contract_start_date: "",
+    contract_end_date: "",
+    unit_sub_type: undefined,
+    customer: undefined,
+    country: undefined,
+    state: undefined,
+    city: undefined,
+    street_address: "",
+    zip_code: "",
+    latitude: "",
+    longitude: "",
+    status: true,
+};
 
 interface Unit {
     id?: number;
@@ -20,17 +41,22 @@ interface Unit {
     state_id?: number;
     city_id?: number;
     street_address?: string;
+    zip_code?: string;
     latitude?: string;
     longitude?: string;
-    status?: boolean;
+    status: boolean;
     unit_sub_type?: UnitSubType;
     unit_label?: UnitLabel;
-    job?: any;
+    job_count?: number,
+    maintenance_count?: number,
+    fault_count?: number,
+    job?: Job;
     customer?: Customer;
     group?: CompanyGroup;
     country?: Country;
     state?: State;
     city?: City;
+    creator?: Creator;
     created_at?: string;
     updated_at?: string;
 }

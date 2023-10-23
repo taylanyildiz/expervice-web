@@ -4,18 +4,18 @@ import PrimaryButton from "@Components/PrimaryButton";
 import { Avatar, Grid, Typography } from "@mui/material";
 import { caption, dateToFormat } from "@Utils/functions";
 import { EActionType } from "@Components/dialogs/DialogCustomActions";
-import { useTechnician } from "../helper/technician_helper";
+import { useUnit } from "../helper/unit_helper";
 
-interface TechnicianDialogActionProps {
+interface UnitDialogActionProps {
   onChanged: (type: EActionType) => void;
 }
 
-function TechnicianDialogAction(props: TechnicianDialogActionProps) {
+function UnitDialogAction(props: UnitDialogActionProps) {
   const { onChanged } = props;
 
-  const { technician } = useTechnician();
-  const isEdit = Boolean(technician);
-  const creatorDisplayName = `${technician?.creator?.first_name} ${technician?.creator?.last_name}`;
+  const { unit } = useUnit();
+  const isEdit = Boolean(unit);
+  const creatorDisplayName = `${unit?.creator?.first_name} ${unit?.creator?.last_name}`;
 
   /// Changed action
   const onChangedAction = (type: EActionType) => {
@@ -89,7 +89,7 @@ function TechnicianDialogAction(props: TechnicianDialogActionProps) {
                 variant="body1"
                 fontSize={12}
                 color="grey"
-                children={dateToFormat(technician?.created_at)}
+                children={dateToFormat(unit?.created_at)}
               />
             </Grid>
           </Grid>
@@ -99,4 +99,4 @@ function TechnicianDialogAction(props: TechnicianDialogActionProps) {
   );
 }
 
-export default TechnicianDialogAction;
+export default UnitDialogAction;

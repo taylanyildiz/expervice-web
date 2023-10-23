@@ -1,7 +1,7 @@
 import { store } from "@Store/index";
 import BaseRepository from "./base_repository";
 import Constant from "./end-points/constant";
-import { setGroupRoles, setLanguages, setPermissions, setRolePermissions, setUserRoleTypes, setUserRoles } from "@Store/constant_store";
+import { setGroupRoles, setLanguages, setPermissions, setRolePermissions, setUnitLabels, setUnitSubTypes, setUnitTypes, setUserRoleTypes, setUserRoles } from "@Store/constant_store";
 
 class ConstantRepository extends BaseRepository {
     constructor() {
@@ -76,6 +76,39 @@ class ConstantRepository extends BaseRepository {
         if (!response.success) return;
         const data = response.data['data']['group_roles'];
         store.dispatch(setGroupRoles(data));
+    }
+
+    /**
+     * Get Unit Types
+     */
+    public async getUnitTypes(): Promise<void> {
+        const path = Constant.unitTypes;
+        const response = await this.get(path);
+        if (!response.success) return;
+        const data = response.data['data']['unit_types'];
+        store.dispatch(setUnitTypes(data));
+    }
+
+    /**
+     * Get Unit Sub Types
+     */
+    public async getUnitSubTypes(): Promise<void> {
+        const path = Constant.unitsubTypes;
+        const response = await this.get(path);
+        if (!response.success) return;
+        const data = response.data['data']['unit_sub_types'];
+        store.dispatch(setUnitSubTypes(data));
+    }
+
+    /**
+     * Get Unit Labels
+     */
+    public async getUnitLabels(): Promise<void> {
+        const path = Constant.unitLabels;
+        const response = await this.get(path);
+        if (!response.success) return;
+        const data = response.data['data']['unit_labels'];
+        store.dispatch(setUnitLabels(data));
     }
 
 }

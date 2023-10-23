@@ -83,6 +83,12 @@ const theme = createTheme({
             }
         },
 
+        // TextField Theme
+        MuiTextField: {
+            styleOverrides: {
+            }
+        },
+
         // Toolbar Theme
         MuiToolbar: {
             defaultProps: {

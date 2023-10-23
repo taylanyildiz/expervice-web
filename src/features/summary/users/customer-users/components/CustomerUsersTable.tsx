@@ -5,7 +5,7 @@ import { useEffect, useMemo, useState } from "react";
 import { useCustomer } from "../helpers/customer_user_helper";
 import CustomerUserRepository from "@Repo/customer_user_repository";
 import CustomerFilter from "@Models/customer/customer_filter";
-import { setFilter } from "@Store/customer_user_store";
+import { setCustomerFilter } from "@Store/customer_user_store";
 import { AppDispatch } from "@Store/index";
 import { useDispatch } from "react-redux";
 
@@ -39,7 +39,7 @@ function CustomerUsersTable() {
 
   /// Initialize component
   useEffect(() => {
-    dispatch(setFilter(filter));
+    dispatch(setCustomerFilter(filter));
     customerRepo.getCustomers();
   }, [filter]);
 

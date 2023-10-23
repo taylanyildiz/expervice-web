@@ -9,6 +9,9 @@ const Constant = {
     roleTypes: "/role-types",
     roles: "/roles",
     groupRoles: "/group-roles",
+    unitTypes: "/unit-types",
+    unitsubTypes: "/unit-sub-types",
+    unitLabels: "/unit-labels",
 }
 
 export default Constant;

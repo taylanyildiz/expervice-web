@@ -1,13 +1,17 @@
 import UnitsTable from "./components/UnitsTable";
-import "../../../assets/css/units.css";
 import GridTableHeader from "@Components/GridTableHeader";
+import { useUnitDialog } from "./helper/unit_helper";
+import "../../../assets/css/units.css";
 
 function UnitsPage() {
+  /// Unit dialog hook
+  const unitDialog = useUnitDialog();
+
   return (
     <div className="units-layout">
       <GridTableHeader
         title="Units"
-        onAdd={() => {}}
+        onAdd={() => unitDialog()}
         onFilter={() => {}}
         onExport={() => {}}
       />

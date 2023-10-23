@@ -10,6 +10,15 @@ import { ReactNode, useState } from "react";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 
+type InputType =
+  | "password"
+  | "email"
+  | "number"
+  | "text"
+  | "tel"
+  | "url"
+  | "date";
+
 /// Text outline field props
 interface TextOutlineFieldProps {
   id?: any;
@@ -18,7 +27,7 @@ interface TextOutlineFieldProps {
   prefix?: ReactNode;
   suffix?: ReactNode;
   secret?: boolean;
-  type?: "password" | "email" | "number" | "text" | "tel" | "url" | "date";
+  type?: InputType;
   value?: any;
   helperText?: ReactNode | null;
   error?: boolean;
@@ -36,6 +45,9 @@ interface TextOutlineFieldProps {
   children?: ReactNode;
   height?: number;
   placeholder?: string;
+  prefixPadding?: string | number | undefined;
+  radius?: string | number;
+  steps?: string;
 }
 
 function TextOutlineField(props?: TextOutlineFieldProps) {
@@ -61,6 +73,9 @@ function TextOutlineField(props?: TextOutlineFieldProps) {
     onFocus,
     height,
     placeholder,
+    prefixPadding,
+    radius,
+    steps,
   } = props ?? {};
 
   /// Show password state
@@ -73,7 +88,11 @@ function TextOutlineField(props?: TextOutlineFieldProps) {
 
   /// Prefix Icon
   const startAdornment = prefix ? (
-    <InputAdornment position="start" children={prefix} />
+    <InputAdornment
+      position="start"
+      sx={{ paddingLeft: 0, marginLeft: 0 }}
+      children={prefix}
+    />
   ) : null;
 
   /// Suffix Icon
@@ -119,15 +138,20 @@ function TextOutlineField(props?: TextOutlineFieldProps) {
         InputProps={{
           startAdornment,
           endAdornment: endAdornment(),
-          sx: { height: height },
+          sx: { height: height, borderRadius: radius },
         }}
         inputProps={{
           maxLength: maxLength,
           minLength: minLength,
         }}
         children={props?.children}
+        sx={{
+          "& .MuiOutlinedInput-root": {
+            padding: prefixPadding,
+          },
+        }}
       />
-      <FormHelperText error={error} sx={{ p: 0, m: 0 }} id="my-helper-text">
+      <FormHelperText error={error} sx={{ p: 0, m: 0 }}>
         {helperText ?? " "}
       </FormHelperText>
     </FormControl>

@@ -1,5 +1,5 @@
 import React from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useSearchParams } from "react-router-dom";
 
 /// Url matches
 export const urlRegex =
@@ -11,7 +11,27 @@ export const urlRegex =
  */
 export function useQuery() {
   const { search } = useLocation();
-  return React.useMemo(() => new URLSearchParams(search), [search]);
+  const [_, setParams] = useSearchParams();
+  const params = React.useMemo(() => new URLSearchParams(search), [search]);
+
+  const deleteParams = (key: string) => {
+    params.delete(key);
+    setParams(params);
+  };
+
+  const setSearchParams = (key: string, value: string) => {
+    params.set(key, value);
+    setParams(params);
+  };
+
+  type TypeQuery = readonly [
+    params: URLSearchParams,
+    deleteParams: (key: string) => void,
+    setParams: (key: string, value: string) => void
+  ];
+
+  const value: TypeQuery = [params, deleteParams, setSearchParams];
+  return value;
 }
 
 /**

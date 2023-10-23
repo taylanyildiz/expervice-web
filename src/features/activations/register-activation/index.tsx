@@ -12,7 +12,7 @@ function RegisterActivationPage() {
   const [completed, setCompleted] = useState<boolean>(false);
 
   /// Url query
-  const query = useQuery();
+  const [query] = useQuery();
   const email = query.get("email");
   const code = query.get("code");
 

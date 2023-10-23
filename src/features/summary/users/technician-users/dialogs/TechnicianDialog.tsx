@@ -22,6 +22,7 @@ import TechnicianSecurity from "./TechnicianSecurity";
 import TechnicianRepository from "@Repo/technician_repository";
 import VisibilityComp from "@Components/VisibilityComp";
 import Colors from "@Themes/colors";
+import { technicianValidator } from "../validator/technician_validator";
 
 function TechnicianDialog() {
   /// Technician store
@@ -126,6 +127,7 @@ function TechnicianDialog() {
   const initialValues: TechnicianUser = defaultTechnician;
   const formik = useFormik({
     initialValues,
+    validationSchema: technicianValidator,
     onSubmit: onSubmitHandle,
   });
 

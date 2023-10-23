@@ -26,15 +26,15 @@ const customer = createSlice({
         setLayzLoading: (state, { payload }) => {
             state.layzLoading = payload;
         },
+        setCustomerFilter: (state, { payload }) => {
+            state.filter = payload;
+        },
         setCustomers: (state, { payload }) => {
             state.customers = payload;
         },
         setCustomer: (state, { payload }) => {
             state.customer = payload;
         },
-        setFilter: (state, { payload }) => {
-            state.filter = payload;
-        }
     }
 });
 
@@ -44,5 +44,5 @@ export const {
     setLayzLoading,
     setCustomers,
     setCustomer,
-    setFilter,
+    setCustomerFilter,
 } = customer.actions;
