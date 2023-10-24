@@ -5,13 +5,13 @@ import "../../../assets/css/units.css";
 
 function UnitsPage() {
   /// Unit dialog hook
-  const unitDialog = useUnitDialog();
+  const { openUnitDialog } = useUnitDialog();
 
   return (
     <div className="units-layout">
       <GridTableHeader
         title="Units"
-        onAdd={() => unitDialog()}
+        onAdd={() => openUnitDialog()}
         onFilter={() => {}}
         onExport={() => {}}
       />

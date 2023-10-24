@@ -7,13 +7,13 @@ import {
   Typography,
 } from "@mui/material";
 import { ReactNode, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, To } from "react-router-dom";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 
 /// Menu link item
 interface LinkChildren {
   title?: string;
-  to?: string;
+  to?: To;
   prefix?: ReactNode;
   suffix?: ReactNode;
   onClick?: () => void;
@@ -22,7 +22,7 @@ interface LinkChildren {
 /// Menu text link
 interface LinkProps {
   title: string | ReactNode;
-  to?: string;
+  to?: To;
   color?: string;
   hover?: boolean;
   children?: LinkChildren[];
@@ -50,34 +50,42 @@ function MenuCustomLink(props: LinkProps) {
     setTarget(null);
   };
 
+  const linktHeader = (
+    <Grid container alignItems="center">
+      <Grid item>
+        <Typography
+          className="link-router-typografy"
+          color={color}
+          sx={{
+            ":hover": {
+              color: color,
+            },
+          }}
+          children={title}
+          variant="body1"
+        />
+      </Grid>
+      {Boolean(children && withIcon) && (
+        <Grid item alignContent="end" display="flex">
+          <KeyboardArrowDownIcon
+            className="menu-icon"
+            sx={{ color: color, width: 20, height: 20 }}
+          />
+        </Grid>
+      )}
+    </Grid>
+  );
+
   return (
     <>
       <div onClick={onOpenMenuHandle}>
-        <Link className="link-router" to={to ?? "#"}>
-          <Grid container alignItems="center">
-            <Grid item>
-              <Typography
-                className="link-router-typografy"
-                color={color}
-                sx={{
-                  ":hover": {
-                    color: color,
-                  },
-                }}
-                children={title}
-                variant="body1"
-              />
-            </Grid>
-            {Boolean(children && withIcon) && (
-              <Grid item alignContent="end" display="flex">
-                <KeyboardArrowDownIcon
-                  className="menu-icon"
-                  sx={{ color: color, width: 20, height: 20 }}
-                />
-              </Grid>
-            )}
-          </Grid>
-        </Link>
+        {to ? (
+          <Link className="link-router" to={to ?? "#"}>
+            {linktHeader}
+          </Link>
+        ) : (
+          <div style={{ cursor: "pointer" }}>{linktHeader}</div>
+        )}
       </div>
 
       {/*  Menu */}

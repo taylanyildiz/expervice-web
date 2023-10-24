@@ -6,8 +6,9 @@ import { useDispatch } from "react-redux";
 import { useEffect, useMemo, useState } from "react";
 import UnitFilter from "@Models/units/unit_filter";
 import UnitRepository from "@Repo/unit_repository";
-import { setUnitFilter } from "@Store/unit_store";
-import { useUnit } from "../helper/unit_helper";
+import { setUnitFilter, setUnitId } from "@Store/unit_store";
+import { useUnit, useUnitDialog } from "../helper/unit_helper";
+import { useQuery } from "@Utils/functions";
 
 function UnitsTable() {
   /// Dispatch
@@ -16,11 +17,18 @@ function UnitsTable() {
   /// Unit store
   const {
     layzLoading,
+    unitId,
     units: { rows, count },
   } = useUnit();
 
   /// Unit repository
   const unitRepo = new UnitRepository();
+
+  /// Dialog hook
+  const { openUnitDialog, closeDialog } = useUnitDialog();
+
+  /// Query hook
+  const [path, deletePath, setPath] = useQuery();
 
   /// Pagination mode
   const [paginationMode, setPaginationMode] = useState<GridPaginationModel>({
@@ -42,6 +50,28 @@ function UnitsTable() {
     dispatch(setUnitFilter(filter));
     unitRepo.getUnits();
   }, [filter]);
+
+  /// Listen query params
+  useEffect(() => {
+    const id = parseInt(`${path.get("unitId")}`);
+    if (!id || isNaN(id)) {
+      deletePath("unitId");
+      dispatch(setUnitId(null));
+    }
+    if (id || !isNaN(id)) {
+      dispatch(setUnitId(id));
+    }
+  }, []);
+
+  /// Listen unit id
+  useEffect(() => {
+    if (unitId) {
+      setPath("unitId", unitId.toString());
+      return openUnitDialog();
+    }
+    deletePath("unitId");
+    closeDialog();
+  }, [unitId]);
 
   return (
     <div className="units-grid">

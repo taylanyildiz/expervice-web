@@ -1,19 +1,24 @@
 import Unit from "@Models/units/unit";
 import { GridColDef } from "@mui/x-data-grid";
-import { useUnitDialog } from "../helper/unit_helper";
 import UnitLabelBox from "@Components/UnitLabelBox";
 import JobTypeBox from "@Components/JobTypeBox";
+import { useDispatch } from "react-redux";
+import { setUnitId } from "@Store/unit_store";
 
 /// Columns
 const columns: GridColDef<Unit>[] = [
   {
     field: "name",
     headerName: "Name",
+    width: 160,
     renderCell: (params) => {
       const row = params.row;
-      const unitDialog = useUnitDialog();
+      const dispatch = useDispatch();
       return (
-        <p className="grid-selectable" onClick={() => unitDialog(row.id)}>
+        <p
+          className="grid-selectable"
+          onClick={() => dispatch(setUnitId(row.id))}
+        >
           {row.name}
         </p>
       );

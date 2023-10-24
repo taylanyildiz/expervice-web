@@ -93,12 +93,18 @@ function SummaryAppBar() {
                   {
                     prefix: <ElevatorIcon />,
                     title: "Elevators",
-                    onClick: () => {},
+                    to: {
+                      pathname: ERouter.Units,
+                      search: "unit_type=1",
+                    },
                   },
                   {
                     prefix: <EscalatorIcon />,
                     title: "Escalators",
-                    onClick: () => {},
+                    to: {
+                      pathname: ERouter.Units,
+                      search: "unit_type=2",
+                    },
                   },
                 ]}
               />

@@ -18,7 +18,6 @@ export const defaultValue: Unit = {
     state: undefined,
     city: undefined,
     street_address: "",
-    zip_code: "",
     latitude: "",
     longitude: "",
     status: true,
@@ -41,7 +40,6 @@ interface Unit {
     state_id?: number;
     city_id?: number;
     street_address?: string;
-    zip_code?: string;
     latitude?: string;
     longitude?: string;
     status: boolean;

@@ -1,6 +1,5 @@
 import PrimaryButton from "@Components/PrimaryButton";
 import Unit from "@Models/units/unit";
-import Colors from "@Themes/colors";
 import { Grid, Typography } from "@mui/material";
 import { FormikProps } from "formik";
 import { useEffect, useState } from "react";
@@ -18,9 +17,15 @@ function UnitStatusButton(props: { formik: FormikProps<Unit> }) {
   /// Initialize component
   useEffect(() => {
     setStatus(formik.values.status);
+    formik.setFieldValue("status_handle", formik.values.status);
+    initTitles();
   }, [formik.values.status]);
 
   useEffect(() => {
+    initTitles();
+  }, [status]);
+
+  const initTitles = () => {
     if (status === formik.values.status) {
       setDesc(null);
       if (status) return setTitle("Close Unit");
@@ -31,7 +36,7 @@ function UnitStatusButton(props: { formik: FormikProps<Unit> }) {
       return setDesc("Unit will opened on save");
     }
     setDesc("Unit will closed on save");
-  }, [status]);
+  };
 
   /// Click handle
   const onClickHandle = () => {

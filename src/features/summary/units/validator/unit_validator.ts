@@ -6,7 +6,7 @@ export const unitValidator = object({
     unit_sub_type: object().required(),
     unit_label: object().nullable().notRequired(),
     customer: object().required(),
-    imei: string().max(11, "Invalid imei"),
+    imei: string().nullable().max(11, "Invalid imei"),
     identity_number: string().notRequired(),
     qr_code: string().notRequired(),
     contract_start_date: string(),
