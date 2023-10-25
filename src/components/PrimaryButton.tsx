@@ -22,6 +22,7 @@ interface PrimaryButtonProps {
   fontWeight?: string | number;
   fontSize?: string | number;
   border?: string;
+  disabled?: boolean;
 }
 
 function PrimaryButton(props?: PrimaryButtonProps) {
@@ -37,10 +38,12 @@ function PrimaryButton(props?: PrimaryButtonProps) {
     fontWeight,
     fontSize,
     border,
+    disabled,
   } = props ?? {};
 
   return (
     <Button
+      disabled={disabled}
       fullWidth={fullWidth}
       type={type}
       onClick={onClick}

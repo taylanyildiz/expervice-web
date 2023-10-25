@@ -6,10 +6,35 @@
 }
 
 .units-grid {
-  margin-top: 10px;
   width: 100%;
   flex-grow: 1;
   height: 0px;
-  overflow-y: hidden;
   background-color: transparent;
+}
+
+.units-map-page {
+  display: flex;
+  flex-direction: row;
+  overflow-y: hidden;
+  height: calc(100vh - 160px);
+}
+
+.units-map-list {
+  flex: 2;
+  overflow: scroll;
+}
+
+.units-map {
+  flex: 6;
+}
+
+.unit-list-item {
+  display: flex;
+  flex-direction: row;
+  padding: 10px;
+}
+
+.unit-list-item:hover {
+  cursor: pointer;
+  background-color: rgba(92, 122, 255, 0.365);
 }

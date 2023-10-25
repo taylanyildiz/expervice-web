@@ -103,11 +103,6 @@ const columns: GridColDef<Unit>[] = [
     width: 200,
   },
   {
-    field: "zip_code",
-    headerName: "Zip Code",
-    minWidth: 150,
-  },
-  {
     field: "state",
     headerName: "State",
     valueGetter: (params) => {

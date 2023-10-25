@@ -1,11 +1,48 @@
-import UnitsTable from "./components/UnitsTable";
 import GridTableHeader from "@Components/GridTableHeader";
-import { useUnitDialog } from "./helper/unit_helper";
+import { useUnit, useUnitDialog } from "./helper/unit_helper";
+import { Outlet } from "react-router-dom";
+import UnitTabs from "./components/UnitTabs";
 import "../../../assets/css/units.css";
+import { useQuery } from "@Utils/functions";
+import { useEffect } from "react";
+import { AppDispatch } from "@Store/index";
+import { useDispatch } from "react-redux";
+import { setUnitId } from "@Store/unit_store";
 
 function UnitsPage() {
+  /// Query hook
+  const [path, deletePath, setPath] = useQuery();
+
+  /// Dispatch
+  const dispatch: AppDispatch = useDispatch<AppDispatch>();
+
+  /// Unit store
+  const { unitId } = useUnit();
+
   /// Unit dialog hook
-  const { openUnitDialog } = useUnitDialog();
+  const { openUnitDialog, closeDialog } = useUnitDialog();
+
+  /// Listen query params
+  useEffect(() => {
+    const id = parseInt(`${path.get("unitId")}`);
+    if (!id || isNaN(id)) {
+      deletePath("unitId");
+      dispatch(setUnitId(null));
+    }
+    if (id || !isNaN(id)) {
+      dispatch(setUnitId(id));
+    }
+  }, []);
+
+  /// Listen unit id
+  useEffect(() => {
+    if (unitId) {
+      setPath("unitId", unitId.toString());
+      return openUnitDialog();
+    }
+    deletePath("unitId");
+    closeDialog();
+  }, [unitId]);
 
   return (
     <div className="units-layout">
@@ -15,7 +52,8 @@ function UnitsPage() {
         onFilter={() => {}}
         onExport={() => {}}
       />
-      <UnitsTable />
+      <UnitTabs />
+      <Outlet />
     </div>
   );
 }

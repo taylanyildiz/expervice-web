@@ -7,6 +7,7 @@ import {
   SelectUnitLabel,
   StateSelect,
   TextQRField,
+  PrimaryButton,
 } from "@Components/index";
 import { Box, Grid, IconButton, Typography } from "@mui/material";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
@@ -32,6 +33,21 @@ function Header(props: { status: boolean }) {
 
 function UnitInformation(props: { formik: FormikProps<Unit> }) {
   const { formik } = props;
+
+  /// Copy customer address
+  const onCopyAddress = () => {
+    const customer = formik.values?.customer;
+    if (!customer) return;
+    const country = customer.country;
+    const state = customer.state;
+    const city = customer.city;
+    const streetAddress = customer.street_address;
+    formik.setFieldValue("country", country);
+    formik.setFieldValue("state", state);
+    formik.setFieldValue("city", city);
+    formik.setFieldValue("street_address", streetAddress);
+  };
+
   return (
     <>
       <Header status={formik.values.status} />
@@ -49,7 +65,7 @@ function UnitInformation(props: { formik: FormikProps<Unit> }) {
                 helperText={formik.touched.name && formik.errors.name}
               />
             </Grid>
-            <Grid item xs={12}>
+            <Grid item xs={9.5}>
               <SelectCustomer
                 fullWidth
                 label="Customer"
@@ -61,6 +77,15 @@ function UnitInformation(props: { formik: FormikProps<Unit> }) {
                   formik.errors.customer && formik.touched.customer
                 )}
                 helperText={formik.touched.customer && formik.errors.customer}
+              />
+            </Grid>
+            <Grid item xs={2.5} pl={1} alignItems="center" display="flex">
+              <PrimaryButton
+                disabled={!Boolean(formik.values.customer)}
+                variant="text"
+                children="Copy Address"
+                fontSize={10}
+                onClick={onCopyAddress}
               />
             </Grid>
             <Grid item xs={12} children={<Contract formik={formik} />} />
@@ -236,7 +261,7 @@ function Address(props: { formik: FormikProps<Unit> }) {
           }
         />
       </Grid>
-      <Grid item xs={5}>
+      <Grid item xs={6}>
         <StateSelect
           fullWidth
           label="State"
@@ -249,7 +274,7 @@ function Address(props: { formik: FormikProps<Unit> }) {
           helperText={formik.touched.state && formik.errors.state}
         />
       </Grid>
-      <Grid item xs={5}>
+      <Grid item xs={6}>
         <CitySelect
           fullWidth
           label="City"
@@ -260,17 +285,6 @@ function Address(props: { formik: FormikProps<Unit> }) {
           value={formik.values.city}
           error={Boolean(formik.errors.city && formik.touched.city)}
           helperText={formik.touched.city && formik.errors.city}
-        />
-      </Grid>
-      <Grid item xs={2}>
-        <TextOutlineField
-          fullWidth
-          name="zip_code"
-          label="Zip Code"
-          onChange={formik.handleChange}
-          value={formik.values.zip_code}
-          error={Boolean(formik.errors.zip_code && formik.touched.zip_code)}
-          helperText={formik.touched.zip_code && formik.errors.zip_code}
         />
       </Grid>
       <Grid item xs={12}>

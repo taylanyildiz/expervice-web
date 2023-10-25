@@ -4,8 +4,8 @@ import { ReactNode } from "react";
 interface GMapProps {
   zoom?: number;
   center: { lat: number; lng: number };
-  height?: number;
-  width?: number;
+  height?: number | string;
+  width?: number | string;
   children?: ReactNode;
 }
 

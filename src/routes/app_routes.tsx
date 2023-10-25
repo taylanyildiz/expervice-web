@@ -11,6 +11,7 @@ import FormsPage from "@Features/summary/forms";
 import JobsPage from "@Features/summary/jobs/indes";
 import SummaryLayout from "@Features/summary/layout";
 import UnitsPage from "@Features/summary/units";
+import { UnitsMapPage, UnitsTablePage } from "@Features/summary/units/pages";
 import CustomerUsersPage from "@Features/summary/users/customer-users";
 import InternalUsersPage from "@Features/summary/users/internal-users";
 import TechnicianUsersPage from "@Features/summary/users/technician-users";
@@ -71,6 +72,16 @@ const routes: RouteObject[] = [
       {
         path: "units",
         element: <UnitsPage />,
+        children: [
+          {
+            index: true,
+            element: <UnitsTablePage />,
+          },
+          {
+            path: "map",
+            element: <UnitsMapPage />,
+          },
+        ],
       },
       {
         path: "forms",
