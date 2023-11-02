@@ -1,3 +1,4 @@
+import TechnicianUser from "@Models/technician-user/technician_user";
 import Unit from "@Models/units/unit";
 import UnitFilter from "@Models/units/unit_filter";
 import { createSlice } from "@reduxjs/toolkit";
@@ -9,6 +10,7 @@ interface Props {
     units: { rows: Unit[], count: number },
     unit: Unit | null;
     unitId: number | null;
+    technicians: TechnicianUser[],
 }
 
 /// Unit initial states
@@ -18,6 +20,7 @@ const initialState: Props = {
     units: { rows: [], count: 0 },
     unit: null,
     unitId: null,
+    technicians: [],
 }
 
 /// Unit slice
@@ -39,9 +42,19 @@ const unit = createSlice({
         },
         setUnitId: (state, { payload }) => {
             state.unitId = payload;
+        },
+        setAvailableTechnicians: (state, { payload }) => {
+            state.technicians = payload;
         }
     }
 });
 
 export default unit.reducer;
-export const { setUnitLayz, setUnitFilter, setUnits, setUnit, setUnitId } = unit.actions;
+export const {
+    setUnitLayz,
+    setUnitFilter,
+    setUnits,
+    setUnit,
+    setUnitId,
+    setAvailableTechnicians,
+} = unit.actions;

@@ -142,17 +142,22 @@ function CustomerDialog() {
           <Typography
             fontSize={13}
             color="white"
-            children="Plese click save to save changes"
+            children="Please click save to save changes"
           />
         </Box>
       </VisibilityComp>
       <DialogContent>
         <Box mt={2}>
           <TabBar
-            tabs={["Contact Information", "Security & Login"]}
-            panels={[
-              <CustomerContactInformation formik={formik} />,
-              <CustomerSecurity formik={formik} />,
+            tabs={[
+              {
+                title: "Contact Information",
+                panel: <CustomerContactInformation formik={formik} />,
+              },
+              {
+                title: "Security & Login",
+                panel: <CustomerSecurity formik={formik} />,
+              },
             ]}
           />
         </Box>

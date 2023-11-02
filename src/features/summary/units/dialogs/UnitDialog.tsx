@@ -140,15 +140,19 @@ function UnitDialog() {
           <Typography
             fontSize={13}
             color="white"
-            children="Plese click save to save changes"
+            children="Please click save to save changes"
           />
         </Box>
       </VisibilityComp>
       <DialogContent>
         <Box mt={1}>
           <TabBar
-            tabs={["Unit Information"]}
-            panels={[<UnitInformation formik={formik} />]}
+            tabs={[
+              {
+                title: "Unit Information",
+                panel: <UnitInformation formik={formik} />,
+              },
+            ]}
           />
         </Box>
       </DialogContent>

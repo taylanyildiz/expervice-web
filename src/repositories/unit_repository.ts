@@ -1,7 +1,7 @@
 import { store } from "@Store/index";
 import BaseRepository from "./base_repository";
 import UnitConst from "./end-points/unit";
-import { setUnit, setUnitLayz, setUnits } from "@Store/unit_store";
+import { setAvailableTechnicians, setUnit, setUnitLayz, setUnits } from "@Store/unit_store";
 import SnackCustomBar from "@Utils/snack_custom_bar";
 import UnitProcess from "@Features/summary/units/entities/unit_process";
 import Unit from "@Models/units/unit";
@@ -90,6 +90,20 @@ class UnitRepository extends BaseRepository {
         if (!success) return null;
         const data = response.data['data']['unit'];
         return data;
+    }
+
+    /**
+     * Get Available Technicians
+     */
+    public async getAvailableTechnicians(id: number, jobSubType: number): Promise<boolean> {
+        const path = UnitConst.technicians(id);
+        const response = await this.get(path, { params: { job_type_id: jobSubType } });
+        const success = response.success;
+        if (success) {
+            const data = response.data['data']['technicians'];
+            store.dispatch(setAvailableTechnicians(data));
+        }
+        return success;
     }
 }
 

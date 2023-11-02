@@ -148,17 +148,22 @@ function TechnicianDialog() {
           <Typography
             fontSize={13}
             color="white"
-            children="Plese click save to save changes"
+            children="Please click save to save changes"
           />
         </Box>
       </VisibilityComp>
       <DialogContent>
         <Box mt={1}>
           <TabBar
-            tabs={["Contact Information", "Security & Login"]}
-            panels={[
-              <TechnicianContactInformation formik={formik} />,
-              <TechnicianSecurity formik={formik} />,
+            tabs={[
+              {
+                title: "Contact Information",
+                panel: <TechnicianContactInformation formik={formik} />,
+              },
+              {
+                title: "Security & Login",
+                panel: <TechnicianSecurity formik={formik} />,
+              },
             ]}
           />
         </Box>

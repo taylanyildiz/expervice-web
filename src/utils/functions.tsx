@@ -184,3 +184,16 @@ export function equalArray(a1?: any[], a2?: any[]) {
   /* WARNING: arrays must not contain {objects} or behavior may be undefined */
   return JSON.stringify(a1) == JSON.stringify(a2);
 }
+
+/**
+ * Open form pdf
+ * @param base64
+ */
+export function openBase64PDF(base64: string): void {
+  const pdfWindow = window.open("");
+  pdfWindow?.document.write(
+    "<iframe width='100%' height='100%' src='data:application/pdf;base64, " +
+      encodeURI(base64) +
+      "'></iframe>"
+  );
+}

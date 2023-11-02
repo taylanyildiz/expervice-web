@@ -172,7 +172,7 @@ function InternalUserDialog() {
           <Typography
             fontSize={13}
             color="white"
-            children="Plese click save to save changes"
+            children="Please click save to save changes"
           />
         </Box>
       </VisibilityComp>
@@ -180,11 +180,19 @@ function InternalUserDialog() {
         <InternalUserInfo />
         <Box mt={1} sx={{ backgroundColor: "transparent" }}>
           <TabBar
-            tabs={["Overview", "Permissions", "Security & Login"]}
-            panels={[
-              <OverViewContent formik={formik} />,
-              <InternalUserPermissionsContent formik={formik} />,
-              <InternalUserSecurityContent formik={formik} />,
+            tabs={[
+              {
+                title: "Overview",
+                panel: <OverViewContent formik={formik} />,
+              },
+              {
+                title: "Permissions",
+                panel: <InternalUserPermissionsContent formik={formik} />,
+              },
+              {
+                title: "Security & Login",
+                panel: <InternalUserSecurityContent formik={formik} />,
+              },
             ]}
           />
         </Box>

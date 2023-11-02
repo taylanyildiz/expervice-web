@@ -2,14 +2,21 @@ import { Box, Tab } from "@mui/material";
 import { TabContext, TabList, TabPanel } from "@mui/lab";
 import { ReactNode, useEffect, useState } from "react";
 
+type TabBarContent = {
+  title: string;
+  panel: ReactNode;
+  visibility?: boolean;
+};
+
 interface TabBarProps {
-  tabs: ReactNode[];
-  panels: ReactNode[];
-  divider?: ReactNode | null | undefined;
+  tabs: TabBarContent[];
+  divider?: boolean;
+  backgroundColor?: string;
 }
 
 function TabBar(props: TabBarProps) {
-  const { tabs, panels, divider } = props;
+  const { tabs, divider, backgroundColor } = props;
+  const tabsList = tabs.filter((e) => e.visibility ?? true);
 
   /// Selected state
   const [selected, setSelected] = useState<string>("0");
@@ -29,13 +36,18 @@ function TabBar(props: TabBarProps) {
       <TabContext value={selected}>
         <Box sx={{ borderBottom: divider ? 1 : 0, borderColor: "divider" }}>
           <TabList onChange={handleChange} aria-label="lab API tabs example">
-            {tabs.map((e, index) => (
-              <Tab key={index} label={e} value={`${index}`} />
+            {tabsList.map((e, index) => (
+              <Tab key={index} label={e.title} value={`${index}`} />
             ))}
           </TabList>
         </Box>
-        {panels.map((e, index) => (
-          <TabPanel key={index} value={`${index}`} children={e} />
+        {tabsList.map((e, index) => (
+          <TabPanel
+            sx={{ backgroundColor: backgroundColor }}
+            key={index}
+            value={`${index}`}
+            children={e.panel}
+          />
         ))}
       </TabContext>
     </Box>

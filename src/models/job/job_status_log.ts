@@ -1,17 +1,11 @@
-import { Creator, TranslationOption } from "..";
+import { Creator } from "..";
 import JobForm from "./job_form";
 import JobImage from "./job_image";
 import JobStatus from "./job_status";
 
-interface Translations {
-    name?: TranslationOption;
-}
-
 interface JobStatusLog {
     id?: number;
-    type_id?: number;
-    name?: string;
-    translations?: Translations;
+    description?: string;
     creator?: Creator;
     status?: JobStatus;
     images?: JobImage[];

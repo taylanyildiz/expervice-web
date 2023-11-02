@@ -3,6 +3,8 @@ import { Creator } from "..";
 import JobStatusLog from "./job_status_log";
 import JobStatus from "./job_status";
 import JobTechnician from "./job_technician";
+import JobSubType from "./job_sub_type";
+import JobPriority from "./job_priority";
 
 interface Job {
     id?: number;
@@ -15,9 +17,12 @@ interface Job {
     status_id?: number;
     unit?: Unit;
     creator?: Creator;
+    description?: string;
     job_statuses?: JobStatusLog[];
-    job_status?: JobStatus;
-    job_technicians?: JobTechnician[];
+    status?: JobStatus;
+    priority?: JobPriority;
+    sub_type?: JobSubType;
+    job_technicians: JobTechnician[];
     created_at?: string;
     updated_at?: string;
     deleted_at?: string;

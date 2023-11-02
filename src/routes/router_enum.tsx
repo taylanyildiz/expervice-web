@@ -12,6 +12,7 @@ enum ERouter {
   Summary = "/summary",
   Forms = "/forms",
   Units = "/units",
+  Jobs = "/jobs",
   InternalUsers = "/users/internal-users",
   CustomerUsers = "/users/customer-users",
   TechnicianUsers = "/users/technician-users",

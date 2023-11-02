@@ -47,17 +47,17 @@ function SummaryAppBar() {
                   {
                     prefix: <WorkIcon />,
                     title: "All Jobs",
-                    onClick: () => {},
-                  },
-                  {
-                    prefix: <SettingsIcon />,
-                    title: "Maintenaces",
-                    onClick: () => {},
+                    to: ERouter.Jobs,
                   },
                   {
                     prefix: <ReportIcon />,
                     title: "Faults",
-                    onClick: () => {},
+                    to: { pathname: ERouter.Jobs, search: "type=1" },
+                  },
+                  {
+                    prefix: <SettingsIcon />,
+                    title: "Maintenaces",
+                    to: { pathname: ERouter.Jobs, search: "type=2" },
                   },
                 ]}
               />

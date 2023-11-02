@@ -1,7 +1,7 @@
 import { store } from "@Store/index";
 import BaseRepository from "./base_repository";
 import Constant from "./end-points/constant";
-import { setGroupRoles, setLanguages, setPermissions, setRolePermissions, setUnitLabels, setUnitSubTypes, setUnitTypes, setUserRoleTypes, setUserRoles } from "@Store/constant_store";
+import { setGroupRoles, setJobPriorities, setJobRoles, setJobSubTypes, setLanguages, setPermissions, setRolePermissions, setUnitLabels, setUnitSubTypes, setUnitTypes, setUserRoleTypes, setUserRoles } from "@Store/constant_store";
 
 class ConstantRepository extends BaseRepository {
     constructor() {
@@ -109,6 +109,39 @@ class ConstantRepository extends BaseRepository {
         if (!response.success) return;
         const data = response.data['data']['unit_labels'];
         store.dispatch(setUnitLabels(data));
+    }
+
+    /**
+     * Get Job Sub Types
+     */
+    public async getJobSubTypes(): Promise<void> {
+        const path = Constant.jobSubTypes;
+        const response = await this.get(path);
+        if (!response.success) return;
+        const data = response.data['data']['job_sub_types'];
+        store.dispatch(setJobSubTypes(data));
+    }
+
+    /**
+     * Get Job Roles
+     */
+    public async getJobRoles(): Promise<void> {
+        const path = Constant.jobRoles;
+        const response = await this.get(path);
+        if (!response.success) return;
+        const data = response.data['data']['job_roles'];
+        store.dispatch(setJobRoles(data));
+    }
+
+    /**
+     * Get Job Priorities
+     */
+    public async getJobPriorities(): Promise<void> {
+        const path = Constant.jobPriorities;
+        const response = await this.get(path);
+        if (!response.success) return;
+        const data = response.data['data']['priorities'];
+        store.dispatch(setJobPriorities(data));
     }
 
 }
