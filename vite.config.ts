@@ -8,10 +8,8 @@ export default defineConfig({
   resolve: {
     alias: [
       {
-        find: '@', replacement: resolve(__dirname, './src'),
-      },
-      {
-        find: './runtimeConfig', replacement: './runtimeConfig.browser',
+        find: './runtimeConfig',
+        replacement: './runtimeConfig.browser',
       },
       { find: '@Assets', replacement: resolve(__dirname, './src/assets') },
       { find: '@Components', replacement: resolve(__dirname, './src/components') },
