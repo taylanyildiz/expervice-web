@@ -20,6 +20,8 @@ function JobDialogInfo(props: { formik: FormikProps<Job> }) {
           label="Unit"
           clearIcon={false}
           value={formik.values.unit}
+          helperText={formik.touched.unit && formik.errors.unit}
+          error={Boolean(formik.touched.unit && formik.errors.unit)}
           onChanged={(unit) => {
             formik.setFieldValue("unit", unit);
           }}
@@ -54,7 +56,7 @@ function JobDialogInfo(props: { formik: FormikProps<Job> }) {
           multiline
           name="notes"
           label="Notes"
-          value={formik.values.job_statuses?.[0].description}
+          value={formik.values.description}
           onChange={(e) => {
             const value = e.target.value;
             formik.setFieldValue("description", value);

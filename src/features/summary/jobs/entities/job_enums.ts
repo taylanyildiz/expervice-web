@@ -62,3 +62,11 @@ export enum EJobPriorites {
     Alarming = 3,
     Lowest = 4,
 };
+
+export enum EFormStatuses {
+    Ready = 1,
+    PendingSignature = 2, // Customer signature waiting
+    PendingConfirmed = 3, // Company confirmed
+    Approved = 4,
+    Rejected = 5,
+};

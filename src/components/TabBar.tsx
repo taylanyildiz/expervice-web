@@ -3,7 +3,7 @@ import { TabContext, TabList, TabPanel } from "@mui/lab";
 import { ReactNode, useEffect, useState } from "react";
 
 type TabBarContent = {
-  title: string;
+  title: ReactNode;
   panel: ReactNode;
   visibility?: boolean;
 };

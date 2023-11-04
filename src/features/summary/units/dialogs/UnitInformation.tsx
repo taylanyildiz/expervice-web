@@ -8,6 +8,7 @@ import {
   StateSelect,
   TextQRField,
   PrimaryButton,
+  VisibilityComp,
 } from "@Components/index";
 import { Box, Grid, IconButton, Typography } from "@mui/material";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
@@ -15,16 +16,51 @@ import { FormikProps } from "formik";
 import Unit from "@Models/units/unit";
 import UnitStatusButton from "./UnitStatusButton";
 import UnitStatusBox from "./UnitStatusBox";
+import { useJobDialog } from "@Features/summary/jobs/helper/job_helper";
+import { getOnlyDate, useLocationDialog } from "@Utils/functions";
+import { LatLng } from "@Components/SelectLocation";
 
-function Header(props: { status: boolean }) {
+function Header(props: { unit: Unit }) {
+  const { job, status } = props.unit;
+  const hasJob = Boolean(job);
+
+  /// Job dialog hook
+  const { openDialog } = useJobDialog();
+
+  /// Open job dialg
+  const handleCreateJob = () => {
+    openDialog({ unit: props.unit });
+  };
+
   return (
-    <Box borderBottom={1} pb={1} borderColor="divider" alignItems="center">
-      <Grid container columnSpacing={1}>
-        <Grid item>
-          <Typography variant="h1" fontSize={14} children="Unit Information" />
+    <Box borderBottom={1} pb={1} borderColor="divider">
+      <Grid container alignItems="center">
+        <Grid item flex={1}>
+          <Grid container columnSpacing={1}>
+            <Grid item>
+              <Typography
+                variant="h1"
+                fontSize={14}
+                children="Unit Information"
+              />
+            </Grid>
+            <Grid item>
+              <UnitStatusBox status={status} />
+            </Grid>
+          </Grid>
         </Grid>
         <Grid item>
-          <UnitStatusBox status={props.status} />
+          <VisibilityComp visibility={!hasJob}>
+            <PrimaryButton
+              paddingX={0.3}
+              paddingY={0.1}
+              fontSize={13}
+              fontWeight="normal"
+              variant="outlined"
+              children="Create Job"
+              onClick={handleCreateJob}
+            />
+          </VisibilityComp>
         </Grid>
       </Grid>
     </Box>
@@ -50,7 +86,7 @@ function UnitInformation(props: { formik: FormikProps<Unit> }) {
 
   return (
     <>
-      <Header status={formik.values.status} />
+      <Header unit={formik.values} />
       <Grid container mt={2} columnSpacing={3}>
         <Grid item xs={7}>
           <Grid container>
@@ -177,6 +213,7 @@ function UnitInformation(props: { formik: FormikProps<Unit> }) {
 
 function Contract(props: { formik: FormikProps<Unit> }) {
   const { formik } = props;
+
   return (
     <Grid container>
       <Grid item xs={12}>
@@ -191,15 +228,9 @@ function Contract(props: { formik: FormikProps<Unit> }) {
               label="Start Date"
               type="date"
               onChange={formik.handleChange}
-              value={formik.values.contract_start_date}
-              error={Boolean(
-                formik.errors.contract_start_date &&
-                  formik.touched.contract_start_date
-              )}
-              helperText={
-                formik.touched.contract_start_date &&
-                formik.errors.contract_start_date
-              }
+              value={getOnlyDate(formik.values.contract_start_date)}
+              error={Boolean(formik.errors.date && formik.errors.date)}
+              helperText={formik.errors.date && formik.errors.date}
             />
           </Grid>
           <Grid item xs={6}>
@@ -209,15 +240,9 @@ function Contract(props: { formik: FormikProps<Unit> }) {
               label="End Date"
               type="date"
               onChange={formik.handleChange}
-              value={formik.values.contract_end_date}
-              error={Boolean(
-                formik.errors.contract_end_date &&
-                  formik.touched.contract_end_date
-              )}
-              helperText={
-                formik.touched.contract_end_date &&
-                formik.errors.contract_end_date
-              }
+              value={getOnlyDate(formik.values.contract_end_date)}
+              error={Boolean(formik.errors.date && formik.errors.date)}
+              helperText={formik.errors.date && formik.errors.date}
             />
           </Grid>
         </Grid>
@@ -228,6 +253,25 @@ function Contract(props: { formik: FormikProps<Unit> }) {
 
 function Address(props: { formik: FormikProps<Unit> }) {
   const { formik } = props;
+
+  /// Location dialog hook
+  const { locationDialog } = useLocationDialog();
+
+  /// Open location select dialog
+  const handleOpenLocationDialog = async () => {
+    const { latitude, longitude } = formik.values;
+    let latLng: LatLng | null = null;
+    if (latitude && longitude) {
+      latLng = {
+        lat: parseInt(latitude),
+        lng: parseInt(longitude),
+      };
+    }
+    const result = await locationDialog(latLng);
+    if (!result) return;
+    formik.setFieldValue("latitude", result.lat.toFixed(4));
+    formik.setFieldValue("longitude", result.lng.toFixed(4));
+  };
 
   return (
     <Grid container columnSpacing={1}>
@@ -330,7 +374,7 @@ function Address(props: { formik: FormikProps<Unit> }) {
             />
           </Grid>
           <Grid item xs={1}>
-            <IconButton>
+            <IconButton onClick={handleOpenLocationDialog}>
               <LocationOnIcon sx={{ color: "red", width: 25, height: 25 }} />
             </IconButton>
           </Grid>

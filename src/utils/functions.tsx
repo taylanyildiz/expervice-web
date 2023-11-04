@@ -1,5 +1,8 @@
 import React from "react";
-import { useLocation, useSearchParams } from "react-router-dom";
+import { useSearchParams, useLocation } from "react-router-dom";
+import { useDialog } from "./hooks/dialog_hook";
+import { LatLng } from "@Components/SelectLocation";
+import SelectLocationDialog from "@Components/dialogs/SelectLocationDialog";
 
 /// Url matches
 export const urlRegex =
@@ -107,6 +110,14 @@ export function dateToFormat(
 }
 
 /**
+ * String date to only date string
+ */
+export function getOnlyDate(date: string | null | undefined): string | null {
+  if (!date) return null;
+  return date.split(" ")[0];
+}
+
+/**
  * Caption
  * @param value
  * @returns
@@ -196,4 +207,28 @@ export function openBase64PDF(base64: string): void {
       encodeURI(base64) +
       "'></iframe>"
   );
+}
+
+/**
+ * Open Select location dialog
+ */
+export function useLocationDialog() {
+  const { closeDialog, openDialog } = useDialog();
+  return {
+    locationDialog: async (value: LatLng | null): Promise<LatLng | null> => {
+      return await new Promise((resolve) => {
+        openDialog(
+          <SelectLocationDialog
+            value={value}
+            onDone={(value) => {
+              resolve(value);
+              closeDialog();
+            }}
+          />,
+          "md"
+        );
+      });
+      return null;
+    },
+  };
 }

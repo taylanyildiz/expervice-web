@@ -21,6 +21,7 @@ export const defaultValue: Unit = {
     latitude: "",
     longitude: "",
     status: true,
+    date: undefined,
 };
 
 interface Unit {
@@ -34,6 +35,7 @@ interface Unit {
     imei?: string;
     identity_number?: string;
     qr_code?: string;
+    date?: string,
     contract_start_date?: string;
     contract_end_date?: string;
     country_id?: number;

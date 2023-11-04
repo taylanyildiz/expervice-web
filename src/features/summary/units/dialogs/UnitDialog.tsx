@@ -16,6 +16,9 @@ import { unitValidator } from "../validator/unit_validator";
 import { useDialog } from "@Utils/hooks/dialog_hook";
 import VisibilityComp from "@Components/VisibilityComp";
 import Colors from "@Themes/colors";
+import UnitJob from "./UnitJob";
+import { EJobType } from "@Features/summary/jobs/entities/job_enums";
+import UnitJobs from "./UnitJobs";
 
 function UnitDialog() {
   /// Dispatch
@@ -29,6 +32,11 @@ function UnitDialog() {
 
   /// Unit store
   const { unit, unitId } = useUnit();
+
+  const jobType =
+    unit?.job?.type_id === EJobType.Fault ? "Fault" : "Maintenance";
+  const jobId = unit?.job?.id;
+  const hasjob = Boolean(jobId);
   const isEdit = Boolean(unit);
 
   /// Title of dialog
@@ -82,7 +90,6 @@ function UnitDialog() {
       case EActionType.SaveNew:
         formik.resetForm();
         dispatch(setUnit(null));
-        dispatch(setUnitId(null));
         break;
     }
   };
@@ -151,6 +158,16 @@ function UnitDialog() {
               {
                 title: "Unit Information",
                 panel: <UnitInformation formik={formik} />,
+              },
+              {
+                visibility: hasjob,
+                title: `Job (${jobType})`,
+                panel: <UnitJob />,
+              },
+              {
+                visibility: isEdit,
+                title: `All Jobs`,
+                panel: <UnitJobs />,
               },
             ]}
           />

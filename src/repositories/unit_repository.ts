@@ -1,7 +1,7 @@
 import { store } from "@Store/index";
 import BaseRepository from "./base_repository";
 import UnitConst from "./end-points/unit";
-import { setAvailableTechnicians, setUnit, setUnitLayz, setUnits } from "@Store/unit_store";
+import { setAvailableTechnicians, setUnit, setUnitJobs, setUnitLayz, setUnits } from "@Store/unit_store";
 import SnackCustomBar from "@Utils/snack_custom_bar";
 import UnitProcess from "@Features/summary/units/entities/unit_process";
 import Unit from "@Models/units/unit";
@@ -104,6 +104,21 @@ class UnitRepository extends BaseRepository {
             store.dispatch(setAvailableTechnicians(data));
         }
         return success;
+    }
+
+    /**
+     * Get Unit Jobs
+     */
+    public async jobs(): Promise<void> {
+        const { unitId, jobsFilter } = store.getState().unit;
+        if (!unitId) return;
+        const path = UnitConst.jobs(unitId)
+        const response = await this.get(path, { params: jobsFilter });
+        const success = response.success;
+        SnackCustomBar.status(response, { display: !success })
+        if (!success) return;
+        const data = response.data['data']['jobs'];
+        store.dispatch(setUnitJobs(data));
     }
 }
 

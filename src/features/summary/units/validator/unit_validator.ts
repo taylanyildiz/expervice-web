@@ -9,8 +9,6 @@ export const unitValidator = object({
     imei: string().nullable().max(11, "Invalid imei"),
     identity_number: string().notRequired(),
     qr_code: string().notRequired(),
-    contract_start_date: string(),
-    contract_end_date: string(),
     country: object().notRequired(),
     state: object().notRequired(),
     city: object().notRequired(),
@@ -18,4 +16,19 @@ export const unitValidator = object({
     zip_code: string().notRequired(),
     latitude: string().notRequired(),
     longitude: string().notRequired(),
+    contract_end_date: string().nullable().notRequired(),
+    date: string().when(['contract_start_date', 'contract_end_date'], {
+        is: (start: any, end: any) => {
+            const hasAny = Boolean(start || end);
+            if (Boolean(start && end)) {
+                const startdate = new Date(start);
+                const enddate = new Date(end);
+                return startdate.getTime() < enddate.getTime();
+            }
+            return hasAny;
+        },
+        then: () => string().nullable().required("Start date must bigger than end date"),
+        otherwise: () => string().nullable().notRequired(),
+    })
+
 });

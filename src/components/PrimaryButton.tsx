@@ -10,12 +10,13 @@ interface PrimaryButtonProps {
   paddingX?: string | number;
   paddingY?: string | number;
   radius?: string | number;
+  size?: "large" | "small" | "large";
   variant?: "text" | "contained" | "outlined";
+  type?: "submit" | "button" | "reset";
   link?: string;
   suffix?: ReactNode;
   prefix?: ReactNode;
   onClick?: React.MouseEventHandler<HTMLButtonElement>;
-  type?: "submit" | "button" | "reset";
   width?: number | string;
   height?: number | string;
   fullWidth?: boolean;
@@ -39,10 +40,12 @@ function PrimaryButton(props?: PrimaryButtonProps) {
     fontSize,
     border,
     disabled,
+    size,
   } = props ?? {};
 
   return (
     <Button
+      size={size ?? "small"}
       disabled={disabled}
       fullWidth={fullWidth}
       type={type}

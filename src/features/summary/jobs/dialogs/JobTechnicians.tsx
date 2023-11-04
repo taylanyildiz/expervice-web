@@ -9,16 +9,12 @@ import SelectJobRole from "@Components/SelectJobRole";
 import TechnicianUser from "@Models/technician-user/technician_user";
 import JobRole from "@Models/job/job_role";
 import { EJobRoles } from "../entities/job_enums";
-import { useJobHelper } from "../helper/job_helper";
 import JobTechnician from "@Models/job/job_technician";
 
 function JobTechnicians(props: { formik: FormikProps<Job> }) {
   const { formik } = props;
   const technicians =
     formik.values?.job_technicians?.map((e) => ({ ...e })) ?? [];
-
-  /// Job helper hook
-  const { editableJob } = useJobHelper(formik.values);
 
   /// Add technician handle
   const onAddHandle = () => {

@@ -32,4 +32,5 @@ export { default as SelectUnit } from "./SelectUnit";
 export { default as SelectAvailableTechnicians } from "./SelectAvailableTechnicians";
 export { default as SelectJobRole } from "./SelectJobRole";
 export { default as SelectJobPriority } from "./SelectJobPriority";
+export { default as LoadingComp } from "./LoadingComp";
 export { DialogCustomTitle, DialogCustomActions } from "./dialogs";

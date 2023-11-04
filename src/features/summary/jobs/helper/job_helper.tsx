@@ -6,11 +6,14 @@ import JobDialog from "../dialogs/JobDialog";
 import SelectUnitDialog from "../dialogs/SelectUnitDialog";
 import Unit from "@Models/units/unit";
 import Job from "@Models/job/job";
-import { EJobStatuses } from "../entities/job_enums";
+import { EJobStatuses, EJobSubType } from "../entities/job_enums";
 import { useEffect, useState } from "react";
 import { FormikProps } from "formik";
 import JobProcess from "../entities/job_process";
-import { FormProps } from "react-router-dom";
+import JobImageDialog from "../dialogs/JobImageDialog";
+import JobImage from "@Models/job/job_image";
+import JobForm from "@Models/job/job_form";
+import JobFormDialog from "../dialogs/JobFormDialog";
 
 /**
  * Job Store
@@ -32,6 +35,12 @@ export function useJobDialog() {
     },
     openUnitDialog: () => {
       openDialog(<SelectUnitDialog />, "xs");
+    },
+    openJobImagesDialog: (images: JobImage[]) => {
+      openDialog(<JobImageDialog images={images} />, "xs");
+    },
+    openJobFormDialog: (form: JobForm) => {
+      openDialog(<JobFormDialog form={form} />, "lg");
     },
     closeDialog,
   };
@@ -61,7 +70,8 @@ export function useJobCreate(formik: FormikProps<Job>) {
  * @returns
  */
 export function useJobHelper(job: Job | null | undefined) {
-  const [editableJob, setEditableJob] = useState<boolean>(false);
+  const [availableStatus, setAvailableStatus] = useState<boolean>(false);
+  const [isFault, setIsFault] = useState<boolean>(false);
 
   const doneCanceled = [
     EJobStatuses.FaultDone,
@@ -71,18 +81,26 @@ export function useJobHelper(job: Job | null | undefined) {
   ];
 
   useEffect(() => {
-    if (!job) setEditableJob(true);
+    setAvailableStatus(true);
+    setIsFault(false);
+    if (!job) return;
     const jobStatus = job?.status_id;
-    setEditableJob(!doneCanceled.includes(jobStatus!));
+    setAvailableStatus(!doneCanceled.includes(jobStatus!));
+    setIsFault(job.sub_type_id === EJobSubType.Fault);
   }, [job?.status_id]);
 
-  return { editableJob };
+  return { availableStatus, isFault };
 }
 
-export function useJobTechnician(
+/**
+ * Job Technicians hook
+ * @returns
+ */
+export function useJobUpdate(
   job: Job | null | undefined,
   formik: FormikProps<Job>
 ) {
+  const [anyUpdate, setAnyUpdate] = useState<boolean>(false);
   const [addedTechnicians, setAddedTechnicians] = useState<
     { technician_id?: number; role_id?: number }[]
   >([]);
@@ -96,13 +114,13 @@ export function useJobTechnician(
 
   useEffect(() => {
     if (!job?.id) return;
+    setAnyUpdate(false);
 
     const onAddedTechnicians = () => {
-      const addedJobTechnicians = formik.values.job_technicians.filter(
-        (e) => !e.id
-      );
+      const technicians = formik.values.job_technicians.filter((e) => !e.id);
+      setAnyUpdate((prev) => prev || technicians.length !== 0);
       setAddedTechnicians(
-        addedJobTechnicians.map((e) => ({
+        technicians.map((e) => ({
           technician_id: e.technician_user?.id,
           role_id: e.role_id!,
         }))
@@ -115,6 +133,7 @@ export function useJobTechnician(
       const technicians = jobTechnicians.filter(
         (e1) => !allJobTechnicians.some((e2) => e2.id && e1.id === e2.id)
       );
+      setAnyUpdate((prev) => prev || technicians.length !== 0);
       setDeletedTechnicians(technicians.map((e) => e.technician_user_id!));
     };
 
@@ -128,6 +147,7 @@ export function useJobTechnician(
             (e2) => e1.id === e2.id && e2.role_id !== e1.role_id
           )
       );
+      setAnyUpdate((prev) => prev || technicians.length !== 0);
       setUpdatedTechnicians(
         technicians.map((e) => ({
           technician_id: e.technician_user_id,
@@ -145,5 +165,6 @@ export function useJobTechnician(
     addedTechnicians,
     updatedTechnicians,
     deletedTechnicians,
+    anyUpdate,
   };
 }

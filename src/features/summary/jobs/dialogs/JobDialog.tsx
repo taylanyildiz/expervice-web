@@ -2,13 +2,13 @@ import { DialogCustomTitle } from "@Components/dialogs";
 import JobDialogAction from "./JobDialogAction";
 import { EActionType } from "@Components/dialogs/DialogCustomActions";
 import { useEffect, useState } from "react";
-import { useJob, useJobCreate, useJobTechnician } from "../helper/job_helper";
+import { useJob, useJobCreate, useJobUpdate } from "../helper/job_helper";
 import { useDispatch } from "react-redux";
 import { setJob, setJobId } from "@Store/job_store";
 import { useFormik } from "formik";
 import JobRepository from "@Repo/job_repository";
 import { useDialog } from "@Utils/hooks/dialog_hook";
-import { Box, DialogContent } from "@mui/material";
+import { Box, DialogContent, Typography } from "@mui/material";
 import Job from "@Models/job/job";
 import JobTechnicians from "./JobTechnicians";
 import Unit from "@Models/units/unit";
@@ -17,6 +17,8 @@ import JobDialogInfo from "./JobDialogInfo";
 import TabBar from "@Components/TabBar";
 import { EJobPriorites } from "../entities/job_enums";
 import { jobValidaotr } from "../validator/job_validator";
+import VisibilityComp from "@Components/VisibilityComp";
+import Colors from "@Themes/colors";
 
 function JobDialog(props?: { unit?: Unit | null }) {
   const { unit } = props ?? {};
@@ -24,11 +26,14 @@ function JobDialog(props?: { unit?: Unit | null }) {
   const { job, jobId } = useJob();
   const isEdit = Boolean(job);
 
+  /// Title of dialog
+  const title = isEdit ? "Job Edit" : "Job Create";
+
   /// Dispacth
   const dispatch = useDispatch();
 
   /// Dialog hook
-  const { openLoading } = useDialog();
+  const { openLoading, closeDialog, openConfirm } = useDialog();
 
   /// Job Repository
   const jobRepo = new JobRepository();
@@ -37,8 +42,18 @@ function JobDialog(props?: { unit?: Unit | null }) {
   const [actionType, setActionType] = useState<EActionType | null>(null);
 
   /// Action changed handle
-  const onChangedActionHandle = (type: EActionType) => {
+  const onChangedActionHandle = async (type: EActionType) => {
     if (type === EActionType.Delete) {
+      const result = await openConfirm(
+        "Delete Job",
+        "Are you sure to delete job ?"
+      );
+      if (result) {
+        const result = await openLoading(async () => {
+          return jobRepo.deleteJob(jobId!);
+        });
+        if (result) closeDialog();
+      }
       return;
     }
     setActionType(type);
@@ -50,17 +65,20 @@ function JobDialog(props?: { unit?: Unit | null }) {
     if (!job) return;
     for (let [k, v] of Object.entries(job)) {
       formik.setFieldValue(k, v);
+      if (k === "job_statuses") {
+        formik.setFieldValue("description", v[0]?.["description"]);
+      }
     }
   }, [job]);
 
-  ///
+  /// Initialize unit
   useEffect(() => {
     if (unit) {
       formik.setFieldValue("unit", unit);
     }
   }, [unit]);
 
-  ///
+  /// Get Job By Id
   useEffect(() => {
     if (!jobId) return;
     openLoading(async () => {
@@ -73,10 +91,11 @@ function JobDialog(props?: { unit?: Unit | null }) {
     return () => {
       dispatch(setJobId(null));
       dispatch(setJob(null));
+      jobRepo.getJobs();
     };
   }, []);
 
-  const process = async () => {
+  const process = async (): Promise<Job | null> => {
     const result = await openLoading(async () => {
       let result: Job | null = null;
       if (!isEdit) result = await jobRepo.createJob(createJob!);
@@ -102,27 +121,34 @@ function JobDialog(props?: { unit?: Unit | null }) {
           }
         }
       }
+      return result;
     });
+    return result ?? job;
   };
 
   /// Submit handle
   const onSubmitHandle = async () => {
-    const job = await process();
+    const processJob = await process();
+    dispatch(setJob(processJob));
+    if (!jobId) dispatch(setJobId(processJob?.id));
     switch (actionType) {
-      case EActionType.Save:
-        break;
       case EActionType.SaveClose:
+        closeDialog();
         break;
       case EActionType.SaveNew:
+        formik.resetForm();
+        dispatch(setJob(null));
         break;
     }
   };
 
   /// Formik
   const initialValues: Job = {
+    unit: undefined,
     sub_type_id: 1,
     priority_id: EJobPriorites.Highest,
     job_technicians: [],
+    description: "",
   };
   const formik = useFormik({
     initialValues,
@@ -134,12 +160,25 @@ function JobDialog(props?: { unit?: Unit | null }) {
   const createJob = useJobCreate(formik);
 
   /// Job technician hook
-  const { addedTechnicians, deletedTechnicians, updatedTechnicians } =
-    useJobTechnician(job, formik);
+  const {
+    addedTechnicians,
+    deletedTechnicians,
+    updatedTechnicians,
+    anyUpdate,
+  } = useJobUpdate(job, formik);
 
   return (
     <>
-      <DialogCustomTitle title="Job Create" />
+      <DialogCustomTitle title={title} />
+      <VisibilityComp visibility={anyUpdate}>
+        <Box pl={1} m={0} sx={{ backgroundColor: Colors.warning }}>
+          <Typography
+            fontSize={13}
+            color="white"
+            children="Please click save to save changes"
+          />
+        </Box>
+      </VisibilityComp>
       <DialogContent>
         <Box mt={1}>
           <TabBar
@@ -156,7 +195,7 @@ function JobDialog(props?: { unit?: Unit | null }) {
               {
                 visibility: isEdit,
                 title: "Job Steps",
-                panel: <JobStepper job={job} onContinue={() => {}} />,
+                panel: <JobStepper job={job} />,
               },
             ]}
           />
