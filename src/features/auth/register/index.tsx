@@ -14,6 +14,9 @@ function RegisterPage() {
   /// Authentication store
   const { plan } = useSelector((state: RootState) => state.auth);
 
+  /// Account store
+  const { user } = useSelector((state: RootState) => state.account);
+
   /// Dispatch
   const dispatch = useDispatch();
 
@@ -34,6 +37,9 @@ function RegisterPage() {
       resetStorage(true);
     };
   }, []);
+
+  /// Redirect to summary
+  if (user) return <Navigate to={ERouter.Summary} />;
 
   /// If not have plan
   if (!plan) return <Navigate to={ERouter.Pricing} />;

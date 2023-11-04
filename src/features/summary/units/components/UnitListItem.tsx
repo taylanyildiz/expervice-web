@@ -14,7 +14,7 @@ interface UnitListItemProps {
 }
 
 function UnitListItem(props: UnitListItemProps) {
-  const { unit, selected, onClick, onMap } = props;
+  const { unit, onClick, onMap } = props;
   return (
     <div className="unit-list-item" onClick={onClick}>
       <Stack flex={1} direction="column">

@@ -26,10 +26,10 @@ function AssetImage(props: AssetImageProps) {
 }
 
 /// Image Props Type
-type ImagePropsType = (props?: ImageProps) => React.ReactNode;
+// type ImagePropsType = (props?: ImageProps) => React.ReactNode;
 
 /// [Images] type
-type ImagesType = Record<string, ImagePropsType>;
+// type ImagesType = Record<string, ImagePropsType>;
 
 /**
  *  Asset Images

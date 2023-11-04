@@ -2,7 +2,7 @@ import GMap from "@Components/GMap";
 import UnitRepository from "@Repo/unit_repository";
 import { AppDispatch } from "@Store/index";
 import { setUnitFilter, setUnitId } from "@Store/unit_store";
-import { Box, CircularProgress, Divider, List } from "@mui/material";
+import { Divider, List } from "@mui/material";
 import { ReactNode, useEffect, useMemo } from "react";
 import { useDispatch } from "react-redux";
 import { useUnit } from "../helper/unit_helper";
@@ -18,7 +18,6 @@ function UnitsMapPage() {
 
   /// Unit store
   const {
-    layzLoading: loading,
     units: { rows },
   } = useUnit();
 

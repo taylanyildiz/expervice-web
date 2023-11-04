@@ -1,6 +1,6 @@
 import Icons from "@Assets/icons";
 import Images from "@Assets/images";
-import { Button, Container, Grid, Paper, Typography } from "@mui/material";
+import { Button, Grid, Typography } from "@mui/material";
 import { Link } from "react-router-dom";
 
 interface FooterProps {

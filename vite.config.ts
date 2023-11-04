@@ -7,6 +7,10 @@ export default defineConfig({
   plugins: [react()],
   resolve: {
     alias: [
+      {
+        find: './runtimeConfig',
+        replacement: './runtimeConfig.browser', // ensures browser compatible version of AWS JS SDK is used
+      },
       { find: '@Assets', replacement: resolve(__dirname, './src/assets') },
       { find: '@Components', replacement: resolve(__dirname, './src/components') },
       { find: '@Features', replacement: resolve(__dirname, './src/features') },
@@ -19,4 +23,7 @@ export default defineConfig({
       { find: '@Store', replacement: resolve(__dirname, './src/stores') },
     ]
   },
+  build: {
+    outDir: "build"
+  }
 })

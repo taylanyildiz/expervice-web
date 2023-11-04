@@ -1,4 +1,4 @@
-import { AnyAction, combineReducers, configureStore } from '@reduxjs/toolkit'
+import { combineReducers, configureStore } from '@reduxjs/toolkit'
 import { persistStore, persistReducer, FLUSH, REGISTER, PURGE, PERSIST, PAUSE, REHYDRATE } from 'redux-persist'
 import storage from 'redux-persist/lib/storage'
 import constant from './constant_store';
@@ -44,14 +44,6 @@ const rootPersistConfig = {
 /// Persisted Reducer
 const persistedReducer = persistReducer(rootPersistConfig, appReducer)
 
-/// Clear all storage
-export const clearAll = (): void => {
-    storage.removeItem('persist:root')
-    const state = {} as RootState
-    const action = {} as AnyAction;
-    appReducer(state, action);
-}
-
 /// Redux Store
 export const store = configureStore({
     reducer: persistedReducer,
@@ -71,5 +63,3 @@ export type RootState = ReturnType<typeof store.getState>
 
 /// Dispatch Type
 export type AppDispatch = typeof store.dispatch
-
-

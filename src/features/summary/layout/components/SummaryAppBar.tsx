@@ -18,15 +18,20 @@ import GroupOutlinedIcon from "@mui/icons-material/GroupOutlined";
 import EngineeringOutlinedIcon from "@mui/icons-material/EngineeringOutlined";
 import ERouter from "@Routes/router_enum";
 import { useNavigate } from "react-router-dom";
-import { clearAll } from "@Store/index";
+import { useDispatch } from "react-redux";
+import { AppDispatch } from "@Store/index";
+import { logout } from "@Store/account_store";
 
 function SummaryAppBar() {
   /// Navigate
   const navigate = useNavigate();
 
+  /// Dispatch
+  const dispatch: AppDispatch = useDispatch<AppDispatch>();
+
   /// Logout handle
-  const onLogoutHandle = () => {
-    clearAll();
+  const onLogoutHandle = async () => {
+    dispatch(logout());
     navigate(ERouter.Base);
   };
 

@@ -28,10 +28,15 @@ const account = createSlice({
         },
         setRefreshToken: (state, { payload }) => {
             state.refreshToken = payload;
+        },
+        logout: (state) => {
+            state.refreshToken = undefined;
+            state.accessToken = undefined;
+            state.user = undefined;
         }
     }
 });
 
 
 export default account.reducer;
-export const { setAccount, setUser, setAccessToken, setRefreshToken } = account.actions;
+export const { setAccount, setUser, setAccessToken, setRefreshToken, logout } = account.actions;

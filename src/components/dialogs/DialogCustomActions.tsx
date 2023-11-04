@@ -1,6 +1,5 @@
 import { DialogActions, Grid } from "@mui/material";
 import { ReactNode } from "react";
-import { VisibilityComp } from "..";
 
 interface LeadingProps {
   visibility?: boolean;

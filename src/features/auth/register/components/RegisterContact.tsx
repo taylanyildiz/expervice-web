@@ -2,7 +2,6 @@ import TextOutlineField from "@Components/TextOutlineField";
 import {
   CitySelect,
   CountrySelect,
-  InputCustomMask,
   PrimaryButton,
   StateSelect,
 } from "@Components/index";
@@ -14,6 +13,7 @@ import { registerPrimaryContactValidation } from "../validator/register_validato
 import Colors from "@Themes/colors";
 import { useRegister } from "@Utils/hooks/register_hook";
 import { useEffect } from "react";
+import { PhoneMask } from "@Components/TextInputMask";
 
 function RegisterContact() {
   /// Register hooks
@@ -142,20 +142,15 @@ function PrimaryContact(props: {
         />
       </Grid>
       <Grid item xs={12}>
-        <InputCustomMask
-          mask="+\90 (999) 999 99 99"
-          onChange={formik.handleChange}
-          value={formik.values.phone}
-        >
-          <TextOutlineField
-            fullWidth
-            name="phone"
-            type="tel"
-            label="Primary Contact Phone"
-            helperText={formik.touched.phone && formik.errors.phone}
-            error={Boolean(formik.touched.phone && formik.errors.phone)}
-          />
-        </InputCustomMask>
+        <TextOutlineField
+          fullWidth
+          name="phone"
+          type="tel"
+          label="Primary Contact Phone"
+          helperText={formik.touched.phone && formik.errors.phone}
+          error={Boolean(formik.touched.phone && formik.errors.phone)}
+          inputComponent={PhoneMask}
+        />
       </Grid>
     </Grid>
   );

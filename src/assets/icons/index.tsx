@@ -32,10 +32,10 @@ function AssetIcon(props: AssetIconProps) {
  * default
  * [width] 40
  */
-type IconPropsType = (props?: IconProps) => React.ReactNode;
+// type IconPropsType = (props?: IconProps) => React.ReactNode;
 
 /// [Icon] type
-type IconsType = Record<string, IconPropsType>;
+// type IconsType = Record<string, IconPropsType>;
 
 /**
  *  Asset Icon
