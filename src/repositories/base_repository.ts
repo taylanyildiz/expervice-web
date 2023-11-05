@@ -1,4 +1,4 @@
-// import logger from "@Log/logger";
+import logger from "@Log/logger";
 import { setAccessToken } from "@Store/account_store";
 import { store } from "@Store/index";
 import { Axios, AxiosRequestConfig, AxiosResponse, InternalAxiosRequestConfig } from "axios";
@@ -44,16 +44,16 @@ abstract class BaseRepository extends Axios {
 
     /// On request listen
     private async onRequest(config: InternalAxiosRequestConfig): Promise<InternalAxiosRequestConfig<any>> {
-        // logger.info(
-        //     "\n******************************\n" +
-        //     "REQUEST INFO \n" +
-        //     `TYPE     => ${config.method}\n` +
-        //     `BASEURL  => ${config.baseURL}\n` +
-        //     `URL      => ${config.url}\n` +
-        //     `BODY     => ${JSON.stringify(config.data)}\n` +
-        //     `PARAMS   => ${JSON.stringify(config.params)}\n` +
-        //     "******************************\n"
-        // );
+        logger.info(
+            "\n******************************\n" +
+            "REQUEST INFO \n" +
+            `TYPE     => ${config.method}\n` +
+            `BASEURL  => ${config.baseURL}\n` +
+            `URL      => ${config.url}\n` +
+            `BODY     => ${JSON.stringify(config.data)}\n` +
+            `PARAMS   => ${JSON.stringify(config.params)}\n` +
+            "******************************\n"
+        );
 
         const data = config.data;
         if (data) {
@@ -69,16 +69,16 @@ abstract class BaseRepository extends Axios {
 
     /// On reponse listen
     private async onResponse(value: AxiosResponse): Promise<AxiosResponse<any> & { success: boolean }> {
-        // logger.info(
-        //     "\n******************************\n" +
-        //     "RESPONSE INFO \n" +
-        //     `TYPE     => ${value.config.method}\n` +
-        //     `STATUS   => ${value.status}\n` +
-        //     `BASEURL  => ${value.config.baseURL}\n` +
-        //     `URL      => ${value.config.url}\n` +
-        //     `BODY     => ${JSON.stringify(value.data)}\n` +
-        //     "******************************\n"
-        // );
+        logger.info(
+            "\n******************************\n" +
+            "RESPONSE INFO \n" +
+            `TYPE     => ${value.config.method}\n` +
+            `STATUS   => ${value.status}\n` +
+            `BASEURL  => ${value.config.baseURL}\n` +
+            `URL      => ${value.config.url}\n` +
+            `BODY     => ${JSON.stringify(value.data)}\n` +
+            "******************************\n"
+        );
 
         /// Refresh token
         if (value.status === 401) {

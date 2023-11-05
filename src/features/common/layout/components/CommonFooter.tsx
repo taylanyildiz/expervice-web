@@ -1,4 +1,3 @@
-import Icons from "@Assets/icons";
 import Images from "@Assets/images";
 import { Button, Grid, Typography } from "@mui/material";
 import { Link } from "react-router-dom";
@@ -45,31 +44,31 @@ function CommonFooter(props: FooterProps) {
           <Grid
             item
             children={
-              <Link to="" children={Icons.instagramBlack({ height: 25 })} />
+              <Link to="" children={Images.instagramBlack({ height: 25 })} />
             }
           />
           <Grid
             item
             children={
-              <Link to="" children={Icons.facebookBlack({ height: 25 })} />
+              <Link to="" children={Images.facebookBlack({ height: 25 })} />
             }
           />
           <Grid
             item
             children={
-              <Link to="" children={Icons.linkedinBlack({ height: 25 })} />
+              <Link to="" children={Images.linkedinBlack({ height: 25 })} />
             }
           />
           <Grid
             item
             children={
-              <Link to="" children={Icons.twitterBlack({ height: 25 })} />
+              <Link to="" children={Images.twitterBlack({ height: 25 })} />
             }
           />
           <Grid
             item
             children={
-              <Link to="" children={Icons.youtubeBlack({ height: 25 })} />
+              <Link to="" children={Images.youtubeBlack({ height: 25 })} />
             }
           />
         </Grid>

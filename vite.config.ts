@@ -1,16 +1,22 @@
 import { resolve } from 'path';
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react-swc'
+import viteHtmlResolveAlias from 'vite-plugin-html-resolve-alias'
+
+
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  plugins: [react()],
+  plugins: [
+    viteHtmlResolveAlias(),
+  ],
   resolve: {
     alias: [
       {
         find: './runtimeConfig',
         replacement: './runtimeConfig.browser',
       },
+      { find: "@", replacement: resolve(__dirname, "./src") },
       { find: '@Assets', replacement: resolve(__dirname, './src/assets') },
       { find: '@Components', replacement: resolve(__dirname, './src/components') },
       { find: '@Features', replacement: resolve(__dirname, './src/features') },
@@ -24,6 +30,6 @@ export default defineConfig({
     ]
   },
   build: {
-    outDir: "build"
+    outDir: "build",
   }
 })

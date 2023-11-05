@@ -1,4 +1,4 @@
-import Icons from "@Assets/icons";
+import Images from "@Assets/images";
 import { Grid } from "@mui/material";
 import { Link } from "react-router-dom";
 
@@ -9,16 +9,16 @@ function SocialMediaBox() {
   return (
     <Grid container columnSpacing={2}>
       <Grid item>
-        <Link to="" children={Icons.facebookWhite({ width: size })} />
+        <Link to="" children={Images.facebookWhite({ width: size })} />
       </Grid>
       <Grid item>
-        <Link to="" children={Icons.instagramWhite({ width: size })} />
+        <Link to="" children={Images.instagramWhite({ width: size })} />
       </Grid>
       <Grid item>
-        <Link to="" children={Icons.twitterWhite({ width: size })} />
+        <Link to="" children={Images.twitterWhite({ width: size })} />
       </Grid>
       <Grid item>
-        <Link to="" children={Icons.linkedinWhite({ width: size })} />
+        <Link to="" children={Images.linkedinWhite({ width: size })} />
       </Grid>
     </Grid>
   );
