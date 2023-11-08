@@ -1,7 +1,7 @@
 import { store } from "@Store/index";
 import BaseRepository from "./base_repository";
 import Constant from "./end-points/constant";
-import { setGroupRoles, setJobPriorities, setJobRoles, setJobSubTypes, setLanguages, setPermissions, setRolePermissions, setUnitLabels, setUnitSubTypes, setUnitTypes, setUserRoleTypes, setUserRoles } from "@Store/constant_store";
+import { setFieldTypes, setGroupRoles, setJobPriorities, setJobRoles, setJobSubTypes, setLanguages, setPermissions, setRolePermissions, setUnitLabels, setUnitSubTypes, setUnitTypes, setUserRoleTypes, setUserRoles } from "@Store/constant_store";
 
 class ConstantRepository extends BaseRepository {
     constructor() {
@@ -142,6 +142,17 @@ class ConstantRepository extends BaseRepository {
         if (!response.success) return;
         const data = response.data['data']['priorities'];
         store.dispatch(setJobPriorities(data));
+    }
+
+    /**
+     * Get Field Types
+     */
+    public async getFieldTypes(): Promise<void> {
+        const path = Constant.fieldTypes;
+        const response = await this.get(path);
+        if (!response.success) return;
+        const data = response.data['data']['field_types'];
+        store.dispatch(setFieldTypes(data));
     }
 
 }

@@ -166,7 +166,7 @@ function UnitDialog() {
               },
               {
                 visibility: isEdit,
-                title: `All Jobs`,
+                title: `All Jobs (${unit?.job_count})`,
                 panel: <UnitJobs />,
               },
             ]}

@@ -32,4 +32,5 @@ export { default as SelectAvailableTechnicians } from "./SelectAvailableTechnici
 export { default as SelectJobRole } from "./SelectJobRole";
 export { default as SelectJobPriority } from "./SelectJobPriority";
 export { default as LoadingComp } from "./LoadingComp";
+export { default as SelectFormFieldType } from "./SelectFormFieldType";
 export { DialogCustomTitle, DialogCustomActions } from "./dialogs";

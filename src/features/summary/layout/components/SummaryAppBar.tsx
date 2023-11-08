@@ -75,7 +75,7 @@ function SummaryAppBar() {
                   {
                     prefix: <FeedIcon />,
                     title: "All Forms",
-                    onClick: () => {},
+                    to: ERouter.Forms,
                   },
                   {
                     prefix: <ContactsIcon />,

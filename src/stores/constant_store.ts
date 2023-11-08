@@ -1,3 +1,4 @@
+import FieldType from "@Models/form/field_type";
 import { Language, UserRole } from "@Models/index";
 import JobPriority from "@Models/job/job_priority";
 import JobRole from "@Models/job/job_role";
@@ -25,6 +26,7 @@ interface Props {
     jobSubTypes: JobSubType[],
     jobRoles: JobRole[],
     jobPriorities: JobPriority[],
+    fieldTypes: FieldType[],
 }
 
 /// Constant Initial States
@@ -41,6 +43,7 @@ const initialStates: Props = {
     jobSubTypes: [],
     jobRoles: [],
     jobPriorities: [],
+    fieldTypes: [],
 }
 
 /// Constants slice
@@ -83,6 +86,9 @@ const constants = createSlice({
         },
         setJobPriorities: (state, { payload }) => {
             state.jobPriorities = payload;
+        },
+        setFieldTypes: (state, { payload }) => {
+            state.fieldTypes = payload;
         }
     },
 });
@@ -102,4 +108,5 @@ export const {
     setJobSubTypes,
     setJobRoles,
     setJobPriorities,
+    setFieldTypes,
 } = constants.actions;
