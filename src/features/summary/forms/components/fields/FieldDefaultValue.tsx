@@ -1,6 +1,6 @@
 import TextOutlineField from "@Components/TextOutlineField";
 import Field from "@Models/form/field";
-import { FormikProps } from "formik";
+import { FormikErrors, FormikProps, FormikTouched } from "formik";
 import { EFormFielType } from "../../entities/form_enums";
 import {
   Autocomplete,
@@ -24,6 +24,13 @@ function FieldDefaultValue(props: FieldDefaultValueProps) {
   const { formik } = props;
   const type = formik.values.field_type_id;
 
+  const optionError = formik.errors.options as FormikErrors<{
+    label?: string;
+  }>[];
+  const optionTouch = formik.touched.options as FormikTouched<{
+    label?: string;
+  }>[];
+
   switch (type) {
     case EFormFielType.TextFormField:
       return (
@@ -31,6 +38,12 @@ function FieldDefaultValue(props: FieldDefaultValueProps) {
           fullWidth
           label="Default Value"
           name="default_value"
+          helperText={
+            formik.touched.default_value && formik.errors.default_value
+          }
+          error={Boolean(
+            formik.touched.default_value && formik.errors.default_value
+          )}
           onChange={formik.handleChange}
           value={formik.values.default_value}
         />
@@ -44,7 +57,7 @@ function FieldDefaultValue(props: FieldDefaultValueProps) {
           <Grid item>
             <FormControlLabel
               label={"True"}
-              checked={formik.values.default_value === "false"}
+              checked={formik.values.default_value === "true"}
               onChange={(_) => formik.setFieldValue("default_value", "true")}
               control={<Checkbox size="small" />}
             />
@@ -64,8 +77,11 @@ function FieldDefaultValue(props: FieldDefaultValueProps) {
         <Grid container>
           <Grid item xs={12}>
             <Autocomplete
-              options={formik.values.options?.map((e) => e.label) ?? []}
+              options={formik.values.options?.map((e) => e.label ?? "") ?? []}
               value={formik.values.default_value ?? null}
+              onChange={(_, v) => {
+                formik.setFieldValue("default_value", v);
+              }}
               renderInput={(props) => {
                 return (
                   <FormControl fullWidth>
@@ -115,43 +131,61 @@ function FieldDefaultValue(props: FieldDefaultValueProps) {
                 </IconButton>
               </Grid>
               <Grid item xs={12}>
-                {formik.values.options?.map((e, index) => (
-                  <Grid key={index} container alignItems="center">
-                    <Grid item flex={1}>
-                      <TextOutlineField
-                        fullWidth
-                        label="Label"
-                        value={e.label}
-                        onChange={(e) => {
-                          const value = e.target.value;
-                          const options = [
-                            ...(formik.values.options?.map((e) => ({ ...e })) ??
-                              []),
-                          ];
-                          options[index].label = value;
-                          formik.setFieldValue("options", options);
-                        }}
-                      />
-                    </Grid>
+                {formik.values.options?.map((e, index) => {
+                  return (
+                    <>
+                      <Grid key={index} container alignItems="center">
+                        <Grid item flex={1}>
+                          <TextOutlineField
+                            fullWidth
+                            label="Label"
+                            value={e.label}
+                            helperText={
+                              optionError &&
+                              optionTouch &&
+                              optionTouch[index] &&
+                              optionError[index]?.label
+                            }
+                            error={
+                              optionError &&
+                              optionTouch &&
+                              optionTouch[index] &&
+                              optionTouch[index]?.label
+                            }
+                            onChange={(e) => {
+                              const value = e.target.value;
+                              const options = [
+                                ...(formik.values.options?.map((e) => ({
+                                  ...e,
+                                })) ?? []),
+                              ];
+                              options[index].label = value;
+                              formik.setFieldValue("options", options);
+                            }}
+                          />
+                        </Grid>
 
-                    <Grid item>
-                      <IconButton
-                        onClick={() => {
-                          const options = [
-                            ...(formik.values.options?.map((e) => ({ ...e })) ??
-                              []),
-                          ];
-                          formik.setFieldValue(
-                            "options",
-                            options.filter((_, i) => i !== index)
-                          );
-                        }}
-                      >
-                        <DeleteOutlineIcon />
-                      </IconButton>
-                    </Grid>
-                  </Grid>
-                ))}
+                        <Grid item>
+                          <IconButton
+                            onClick={() => {
+                              const options = [
+                                ...(formik.values.options?.map((e) => ({
+                                  ...e,
+                                })) ?? []),
+                              ];
+                              formik.setFieldValue(
+                                "options",
+                                options.filter((_, i) => i !== index)
+                              );
+                            }}
+                          >
+                            <DeleteOutlineIcon />
+                          </IconButton>
+                        </Grid>
+                      </Grid>
+                    </>
+                  );
+                })}
               </Grid>
             </Grid>
           </Grid>

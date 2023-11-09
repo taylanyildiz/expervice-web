@@ -1,5 +1,5 @@
 import { DialogCustomTitle } from "@Components/dialogs";
-import { useForm } from "../helper/form_helper";
+import { useForm, useFormProcess } from "../helper/form_helper";
 import FormPDFDialogAction from "./FormPDFDialogAction";
 import { EActionType } from "@Components/dialogs/DialogCustomActions";
 import { useEffect, useState } from "react";
@@ -13,6 +13,8 @@ import { useDialog } from "@Utils/hooks/dialog_hook";
 import { AppDispatch } from "@Store/index";
 import { useDispatch } from "react-redux";
 import { setForm, setFormId } from "@Store/form_store";
+import FormCustomersContent from "./FormCustomersContent";
+import { object, string } from "yup";
 
 function FormPDFDialog() {
   const { form, formId } = useForm();
@@ -22,7 +24,7 @@ function FormPDFDialog() {
   const dispatch: AppDispatch = useDispatch<AppDispatch>();
 
   /// Dialog hook
-  const { openLoading } = useDialog();
+  const { openLoading, closeDialog } = useDialog();
 
   /// Form repository
   const formRepo = new FormRepository();
@@ -39,26 +41,49 @@ function FormPDFDialog() {
       return;
     }
     setActionType(type);
+    formik.handleSubmit();
+  };
+
+  /// Process form
+  const process = async () => {
+    const result = await openLoading(async () => {
+      if (!isEdit) return await formRepo.createForm(formProcess!);
+      // update form
+    });
+    return result ?? form;
   };
 
   /// Submit handle
-  const onSubmitHandle = () => {
+  const onSubmitHandle = async () => {
+    const result = await process();
     switch (actionType) {
       case EActionType.Save:
+        dispatch(setForm(result));
         break;
       case EActionType.SaveClose:
+        closeDialog();
         break;
       case EActionType.SaveNew:
+        formik.resetForm();
+        dispatch(setForm(null));
         break;
     }
   };
 
   /// Formik
-  const initialValues: Form = {};
+  const initialValues: Form = {
+    name: "",
+  };
   const formik = useFormik({
     initialValues,
+    validationSchema: object({
+      name: string().nullable().required().min(2, "Invalid name"),
+    }),
     onSubmit: onSubmitHandle,
   });
+
+  /// Form process
+  const { formProcess } = useFormProcess(formik, form);
 
   /// Initialize component
   useEffect(() => {
@@ -67,6 +92,14 @@ function FormPDFDialog() {
       await formRepo.getForm(formId);
     });
   }, [formId]);
+
+  /// Template pdf
+  useEffect(() => {
+    formRepo.formPdfTemplate({
+      fields: form?.fields,
+      name: form?.name,
+    });
+  }, [form]);
 
   /// Initialize formik
   useEffect(() => {
@@ -94,6 +127,11 @@ function FormPDFDialog() {
               {
                 title: "Content",
                 panel: <FormPdFDialogContent formik={formik} />,
+              },
+              {
+                visibility: isEdit,
+                title: "Customers",
+                panel: <FormCustomersContent />,
               },
             ]}
           />

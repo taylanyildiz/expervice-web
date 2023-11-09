@@ -16,6 +16,7 @@ const Constant = {
     jobRoles: "/job-roles",
     jobPriorities: "/job-priorities",
     fieldTypes: "/field-types",
+    jobStatuses: "/job-statuses",
 }
 
 export default Constant;

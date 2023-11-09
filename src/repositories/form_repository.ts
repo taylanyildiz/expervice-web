@@ -1,8 +1,11 @@
 import { store } from "@Store/index";
 import BaseRepository from "./base_repository";
 import Formconst from "./end-points/form";
-import { setForm, setFormLayzLoading, setForms } from "@Store/form_store";
+import { setForm, setFormCustomers, setFormLayzLoading, setFormPdfTemplate, setForms } from "@Store/form_store";
 import SnackCustomBar from "@Utils/snack_custom_bar";
+import FormTemplateProcess from "@Features/summary/forms/entities/form_template_process";
+import FormProcess from "@Features/summary/forms/entities/form_process";
+import Form from "@Models/form/form";
 
 class FormRepository extends BaseRepository {
     constructor() {
@@ -56,11 +59,36 @@ class FormRepository extends BaseRepository {
     /**
      * Form Template
      */
-    public async formPdfTemplate(): Promise<string | null> {
+    public async formPdfTemplate(form: FormTemplateProcess): Promise<boolean> {
         const path = Formconst.template();
-        const data = {};
-        const response = await this.post(path, data);
-        return response.data?.['data']?.['pdf'];
+        const response = await this.post(path, form);
+        const success = response.success;
+        const data = response.data?.['data']?.['pdf'];
+        store.dispatch(setFormPdfTemplate(data));
+        return success;
+    }
+
+    /**
+     * Form Template
+     */
+    public async formCustomers(id: number, filter?: { limit: number, offset: number }): Promise<boolean> {
+        const path = Formconst.customers(id);
+        const response = await this.get(path, { params: filter });
+        const success = response.success;
+        const data = response.data?.['data']?.['customers'];
+        store.dispatch(setFormCustomers(data));
+        return success;
+    }
+
+    /**
+     * Create form
+     */
+    public async createForm(form: FormProcess): Promise<Form | null> {
+        const path = "/";
+        const response = await this.post(path, form);
+        SnackCustomBar.status(response);
+        const data = response.data?.['data']?.['form'];
+        return data;
     }
 }
 

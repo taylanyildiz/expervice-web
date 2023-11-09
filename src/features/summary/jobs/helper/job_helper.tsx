@@ -46,7 +46,9 @@ export function useJobDialog() {
   };
 }
 
-/// Create Job hook
+/**
+ * Create Job hook
+ */
 export function useJobCreate(formik: FormikProps<Job>) {
   const [job, setJob] = useState<JobProcess | null>(null);
 

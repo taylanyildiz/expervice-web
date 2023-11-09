@@ -9,7 +9,7 @@ interface Field {
     description?: string;
     default_value?: string;
     mandantory?: boolean;
-    options?: { label: string }[]
+    options: { label?: string }[]
     field_type?: FieldType;
     created_at?: string;
     updated_at?: string;

@@ -2,6 +2,7 @@ import { store } from "@Store/index";
 import BaseRepository from "./base_repository";
 import Constant from "./end-points/constant";
 import { setFieldTypes, setGroupRoles, setJobPriorities, setJobRoles, setJobSubTypes, setLanguages, setPermissions, setRolePermissions, setUnitLabels, setUnitSubTypes, setUnitTypes, setUserRoleTypes, setUserRoles } from "@Store/constant_store";
+import JobStatus from "@Models/job/job_status";
 
 class ConstantRepository extends BaseRepository {
     constructor() {
@@ -153,6 +154,18 @@ class ConstantRepository extends BaseRepository {
         if (!response.success) return;
         const data = response.data['data']['field_types'];
         store.dispatch(setFieldTypes(data));
+    }
+
+    /**
+     * Get Job Statuses
+     */
+    public async getJobStatuses(props?: { job_type?: number, status_id?: number }): Promise<JobStatus[] | null> {
+        const path = Constant.jobStatuses;
+        const response = await this.get(path, { params: props });
+        if (!response.success) return null;
+        const data = response.data['data']['job_statuses'];
+        store.dispatch(setFieldTypes(data));
+        return data;
     }
 
 }

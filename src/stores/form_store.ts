@@ -1,5 +1,5 @@
+import Customer from "@Models/customer/customer";
 import Form from "@Models/form/form";
-import FormCustomer from "@Models/form/form_customer";
 import { createSlice } from "@reduxjs/toolkit";
 
 interface Props {
@@ -8,7 +8,8 @@ interface Props {
     formFilter: { limit: number, offset: number } | null,
     form: Form | null;
     formId: number | null;
-    formCustomers: { rows: FormCustomer[], count: number },
+    formCustomers: { rows: Customer[], count: number },
+    formPdfTemplate: string | null;
 }
 
 const initialState: Props = {
@@ -18,6 +19,7 @@ const initialState: Props = {
     form: null,
     formId: null,
     formCustomers: { rows: [], count: 0 },
+    formPdfTemplate: null,
 }
 
 const form = createSlice({
@@ -36,11 +38,14 @@ const form = createSlice({
         setForm: (state, { payload }) => {
             state.form = payload;
         },
-        setFormCustomer: (state, { payload }) => {
+        setFormCustomers: (state, { payload }) => {
             state.formCustomers = payload;
         },
         setFormId: (state, { payload }) => {
             state.formId = payload;
+        },
+        setFormPdfTemplate: (state, { payload }) => {
+            state.formPdfTemplate = payload;
         }
     },
 });
@@ -49,9 +54,10 @@ const form = createSlice({
 export default form.reducer;
 export const {
     setForm,
-    setFormCustomer,
+    setFormCustomers,
     setFormFilter,
     setFormLayzLoading,
     setForms,
     setFormId,
+    setFormPdfTemplate,
 } = form.actions;

@@ -33,4 +33,6 @@ export { default as SelectJobRole } from "./SelectJobRole";
 export { default as SelectJobPriority } from "./SelectJobPriority";
 export { default as LoadingComp } from "./LoadingComp";
 export { default as SelectFormFieldType } from "./SelectFormFieldType";
+export { default as SelectJobStatus } from "./SelectJobStatus";
+export { default as DraggableList } from "./DraggableList";
 export { DialogCustomTitle, DialogCustomActions } from "./dialogs";

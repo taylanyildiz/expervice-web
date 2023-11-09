@@ -103,6 +103,63 @@ class CustomerUserRepository extends BaseRepository {
         return response.success;
     }
 
+    /**
+     * Delete Customer Form
+     */
+    public async deleteForm(id: number): Promise<boolean> {
+        const path = Customer.form(id);
+        const response = await this.delete(path);
+        const success = response.success;
+        SnackCustomBar.status(response);
+        return success;
+    }
+
+    /**
+     * Get Customer Form
+     */
+    public async getForm(id: number): Promise<boolean> {
+        const path = Customer.form(id);
+        const response = await this.get(path);
+        const success = response.success;
+        SnackCustomBar.status(response, { display: !success });
+        return success;
+    }
+
+    /**
+     * Get Customer Form as PDF
+     */
+    public async getFormPDF(id: number): Promise<string | null> {
+        const path = Customer.formPdf(id);
+        const response = await this.get(path);
+        const success = response.success;
+        SnackCustomBar.status(response, { display: !success });
+        return response.data?.['data']?.['pdf'];
+    }
+
+    /**
+     * Get Customer Forms
+     */
+    public async getForms(id: number): Promise<boolean> {
+        const path = Customer.forms(id);
+        const response = await this.get(path);
+        const success = response.success;
+        SnackCustomBar.status(response, { display: !success });
+        const data = response.data?.['data']?.['forms'];
+        return success;
+    }
+
+    /**
+     * Create Customer Form
+     */
+    public async createForm(form: any): Promise<boolean> {
+        const path = Customer.customerForm(form.customer_id, form.form_id);
+        const response = await this.post(path, form);
+        const success = response.success;
+        SnackCustomBar.status(response);
+        const data = response.data?.['data']?.['customer_form'];
+        return success;
+    }
+
 }
 
 export default CustomerUserRepository;

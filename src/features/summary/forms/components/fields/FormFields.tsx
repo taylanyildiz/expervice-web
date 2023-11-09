@@ -1,10 +1,12 @@
-import { Grid, IconButton, Stack, Typography } from "@mui/material";
+import { Box, Grid, IconButton, Stack, Typography } from "@mui/material";
 import { EFormFielType } from "../../entities/form_enums";
 import Field from "@Models/form/field";
 import VisibilityComp from "@Components/VisibilityComp";
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 import EditNoteOutlinedIcon from "@mui/icons-material/EditNoteOutlined";
 import { useFormDialog } from "../../helper/form_helper";
+import { FormikProps } from "formik";
+import Form from "@Models/form/form";
 
 export interface FormFieldProps {
   fieldType?: EFormFielType | null;
@@ -15,29 +17,35 @@ export interface FormFieldProps {
 }
 
 interface Props {
-  fields: Field[];
+  formik: FormikProps<Form>;
 }
 
 function FormFields(props: Props) {
-  const { fields } = props;
+  const { formik } = props;
+  const fields = formik.values.fields ?? [];
 
   /// Form dialog hook
   const { openFieldDialog } = useFormDialog();
 
-  const isTextField = (field: Field) =>
-    field.field_type_id === EFormFielType.TextFormField;
-  const isCheckbox = (field: Field) =>
-    field.field_type_id === EFormFielType.CheckBox;
   const isDrodown = (field: Field) =>
     field.field_type_id === EFormFielType.DropDown;
 
   /// Edit field
   const onEdit = async (field: Field, index: number) => {
     const result = await openFieldDialog(field);
+    if (!result) return;
+    const values = [...fields];
+    values[index] = result;
+    formik.setFieldValue("fields", values);
   };
 
   /// Edit field
-  const onDelete = (index: number) => {};
+  const onDelete = (index: number) => {
+    formik.setFieldValue(
+      "fields",
+      fields.filter((_, i) => i !== index)
+    );
+  };
 
   return fields.map((field, index) => (
     <Grid mt={1} item xs={12}>
@@ -107,9 +115,16 @@ function FormFields(props: Props) {
                   children={
                     <>
                       Field Options :{" "}
-                      {field.options?.map((e, index) => {
-                        <li key={index}>{e.label}</li>;
-                      })}
+                      <Box
+                        px={1}
+                        sx={{ border: 1 }}
+                        overflow="scroll"
+                        maxHeight={50}
+                      >
+                        {field.options?.map((e, index) => {
+                          return <li key={index}>{e.label}</li>;
+                        })}
+                      </Box>
                     </>
                   }
                 />
