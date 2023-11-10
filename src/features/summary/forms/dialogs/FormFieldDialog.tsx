@@ -3,13 +3,18 @@ import SelectFormFieldType from "@Components/SelectFormFieldType";
 import { DialogCustomActions, DialogCustomTitle } from "@Components/dialogs";
 import Field from "@Models/form/field";
 import { useDialog } from "@Utils/hooks/dialog_hook";
-import { Box, DialogContent, Grid } from "@mui/material";
+import {
+  Box,
+  Checkbox,
+  DialogContent,
+  FormControlLabel,
+  Grid,
+} from "@mui/material";
 import { useFormik } from "formik";
 import { useEffect } from "react";
-import FieldDefaultValue from "../components/fields/FieldDefaultValue";
+import FieldDefaultValue from "../components/FieldDefaultValue";
 import TextOutlineField from "@Components/TextOutlineField";
-import { array, object, string } from "yup";
-import { EFormFielType } from "../entities/form_enums";
+import { formFieldValidator } from "../validator/form_validator";
 
 interface FormFieldDialogProps {
   field?: Field;
@@ -34,33 +39,11 @@ function FormFieldDialog(props: FormFieldDialogProps) {
     field_type: undefined,
     label: "",
     description: "",
+    mandantory: false,
   };
   const formik = useFormik({
     initialValues,
-    validationSchema: object({
-      field_type: object().nullable().required(),
-      label: string().required().min(2, "Invalid label"),
-      description: string()
-        .nullable()
-        .notRequired()
-        .min(2, "Invalid description"),
-      options: array().when(["field_type_id"], {
-        is: (fieldType: number | null) => {
-          const isDropdown = fieldType === EFormFielType.DropDown;
-          return !isDropdown;
-        },
-        then: () => array().nullable().notRequired(),
-        otherwise: () =>
-          array()
-            .nullable()
-            .of(
-              object({
-                label: string().nullable().required().min(2, "Invalid label"),
-              })
-            )
-            .min(1, "Min 1 option"),
-      }),
-    }),
+    validationSchema: formFieldValidator,
     onSubmit: onSubmitHandle,
   });
 
@@ -123,6 +106,16 @@ function FormFieldDialog(props: FormFieldDialogProps) {
             </Grid>
             <Grid item xs={12}>
               <FieldDefaultValue formik={formik} />
+            </Grid>
+            <Grid item>
+              <FormControlLabel
+                checked={formik.values.mandantory}
+                onChange={(_, checked) =>
+                  formik.setFieldValue("mandantory", checked)
+                }
+                control={<Checkbox size="small" />}
+                label={"Is Required field"}
+              />
             </Grid>
           </Grid>
         </Box>

@@ -1,7 +1,7 @@
 import TextOutlineField from "@Components/TextOutlineField";
 import Field from "@Models/form/field";
 import { FormikErrors, FormikProps, FormikTouched } from "formik";
-import { EFormFielType } from "../../entities/form_enums";
+import { EFormFielType } from "../entities/form_enums";
 import {
   Autocomplete,
   Checkbox,

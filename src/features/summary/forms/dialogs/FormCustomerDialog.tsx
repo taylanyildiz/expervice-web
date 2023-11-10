@@ -140,7 +140,7 @@ function FormCustomerDialog(props: FormCustomerDialogProps) {
                     <SelectJobStatus
                       fullWidth
                       label="Current Job Status"
-                      jobType={formik.values.job_sub_type?.id}
+                      jobType={formik.values.job_sub_type?.type_id}
                       value={formik.values.current_job_status}
                       helperText={
                         formik.touched.current_job_status &&
@@ -160,7 +160,7 @@ function FormCustomerDialog(props: FormCustomerDialogProps) {
                     <SelectJobStatus
                       fullWidth
                       label="Next Job Status"
-                      jobType={formik.values.job_sub_type?.id}
+                      jobType={formik.values.job_sub_type?.type_id}
                       jobStatus={formik.values.current_job_status?.id}
                       value={formik.values.next_job_status}
                       helperText={

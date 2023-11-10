@@ -5,7 +5,7 @@ import { EActionType } from "@Components/dialogs/DialogCustomActions";
 import { useEffect, useState } from "react";
 import { useFormik } from "formik";
 import Form from "@Models/form/form";
-import { Box, DialogContent } from "@mui/material";
+import { Box, DialogContent, Typography } from "@mui/material";
 import TabBar from "@Components/TabBar";
 import FormPdFDialogContent from "./FormPdFDialogContent";
 import FormRepository from "@Repo/form_repository";
@@ -15,6 +15,8 @@ import { useDispatch } from "react-redux";
 import { setForm, setFormId } from "@Store/form_store";
 import FormCustomersContent from "./FormCustomersContent";
 import { object, string } from "yup";
+import VisibilityComp from "@Components/VisibilityComp";
+import Colors from "@Themes/colors";
 
 function FormPDFDialog() {
   const { form, formId } = useForm();
@@ -48,7 +50,18 @@ function FormPDFDialog() {
   const process = async () => {
     const result = await openLoading(async () => {
       if (!isEdit) return await formRepo.createForm(formProcess!);
-      // update form
+      if (formName) await formRepo.updateForm(form!.id!, formName);
+      if (addedFields) await formRepo.addFields(form!.id!, addedFields);
+      if (deletedFields) {
+        for (const field of deletedFields) {
+          await formRepo.deleteField(form!.id!, field);
+        }
+      }
+      if (updatedFieds) {
+        for (const field of updatedFieds) {
+          await formRepo.updateField(form!.id!, field);
+        }
+      }
     });
     return result ?? form;
   };
@@ -83,7 +96,14 @@ function FormPDFDialog() {
   });
 
   /// Form process
-  const { formProcess } = useFormProcess(formik, form);
+  const {
+    formProcess,
+    addedFields,
+    deletedFields,
+    updatedFieds,
+    anyUpdate,
+    formName,
+  } = useFormProcess(formik, form);
 
   /// Initialize component
   useEffect(() => {
@@ -114,12 +134,22 @@ function FormPDFDialog() {
     return () => {
       dispatch(setForm(null));
       dispatch(setFormId(null));
+      formRepo.getForms();
     };
   }, []);
 
   return (
     <>
       <DialogCustomTitle title={title} />
+      <VisibilityComp visibility={anyUpdate}>
+        <Box pl={1} m={0} sx={{ backgroundColor: Colors.warning }}>
+          <Typography
+            fontSize={13}
+            color="white"
+            children="Please click save to save changes"
+          />
+        </Box>
+      </VisibilityComp>
       <DialogContent>
         <Box mt={1}>
           <TabBar

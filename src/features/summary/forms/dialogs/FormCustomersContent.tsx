@@ -191,6 +191,7 @@ function FormCustomersContent() {
                       <TableCell children={customer.customer_forms?.length} />
                     </TableRow>
                     <TableCell
+                      key={index + customers.length}
                       style={{ paddingBottom: 0, paddingTop: 0 }}
                       colSpan={4}
                     >
@@ -208,7 +209,7 @@ function FormCustomersContent() {
                           </TableHead>
                           <TableBody>
                             {customer.customer_forms?.map((form, index) => (
-                              <TableRow key={index}>
+                              <TableRow key={index + 2 * customers.length}>
                                 <TableCell children={form.name} />
                                 <TableCell children={form.job_sub_type?.name} />
                                 <TableCell

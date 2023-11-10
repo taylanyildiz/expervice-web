@@ -6,6 +6,7 @@ import SnackCustomBar from "@Utils/snack_custom_bar";
 import FormTemplateProcess from "@Features/summary/forms/entities/form_template_process";
 import FormProcess from "@Features/summary/forms/entities/form_process";
 import Form from "@Models/form/form";
+import FormField from "@Features/summary/forms/entities/form_field";
 
 class FormRepository extends BaseRepository {
     constructor() {
@@ -89,6 +90,43 @@ class FormRepository extends BaseRepository {
         SnackCustomBar.status(response);
         const data = response.data?.['data']?.['form'];
         return data;
+    }
+
+    /**
+     * Update form
+     */
+    public async updateForm(id: number, name: string): Promise<boolean> {
+        const path = Formconst.form(id);
+        const response = await this.put(path, { name });
+        return response.success;
+    }
+
+    /**
+     * Add field to form
+     */
+    public async addFields(id: number, fields: FormField[]): Promise<Form | null> {
+        const path = Formconst.fields(id);
+        const response = await this.post(path, { fields });
+        const data = response.data?.['data']?.['form'];
+        return data;
+    }
+
+    /**
+     * Delete field from form
+     */
+    public async deleteField(id: number, field: number): Promise<boolean> {
+        const path = Formconst.field(id, field);
+        const response = await this.delete(path);
+        return response.success;
+    }
+
+    /**
+     * Update field from form
+     */
+    public async updateField(id: number, field: FormField): Promise<boolean> {
+        const path = Formconst.field(id, field.id!);
+        const response = await this.put(path, field);
+        return response.success;
     }
 }
 

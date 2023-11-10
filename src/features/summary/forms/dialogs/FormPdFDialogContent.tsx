@@ -1,10 +1,10 @@
 import PrimaryButton from "@Components/PrimaryButton";
 import TextOutlineField from "@Components/TextOutlineField";
 import Form from "@Models/form/form";
-import { Box, Grid, Typography } from "@mui/material";
+import { Box, Grid, Stack, Typography } from "@mui/material";
 import { FormikProps } from "formik";
 import AddIcon from "@mui/icons-material/Add";
-import FormFields from "../components/fields/FormFields";
+import FormFields from "../components/FormFields";
 import { useForm, useFormDialog } from "../helper/form_helper";
 import LoadingComp from "@Components/LoadingComp";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
@@ -31,7 +31,10 @@ function FormPdFDialogContent(props: FormPdFDialogContentProps) {
   const onAddField = async () => {
     const result = await openFieldDialog();
     if (!result) return;
-    formik.setFieldValue("fields", [...fields, result]);
+    formik.setFieldValue("fields", [
+      ...fields,
+      { ...result, order_number: fields.length },
+    ]);
   };
 
   /// Handle review form
@@ -43,28 +46,26 @@ function FormPdFDialogContent(props: FormPdFDialogContentProps) {
   };
 
   return (
-    <Grid container columnSpacing={10}>
-      <Grid item xs={5}>
-        <Grid container>
-          <Grid item xs={12}>
-            <Typography variant="h1" fontSize={15} children="Form Content" />
-          </Grid>
-          <Grid item xs={12} mt={1}>
-            <TextOutlineField
-              fullWidth
-              name="name"
-              label="Name"
-              helperText={formik.touched.name && formik.errors.name}
-              error={Boolean(formik.touched.name && formik.errors.name)}
-              value={formik.values.name}
-              onChange={formik.handleChange}
-            />
-          </Grid>
-          <Grid item xs={12}>
+    <Grid container flex={1}>
+      <Grid item flex={1} pr={5}>
+        <Stack spacing={1}>
+          <Typography variant="h1" fontSize={15} children="Form Content" />
+          <TextOutlineField
+            fullWidth
+            name="name"
+            label="Name"
+            helperText={formik.touched.name && formik.errors.name}
+            error={Boolean(formik.touched.name && formik.errors.name)}
+            value={formik.values.name}
+            onChange={formik.handleChange}
+          />
+          <Stack
+            mb={1}
+            direction="row"
+            justifyContent="space-between"
+            alignItems="center"
+          >
             <Typography variant="h1" fontSize={15} children="Form Fields" />
-          </Grid>
-          <FormFields formik={formik} />
-          <Grid item xs={12} mt={2}>
             <PrimaryButton
               color="blue"
               prefix={<AddIcon />}
@@ -72,10 +73,11 @@ function FormPdFDialogContent(props: FormPdFDialogContentProps) {
               variant="text"
               onClick={() => onAddField()}
             />
-          </Grid>
-        </Grid>
+          </Stack>
+          <FormFields formik={formik} />
+        </Stack>
       </Grid>
-      <Grid item>
+      <Grid item xs={1}>
         <PrimaryButton
           suffix={<ChevronRightIcon />}
           variant="outlined"
@@ -85,7 +87,7 @@ function FormPdFDialogContent(props: FormPdFDialogContentProps) {
         />
       </Grid>
       <Grid item xs={5}>
-        <Box sx={{ height: 500 }}>
+        <Box sx={{ height: 530 }}>
           <LoadingComp loading={!Boolean(formPdfTemplate)}>
             <embed
               width="100%"
