@@ -65,7 +65,7 @@ export function useFormProcess(formik: FormikProps<Form>, form: Form | null) {
       fields: values.fields?.map(
         (e) =>
           ({
-            options: isDropdown(e.field_type_id) ? null : e.options,
+            options: isDropdown(e.field_type_id) ? e.options : null,
             default_value: e.default_value,
             description: e.description,
             field_type_id: e.field_type?.id,

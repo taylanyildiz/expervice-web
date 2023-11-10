@@ -270,7 +270,15 @@ const theme = createTheme({
                     fontSize: 13,
                 }
             }
-        }
+        },
+
+        MuiTableRow: {
+            styleOverrides: {
+                head: {
+                    backgroundColor: "#F2F4F9",
+                },
+            },
+        },
     }
 });
 

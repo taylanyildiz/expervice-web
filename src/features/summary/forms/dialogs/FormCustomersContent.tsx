@@ -156,7 +156,7 @@ function FormCustomersContent() {
       >
         <div style={{ flex: 1, overflow: "scroll" }}>
           <TableContainer>
-            <Table stickyHeader>
+            <Table>
               <TableHead>
                 <TableRow>
                   <TableCell />
@@ -197,7 +197,7 @@ function FormCustomersContent() {
                     >
                       <Collapse in={customer.display}>
                         <Table size="small">
-                          <TableHead sx={{ backgroundColor: "red" }}>
+                          <TableHead>
                             <TableRow>
                               <TableCell>Name</TableCell>
                               <TableCell>Job Type</TableCell>

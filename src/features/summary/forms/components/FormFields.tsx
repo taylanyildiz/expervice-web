@@ -70,10 +70,8 @@ function FormFields(props: Props) {
     const list = [...fields];
     const [removed] = list.splice(startIndex, 1);
     list.splice(endIndex, 0, removed);
-    formik.setFieldValue(
-      "fields",
-      list.map((e, i) => ({ ...e, order_number: i }))
-    );
+    const orderedList = [...list.map((e, i) => ({ ...e, order_number: i }))];
+    formik.setFieldValue("fields", orderedList);
   };
 
   return (

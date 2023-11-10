@@ -47,8 +47,9 @@ function FormPDFDialog() {
   };
 
   /// Process form
-  const process = async () => {
+  const process = async (): Promise<Form | null> => {
     const result = await openLoading(async () => {
+      // Create form
       if (!isEdit) return await formRepo.createForm(formProcess!);
       if (formName) await formRepo.updateForm(form!.id!, formName);
       if (addedFields) await formRepo.addFields(form!.id!, addedFields);
@@ -62,13 +63,16 @@ function FormPDFDialog() {
           await formRepo.updateField(form!.id!, field);
         }
       }
+      await formRepo.getForm(form!.id!);
+      return form;
     });
-    return result ?? form;
+    return result;
   };
 
   /// Submit handle
   const onSubmitHandle = async () => {
-    const result = await process();
+    let result = await process();
+    if (!result) return;
     switch (actionType) {
       case EActionType.Save:
         dispatch(setForm(result));

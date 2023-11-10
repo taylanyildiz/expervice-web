@@ -2,6 +2,7 @@ import VisibilityComp from "@Components/VisibilityComp";
 import Field from "@Models/form/field";
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 import EditNoteOutlinedIcon from "@mui/icons-material/EditNoteOutlined";
+import DragIndicatorIcon from "@mui/icons-material/DragIndicator";
 
 import {
   IconButton,
@@ -13,7 +14,6 @@ import {
 
 interface FormFieldItemProps {
   field: Field;
-
   onDelete: () => void;
   onEdit: () => void;
 }
@@ -22,7 +22,8 @@ function FormFieldItem(props: FormFieldItemProps) {
   const { field, onDelete, onEdit } = props;
 
   return (
-    <ListItem>
+    <ListItem sx={{ alignItems: "start" }}>
+      <DragIndicatorIcon sx={{ width: 20, height: 20, mt: 1 }} />
       <ListItemText
         primary={
           <Typography
