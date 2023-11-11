@@ -1,12 +1,10 @@
 import Colors from "@Themes/colors";
 import { AppBar, Avatar, Grid, IconButton, Tooltip } from "@mui/material";
 import GroupsOutlinedIcon from "@mui/icons-material/GroupsOutlined";
-import NotificationsNoneOutlinedIcon from "@mui/icons-material/NotificationsNoneOutlined";
 import AddOutlinedIcon from "@mui/icons-material/AddOutlined";
 import MenuCustomLink from "@Components/MenuCustomLink";
 import ElevatorIcon from "@mui/icons-material/Elevator";
 import EscalatorIcon from "@mui/icons-material/Escalator";
-import FeedIcon from "@mui/icons-material/Feed";
 import ContactsIcon from "@mui/icons-material/Contacts";
 import WorkIcon from "@mui/icons-material/Work";
 import SettingsIcon from "@mui/icons-material/Settings";
@@ -21,6 +19,8 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "@Store/index";
 import { logout } from "@Store/account_store";
+import NotificationIcon from "./NotificationIcon";
+import SummarizeIcon from "@mui/icons-material/Summarize";
 
 function SummaryAppBar() {
   /// Navigate
@@ -50,6 +50,11 @@ function SummaryAppBar() {
                 title="Jobs"
                 children={[
                   {
+                    prefix: <SummarizeIcon />,
+                    title: "Summary",
+                    to: ERouter.Summary,
+                  },
+                  {
                     prefix: <WorkIcon />,
                     title: "All Jobs",
                     to: ERouter.Jobs,
@@ -68,22 +73,7 @@ function SummaryAppBar() {
               />
             </Grid>
             <Grid item>
-              <MenuCustomLink
-                color="white"
-                title="Forms"
-                children={[
-                  {
-                    prefix: <FeedIcon />,
-                    title: "All Forms",
-                    to: ERouter.Forms,
-                  },
-                  {
-                    prefix: <ContactsIcon />,
-                    title: "Customer Forms",
-                    onClick: () => {},
-                  },
-                ]}
-              />
+              <MenuCustomLink color="white" title="Forms" to={ERouter.Forms} />
             </Grid>
             <Grid item>
               <MenuCustomLink
@@ -131,9 +121,7 @@ function SummaryAppBar() {
             </Grid>
             <Grid item>
               <Tooltip title="Notifications">
-                <IconButton size="small">
-                  <NotificationsNoneOutlinedIcon sx={{ color: "white" }} />
-                </IconButton>
+                <NotificationIcon />
               </Tooltip>
             </Grid>
             <Grid item>

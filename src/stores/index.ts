@@ -15,6 +15,7 @@ import user from './user_store';
 import technician from './technician_store';
 import job from './job_store';
 import form from './form_store';
+import notification from './notification_store';
 
 /// Root Reducer
 const appReducer = combineReducers({
@@ -32,6 +33,7 @@ const appReducer = combineReducers({
     technician,
     job,
     form,
+    notification,
 });
 
 /// Persist Configuration
@@ -39,7 +41,7 @@ const rootPersistConfig = {
     version: 1.0,
     key: 'root',
     storage,
-    whiteList: [constant, production, region, summary, internalUser, customer, user, technician, job, form],
+    whiteList: [constant, production, region, summary, internalUser, customer, user, technician, job, form, notification],
     blackList: [auth, account, companyRegion],
 }
 

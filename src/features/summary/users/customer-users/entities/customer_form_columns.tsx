@@ -40,6 +40,7 @@ const customerFormColumns = (props: {
   {
     field: "",
     headerName: "Actions",
+    sortable: false,
     renderCell: (params) => {
       return (
         <Stack spacing={1} direction="row">
