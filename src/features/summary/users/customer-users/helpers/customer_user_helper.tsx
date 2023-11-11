@@ -9,6 +9,7 @@ import { FormikProps } from "formik";
 import CustomerUpdate from "../entities/customer_update";
 import { equalInterface } from "@Utils/functions";
 import { ECustomerStatus } from "../entities/customer_enums";
+import CustomerFormDialog from "../dialogs/CustomerFormDialog";
 
 /**
  * Customer user store hook
@@ -132,8 +133,26 @@ export function useCustomerUpdate(
 export function useCustomerDialog() {
   const { openDialog } = useDialog();
 
-  return (customer?: Customer) => {
-    store.dispatch(setCustomer(customer));
-    openDialog(<CustomerDialog />, "md");
+  return {
+    openCustomerDialog: (customer?: Customer) => {
+      store.dispatch(setCustomer(customer));
+      openDialog(<CustomerDialog />, "md");
+    },
+    openCustomerFormDialog: async (
+      onDone: (form: any) => Promise<boolean>
+    ): Promise<boolean> => {
+      return await new Promise((resolve) => {
+        openDialog(
+          <CustomerFormDialog
+            onDone={async (form) => {
+              const result = await onDone(form);
+              resolve(result);
+              return result;
+            }}
+          />,
+          "xs"
+        );
+      });
+    },
   };
 }

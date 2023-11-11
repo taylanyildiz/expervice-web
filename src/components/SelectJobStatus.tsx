@@ -19,6 +19,7 @@ interface SelectJobStatusProps {
   value?: JobStatus;
   jobType?: number;
   jobStatus?: number;
+  forForm?: boolean;
   onChanged: (values: JobStatus | null | undefined) => void;
 }
 
@@ -45,6 +46,7 @@ function SelectJobStatus(props: SelectJobStatusProps) {
     onChanged,
     jobStatus,
     jobType,
+    forForm,
   } = props;
 
   /// Job statuses & loading state
@@ -63,12 +65,13 @@ function SelectJobStatus(props: SelectJobStatusProps) {
       const statuses = await constantRepo.getJobStatuses({
         job_type: jobType,
         status_id: jobStatus,
+        forForm: forForm,
       });
       setStatuses(statuses ?? []);
     };
 
     getStatuses();
-  }, [jobStatus, jobType]);
+  }, [jobStatus, jobType, forForm]);
 
   /// Depends on [value]
   useEffect(() => {

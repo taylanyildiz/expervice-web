@@ -15,7 +15,13 @@ import { UnitsMapPage, UnitsTablePage } from "@Features/summary/units/pages";
 import CustomerUsersPage from "@Features/summary/users/customer-users";
 import InternalUsersPage from "@Features/summary/users/internal-users";
 import TechnicianUsersPage from "@Features/summary/users/technician-users";
-import { Outlet, RouteObject, createBrowserRouter } from "react-router-dom";
+import {
+  Navigate,
+  Outlet,
+  RouteObject,
+  createBrowserRouter,
+} from "react-router-dom";
+import ERouter from "./router_enum";
 
 /// Router Options
 const options = {
@@ -95,6 +101,10 @@ const routes: RouteObject[] = [
         path: "users",
         element: <Outlet />,
         children: [
+          {
+            index: true,
+            element: <Navigate to={ERouter.InternalUsers} />,
+          },
           {
             path: "internal-users",
             element: <InternalUsersPage />,

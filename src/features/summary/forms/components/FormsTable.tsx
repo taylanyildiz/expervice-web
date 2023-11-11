@@ -2,9 +2,10 @@ import { DataGrid, GridPaginationModel } from "@mui/x-data-grid";
 import columns from "../entities/grid_columns";
 import EmptyGrid from "@Components/EmptyGrid";
 import { useEffect, useMemo, useState } from "react";
-import { useSelector } from "react-redux";
-import { RootState } from "@Store/index";
+import { useDispatch, useSelector } from "react-redux";
+import { AppDispatch, RootState } from "@Store/index";
 import FormRepository from "@Repo/form_repository";
+import { setFormFilter } from "@Store/form_store";
 
 function FormsTable() {
   /// Form store
@@ -12,6 +13,9 @@ function FormsTable() {
     formLayzLoading: loading,
     forms: { rows, count },
   } = useSelector((state: RootState) => state.form);
+
+  /// Dispatch
+  const dispatch: AppDispatch = useDispatch<AppDispatch>();
 
   /// Form repository
   const formRepo = new FormRepository();
@@ -32,6 +36,7 @@ function FormsTable() {
 
   /// Initialize component
   useEffect(() => {
+    dispatch(setFormFilter(filter));
     formRepo.getForms();
   }, [filter]);
 

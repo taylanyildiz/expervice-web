@@ -2,6 +2,7 @@ import Customer from "@Models/customer/customer";
 import JobStatus from "@Models/job/job_status";
 import JobSubType from "@Models/job/job_sub_type";
 import UnitSubType from "@Models/units/unit_sub_type";
+import Form from "./form";
 
 interface FormCustomer {
     id?: number;
@@ -17,6 +18,7 @@ interface FormCustomer {
     job_sub_type?: JobSubType;
     unit_sub_type?: UnitSubType;
     customer_user?: Customer;
+    form?: Form;
 }
 
 export default FormCustomer;

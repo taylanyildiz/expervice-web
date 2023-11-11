@@ -21,6 +21,7 @@ import { customerValidator } from "../validator/customer_validator";
 import CustomerUserRepository from "@Repo/customer_user_repository";
 import VisibilityComp from "@Components/VisibilityComp";
 import Colors from "@Themes/colors";
+import CustomerForms from "./CustomerForms";
 
 function CustomerDialog() {
   /// Customer hook
@@ -157,6 +158,11 @@ function CustomerDialog() {
               {
                 title: "Security & Login",
                 panel: <CustomerSecurity formik={formik} />,
+              },
+              {
+                visibility: isEdit,
+                title: "Forms",
+                panel: <CustomerForms />,
               },
             ]}
           />

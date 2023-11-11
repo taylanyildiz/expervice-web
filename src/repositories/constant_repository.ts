@@ -159,7 +159,7 @@ class ConstantRepository extends BaseRepository {
     /**
      * Get Job Statuses
      */
-    public async getJobStatuses(props?: { job_type?: number, status_id?: number }): Promise<JobStatus[] | null> {
+    public async getJobStatuses(props?: { job_type?: number, status_id?: number, forForm?: boolean }): Promise<JobStatus[] | null> {
         const path = Constant.jobStatuses;
         const response = await this.get(path, { params: props });
         if (!response.success) return null;

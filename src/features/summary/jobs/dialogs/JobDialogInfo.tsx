@@ -30,6 +30,7 @@ function JobDialogInfo(props: { formik: FormikProps<Job> }) {
       <Grid item xs={6}>
         <SelectJobSubType
           fullWidth
+          clearIcon={false}
           label="Job Sub Type"
           value={formik.values.sub_type_id}
           onChanged={(subType) => {

@@ -54,8 +54,9 @@ function FormCustomersContent() {
   /// Form dialog hook
   const { openCustomerDialog } = useFormDialog();
 
+  /// Pagination state
   const [page, setPage] = useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState(10);
+  const [rowsPerPage, setRowsPerPage] = useState<number>(10);
 
   const handleChangePage = (_: unknown, newPage: number) => {
     setPage(newPage);
@@ -118,7 +119,7 @@ function FormCustomersContent() {
   /// Add customer
   const handleAddCustomer = async () => {
     const result = await openCustomerDialog(async (customerForm) => {
-      return customerRepo.createForm({
+      return await customerRepo.createForm({
         ...customerForm,
         form_id: form?.id,
       });

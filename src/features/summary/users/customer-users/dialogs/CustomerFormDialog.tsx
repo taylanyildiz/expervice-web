@@ -1,5 +1,5 @@
 import PrimaryButton from "@Components/PrimaryButton";
-import SelectCustomer from "@Components/SelectCustomer";
+import SelectForm from "@Components/SelectForm";
 import SelectJobStatus from "@Components/SelectJobStatus";
 import SelectJobSubType from "@Components/SelectJobSubType";
 import SelectUnitSubType from "@Components/SelectUnitSubType";
@@ -12,11 +12,11 @@ import { Box, DialogContent, Grid, Typography } from "@mui/material";
 import { useFormik } from "formik";
 import { object, string } from "yup";
 
-interface FormCustomerDialogProps {
+interface CustomerFormDialogProps {
   onDone: (form: any) => Promise<boolean>;
 }
 
-function FormCustomerDialog(props: FormCustomerDialogProps) {
+function CustomerFormDialog(props: CustomerFormDialogProps) {
   const { onDone } = props;
 
   /// Dialog hook
@@ -26,7 +26,7 @@ function FormCustomerDialog(props: FormCustomerDialogProps) {
   const onSubmitHandle = async (value: FormCustomer) => {
     const form = {
       name: value.name,
-      customer_id: value.customer_user?.id,
+      form_id: value.form?.id,
       job_sub_type_id: value.job_sub_type?.id,
       unit_sub_type_id: value.unit_sub_type?.id,
       current_job_status_id: value.current_job_status?.id,
@@ -41,7 +41,7 @@ function FormCustomerDialog(props: FormCustomerDialogProps) {
 
   /// Formik
   const initialValues: FormCustomer = {
-    customer_user: undefined,
+    form: undefined,
     current_job_status: undefined,
     next_job_status: undefined,
     name: "",
@@ -51,7 +51,7 @@ function FormCustomerDialog(props: FormCustomerDialogProps) {
   const formik = useFormik({
     initialValues,
     validationSchema: object({
-      customer_user: object().nullable().required(),
+      form: object().nullable().required(),
       name: string().required().min(2, "Invalid name"),
       current_job_status: object().nullable().required(),
       next_job_status: object().nullable().required(),
@@ -104,19 +104,15 @@ function FormCustomerDialog(props: FormCustomerDialogProps) {
         <Box mt={1} p={1} sx={{ backgroundColor: "white" }}>
           <Grid container>
             <Grid item xs={12}>
-              <SelectCustomer
+              <SelectForm
                 fullWidth
-                label="Customer"
-                value={formik.values.customer_user}
-                helperText={
-                  formik.touched.customer_user && formik.errors.customer_user
-                }
-                error={Boolean(
-                  formik.touched.customer_user && formik.errors.customer_user
-                )}
-                onChanged={(customer) => {
-                  formik.setFieldValue("customer_user", customer);
+                label="Form"
+                value={formik.values.form}
+                onChanged={(form) => {
+                  formik.setFieldValue("form", form);
                 }}
+                error={Boolean(formik.touched.form && formik.errors.form)}
+                helperText={formik.touched.form && formik.errors.form}
               />
             </Grid>
             <Grid item xs={12}>
@@ -227,4 +223,4 @@ function FormCustomerDialog(props: FormCustomerDialogProps) {
   );
 }
 
-export default FormCustomerDialog;
+export default CustomerFormDialog;

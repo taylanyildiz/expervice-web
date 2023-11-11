@@ -2,7 +2,7 @@
 import BaseRepository from "./base_repository";
 import SnackCustomBar from "@Utils/snack_custom_bar";
 import { store } from "@Store/index";
-import { setCustomer, setCustomers, setLayzLoading } from "@Store/customer_user_store";
+import { setCustomer, setCustomerForms, setCustomers, setLayzLoading } from "@Store/customer_user_store";
 import Customer from "./end-points/customer_user";
 import CustomerUser from "@Models/customer/customer";
 import CustomerUpdate from "@Features/summary/users/customer-users/entities/customer_update";
@@ -139,12 +139,13 @@ class CustomerUserRepository extends BaseRepository {
     /**
      * Get Customer Forms
      */
-    public async getForms(id: number): Promise<boolean> {
+    public async getForms(id: number, filter?: { limit: number, offset: number }): Promise<boolean> {
         const path = Customer.forms(id);
-        const response = await this.get(path);
+        const response = await this.get(path, { params: filter });
         const success = response.success;
         SnackCustomBar.status(response, { display: !success });
         const data = response.data?.['data']?.['forms'];
+        store.dispatch(setCustomerForms(data));
         return success;
     }
 
@@ -156,7 +157,7 @@ class CustomerUserRepository extends BaseRepository {
         const response = await this.post(path, form);
         const success = response.success;
         SnackCustomBar.status(response);
-        const data = response.data?.['data']?.['customer_form'];
+        // const data = response.data?.['data']?.['customer_form'];
         return success;
     }
 
