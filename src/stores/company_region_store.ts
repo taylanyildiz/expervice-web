@@ -51,7 +51,7 @@ const companyRegion = createSlice({
         },
         setGroups: (state, { payload }) => {
             state.groups = payload;
-            if (state.groups.rows && state.groups.rows?.length != 0) {
+            if (state.groups?.rows && state.groups.rows?.length != 0) {
                 state.group = state.groups.rows[0];
             }
         },

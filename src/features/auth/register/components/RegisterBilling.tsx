@@ -98,6 +98,7 @@ function RegisterBilling() {
               fullWidth
               name="card_number"
               label="Card Number"
+              onChange={formik.handleChange}
               helperText={
                 formik.touched.card_number && formik.errors.card_number
               }

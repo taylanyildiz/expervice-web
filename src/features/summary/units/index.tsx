@@ -7,7 +7,7 @@ import { useQuery } from "@Utils/functions";
 import { useEffect } from "react";
 import { AppDispatch } from "@Store/index";
 import { useDispatch } from "react-redux";
-import { setUnitId } from "@Store/unit_store";
+import { setUnitDialogStatus, setUnitId } from "@Store/unit_store";
 
 function UnitsPage() {
   /// Query hook
@@ -25,13 +25,10 @@ function UnitsPage() {
   /// Listen query params
   useEffect(() => {
     const id = parseInt(`${path.get("unitId")}`);
-    if (!id || isNaN(id)) {
-      deletePath("unitId");
-      dispatch(setUnitId(null));
-    }
-    if (id || !isNaN(id)) {
-      dispatch(setUnitId(id));
-    }
+    dispatch(setUnitDialogStatus(false));
+    dispatch(setUnitId(null));
+    if (!id || isNaN(id)) deletePath("unitId");
+    if (id || !isNaN(id)) dispatch(setUnitId(id));
   }, []);
 
   /// Listen unit id
@@ -41,6 +38,7 @@ function UnitsPage() {
       return openUnitDialog();
     }
     deletePath("unitId");
+    dispatch(setUnitDialogStatus(false));
     closeDialog();
   }, [unitId]);
 

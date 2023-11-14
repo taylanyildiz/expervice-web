@@ -11,7 +11,12 @@ function LoadingComp(props: LoadingCompProps) {
 
   if (loading)
     return (
-      <Box display="flex" justifyContent="center" alignItems="center">
+      <Box
+        display="flex"
+        height="100%"
+        justifyContent="center"
+        alignItems="center"
+      >
         <CircularProgress />
       </Box>
     );

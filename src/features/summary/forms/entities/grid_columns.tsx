@@ -1,13 +1,12 @@
 import Form from "@Models/form/form";
 import { GridColDef } from "@mui/x-data-grid";
-import { useDispatch } from "react-redux";
 import PictureAsPdfIcon from "@mui/icons-material/PictureAsPdf";
 import { IconButton, Tooltip } from "@mui/material";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import FormRepository from "@Repo/form_repository";
 import { useDialog } from "@Utils/hooks/dialog_hook";
 import { openBase64PDF } from "@Utils/functions";
-import { setFormId } from "@Store/form_store";
+import { useFormDialog } from "../helper/form_helper";
 
 const columns: GridColDef<Form>[] = [
   {
@@ -18,12 +17,12 @@ const columns: GridColDef<Form>[] = [
       const form = params.row;
       const formId = form.id;
       const formName = form.name;
-      const dispatch = useDispatch();
+      const { openFormDialog } = useFormDialog();
       return (
         <div
           className="grid-selectable"
           onClick={() => {
-            dispatch(setFormId(formId));
+            openFormDialog(formId);
           }}
         >
           {formName}

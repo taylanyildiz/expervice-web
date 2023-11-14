@@ -11,6 +11,7 @@ interface Props {
     filter: UnitFilter | null;
     units: { rows: Unit[], count: number },
     unit: Unit | null;
+    unitDialogStatus: boolean;
     unitId: number | null;
     technicians: TechnicianUser[],
     jobsFilter: UnitJobsFilter | null,
@@ -23,6 +24,7 @@ const initialState: Props = {
     filter: { limit: 10, offset: 0 },
     units: { rows: [], count: 0 },
     unit: null,
+    unitDialogStatus: false,
     unitId: null,
     technicians: [],
     jobsFilter: { limit: 10, offset: 0 },
@@ -42,6 +44,9 @@ const unit = createSlice({
         },
         setUnits: (state, { payload }) => {
             state.units = payload;
+        },
+        setUnitDialogStatus: (state, { payload }) => {
+            state.unitDialogStatus = payload;
         },
         setUnit: (state, { payload }) => {
             state.unit = payload;
@@ -70,6 +75,7 @@ export const {
     setUnitLayz,
     setUnitFilter,
     setUnits,
+    setUnitDialogStatus,
     setUnit,
     setUnitId,
     setAvailableTechnicians,

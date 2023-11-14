@@ -25,11 +25,11 @@ function Header(props: { unit: Unit }) {
   const hasJob = Boolean(job);
 
   /// Job dialog hook
-  const { openDialog } = useJobDialog();
+  const { openJobDialog } = useJobDialog();
 
   /// Open job dialg
   const handleCreateJob = () => {
-    openDialog({ unit: props.unit });
+    openJobDialog({ unit: props.unit });
   };
 
   return (

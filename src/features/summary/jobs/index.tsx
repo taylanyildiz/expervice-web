@@ -6,11 +6,11 @@ import { useEffect } from "react";
 import { AppDispatch } from "@Store/index";
 import { useDispatch } from "react-redux";
 import { useQuery } from "@Utils/functions";
-import { setJobId } from "@Store/job_store";
+import { setJobDialogStatus, setJobId } from "@Store/job_store";
 
 function JobsPage() {
   /// Job dialog hook
-  const { openDialog, closeDialog, openUnitDialog } = useJobDialog();
+  const { openJobDialog, closeDialog, openUnitDialog } = useJobDialog();
   /// Query hook
   const [path, deletePath, setPath] = useQuery();
 
@@ -23,23 +23,21 @@ function JobsPage() {
   /// Initialize component
   useEffect(() => {
     const id = parseInt(`${path.get("jobId")}`);
-    if (!id || isNaN(id)) {
-      deletePath("unitId");
-      dispatch(setJobId(null));
-    }
-    if (id || !isNaN(id)) {
-      dispatch(setJobId(id));
-    }
+    dispatch(setJobId(null));
+    dispatch(setJobDialogStatus(false));
+    if (!id || isNaN(id)) deletePath("unitId");
+    if (id || !isNaN(id)) dispatch(setJobId(id));
   }, []);
 
   /// Listen job id
   useEffect(() => {
     if (jobId) {
       setPath("jobId", jobId.toString());
-      return openDialog();
+      return openJobDialog();
     }
     deletePath("jobId");
     closeDialog();
+    dispatch(setJobDialogStatus(false));
   }, [jobId]);
 
   return (

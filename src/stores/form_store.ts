@@ -6,6 +6,7 @@ interface Props {
     formLayzLoading: boolean;
     forms: { rows: Form[], count: number };
     formFilter: { limit: number, offset: number } | null,
+    formDialogStatus: boolean;
     form: Form | null;
     formId: number | null;
     formCustomers: { rows: Customer[], count: number },
@@ -16,6 +17,7 @@ const initialState: Props = {
     formLayzLoading: true,
     formFilter: { limit: 10, offset: 0 },
     forms: { rows: [], count: 0 },
+    formDialogStatus: false,
     form: null,
     formId: null,
     formCustomers: { rows: [], count: 0 },
@@ -35,6 +37,9 @@ const form = createSlice({
         setForms: (state, { payload }) => {
             state.forms = payload;
         },
+        setFormDialogStatus: (state, { payload }) => {
+            state.formDialogStatus = payload;
+        },
         setForm: (state, { payload }) => {
             state.form = payload;
         },
@@ -53,11 +58,12 @@ const form = createSlice({
 
 export default form.reducer;
 export const {
-    setForm,
     setFormCustomers,
     setFormFilter,
     setFormLayzLoading,
     setForms,
+    setFormDialogStatus,
+    setForm,
     setFormId,
     setFormPdfTemplate,
 } = form.actions;

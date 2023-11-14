@@ -6,7 +6,7 @@ import { EActionType } from "@Components/dialogs/DialogCustomActions";
 import { useEffect, useState } from "react";
 import { AppDispatch } from "@Store/index";
 import { useDispatch } from "react-redux";
-import { setUnit, setUnitId } from "@Store/unit_store";
+import { setUnit, setUnitDialogStatus, setUnitId } from "@Store/unit_store";
 import TabBar from "@Components/TabBar";
 import UnitInformation from "./UnitInformation";
 import { useFormik } from "formik";
@@ -135,6 +135,7 @@ function UnitDialog() {
     return () => {
       dispatch(setUnitId(null));
       dispatch(setUnit(null));
+      dispatch(setUnitDialogStatus(false));
       unitRepo.getUnits();
     };
   }, []);

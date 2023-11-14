@@ -8,7 +8,7 @@ import CommonLayout from "@Features/common/layout";
 import PricingPage from "@Features/common/pricing";
 import SummaryPage from "@Features/summary/base";
 import FormsPage from "@Features/summary/forms";
-import JobsPage from "@Features/summary/jobs/indes";
+import JobsPage from "@Features/summary/jobs";
 import SummaryLayout from "@Features/summary/layout";
 import UnitsPage from "@Features/summary/units";
 import { UnitsMapPage, UnitsTablePage } from "@Features/summary/units/pages";

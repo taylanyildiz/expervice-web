@@ -29,8 +29,8 @@ function UnitJob() {
   }, [jobId]);
 
   return (
-    <LoadingComp loading={loading}>
-      <Box>
+    <Box height={500}>
+      <LoadingComp loading={loading}>
         <JobStepper
           job={job!}
           onUpdate={(job) => {
@@ -38,8 +38,8 @@ function UnitJob() {
             setJob(job);
           }}
         />
-      </Box>
-    </LoadingComp>
+      </LoadingComp>
+    </Box>
   );
 }
 

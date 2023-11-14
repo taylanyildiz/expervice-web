@@ -16,15 +16,28 @@ import GroupOutlinedIcon from "@mui/icons-material/GroupOutlined";
 import EngineeringOutlinedIcon from "@mui/icons-material/EngineeringOutlined";
 import ERouter from "@Routes/router_enum";
 import { useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
-import { AppDispatch } from "@Store/index";
+import { useDispatch, useSelector } from "react-redux";
+import { AppDispatch, RootState } from "@Store/index";
 import { logout } from "@Store/account_store";
 import NotificationIcon from "./NotificationIcon";
 import SummarizeIcon from "@mui/icons-material/Summarize";
+import UploadFileIcon from "@mui/icons-material/UploadFile";
+import { caption } from "@Utils/functions";
+import { useJobDialog } from "@Features/summary/jobs/helper/job_helper";
+import { useUnitDialog } from "@Features/summary/units/helper/unit_helper";
+import { useInternalDialog } from "@Features/summary/users/internal-users/helper/internal_user_helper";
+import { useTechnicianDialog } from "@Features/summary/users/technician-users/helper/technician_helper";
+import { useCustomerDialog } from "@Features/summary/users/customer-users/helpers/customer_user_helper";
+import { useFormDialog } from "@Features/summary/forms/helper/form_helper";
+import { useProfileDialog } from "@Features/summary/profile/helper/profile_helper";
 
 function SummaryAppBar() {
   /// Navigate
   const navigate = useNavigate();
+
+  /// Account store
+  const { user } = useSelector((state: RootState) => state.account);
+  const displayName = `${user?.first_name} ${user?.last_name}`;
 
   /// Dispatch
   const dispatch: AppDispatch = useDispatch<AppDispatch>();
@@ -34,6 +47,14 @@ function SummaryAppBar() {
     dispatch(logout());
     navigate(ERouter.Base);
   };
+
+  const { openJobDialog } = useJobDialog();
+  const { openUnitDialog } = useUnitDialog();
+  const openInternalDialog = useInternalDialog();
+  const openTechnicianDialog = useTechnicianDialog();
+  const { openCustomerDialog } = useCustomerDialog();
+  const { openFormDialog } = useFormDialog();
+  const { openProfileDialog } = useProfileDialog();
 
   return (
     <AppBar
@@ -110,6 +131,7 @@ function SummaryAppBar() {
           <Grid container alignItems="center">
             <Grid item>
               <MenuCustomLink
+                withIcon={false}
                 title={
                   <Tooltip title="Add">
                     <IconButton size="small">
@@ -117,6 +139,38 @@ function SummaryAppBar() {
                     </IconButton>
                   </Tooltip>
                 }
+                children={[
+                  {
+                    prefix: <WorkIcon />,
+                    title: "Add Job",
+                    onClick: openJobDialog,
+                  },
+                  {
+                    prefix: <DevicesIcon />,
+                    title: "Add Unit",
+                    onClick: openUnitDialog,
+                  },
+                  {
+                    prefix: <GroupOutlinedIcon />,
+                    title: "Add Technician User",
+                    onClick: openTechnicianDialog,
+                  },
+                  {
+                    prefix: <GroupOutlinedIcon />,
+                    title: "Add Internal User",
+                    onClick: openInternalDialog,
+                  },
+                  {
+                    prefix: <GroupOutlinedIcon />,
+                    title: "Add Customer User",
+                    onClick: openCustomerDialog,
+                  },
+                  {
+                    prefix: <UploadFileIcon />,
+                    title: "Add Form",
+                    onClick: openFormDialog,
+                  },
+                ]}
               />
             </Grid>
             <Grid item>
@@ -161,7 +215,7 @@ function SummaryAppBar() {
                   <Tooltip title="Profile">
                     <IconButton size="small">
                       <Avatar
-                        children="TY"
+                        children={caption(displayName)}
                         sx={{
                           width: 30,
                           height: 30,
@@ -175,8 +229,8 @@ function SummaryAppBar() {
                 children={[
                   {
                     prefix: <AccountBoxIcon />,
-                    title: "Profile",
-                    onClick: () => {},
+                    title: displayName,
+                    onClick: openProfileDialog,
                   },
                   {
                     prefix: <LogoutIcon />,

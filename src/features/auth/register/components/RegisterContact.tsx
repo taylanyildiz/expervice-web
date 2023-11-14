@@ -147,6 +147,7 @@ function PrimaryContact(props: {
           name="phone"
           type="tel"
           label="Primary Contact Phone"
+          onChange={formik.handleChange}
           helperText={formik.touched.phone && formik.errors.phone}
           error={Boolean(formik.touched.phone && formik.errors.phone)}
           inputComponent={PhoneMask}

@@ -1,13 +1,14 @@
 import { useDialog } from "@Utils/hooks/dialog_hook";
 import UnitDialog from "../dialogs/UnitDialog";
 import { useSelector } from "react-redux";
-import { RootState } from "@Store/index";
+import { RootState, store } from "@Store/index";
 import { useEffect, useState } from "react";
 import UnitProcess from "../entities/unit_process";
 import { FormikProps } from "formik";
 import Unit from "@Models/units/unit";
 import { UnitUpdate } from "../entities/unit_update";
 import { equalInterface } from "@Utils/functions";
+import { setUnitDialogStatus, setUnitId } from "@Store/unit_store";
 
 /**
  * Unit store
@@ -21,8 +22,14 @@ export function useUnit() {
  */
 export function useUnitDialog() {
   const { openDialog, closeDialog } = useDialog();
+  const { unitDialogStatus } = useUnit();
   return {
-    openUnitDialog: () => openDialog(<UnitDialog />, "md"),
+    openUnitDialog: (id?: number) => {
+      if (unitDialogStatus) return;
+      store.dispatch(setUnitDialogStatus(true));
+      if (id) store.dispatch(setUnitId(id));
+      openDialog(<UnitDialog />, "md");
+    },
     closeDialog,
   };
 }

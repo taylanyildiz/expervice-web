@@ -7,14 +7,14 @@ import { useEffect } from "react";
 import { useQuery } from "@Utils/functions";
 import { AppDispatch } from "@Store/index";
 import { useDispatch } from "react-redux";
-import { setFormId } from "@Store/form_store";
+import { setFormDialogStatus, setFormId } from "@Store/form_store";
 
 function FormsPage() {
   /// Form store
   const { formId } = useForm();
 
   /// Form dialog hook
-  const { openDilaog, closeDialog } = useFormDialog();
+  const { openFormDialog, closeDialog } = useFormDialog();
 
   /// Query hook
   const [path, deletePath, setPath] = useQuery();
@@ -25,22 +25,20 @@ function FormsPage() {
   /// Listen query params
   useEffect(() => {
     const id = parseInt(`${path.get("formId")}`);
-    if (!id || isNaN(id)) {
-      deletePath("formId");
-      dispatch(setFormId(null));
-    }
-    if (id || !isNaN(id)) {
-      dispatch(setFormId(id));
-    }
+    dispatch(setFormId(null));
+    dispatch(setFormDialogStatus(false));
+    if (!id || isNaN(id)) deletePath("formId");
+    if (id || !isNaN(id)) dispatch(setFormId(id));
   }, []);
 
   /// Listen form id
   useEffect(() => {
     if (formId) {
       setPath("formId", formId.toString());
-      return openDilaog();
+      return openFormDialog();
     }
     deletePath("formId");
+    dispatch(setFormDialogStatus(false));
     closeDialog();
   }, [formId]);
 
@@ -49,7 +47,7 @@ function FormsPage() {
       <GridTableHeader
         title="Forms"
         onAdd={() => {
-          openDilaog();
+          openFormDialog();
         }}
         onFilter={() => {}}
         onExport={() => {}}

@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit"
+import Notification from "@Models/notification/notification"
 
 interface Props {
     notificationFilter: { limit: number, offset: number },
