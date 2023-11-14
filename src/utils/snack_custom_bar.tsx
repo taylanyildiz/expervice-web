@@ -1,7 +1,9 @@
-import { IconButton } from "@mui/material";
+import { IconButton, Stack, Typography } from "@mui/material";
 import { AxiosResponse } from "axios";
 import { enqueueSnackbar, closeSnackbar } from "notistack";
 import CloseIcon from "@mui/icons-material/Close";
+import { MessagePayload } from "firebase/messaging";
+import Images from "@Assets/images";
 
 abstract class SnackCustomBar {
   /**
@@ -32,6 +34,41 @@ abstract class SnackCustomBar {
         return (
           <IconButton
             sx={{ color: "white" }}
+            onClick={() => closeSnackbar(id)}
+            children={<CloseIcon sx={{ width: 20, height: 20 }} />}
+          />
+        );
+      },
+    });
+  }
+
+  /**
+   * Notification displayed
+   * @param payload
+   */
+  public static notification(payload: MessagePayload) {
+    const title = payload.notification?.title;
+    const body = payload.notification?.body;
+    const children = (
+      <Stack direction="row" spacing={1} alignItems="center">
+        {Images.logoBlack({ width: 30 })}
+        <Stack flex={1} direction="column" spacing={0.3}>
+          <Typography variant="h1" fontSize={14} children={title} />
+          <Typography fontSize={13} children={body} />
+        </Stack>
+      </Stack>
+    );
+    enqueueSnackbar(children, {
+      anchorOrigin: { horizontal: "right", vertical: "top" },
+      autoHideDuration: 4000,
+      style: {
+        backgroundColor: "white",
+        boxShadow: "10.0",
+      },
+      action: (id) => {
+        return (
+          <IconButton
+            sx={{ color: "black" }}
             onClick={() => closeSnackbar(id)}
             children={<CloseIcon sx={{ width: 20, height: 20 }} />}
           />

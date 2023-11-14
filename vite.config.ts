@@ -9,6 +9,10 @@ export default defineConfig({
     react(),
     viteHtmlResolveAlias(),
   ],
+  build: {
+    outDir: "build",
+    copyPublicDir: true,
+  },
   resolve: {
     alias: [
       {
@@ -28,8 +32,4 @@ export default defineConfig({
       { find: '@Store', replacement: resolve(__dirname, './src/stores') },
     ]
   },
-  build: {
-    outDir: "build",
-    copyPublicDir: true,
-  }
 })
