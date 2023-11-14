@@ -3,7 +3,7 @@ import GroupsList from "./components/GroupsList";
 import SummarySideBar from "./components/SummarySideBar";
 import RegionInfoBox from "./components/RegionInfoBox";
 import GroupInfoBox from "./components/GroupInfoBox";
-import GroupJobsChart from "./components/GroupJobsChart";
+// import GroupJobsChart from "./components/GroupJobsChart";
 
 function SummaryPage() {
   return (
@@ -15,7 +15,7 @@ function SummaryPage() {
             <Grid container rowSpacing={2}>
               <Grid item xs={12} children={<RegionInfoBox />} />
               <Grid item xs={12} children={<GroupInfoBox />} />
-              <Grid item xs={12} children={<GroupJobsChart />} />
+              {/* <Grid item xs={12} children={<GroupJobsChart />} /> */}
             </Grid>
           </Box>
         </Grid>

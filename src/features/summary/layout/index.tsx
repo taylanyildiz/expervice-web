@@ -20,7 +20,6 @@ function SummaryLayout() {
     const token = await requestPermission();
     if (!token) return;
     console.log(token);
-
     userRepo.deviceToken(token);
     onMessageListener().then((payload) => {
       console.log(payload);

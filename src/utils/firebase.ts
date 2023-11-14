@@ -18,7 +18,7 @@ const messaging = getMessaging(app);
 const serverWorker = async (): Promise<ServiceWorkerRegistration | null> => {
     if ("serviceWorker" in navigator) {
         return navigator.serviceWorker.register(
-            import.meta.env.MODE === 'production' ? '/sw.js' : '/dev-sw.js?dev-sw',
+            import.meta.env.MODE === 'production' ? '/firebase-messaging-sw.js' : '/public/firebase-messaging-sw.js',
             { type: import.meta.env.MODE === 'production' ? 'classic' : 'module' }
         );
     }
