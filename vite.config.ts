@@ -9,21 +9,21 @@ export default defineConfig({
   plugins: [
     react(),
     viteHtmlResolveAlias(),
-    VitePWA({
-      strategies: 'injectManifest',
-      injectRegister: null,
-      registerType: 'autoUpdate',
-      srcDir: 'src',
-      filename: 'firebase-messaging-sw.js',
-      devOptions: {
-        enabled: true,
-        type: 'module', //firebase
-        navigateFallback: 'index.html' //firebase
-      },
-      workbox: { //firebase
-        sourcemap: true
-      }
-    })
+    // VitePWA({
+    //   strategies: 'injectManifest',
+    //   injectRegister: null,
+    //   registerType: 'autoUpdate',
+    //   srcDir: 'src',
+    //   filename: 'firebase-messaging-sw.js',
+    //   devOptions: {
+    //     enabled: true,
+    //     type: 'module', //firebase
+    //     navigateFallback: 'index.html' //firebase
+    //   },
+    //   workbox: { //firebase
+    //     sourcemap: true
+    //   }
+    // })
   ],
   resolve: {
     alias: [
