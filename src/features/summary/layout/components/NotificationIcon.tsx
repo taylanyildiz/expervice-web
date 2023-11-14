@@ -16,7 +16,7 @@ import NotificationsNoneOutlinedIcon from "@mui/icons-material/NotificationsNone
 import NotificationRepository from "@Repo/notification_repository";
 import { AppDispatch, RootState } from "@Store/index";
 import { useDispatch, useSelector } from "react-redux";
-import { ReactNode, useEffect, useState } from "react";
+import { Fragment, ReactNode, useEffect, useState } from "react";
 import PrimaryButton from "@Components/PrimaryButton";
 import Notification from "@Models/notification/notification";
 import {
@@ -134,6 +134,7 @@ function NotificationIcon() {
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
   };
+
   const handleClose = () => {
     setAnchorEl(null);
   };
@@ -231,14 +232,14 @@ function NotificationIcon() {
           }}
         >
           {rows.map((item, index) => (
-            <>
+            <Fragment key={`notification-item-${index}`}>
               <NotificationItem
-                key={index}
+                key={`notification-${index}`}
                 item={item}
                 onClick={() => handleClickItem(item)}
               />
               <Divider sx={{ m: 0, p: 0 }} key={`divider-${index}`} />
-            </>
+            </Fragment>
           ))}
         </List>
       </NotificationMenu>

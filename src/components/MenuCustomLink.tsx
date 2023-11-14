@@ -100,7 +100,7 @@ function MenuCustomLink(props: LinkProps) {
           {children?.map((e, index) => {
             const comp = (
               <MenuItem
-                key={index}
+                key={`menu-${index}`}
                 sx={{ minWidth: 150 }}
                 onClick={() => {
                   onCloseMenuHandle();
@@ -118,7 +118,12 @@ function MenuCustomLink(props: LinkProps) {
             );
             if (e.to) {
               return (
-                <Link className="link-router" to={e.to!} children={comp} />
+                <Link
+                  key={`link-${index}`}
+                  className="link-router"
+                  to={e.to!}
+                  children={comp}
+                />
               );
             }
             return comp;

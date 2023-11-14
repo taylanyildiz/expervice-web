@@ -46,6 +46,7 @@ function GroupJobsChart() {
       sx={{ alignItems: "center", display: "flex", backgroundColor: "white" }}
     >
       <BarChart
+        height={300}
         dataset={dataset}
         xAxis={[{ scaleType: "band", dataKey: "date" }]}
         series={[
@@ -56,8 +57,6 @@ function GroupJobsChart() {
           },
           { dataKey: "maintenance", label: "Maintenance", valueFormatter },
         ]}
-        width={900}
-        height={300}
       />
     </Box>
   );
