@@ -9,6 +9,8 @@ import Unit from "@Models/units/unit";
 import { UnitUpdate } from "../entities/unit_update";
 import { equalInterface } from "@Utils/functions";
 import { setUnitDialogStatus, setUnitId } from "@Store/unit_store";
+import Customer from "@Models/customer/customer";
+import AssignCustomerDialog from "../dialogs/AssignCustomerDialog";
 
 /**
  * Unit store
@@ -24,12 +26,13 @@ export function useUnitDialog() {
   const { openDialog, closeDialog } = useDialog();
   const { unitDialogStatus } = useUnit();
   return {
-    openUnitDialog: (id?: number) => {
+    openUnitDialog: (id?: number, option?: { customer?: Customer | null }) => {
       if (unitDialogStatus) return;
       store.dispatch(setUnitDialogStatus(true));
       if (id) store.dispatch(setUnitId(id));
-      openDialog(<UnitDialog />, "md");
+      openDialog(<UnitDialog customerUser={option?.customer} />, "md");
     },
+    openAssignCustomerDialog: () => openDialog(<AssignCustomerDialog />, "xs"),
     closeDialog,
   };
 }

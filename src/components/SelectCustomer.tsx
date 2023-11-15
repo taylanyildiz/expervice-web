@@ -21,12 +21,14 @@ interface SelectCustomerProps {
   fullWidth?: boolean;
   helperText?: ReactNode;
   error?: boolean;
-  value?: Customer;
+  value?: Customer | null;
+  disabled?: boolean;
   onChanged: (values: Customer | null | undefined) => void;
 }
 
 function SelectCustomer(props: SelectCustomerProps) {
-  const { label, fullWidth, helperText, error, value, onChanged } = props;
+  const { label, fullWidth, helperText, error, value, disabled, onChanged } =
+    props;
 
   /// Customer store
   const {
@@ -66,6 +68,7 @@ function SelectCustomer(props: SelectCustomerProps) {
 
   return (
     <Autocomplete
+      disabled={disabled}
       loading={layzLoading}
       value={option}
       options={options}

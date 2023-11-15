@@ -1,6 +1,6 @@
 import { store } from "@Store/index";
 import BaseRepository from "./base_repository";
-import { setUserGroups } from "@Store/user_store";
+import { setCompany, setSubscription, setUserGroups } from "@Store/user_store";
 import User from "./end-points/user";
 import UserPassword from "@Features/summary/profile/entities/user_password";
 import SnackCustomBar from "@Utils/snack_custom_bar";
@@ -48,6 +48,28 @@ class UserRepository extends BaseRepository {
         const path = User.devices;
         const response = await this.post(path, { device_token: token });
         const success = response.success;
+        return success;
+    }
+
+    public async company(): Promise<boolean> {
+        const path = User.company;
+        const response = await this.get(path);
+        const success = response.success;
+        if (success) {
+            const data = response.data?.['data']?.['company'];
+            store.dispatch(setCompany(data));
+        }
+        return success;
+    }
+
+    public async subscribtion(): Promise<boolean> {
+        const path = User.subscription;
+        const response = await this.get(path);
+        const success = response.success;
+        if (success) {
+            const data = response.data?.['data']?.['subscription'];
+            store.dispatch(setSubscription(data));
+        }
         return success;
     }
 

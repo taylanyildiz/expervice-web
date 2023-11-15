@@ -1,6 +1,7 @@
 import Customer from "@Models/customer/customer";
 import CustomerFilter from "@Models/customer/customer_filter";
 import FormCustomer from "@Models/form/form_customer";
+import Unit from "@Models/units/unit";
 import { createSlice } from "@reduxjs/toolkit";
 
 /// Customer props
@@ -10,6 +11,7 @@ interface Props {
     customers: { rows: Customer[], count: number };
     customer: Customer | null;
     customerForms: { rows: FormCustomer[], count: 0 };
+    customerUnits: { rows: Unit[], count: 0 },
 }
 
 /// Cutomer initial states
@@ -19,6 +21,7 @@ const initialState: Props = {
     customers: { rows: [], count: 0 },
     customer: null,
     customerForms: { rows: [], count: 0 },
+    customerUnits: { rows: [], count: 0 },
 }
 
 /// Customer slice
@@ -40,6 +43,9 @@ const customer = createSlice({
         },
         setCustomerForms: (state, { payload }) => {
             state.customerForms = payload ?? { rows: [], count: 0 };
+        },
+        setCustomerUnits: (state, { payload }) => {
+            state.customerUnits = payload;
         }
     }
 });
@@ -52,4 +58,5 @@ export const {
     setCustomer,
     setCustomerFilter,
     setCustomerForms,
+    setCustomerUnits,
 } = customer.actions;

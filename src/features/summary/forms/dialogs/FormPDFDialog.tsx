@@ -64,7 +64,6 @@ function FormPDFDialog() {
         }
       }
       await formRepo.getForm(form!.id!);
-      return form;
     });
     return result;
   };

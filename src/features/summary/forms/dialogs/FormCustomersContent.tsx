@@ -11,7 +11,7 @@ import {
   TableRow,
   Typography,
 } from "@mui/material";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useForm, useFormDialog } from "../helper/form_helper";
 import FormRepository from "@Repo/form_repository";
 import ArrowRightIcon from "@mui/icons-material/ArrowRight";
@@ -62,17 +62,29 @@ function FormCustomersContent() {
     setPage(newPage);
   };
 
-  const handleChangeRowsPerPage = (
-    event: React.ChangeEvent<HTMLInputElement>
-  ) => {
+  const handleChangeRowsPerPage = (event: any) => {
     setRowsPerPage(+event.target.value);
     setPage(0);
   };
 
+  /// Form customers filter
+  const filter = useMemo(
+    () => ({
+      offset: rowsPerPage * page,
+      limit: rowsPerPage,
+    }),
+    [rowsPerPage, page]
+  );
+
   /// Initialize component
   useEffect(() => {
-    formRepo.formCustomers(form!.id!);
-  }, [form]);
+    formRepo.formCustomers(form!.id!, filter);
+  }, [form, filter]);
+
+  useEffect(() => {
+    console.log(page);
+    console.log(rowsPerPage);
+  }, [page, rowsPerPage]);
 
   /// Initialize customers
   useEffect(() => {

@@ -44,19 +44,31 @@ function CommonFooter(props: FooterProps) {
           <Grid
             item
             children={
-              <Link to="" children={Images.instagramBlack({ height: 25 })} />
+              <Link
+                target="_blank"
+                to="https://www.instagram.com/acritechnology/"
+                children={Images.instagramBlack({ height: 25 })}
+              />
             }
           />
           <Grid
             item
             children={
-              <Link to="" children={Images.facebookBlack({ height: 25 })} />
+              <Link
+                target="_blank"
+                to=""
+                children={Images.facebookBlack({ height: 25 })}
+              />
             }
           />
           <Grid
             item
             children={
-              <Link to="" children={Images.linkedinBlack({ height: 25 })} />
+              <Link
+                target="_blank"
+                to="https://www.linkedin.com/company/acritechnology/mycompany/"
+                children={Images.linkedinBlack({ height: 25 })}
+              />
             }
           />
           <Grid
@@ -68,7 +80,11 @@ function CommonFooter(props: FooterProps) {
           <Grid
             item
             children={
-              <Link to="" children={Images.youtubeBlack({ height: 25 })} />
+              <Link
+                target="_blank"
+                to=""
+                children={Images.youtubeBlack({ height: 25 })}
+              />
             }
           />
         </Grid>

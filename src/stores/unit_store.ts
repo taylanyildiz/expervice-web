@@ -16,6 +16,7 @@ interface Props {
     technicians: TechnicianUser[],
     jobsFilter: UnitJobsFilter | null,
     jobs: { rows: Job[], count: number } | null;
+    selectedUnits: number[];
 }
 
 /// Unit initial states
@@ -29,6 +30,7 @@ const initialState: Props = {
     technicians: [],
     jobsFilter: { limit: 10, offset: 0 },
     jobs: null,
+    selectedUnits: [],
 }
 
 /// Unit slice
@@ -66,6 +68,9 @@ const unit = createSlice({
         },
         setUnitJobs: (state, { payload }) => {
             state.jobs = payload;
+        },
+        setSelectedUnits: (state, { payload }) => {
+            state.selectedUnits = payload;
         }
     }
 });
@@ -81,4 +86,5 @@ export const {
     setAvailableTechnicians,
     setUnitJobs,
     setUnitJobsFilter,
+    setSelectedUnits,
 } = unit.actions;

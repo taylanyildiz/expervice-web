@@ -4,16 +4,17 @@ import { ReactNode } from "react";
 interface LoadingCompProps {
   children?: ReactNode;
   loading: boolean;
+  height?: number | string;
 }
 
 function LoadingComp(props: LoadingCompProps) {
-  const { children, loading } = props;
+  const { children, loading, height } = props;
 
   if (loading)
     return (
       <Box
         display="flex"
-        height="100%"
+        height={height ?? "100%"}
         justifyContent="center"
         alignItems="center"
       >

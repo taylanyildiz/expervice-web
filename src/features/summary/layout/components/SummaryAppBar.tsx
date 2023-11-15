@@ -30,6 +30,8 @@ import { useTechnicianDialog } from "@Features/summary/users/technician-users/he
 import { useCustomerDialog } from "@Features/summary/users/customer-users/helpers/customer_user_helper";
 import { useFormDialog } from "@Features/summary/forms/helper/form_helper";
 import { useProfileDialog } from "@Features/summary/profile/helper/profile_helper";
+import ApartmentIcon from "@mui/icons-material/Apartment";
+import { useCompanyDialog } from "@Features/summary/company/helper/company_helper";
 
 function SummaryAppBar() {
   /// Navigate
@@ -38,6 +40,7 @@ function SummaryAppBar() {
   /// Account store
   const { user } = useSelector((state: RootState) => state.account);
   const displayName = `${user?.first_name} ${user?.last_name}`;
+  const isOwner = user?.role_id === 3;
 
   /// Dispatch
   const dispatch: AppDispatch = useDispatch<AppDispatch>();
@@ -55,6 +58,7 @@ function SummaryAppBar() {
   const { openCustomerDialog } = useCustomerDialog();
   const { openFormDialog } = useFormDialog();
   const { openProfileDialog } = useProfileDialog();
+  const { openCompanyDialog } = useCompanyDialog();
 
   return (
     <AppBar
@@ -239,6 +243,12 @@ function SummaryAppBar() {
                     prefix: <AccountBoxIcon />,
                     title: displayName,
                     onClick: openProfileDialog,
+                  },
+                  {
+                    visibility: isOwner,
+                    prefix: <ApartmentIcon />,
+                    title: "Company Settings",
+                    onClick: openCompanyDialog,
                   },
                   {
                     prefix: <LogoutIcon />,

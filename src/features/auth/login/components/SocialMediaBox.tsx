@@ -12,13 +12,21 @@ function SocialMediaBox() {
         <Link to="" children={Images.facebookWhite({ width: size })} />
       </Grid>
       <Grid item>
-        <Link to="" children={Images.instagramWhite({ width: size })} />
+        <Link
+          target="_blank"
+          to="https://www.instagram.com/acritechnology/"
+          children={Images.instagramWhite({ width: size })}
+        />
       </Grid>
       <Grid item>
         <Link to="" children={Images.twitterWhite({ width: size })} />
       </Grid>
       <Grid item>
-        <Link to="" children={Images.linkedinWhite({ width: size })} />
+        <Link
+          target="_blank"
+          to="https://www.linkedin.com/company/acritechnology/mycompany/"
+          children={Images.linkedinWhite({ width: size })}
+        />
       </Grid>
     </Grid>
   );

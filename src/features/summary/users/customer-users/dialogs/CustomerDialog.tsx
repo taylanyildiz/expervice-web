@@ -22,6 +22,7 @@ import CustomerUserRepository from "@Repo/customer_user_repository";
 import VisibilityComp from "@Components/VisibilityComp";
 import Colors from "@Themes/colors";
 import CustomerForms from "./CustomerForms";
+import CustomerUnits from "./CustomerUnits";
 
 function CustomerDialog() {
   /// Customer hook
@@ -163,6 +164,11 @@ function CustomerDialog() {
                 visibility: isEdit,
                 title: "Forms",
                 panel: <CustomerForms />,
+              },
+              {
+                visibility: isEdit,
+                title: "Units",
+                panel: <CustomerUnits />,
               },
             ]}
           />

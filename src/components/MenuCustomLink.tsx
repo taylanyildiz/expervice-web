@@ -12,6 +12,7 @@ import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 
 /// Menu link item
 interface LinkChildren {
+  visibility?: boolean;
   title?: string;
   to?: To;
   prefix?: ReactNode;
@@ -97,37 +98,39 @@ function MenuCustomLink(props: LinkProps) {
           onClose={onCloseMenuHandle}
           // MenuListProps={{ onMouseLeave: onCloseMenuHandle }}
         >
-          {children?.map((e, index) => {
-            const comp = (
-              <MenuItem
-                key={`menu-${index}`}
-                sx={{ minWidth: 150 }}
-                onClick={() => {
-                  onCloseMenuHandle();
-                  e.onClick?.();
-                }}
-              >
-                {e.prefix && <ListItemIcon children={e.prefix} />}
-                <ListItemText children={e.title} />
-                <Typography
-                  variant="body2"
-                  color="text.secondary"
-                  children={e.suffix}
-                />
-              </MenuItem>
-            );
-            if (e.to) {
-              return (
-                <Link
-                  key={`link-${index}`}
-                  className="link-router"
-                  to={e.to!}
-                  children={comp}
-                />
+          {children
+            ?.filter((e) => e.visibility !== false)
+            .map((e, index) => {
+              const comp = (
+                <MenuItem
+                  key={`menu-${index}`}
+                  sx={{ minWidth: 150 }}
+                  onClick={() => {
+                    onCloseMenuHandle();
+                    e.onClick?.();
+                  }}
+                >
+                  {e.prefix && <ListItemIcon children={e.prefix} />}
+                  <ListItemText children={e.title} />
+                  <Typography
+                    variant="body2"
+                    color="text.secondary"
+                    children={e.suffix}
+                  />
+                </MenuItem>
               );
-            }
-            return comp;
-          })}
+              if (e.to) {
+                return (
+                  <Link
+                    key={`link-${index}`}
+                    className="link-router"
+                    to={e.to!}
+                    children={comp}
+                  />
+                );
+              }
+              return comp;
+            })}
         </Menu>
       )}
     </>

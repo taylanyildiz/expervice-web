@@ -59,7 +59,7 @@ function ResetPasswordDialog() {
       <DialogContent>
         <Box mt={1} p={1} sx={{ backgroundColor: "white" }}>
           <Grid container columnSpacing={1}>
-            <Grid item>
+            <Grid item xs={12}>
               <TextOutlineField
                 fullWidth
                 secret

@@ -111,7 +111,6 @@ abstract class BaseRepository extends Axios {
         return Object.assign({}, value, { success });
     }
 
-
     /**
      * Get Request
      * @param url 

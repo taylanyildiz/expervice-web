@@ -1,7 +1,7 @@
 import EmptyGrid from "@Components/EmptyGrid";
 import { Box, Grid, Typography } from "@mui/material";
 import { DataGrid, GridPaginationModel } from "@mui/x-data-grid";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import {
   useCustomer,
   useCustomerDialog,
@@ -35,19 +35,24 @@ function CustomerForms() {
     pageSize: 10,
   });
 
-  /// Forms filter
-  // const filter: CustomerFilter = useMemo(
-  //     () => ({
-  //       limit: paginationMode.pageSize,
-  //       offset: paginationMode.pageSize * paginationMode.page,
-  //     }),
-  //     [paginationMode]
-  //   );
+  // Forms filter
+  const filter = useMemo(
+    () => ({
+      limit: paginationMode.pageSize,
+      offset: paginationMode.pageSize * paginationMode.page,
+    }),
+    [paginationMode]
+  );
+
+  /// Get customers
+  const getCustomers = () => {
+    customerRepo.getForms(customer!.id!, filter);
+  };
 
   /// Initialize component
   useEffect(() => {
-    customerRepo.getForms(customer!.id!);
-  }, []);
+    getCustomers();
+  }, [filter]);
 
   /// Handle add form
   const handleAddForm = async () => {
@@ -59,7 +64,7 @@ function CustomerForms() {
       return result;
     });
     if (!result) return;
-    customerRepo.getForms(customer!.id!);
+    getCustomers();
   };
 
   /// Handle delete customer form
@@ -73,7 +78,7 @@ function CustomerForms() {
       return await customerRepo.deleteForm(id);
     });
     if (!result) return;
-    customerRepo.getForms(customer!.id!);
+    getCustomers();
   };
 
   /// Handle view pdf customer form
@@ -89,7 +94,7 @@ function CustomerForms() {
     <>
       <Grid container alignItems="center">
         <Grid item flex={1}>
-          <Typography variant="h1" fontSize={15} children="Forms" />
+          <Typography variant="h1" fontSize={16} children="Forms" />
         </Grid>
         <Grid item>
           <PrimaryButton
@@ -102,9 +107,11 @@ function CustomerForms() {
           />
         </Grid>
       </Grid>
-      <Box mt={2} height={500}>
+      <Box mt={2} height={400}>
         <DataGrid
           disableColumnMenu
+          sortingMode="server"
+          paginationMode="server"
           rows={rows}
           rowCount={count}
           columns={customerFormColumns({

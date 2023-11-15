@@ -19,8 +19,15 @@ import Colors from "@Themes/colors";
 import UnitJob from "./UnitJob";
 import { EJobType } from "@Features/summary/jobs/entities/job_enums";
 import UnitJobs from "./UnitJobs";
+import Customer from "@Models/customer/customer";
 
-function UnitDialog() {
+interface UnitDialogProps {
+  customerUser?: Customer | null;
+}
+
+function UnitDialog(props: UnitDialogProps) {
+  const { customerUser } = props;
+
   /// Dispatch
   const dispatch: AppDispatch = useDispatch<AppDispatch>();
 
@@ -124,10 +131,15 @@ function UnitDialog() {
 
   /// Set formik
   useEffect(() => {
-    if (!unit) return;
-    for (let [k, v] of Object.entries(unit)) {
-      formik.setFieldValue(k, v);
+    if (unit) {
+      for (let [k, v] of Object.entries(unit)) {
+        formik.setFieldValue(k, v);
+      }
     }
+    if (customerUser) {
+      formik.setFieldValue("customer", customerUser);
+    }
+    formik.setFieldValue("availableCustomer", Boolean(!customerUser));
   }, [unit]);
 
   /// Destroy

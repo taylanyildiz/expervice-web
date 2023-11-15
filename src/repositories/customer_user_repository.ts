@@ -2,7 +2,7 @@
 import BaseRepository from "./base_repository";
 import SnackCustomBar from "@Utils/snack_custom_bar";
 import { store } from "@Store/index";
-import { setCustomer, setCustomerForms, setCustomers, setLayzLoading } from "@Store/customer_user_store";
+import { setCustomer, setCustomerForms, setCustomerUnits, setCustomers, setLayzLoading } from "@Store/customer_user_store";
 import Customer from "./end-points/customer_user";
 import CustomerUser from "@Models/customer/customer";
 import CustomerUpdate from "@Features/summary/users/customer-users/entities/customer_update";
@@ -158,6 +158,20 @@ class CustomerUserRepository extends BaseRepository {
         const success = response.success;
         SnackCustomBar.status(response);
         // const data = response.data?.['data']?.['customer_form'];
+        return success;
+    }
+
+    /**
+     * Get Customer units
+     */
+    public async getUnits(id: number, filter: { limit: number, offset: number }): Promise<boolean> {
+        const path = Customer.units(id);
+        const response = await this.get(path, { params: filter });
+        const success = response.success;
+        if (success) {
+            const data = response.data['data']['units'];
+            store.dispatch(setCustomerUnits(data))
+        }
         return success;
     }
 

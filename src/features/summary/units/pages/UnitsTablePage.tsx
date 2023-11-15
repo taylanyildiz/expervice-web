@@ -6,7 +6,7 @@ import { useDispatch } from "react-redux";
 import { useEffect, useMemo, useState } from "react";
 import UnitFilter from "@Models/units/unit_filter";
 import UnitRepository from "@Repo/unit_repository";
-import { setUnitFilter } from "@Store/unit_store";
+import { setSelectedUnits, setUnitFilter } from "@Store/unit_store";
 import { useUnit } from "../helper/unit_helper";
 
 function UnitsTablePage() {
@@ -17,6 +17,7 @@ function UnitsTablePage() {
   const {
     layzLoading,
     units: { rows, count },
+    selectedUnits,
   } = useUnit();
 
   /// Unit repository
@@ -43,10 +44,19 @@ function UnitsTablePage() {
     unitRepo.getUnits();
   }, [filter]);
 
+  /// Destroy component
+  useEffect(() => {
+    return () => {
+      dispatch(setSelectedUnits([]));
+    };
+  }, []);
+
   return (
     <div className="units-grid">
       <DataGrid
         pagination
+        checkboxSelection
+        disableRowSelectionOnClick
         loading={layzLoading}
         disableColumnMenu
         sortingMode="server"
@@ -58,6 +68,10 @@ function UnitsTablePage() {
         slots={{ noRowsOverlay: EmptyGrid }}
         paginationModel={paginationMode}
         onPaginationModelChange={setPaginationMode}
+        rowSelectionModel={selectedUnits ?? []}
+        onRowSelectionModelChange={(selecteds) => {
+          dispatch(setSelectedUnits(selecteds));
+        }}
       />
     </div>
   );

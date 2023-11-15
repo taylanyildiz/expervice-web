@@ -120,6 +120,26 @@ class UnitRepository extends BaseRepository {
         const data = response.data['data']['jobs'];
         store.dispatch(setUnitJobs(data));
     }
+
+    /**
+     * Assign Units to customer
+     */
+    public async assign(units: number[], customer: number): Promise<boolean> {
+        const path = UnitConst.assign;
+        const response = await this.post(path, { units, customer_id: customer });
+        SnackCustomBar.status(response);
+        return response.success;
+    }
+
+    /**
+     * Assign Units to customer
+     */
+    public async deleteUnits(units: number[]): Promise<boolean> {
+        const path = "/";
+        const response = await this.delete(path, { data: { units } });
+        SnackCustomBar.status(response);
+        return response.success;
+    }
 }
 
 export default UnitRepository;
