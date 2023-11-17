@@ -106,6 +106,8 @@ function RegisterBilling() {
                 formik.touched.card_number && formik.errors.card_number
               )}
               inputComponent={CardNumberMask}
+              onFocus={() => setFocus("number")}
+              value={formik.values.card_number}
             />
           </Grid>
           <Grid item xs={12}>
@@ -118,6 +120,9 @@ function RegisterBilling() {
                   helperText={formik.touched.expire && formik.errors.expire}
                   error={Boolean(formik.touched.expire && formik.errors.expire)}
                   inputComponent={CardYearMask}
+                  onChange={formik.handleChange}
+                  onFocus={() => setFocus("expiry")}
+                  value={formik.values.expire}
                 />
               </Grid>
               <Grid item xs={6}>

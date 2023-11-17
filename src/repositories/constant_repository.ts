@@ -3,6 +3,7 @@ import BaseRepository from "./base_repository";
 import Constant from "./end-points/constant";
 import { setFieldTypes, setGroupRoles, setJobPriorities, setJobRoles, setJobSubTypes, setLanguages, setPermissions, setRolePermissions, setUnitLabels, setUnitSubTypes, setUnitTypes, setUserRoleTypes, setUserRoles } from "@Store/constant_store";
 import JobStatus from "@Models/job/job_status";
+import UnsubscriptionReason from "@Models/unsubscription_reason";
 
 class ConstantRepository extends BaseRepository {
     constructor() {
@@ -166,6 +167,15 @@ class ConstantRepository extends BaseRepository {
         const data = response.data['data']['job_statuses'];
         store.dispatch(setFieldTypes(data));
         return data;
+    }
+
+    /**
+     * Get Unsubscription Reaons
+     */
+    public async getUnsubReasons(): Promise<UnsubscriptionReason[] | null> {
+        const path = Constant.unsubReasons;
+        const response = await this.get(path);
+        return response.data?.['data']?.['reasons'];
     }
 
 }

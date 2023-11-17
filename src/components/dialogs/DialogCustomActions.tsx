@@ -1,4 +1,4 @@
-import { DialogActions, Grid } from "@mui/material";
+import { DialogActions, DialogActionsProps, Grid } from "@mui/material";
 import { ReactNode } from "react";
 
 interface LeadingProps {
@@ -23,11 +23,13 @@ export enum EActionType {
   Delete = 4,
 }
 
-function DialogCustomActions(props: DialogCustomActionProps) {
+function DialogCustomActions(
+  props: DialogCustomActionProps & DialogActionsProps
+) {
   const { leading, actions, actionsSpace, rowSpace } = props;
 
   return (
-    <DialogActions>
+    <DialogActions {...props}>
       <Grid container rowSpacing={rowSpace ?? 1} alignItems="center">
         <Grid
           item

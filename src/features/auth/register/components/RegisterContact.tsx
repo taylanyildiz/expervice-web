@@ -37,10 +37,10 @@ function RegisterContact() {
     email: "",
     phone: "",
     city: undefined,
-    company_fax: "",
-    company_phone: "",
+    company_fax: undefined,
+    company_phone: undefined,
     company_name: "",
-    company_web_site: "",
+    company_web_site: undefined,
     country: undefined,
     state: undefined,
     street_address: "",
@@ -151,6 +151,7 @@ function PrimaryContact(props: {
           helperText={formik.touched.phone && formik.errors.phone}
           error={Boolean(formik.touched.phone && formik.errors.phone)}
           inputComponent={PhoneMask}
+          value={formik.values.phone}
         />
       </Grid>
     </Grid>

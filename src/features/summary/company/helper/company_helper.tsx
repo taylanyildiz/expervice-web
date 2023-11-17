@@ -2,6 +2,8 @@ import { useDialog } from "@Utils/hooks/dialog_hook";
 import CompanyDialog from "..";
 import { useSelector } from "react-redux";
 import { RootState } from "@Store/index";
+import SubscriptionPlanDialog from "../dialogs/SubscriptionPlanDialog";
+import CancelSubscriptionDialog from "../dialogs/CancelSubscriptionDialog";
 
 /// User store
 export function useUser() {
@@ -15,5 +17,9 @@ export function useCompanyDialog() {
   const { openDialog } = useDialog();
   return {
     openCompanyDialog: () => openDialog(<CompanyDialog />, "md"),
+    openSubscriptionDialog: () => openDialog(<SubscriptionPlanDialog />, "sm"),
+    openCancelSubscriptionDialog: () => {
+      openDialog(<CancelSubscriptionDialog />, "xs");
+    },
   };
 }

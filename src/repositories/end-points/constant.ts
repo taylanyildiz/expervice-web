@@ -17,6 +17,7 @@ const Constant = {
     jobPriorities: "/job-priorities",
     fieldTypes: "/field-types",
     jobStatuses: "/job-statuses",
+    unsubReasons: "/unsub-reasons",
 }
 
 export default Constant;

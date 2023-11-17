@@ -35,7 +35,7 @@ export const CardNumberMask = forwardRef<HTMLInputElement, CustomProps>(
         {...other}
         inputRef={ref}
         overwrite
-        mask="#### #### #### ####"
+        mask="#### #### #### ####"
         definitions={{
           "#": /[0-9]/,
         }}

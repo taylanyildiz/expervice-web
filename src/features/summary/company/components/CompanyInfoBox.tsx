@@ -7,7 +7,7 @@ import MailOutlineOutlinedIcon from "@mui/icons-material/MailOutlineOutlined";
 import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
 import LanguageOutlinedIcon from "@mui/icons-material/LanguageOutlined";
 
-function CompanyInfo() {
+function CompanyInfoBox() {
   /// User store
   const { company } = useUser();
   const image = company?.company_image;
@@ -82,4 +82,4 @@ function CompanyInfo() {
   );
 }
 
-export default CompanyInfo;
+export default CompanyInfoBox;
