@@ -138,11 +138,9 @@ function SummaryAppBar() {
                 withIcon={false}
                 title={
                   <Tooltip title="Add">
-                    <>
-                      <IconButton size="small">
-                        <AddOutlinedIcon sx={{ color: "white" }} />
-                      </IconButton>
-                    </>
+                    <IconButton size="small">
+                      <AddOutlinedIcon sx={{ color: "white" }} />
+                    </IconButton>
                   </Tooltip>
                 }
                 children={[
@@ -181,9 +179,7 @@ function SummaryAppBar() {
             </Grid>
             <Grid item>
               <Tooltip title="Notifications">
-                <>
-                  <NotificationIcon />
-                </>
+                <NotificationIcon />
               </Tooltip>
             </Grid>
             <Grid item>
@@ -192,11 +188,9 @@ function SummaryAppBar() {
                 withIcon={false}
                 title={
                   <Tooltip title="Users">
-                    <>
-                      <IconButton size="small">
-                        <GroupsOutlinedIcon sx={{ color: "white" }} />
-                      </IconButton>
-                    </>
+                    <IconButton size="small">
+                      <GroupsOutlinedIcon sx={{ color: "white" }} />
+                    </IconButton>
                   </Tooltip>
                 }
                 children={[
@@ -223,19 +217,17 @@ function SummaryAppBar() {
                 withIcon={false}
                 title={
                   <Tooltip title="Profile">
-                    <>
-                      <IconButton size="small">
-                        <Avatar
-                          children={caption(displayName)}
-                          sx={{
-                            width: 30,
-                            height: 30,
-                            fontSize: 12,
-                            color: "white",
-                          }}
-                        />
-                      </IconButton>
-                    </>
+                    <IconButton size="small">
+                      <Avatar
+                        children={caption(displayName)}
+                        sx={{
+                          width: 30,
+                          height: 30,
+                          fontSize: 12,
+                          color: "white",
+                        }}
+                      />
+                    </IconButton>
                   </Tooltip>
                 }
                 children={[

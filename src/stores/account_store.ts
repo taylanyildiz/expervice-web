@@ -33,6 +33,7 @@ const account = createSlice({
             state.refreshToken = undefined;
             state.accessToken = undefined;
             state.user = undefined;
+            localStorage.clear();
         }
     }
 });

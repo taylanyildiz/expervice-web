@@ -12,3 +12,5 @@ export { default as JobRepository } from "./job_repository";
 export { default as FormRepository } from "./form_repository";
 export { default as NotificationRepository } from "./notification_repository";
 export { default as SubscriptionRepository } from "./subscription_repository";
+export { default as UserRepository } from "./user_repository";
+export { default as CompanyRepository } from "./company_repository";

@@ -1,11 +1,19 @@
 import TextOutlineField from "@Components/TextOutlineField";
 import { CitySelect, CountrySelect, StateSelect } from "@Components/index";
+import CompanyAddress from "@Models/company/company_address";
 import CompanyInfo from "@Models/company/company_info";
 import { Grid, Typography } from "@mui/material";
-import { FormikProps } from "formik";
+import { FormikErrors, FormikProps, FormikTouched } from "formik";
 
 function CompanyOverview(props: { formik: FormikProps<CompanyInfo> }) {
   const { formik } = props;
+
+  const optionError = formik.errors.company_address as FormikErrors<
+    CompanyAddress | undefined
+  >;
+  const optionTouch = formik.touched.company_address as FormikTouched<
+    CompanyAddress | undefined
+  >;
 
   return (
     <Grid container spacing={1}>
@@ -71,6 +79,8 @@ function CompanyOverview(props: { formik: FormikProps<CompanyInfo> }) {
           onChanged={(country) => {
             formik.setFieldValue("company_address.country", country);
           }}
+          helperText={optionTouch?.country && optionError?.country}
+          error={Boolean(optionTouch?.country && optionError?.country)}
         />
       </Grid>
       <Grid item xs={4}>
@@ -82,6 +92,8 @@ function CompanyOverview(props: { formik: FormikProps<CompanyInfo> }) {
           onChanged={(state) => {
             formik.setFieldValue("company_address.state", state);
           }}
+          helperText={optionTouch?.state && optionError?.state}
+          error={Boolean(optionTouch?.state && optionError?.state)}
         />
       </Grid>
       <Grid item xs={4}>
@@ -93,6 +105,8 @@ function CompanyOverview(props: { formik: FormikProps<CompanyInfo> }) {
           onChanged={(city) => {
             formik.setFieldValue("company_address.city", city);
           }}
+          helperText={optionTouch?.city && optionError?.city}
+          error={Boolean(optionTouch?.city && optionError?.city)}
         />
       </Grid>
       <Grid item xs={8}>

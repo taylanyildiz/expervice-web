@@ -36,12 +36,19 @@ const companyRegion = createSlice({
         setRegions: (state, { payload }) => {
             state.regions = payload;
             state.group = null;
-            if (!state.region && state.regions.rows.length != 0) {
-                state.region = state.regions.rows[0];
+            state.region = null;
+            state.groups = { rows: [], count: 0 };
+            state.group = null;
+            state.groupInfo = null;
+            if (payload.rows.length != 0) {
+                state.region = payload.rows[0];
             }
         },
         setSelectedRegion: (state, { payload }) => {
             state.region = payload;
+            state.groups = { rows: [], count: 0 };
+            state.group = null;
+            state.groupInfo = null;
         },
         setEditRegion: (state, { payload }) => {
             state.editRegion = payload;

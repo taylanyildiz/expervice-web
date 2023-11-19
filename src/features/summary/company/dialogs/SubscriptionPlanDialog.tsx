@@ -10,6 +10,8 @@ import Colors from "@Themes/colors";
 import LoadingComp from "@Components/LoadingComp";
 import VisibilityComp from "@Components/VisibilityComp";
 import ProductionPlan from "@Models/products/production_plan";
+import { useDialog } from "@Utils/hooks/dialog_hook";
+import SubscriptionRepository from "@Repo/subscription_repository";
 
 const defaultBox = {
   borderRadius: 1,
@@ -22,6 +24,12 @@ const defaultBox = {
 function SubscriptionPlanDialog() {
   /// User store
   const { subscription } = useUser();
+
+  /// Subscription repository
+  const subRepo = new SubscriptionRepository();
+
+  /// Dialog hook
+  const { openLoading, openConfirm, closeDialog } = useDialog();
 
   /// Selected plan
   const [plan, setPlan] = useState<ProductionPlan | null>(null);
@@ -51,6 +59,23 @@ function SubscriptionPlanDialog() {
 
   /// Available save button
   const availableSave = currentPlanId !== subscription?.plan?.id;
+
+  const handleSave = async () => {
+    const confirm = await openConfirm(
+      "Upgrade Plan",
+      <section>
+        Are you sure to upgrade <b>{plan?.name}</b> plan
+      </section>
+    );
+    if (!confirm) return;
+    closeDialog();
+    3;
+    const result = await openLoading(async () => {
+      return subRepo.upgradePlan(subscription!.id!, plan!.id!);
+    });
+    if (!result) return;
+    closeDialog();
+  };
 
   return (
     <>
@@ -110,6 +135,7 @@ function SubscriptionPlanDialog() {
             color="white"
             fontWeight="normal"
             children="Save"
+            onClick={handleSave}
           />,
         ]}
       />

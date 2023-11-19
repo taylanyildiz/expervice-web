@@ -218,9 +218,11 @@ function NotificationIcon() {
           disablePadding
           sx={{ maxHeight: 400, overflowY: "scroll" }}
           onScroll={(e) => {
+            const current = e.currentTarget;
+            const dif = current.scrollHeight - current.scrollTop;
             const bottom =
-              e.currentTarget.scrollHeight - e.currentTarget.scrollTop - 0.5 ===
-              e.currentTarget.clientHeight;
+              dif === current.clientHeight ||
+              dif - 0.5 === current.clientHeight;
 
             if (!bottom) return;
             dispatch(

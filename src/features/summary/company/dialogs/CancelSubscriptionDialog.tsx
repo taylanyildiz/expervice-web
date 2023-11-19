@@ -6,11 +6,14 @@ import { DialogCustomActions } from "@Components/dialogs";
 import UnsubscriptionReason from "@Models/unsubscription_reason";
 import ConstantRepository from "@Repo/constant_repository";
 import SubscriptionRepository from "@Repo/subscription_repository";
+import { logout } from "@Store/account_store";
+import { AppDispatch } from "@Store/index";
 import Colors from "@Themes/colors";
 import { useDialog } from "@Utils/hooks/dialog_hook";
 import { Box, DialogContent, Stack, Typography } from "@mui/material";
 import { useFormik } from "formik";
 import { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
 import { object, string } from "yup";
 
 function CancelSubscriptionBox(props: {
@@ -74,6 +77,9 @@ function CancelSubscriptionDialog() {
   /// Loading
   const [loading, setLoading] = useState<boolean>(true);
 
+  /// Dispatch
+  const dispatch: AppDispatch = useDispatch<AppDispatch>();
+
   /// Selected reason type
   const [selectedReason, setSelectedReason] =
     useState<UnsubscriptionReason | null>(null);
@@ -95,6 +101,7 @@ function CancelSubscriptionDialog() {
       );
     });
     if (!result) return;
+    dispatch(logout());
   };
 
   /// Formik

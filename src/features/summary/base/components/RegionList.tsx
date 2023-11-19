@@ -33,8 +33,9 @@ function RegionsList(props: { scale: string }) {
   }, []);
 
   /// Select region
-  const onSelectRegion = (region: CompanyRegion) => {
-    dispatch(setSelectedRegion(region));
+  const onSelectRegion = (value: CompanyRegion) => {
+    if (value.id === region?.id) return;
+    dispatch(setSelectedRegion(value));
   };
 
   return (

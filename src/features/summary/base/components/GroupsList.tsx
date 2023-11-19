@@ -44,8 +44,9 @@ function GroupsList() {
   }, [region]);
 
   /// Select group
-  const onSelectGroup = (group: CompanyGroup) => {
-    dispatch(setSelectedGroup(group));
+  const onSelectGroup = (value: CompanyGroup) => {
+    if (value.id === group?.id) return;
+    dispatch(setSelectedGroup(value));
   };
 
   /// Create group handle

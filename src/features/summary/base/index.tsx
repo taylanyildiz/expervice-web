@@ -16,8 +16,8 @@ function SummaryPage() {
     (state: RootState) => state.companyRegion
   );
 
-  const isRegionEmpty = regions.rows.length === 0;
-  const isGroupEmpty = groups.rows.length === 0;
+  const isRegionEmpty = regions?.rows?.length === 0;
+  const isGroupEmpty = groups?.rows?.length === 0;
 
   return (
     <div className="summary-layout">

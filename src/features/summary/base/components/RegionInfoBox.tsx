@@ -1,3 +1,4 @@
+import VisibilityComp from "@Components/VisibilityComp";
 import CompanyRegionRepository from "@Repo/company_region_repository";
 import { RootState } from "@Store/index";
 import { Box, Grid, Typography } from "@mui/material";
@@ -49,17 +50,25 @@ function RegionInfoBox() {
               <Typography
                 variant="h1"
                 fontSize={20}
-                children={weather?.forecast?.[0].text}
+                children={weather?.forecast?.[0]?.text ?? "-"}
               />
             </Grid>
             <Grid item>
-              <img height={40} width={40} src={weather?.forecast?.[0].icon} />
+              <VisibilityComp
+                visibility={Boolean(weather?.forecast?.[0]?.icon)}
+              >
+                <img
+                  height={40}
+                  width={40}
+                  src={weather?.forecast?.[0]?.icon}
+                />
+              </VisibilityComp>
             </Grid>
             <Grid item>
               <Typography
                 variant="body2"
                 fontSize={20}
-                children={`${weather?.forecast?.[0].temp_c} °C`}
+                children={`${weather?.forecast?.[0]?.temp_c ?? ""} °C`}
               />
             </Grid>
             <Grid item ml={1}>
