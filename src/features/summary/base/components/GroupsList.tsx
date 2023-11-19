@@ -17,10 +17,11 @@ import { CompanyGroup } from "@Models/index";
 import { setSelectedGroup } from "@Store/company_region_store";
 import { useDialog } from "@Utils/hooks/dialog_hook";
 import GroupDialog from "../dialogs/GroupDialog";
+import LoadingComp from "@Components/LoadingComp";
 
 function GroupsList() {
   /// Company region store
-  const { groups, group, region } = useSelector(
+  const { groups, group, region, groupsLoading } = useSelector(
     (state: RootState) => state.companyRegion
   );
 
@@ -69,24 +70,26 @@ function GroupsList() {
         </Grid>
       </Grid>
       <Grid item xs={12} children={<Divider />} />
-      <Grid item xs={12}>
-        <Grid container>
-          <Grid item xs={12}>
-            <VisibilityComp
-              visibility={Boolean(group)}
-              children={<SelectedGroupBox />}
-            />
-            {groups?.rows.map((item, index) => (
-              <ListItemButton
-                onClick={() => onSelectGroup(item)}
-                key={index}
-                selected={item.id == group?.id}
-              >
-                <ListItemText primary={item.name} />
-              </ListItemButton>
-            ))}
+      <Grid mt={1} item xs={12}>
+        <LoadingComp loading={groupsLoading}>
+          <Grid container>
+            <Grid item xs={12}>
+              <VisibilityComp
+                visibility={Boolean(group)}
+                children={<SelectedGroupBox />}
+              />
+              {groups?.rows.map((item, index) => (
+                <ListItemButton
+                  onClick={() => onSelectGroup(item)}
+                  key={index}
+                  selected={item.id == group?.id}
+                >
+                  <ListItemText primary={item.name} />
+                </ListItemButton>
+              ))}
+            </Grid>
           </Grid>
-        </Grid>
+        </LoadingComp>
       </Grid>
     </Grid>
   );

@@ -2,7 +2,7 @@ import { CompanyGroup, CompanyRegion, CompanyRegionFilter } from "@Models/index"
 import BaseRepository from "./base_repository";
 import CompanyRegionConst from "./end-points/company_region";
 import { store } from "@Store/index";
-import { setGroupInfo, setGroups, setRegions, setSelectedGroup, setSelectedRegion, setWeather } from "@Store/company_region_store";
+import { setGroupInfo, setGroupsLoading, setGroups, setRegions, setRegionsLoading, setSelectedGroup, setSelectedRegion, setWeather, setGroupInfoLoading, setWeatherLoading } from "@Store/company_region_store";
 import RegionProcess from "@Features/summary/base/entities/region_process";
 import SnackCustomBar from "@Utils/snack_custom_bar";
 
@@ -15,45 +15,50 @@ class CompanyRegionRepository extends BaseRepository {
      * Get Company Regions
      */
     public async getRegions(filter?: CompanyRegionFilter): Promise<void> {
+        store.dispatch(setRegionsLoading(true));
         const response = await this.get("/", { params: filter });
         const status = response.status;
         if (status !== 200) return;
         const data = response.data['data']['regions'];
         store.dispatch(setRegions(data));
+        store.dispatch(setRegionsLoading(false));
     }
 
     /**
      * Get region groups
      */
     public async getRegionWeather(): Promise<void> {
+        store.dispatch(setWeatherLoading(true));
         const region = store.getState().companyRegion.region;
-        if (!region) return;
-        const path = CompanyRegionConst.weather(region.id!);
+        const path = CompanyRegionConst.weather(region!.id!);
         const response = await this.get(path);
         const status = response.status;
         if (status !== 200) return;
         const data = response.data['data']['weather'];
         store.dispatch(setWeather(data));
+        store.dispatch(setWeatherLoading(false));
     }
 
     /**
      * Get region groups
      */
     public async getRegionGroups(): Promise<void> {
+        store.dispatch(setGroupsLoading(true));
         const region = store.getState().companyRegion.region;
-        if (!region) return;
-        const path = CompanyRegionConst.groups(region.id!);
+        const path = CompanyRegionConst.groups(region!.id!);
         const response = await this.get(path);
         const status = response.status;
         if (status !== 200) return;
         const data = response.data['data']['groups'];
         store.dispatch(setGroups(data));
+        store.dispatch(setGroupsLoading(false));
     }
 
     /**
      * Get group info
      */
     public async getGroupInfo(): Promise<void> {
+        store.dispatch(setGroupInfoLoading(true));
         const group_id = store.getState().companyRegion.group?.id;
         const path = CompanyRegionConst.groupInfo;
         const response = await this.get(path, { params: { group_id } });
@@ -61,6 +66,7 @@ class CompanyRegionRepository extends BaseRepository {
         if (status !== 200) return;
         const data = response.data['data']['group'];
         store.dispatch(setGroupInfo(data));
+        store.dispatch(setGroupInfoLoading(false));
     }
 
     /**

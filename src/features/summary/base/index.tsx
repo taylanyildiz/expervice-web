@@ -12,12 +12,12 @@ import GroupsEmptyBox from "./components/GroupsEmptyBox";
 
 function SummaryPage() {
   /// Region store
-  const { regions, groups } = useSelector(
+  const { regions, groups, groupsLoading, regionsLoading } = useSelector(
     (state: RootState) => state.companyRegion
   );
 
-  const isRegionEmpty = regions?.rows?.length === 0;
-  const isGroupEmpty = groups?.rows?.length === 0;
+  const isRegionEmpty = regions?.rows?.length === 0 && !regionsLoading;
+  const isGroupEmpty = groups?.rows?.length === 0 && !groupsLoading;
 
   return (
     <div className="summary-layout">
