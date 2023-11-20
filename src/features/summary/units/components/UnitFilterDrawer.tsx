@@ -84,7 +84,17 @@ function UnitsFilterDrawer() {
               variant="outlined"
               fontWeight="normal"
               children="Clear Filter"
-              onClick={() => formik.resetForm()}
+              onClick={() =>
+                formik.resetForm({
+                  values: {
+                    keyword: "",
+                    filter_type: EUnitFilterType.Name,
+                    has_job: filter?.has_job,
+                    limit: filter?.limit,
+                    offset: filter?.offset,
+                  },
+                })
+              }
             />
             <PrimaryButton
               variant="contained"

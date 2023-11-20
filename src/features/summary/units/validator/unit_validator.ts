@@ -19,7 +19,7 @@ export const unitValidator = object({
     contract_end_date: string().nullable().notRequired(),
     date: string().when(['contract_start_date', 'contract_end_date'], {
         is: (start: any, end: any) => {
-            const hasAny = Boolean(start || end);
+            const hasAny = !Boolean(start || end);
             if (Boolean(start && end)) {
                 const startdate = new Date(start);
                 const enddate = new Date(end);
@@ -27,8 +27,8 @@ export const unitValidator = object({
             }
             return hasAny;
         },
-        then: () => string().nullable().required("Start date must bigger than end date"),
-        otherwise: () => string().nullable().notRequired(),
+        otherwise: () => string().nullable().required("End date must bigger than start date"),
+        then: () => string().nullable().notRequired(),
     })
 
 });

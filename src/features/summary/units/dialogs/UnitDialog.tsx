@@ -99,6 +99,10 @@ function UnitDialog(props: UnitDialogProps) {
         dispatch(setUnit(null));
         break;
     }
+    if (customerUser) {
+      formik.setFieldValue("customer", customerUser);
+    }
+    formik.setFieldValue("availableCustomer", !Boolean(customerUser));
   };
 
   /// Formik
@@ -139,7 +143,7 @@ function UnitDialog(props: UnitDialogProps) {
     if (customerUser) {
       formik.setFieldValue("customer", customerUser);
     }
-    formik.setFieldValue("availableCustomer", Boolean(!customerUser));
+    formik.setFieldValue("availableCustomer", !Boolean(customerUser));
   }, [unit]);
 
   /// Destroy
