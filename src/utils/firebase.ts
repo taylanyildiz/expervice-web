@@ -1,5 +1,5 @@
 import { initializeApp } from "firebase/app";
-import { MessagePayload, getMessaging, getToken, onMessage } from "firebase/messaging";
+import { MessagePayload, deleteToken, getMessaging, getToken, onMessage } from "firebase/messaging";
 
 const firebaseConfig = {
     apiKey: "AIzaSyBsYHPmyUf5MVDBK26b2OzVwb8FYd467l0",
@@ -15,10 +15,11 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const messaging = getMessaging(app);
 
-export const requestPermission = async (): Promise<string | null> => {
+export const requestPermission = async (refresh?: boolean): Promise<string | null> => {
     return await new Promise(resolve => {
         Notification.requestPermission().then(async (permission) => {
             if (permission !== 'granted') return;
+            if (refresh === true) await deleteDeviceToken();
             getToken(messaging, { vapidKey: 'BHIXKTP8xHDQUVtv-n3eXsxWhNi6GGDYkH8JPxPHexhnRdrXg7LXm1pgsYzfvuFTMW_K1jqjnDgXHQZMHsxM8N8' }).then((currentToken) => {
                 if (currentToken) {
                     resolve(currentToken);
@@ -30,6 +31,10 @@ export const requestPermission = async (): Promise<string | null> => {
             });
         });
     })
+}
+
+export const deleteDeviceToken = async (): Promise<boolean> => {
+    return await deleteToken(messaging);
 }
 
 export const onMessageListener = (): Promise<MessagePayload> => {

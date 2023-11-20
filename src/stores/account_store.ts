@@ -6,15 +6,21 @@ interface Props {
     user?: User;
     accessToken?: string;
     refreshToken?: string;
+    deviceToken: string | null;
 }
 
 /// Account initial state
-const initialState: Props = {};
+const initialState: Props = {
+    deviceToken: null,
+};
 
 const account = createSlice({
     name: "account",
     initialState,
     reducers: {
+        setDeviceToken: (state, { payload }) => {
+            state.deviceToken = payload;
+        },
         setAccount: (state, { payload }) => {
             state.user = payload?.user;
             state.accessToken = payload?.access_token;
@@ -33,6 +39,7 @@ const account = createSlice({
             state.refreshToken = undefined;
             state.accessToken = undefined;
             state.user = undefined;
+            state.deviceToken = null;
             localStorage.clear();
         }
     }
@@ -40,4 +47,4 @@ const account = createSlice({
 
 
 export default account.reducer;
-export const { setAccount, setUser, setAccessToken, setRefreshToken, logout } = account.actions;
+export const { setDeviceToken, setAccount, setUser, setAccessToken, setRefreshToken, logout } = account.actions;

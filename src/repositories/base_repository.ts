@@ -25,7 +25,11 @@ abstract class BaseRepository extends Axios {
                 "x-access-token": store.getState().account.accessToken,
             },
             transformResponse: (e) => {
-                return JSON.parse(e);
+                try {
+                    return JSON.parse(e);
+                } catch (error) {
+                    return { message: 'Something Wrong' };
+                }
             },
             transformRequest: (e) => {
                 return JSON.stringify(e);

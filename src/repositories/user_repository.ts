@@ -6,6 +6,7 @@ import UserPassword from "@Features/summary/profile/entities/user_password";
 import SnackCustomBar from "@Utils/snack_custom_bar";
 import { setUser } from "@Store/account_store";
 import UserProfile from "@Features/summary/profile/entities/user_profile";
+import { deleteDeviceToken } from "@Utils/firebase";
 
 class UserRepository extends BaseRepository {
     constructor() {
@@ -48,6 +49,16 @@ class UserRepository extends BaseRepository {
         const path = User.devices;
         const response = await this.post(path, { device_token: token });
         const success = response.success;
+        return success;
+    }
+
+    public async deleteToken(): Promise<boolean> {
+        const path = User.devices;
+        const response = await this.delete(path);
+        const success = response.success;
+        if (success) {
+            await deleteDeviceToken();
+        }
         return success;
     }
 
