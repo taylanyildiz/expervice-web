@@ -1,7 +1,7 @@
 import Job from "@Models/job/job";
+import { store } from "@Store/index";
 import { setJobId } from "@Store/job_store";
 import { GridColDef } from "@mui/x-data-grid";
-import { useDispatch } from "react-redux";
 
 const columns: GridColDef<Job>[] = [
   {
@@ -13,12 +13,11 @@ const columns: GridColDef<Job>[] = [
     renderCell: (params) => {
       const job = params.row;
       const jobId = job.id;
-      const dispatch = useDispatch();
       return (
         <div
           className="grid-selectable"
           onClick={() => {
-            dispatch(setJobId(jobId));
+            store.dispatch(setJobId(jobId));
           }}
         >
           {jobId}

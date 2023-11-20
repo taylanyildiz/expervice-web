@@ -1,5 +1,6 @@
 import { ECustomerStatus } from "@Features/summary/users/customer-users/entities/customer_enums";
 import { City, CompanyGroup, Country, Creator, State } from "..";
+import FormCustomer from "@Models/form/form_customer";
 
 export const defaultCustomer: Customer = {
     id: undefined,
@@ -56,6 +57,7 @@ interface Customer {
     state?: State;
     city?: City;
     creator?: Creator;
+    customer_forms?: FormCustomer[],
     group?: CompanyGroup,
     created_at?: string;
     updated_at?: string;

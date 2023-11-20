@@ -2,7 +2,7 @@
 import BaseRepository from "./base_repository";
 import SnackCustomBar from "@Utils/snack_custom_bar";
 import { store } from "@Store/index";
-import { setCustomer, setCustomers, setLayzLoading } from "@Store/customer_user_store";
+import { setCustomer, setCustomerForms, setCustomerUnits, setCustomers, setLayzLoading } from "@Store/customer_user_store";
 import Customer from "./end-points/customer_user";
 import CustomerUser from "@Models/customer/customer";
 import CustomerUpdate from "@Features/summary/users/customer-users/entities/customer_update";
@@ -101,6 +101,78 @@ class CustomerUserRepository extends BaseRepository {
             store.dispatch(setCustomer(null));
         }
         return response.success;
+    }
+
+    /**
+     * Delete Customer Form
+     */
+    public async deleteForm(id: number): Promise<boolean> {
+        const path = Customer.form(id);
+        const response = await this.delete(path);
+        const success = response.success;
+        SnackCustomBar.status(response);
+        return success;
+    }
+
+    /**
+     * Get Customer Form
+     */
+    public async getForm(id: number): Promise<boolean> {
+        const path = Customer.form(id);
+        const response = await this.get(path);
+        const success = response.success;
+        SnackCustomBar.status(response, { display: !success });
+        return success;
+    }
+
+    /**
+     * Get Customer Form as PDF
+     */
+    public async getFormPDF(id: number): Promise<string | null> {
+        const path = Customer.formPdf(id);
+        const response = await this.get(path);
+        const success = response.success;
+        SnackCustomBar.status(response, { display: !success });
+        return response.data?.['data']?.['pdf'];
+    }
+
+    /**
+     * Get Customer Forms
+     */
+    public async getForms(id: number, filter?: { limit: number, offset: number }): Promise<boolean> {
+        const path = Customer.forms(id);
+        const response = await this.get(path, { params: filter });
+        const success = response.success;
+        SnackCustomBar.status(response, { display: !success });
+        const data = response.data?.['data']?.['forms'];
+        store.dispatch(setCustomerForms(data));
+        return success;
+    }
+
+    /**
+     * Create Customer Form
+     */
+    public async createForm(form: any): Promise<boolean> {
+        const path = Customer.customerForm(form.customer_id, form.form_id);
+        const response = await this.post(path, form);
+        const success = response.success;
+        SnackCustomBar.status(response);
+        // const data = response.data?.['data']?.['customer_form'];
+        return success;
+    }
+
+    /**
+     * Get Customer units
+     */
+    public async getUnits(id: number, filter: { limit: number, offset: number }): Promise<boolean> {
+        const path = Customer.units(id);
+        const response = await this.get(path, { params: filter });
+        const success = response.success;
+        if (success) {
+            const data = response.data['data']['units'];
+            store.dispatch(setCustomerUnits(data))
+        }
+        return success;
     }
 
 }

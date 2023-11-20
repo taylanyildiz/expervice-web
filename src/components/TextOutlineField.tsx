@@ -48,6 +48,7 @@ interface TextOutlineFieldProps {
   prefixPadding?: string | number | undefined;
   radius?: string | number;
   steps?: string;
+  inputComponent?: any;
 }
 
 function TextOutlineField(props?: TextOutlineFieldProps) {
@@ -75,7 +76,7 @@ function TextOutlineField(props?: TextOutlineFieldProps) {
     placeholder,
     prefixPadding,
     radius,
-    steps,
+    inputComponent,
   } = props ?? {};
 
   /// Show password state
@@ -139,6 +140,7 @@ function TextOutlineField(props?: TextOutlineFieldProps) {
           startAdornment,
           endAdornment: endAdornment(),
           sx: { height: height, borderRadius: radius },
+          inputComponent: inputComponent,
         }}
         inputProps={{
           maxLength: maxLength,

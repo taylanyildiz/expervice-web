@@ -32,11 +32,13 @@ interface SelectJobSubTypeProps {
   helperText?: ReactNode;
   error?: boolean;
   value?: JobSubType | number;
+  clearIcon?: boolean;
   onChanged: (values: JobSubType | null | undefined) => void;
 }
 
 function SelectJobSubType(props: SelectJobSubTypeProps) {
-  const { label, fullWidth, helperText, error, value, onChanged } = props;
+  const { label, fullWidth, helperText, error, value, clearIcon, onChanged } =
+    props;
 
   /// Constant store
   const { jobSubTypes } = useSelector((state: RootState) => state.constant);
@@ -75,7 +77,7 @@ function SelectJobSubType(props: SelectJobSubTypeProps) {
       fullWidth={fullWidth}
       options={options}
       value={option}
-      clearIcon={false}
+      clearIcon={clearIcon}
       groupBy={(option) => option?.type?.name ?? ""}
       getOptionLabel={(option) => option.name ?? ""}
       renderGroup={(params) => (

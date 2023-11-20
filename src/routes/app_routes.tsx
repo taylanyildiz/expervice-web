@@ -8,14 +8,20 @@ import CommonLayout from "@Features/common/layout";
 import PricingPage from "@Features/common/pricing";
 import SummaryPage from "@Features/summary/base";
 import FormsPage from "@Features/summary/forms";
-import JobsPage from "@Features/summary/jobs/indes";
+import JobsPage from "@Features/summary/jobs";
 import SummaryLayout from "@Features/summary/layout";
 import UnitsPage from "@Features/summary/units";
 import { UnitsMapPage, UnitsTablePage } from "@Features/summary/units/pages";
 import CustomerUsersPage from "@Features/summary/users/customer-users";
 import InternalUsersPage from "@Features/summary/users/internal-users";
 import TechnicianUsersPage from "@Features/summary/users/technician-users";
-import { Outlet, RouteObject, createBrowserRouter } from "react-router-dom";
+import {
+  Navigate,
+  Outlet,
+  RouteObject,
+  createBrowserRouter,
+} from "react-router-dom";
+import ERouter from "./router_enum";
 
 /// Router Options
 const options = {
@@ -95,6 +101,10 @@ const routes: RouteObject[] = [
         path: "users",
         element: <Outlet />,
         children: [
+          {
+            index: true,
+            element: <Navigate to={ERouter.InternalUsers} />,
+          },
           {
             path: "internal-users",
             element: <InternalUsersPage />,

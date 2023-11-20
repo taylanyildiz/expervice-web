@@ -1,19 +1,33 @@
 import { useDialog } from "@Utils/hooks/dialog_hook";
 import UnitDialog from "../dialogs/UnitDialog";
 import { useSelector } from "react-redux";
-import { RootState } from "@Store/index";
+import { RootState, store } from "@Store/index";
 import { useEffect, useState } from "react";
 import UnitProcess from "../entities/unit_process";
 import { FormikProps } from "formik";
 import Unit from "@Models/units/unit";
 import { UnitUpdate } from "../entities/unit_update";
 import { equalInterface } from "@Utils/functions";
+import { setUnitDialogStatus, setUnitId } from "@Store/unit_store";
+import Customer from "@Models/customer/customer";
+import AssignCustomerDialog from "../dialogs/AssignCustomerDialog";
+import { EUnitFilterType } from "../entities/unit_enums";
 
 /**
  * Unit store
  */
 export function useUnit() {
-  return useSelector((state: RootState) => state.unit);
+  const store = useSelector((state: RootState) => state.unit);
+  const { filter } = store;
+  const [filterCount, setCount] = useState<number>(0);
+  useEffect(() => {
+    let count = 0;
+    if (filter?.filter_type !== EUnitFilterType.Name) ++count;
+    if (filter?.keyword && filter?.keyword?.length !== 0) ++count;
+    setCount(count);
+  }, [filter]);
+
+  return { ...store, filterCount };
 }
 
 /**
@@ -21,8 +35,15 @@ export function useUnit() {
  */
 export function useUnitDialog() {
   const { openDialog, closeDialog } = useDialog();
+  const { unitDialogStatus } = useUnit();
   return {
-    openUnitDialog: () => openDialog(<UnitDialog />, "md"),
+    openUnitDialog: (id?: number, option?: { customer?: Customer | null }) => {
+      if (unitDialogStatus) return;
+      store.dispatch(setUnitDialogStatus(true));
+      if (id) store.dispatch(setUnitId(id));
+      openDialog(<UnitDialog customerUser={option?.customer} />, "md");
+    },
+    openAssignCustomerDialog: () => openDialog(<AssignCustomerDialog />, "xs"),
     closeDialog,
   };
 }

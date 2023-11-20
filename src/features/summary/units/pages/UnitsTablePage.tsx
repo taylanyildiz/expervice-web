@@ -6,7 +6,7 @@ import { useDispatch } from "react-redux";
 import { useEffect, useMemo, useState } from "react";
 import UnitFilter from "@Models/units/unit_filter";
 import UnitRepository from "@Repo/unit_repository";
-import { setUnitFilter } from "@Store/unit_store";
+import { setSelectedUnits, setUnitFilter } from "@Store/unit_store";
 import { useUnit } from "../helper/unit_helper";
 
 function UnitsTablePage() {
@@ -17,6 +17,8 @@ function UnitsTablePage() {
   const {
     layzLoading,
     units: { rows, count },
+    filter,
+    selectedUnits,
   } = useUnit();
 
   /// Unit repository
@@ -29,7 +31,7 @@ function UnitsTablePage() {
   });
 
   /// Filter
-  const filter: UnitFilter = useMemo(
+  const pagination: UnitFilter = useMemo(
     () => ({
       limit: paginationMode.pageSize,
       offset: paginationMode.pageSize * paginationMode.page,
@@ -37,16 +39,34 @@ function UnitsTablePage() {
     [paginationMode]
   );
 
+  /// Listen pagination and filter
+  useEffect(() => {
+    dispatch(
+      setUnitFilter({
+        ...filter,
+        ...pagination,
+      })
+    );
+  }, [pagination]);
+
   /// Initialize component
   useEffect(() => {
-    dispatch(setUnitFilter(filter));
     unitRepo.getUnits();
   }, [filter]);
+
+  /// Destroy component
+  useEffect(() => {
+    return () => {
+      dispatch(setSelectedUnits([]));
+    };
+  }, []);
 
   return (
     <div className="units-grid">
       <DataGrid
         pagination
+        checkboxSelection
+        disableRowSelectionOnClick
         loading={layzLoading}
         disableColumnMenu
         sortingMode="server"
@@ -58,6 +78,10 @@ function UnitsTablePage() {
         slots={{ noRowsOverlay: EmptyGrid }}
         paginationModel={paginationMode}
         onPaginationModelChange={setPaginationMode}
+        rowSelectionModel={selectedUnits ?? []}
+        onRowSelectionModelChange={(selecteds) => {
+          dispatch(setSelectedUnits(selecteds));
+        }}
       />
     </div>
   );

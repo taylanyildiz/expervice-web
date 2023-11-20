@@ -1,6 +1,5 @@
-import { DialogActions, Grid } from "@mui/material";
+import { DialogActions, DialogActionsProps, Grid } from "@mui/material";
 import { ReactNode } from "react";
-import { VisibilityComp } from "..";
 
 interface LeadingProps {
   visibility?: boolean;
@@ -24,12 +23,14 @@ export enum EActionType {
   Delete = 4,
 }
 
-function DialogCustomActions(props: DialogCustomActionProps) {
+function DialogCustomActions(
+  props: DialogCustomActionProps & DialogActionsProps
+) {
   const { leading, actions, actionsSpace, rowSpace } = props;
 
   return (
-    <DialogActions>
-      <Grid container rowSpacing={rowSpace ?? 1}>
+    <DialogActions {...props}>
+      <Grid container rowSpacing={rowSpace ?? 1} alignItems="center">
         <Grid
           item
           flexGrow={1}

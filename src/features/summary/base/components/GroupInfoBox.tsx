@@ -5,6 +5,7 @@ import { ReactNode, useEffect } from "react";
 import { useSelector } from "react-redux";
 import WorkIcon from "@mui/icons-material/Work";
 import AssignmentIndIcon from "@mui/icons-material/AssignmentInd";
+import LoadingComp from "@Components/LoadingComp";
 
 interface InfoProps {
   title: string;
@@ -40,7 +41,7 @@ function InfoBox(props: InfoProps) {
 
 function GroupInfoBox() {
   /// Company region store
-  const { group, groupInfo } = useSelector(
+  const { group, groupInfo, groupInfoLoading } = useSelector(
     (state: RootState) => state.companyRegion
   );
 
@@ -59,43 +60,47 @@ function GroupInfoBox() {
 
   return (
     <Box p={4} sx={{ backgroundColor: "white", borderRadius: 1 }}>
-      <Grid container rowSpacing={1}>
-        <Grid item xs={12}>
-          <Typography
-            variant="h1"
-            fontSize={18}
-            children={group?.name}
-            overflow="clip"
-            textOverflow="ellipsis"
-          />
-        </Grid>
-        <Grid item xs={12} children={<Divider />} />
-        <Grid item xs={12} mt={2}>
-          <Stack
-            useFlexGap
-            direction="row"
-            justifyContent="space-around"
-            divider={<Divider orientation="vertical" flexItem />}
-            spacing={2}
-          >
-            <InfoBox title="Units" count={groupInfo?.unit_count} />
-            <InfoBox
-              title="Jobs"
-              count={groupInfo?.job_count}
-              icon={<WorkIcon sx={{ height: 20, width: 20, color: "grey" }} />}
+      <LoadingComp loading={groupInfoLoading}>
+        <Grid container rowSpacing={1}>
+          <Grid item xs={12}>
+            <Typography
+              variant="h1"
+              fontSize={18}
+              children={group?.name}
+              overflow="clip"
+              textOverflow="ellipsis"
             />
-            <InfoBox
-              title="Technicians"
-              count={groupInfo?.technician_count}
-              icon={
-                <AssignmentIndIcon
-                  sx={{ height: 20, width: 20, color: "grey" }}
-                />
-              }
-            />
-          </Stack>
+          </Grid>
+          <Grid item xs={12} children={<Divider />} />
+          <Grid item xs={12} mt={2}>
+            <Stack
+              useFlexGap
+              direction="row"
+              justifyContent="space-around"
+              divider={<Divider orientation="vertical" flexItem />}
+              spacing={2}
+            >
+              <InfoBox title="Units" count={groupInfo?.unit_count} />
+              <InfoBox
+                title="Jobs"
+                count={groupInfo?.job_count}
+                icon={
+                  <WorkIcon sx={{ height: 20, width: 20, color: "grey" }} />
+                }
+              />
+              <InfoBox
+                title="Technicians"
+                count={groupInfo?.technician_count}
+                icon={
+                  <AssignmentIndIcon
+                    sx={{ height: 20, width: 20, color: "grey" }}
+                  />
+                }
+              />
+            </Stack>
+          </Grid>
         </Grid>
-      </Grid>
+      </LoadingComp>
     </Box>
   );
 }

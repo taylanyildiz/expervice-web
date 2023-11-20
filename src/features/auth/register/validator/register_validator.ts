@@ -26,12 +26,15 @@ export const registerPrimaryContactValidation = object({
 export const registerBillingValidation = object({
     card_holder_name: string().required(),
     card_number: mixed().test("len", "Invalid card number", function (val: any) {
-        const length = val?.replace(/\ |_/g, "").length;
+        const newValue = val?.replace(/\ |_/g, "");
+        const length = newValue?.length;
         return length === 16;
     }),
     cvc: string().required().min(3, "Invalid cvc"),
     expire: mixed().test("valid", "Invalid expire", function (val: any) {
-        const length = val?.replace(/\//g, "").length;
+        const newValue = val?.replace(/\//g, "");
+        console.log(newValue);
+        const length = newValue?.length;
         return length === 4;
     })
 });

@@ -1,11 +1,13 @@
 import Images from "@Assets/images";
 import ERouter from "@Routes/router_enum";
 import { Box, Grid } from "@mui/material";
-import { Link } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 import ForgotPasswordStepperHeader from "./components/ForgotPaswordStepperHeader";
 import ForgotPasswordProvider from "@Utils/hooks/forgot_password_hook";
 import ForgotPasswordStepper from "./components/ForgotPasswordStepper";
 import { useEffect } from "react";
+import { useSelector } from "react-redux";
+import { RootState } from "@Store/index";
 
 function ForgotPasswordPage() {
   /// Clear storage about forgot-password
@@ -13,11 +15,17 @@ function ForgotPasswordPage() {
     sessionStorage.clear();
   };
 
+  /// Account store
+  const { user } = useSelector((state: RootState) => state.account);
+
   /// Initialize component
   useEffect(() => {
     resetStorage();
     return () => resetStorage();
   }, []);
+
+  /// Redirect to summary
+  if (user) return <Navigate to={ERouter.Summary} />;
 
   return (
     <ForgotPasswordProvider>

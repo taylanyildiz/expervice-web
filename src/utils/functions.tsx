@@ -4,9 +4,16 @@ import { useDialog } from "./hooks/dialog_hook";
 import { LatLng } from "@Components/SelectLocation";
 import SelectLocationDialog from "@Components/dialogs/SelectLocationDialog";
 
-/// Url matches
+/**
+ * Url regex
+ */
 export const urlRegex =
   /^(?=.{4,2048}$)((http|https):\/\/)?(www.)?(?!.*(http|https|www.))[a-zA-Z0-9_-]{1,63}(\.[a-zA-Z]{1,63}){1,5}(\/)?.([\w\?[a-zA-Z-_%\/@?]+)*([^\/\w\?[a-zA-Z0-9_-]+=\w+(&[a-zA-Z0-9_]+=\w+)*)?$/;
+
+/**
+ * Script regex
+ */
+export const scriptRegex = /<script.*?>((.|\n|\r)*?)<\/script>/g;
 
 /**
  * Router query hook
@@ -231,4 +238,46 @@ export function useLocationDialog() {
       return null;
     },
   };
+}
+
+/**
+ * Time ago
+ * @param input
+ * @returns
+ */
+export function timeAgo(input?: Date | string) {
+  if (!input) return null;
+  const date = input instanceof Date ? input : new Date(input);
+  const formatter = new Intl.RelativeTimeFormat("en");
+  const ranges = {
+    years: 3600 * 24 * 365,
+    months: 3600 * 24 * 30,
+    weeks: 3600 * 24 * 7,
+    days: 3600 * 24,
+    hours: 3600,
+    minutes: 60,
+    seconds: 1,
+  };
+  const secondsElapsed = (date.getTime() - Date.now()) / 1000;
+  for (let [key, value] of Object.entries(ranges)) {
+    if (value < Math.abs(secondsElapsed)) {
+      const delta = secondsElapsed / value;
+      return formatter.format(
+        Math.round(delta),
+        key as Intl.RelativeTimeFormatUnit
+      );
+    }
+  }
+}
+
+/**
+ * Iyzipay parser
+ */
+export function iyziParser(data: string) {
+  const scripts = [...data.matchAll(scriptRegex)];
+  const combinedScript = scripts.map((script) => script[1]).join("\n");
+  const scriptElement = document.createElement("script");
+  scriptElement.type = "text/javascript";
+  scriptElement.text = combinedScript;
+  document.head.appendChild(scriptElement);
 }

@@ -7,6 +7,7 @@ import { CompanyRegion } from "@Models/index";
 import { setSelectedRegion } from "@Store/company_region_store";
 import SelectedRegionBox from "./SelectedRegionBox";
 import VisibilityComp from "@Components/VisibilityComp";
+import LoadingComp from "@Components/LoadingComp";
 
 /// Regions list
 function RegionsList(props: { scale: string }) {
@@ -15,6 +16,7 @@ function RegionsList(props: { scale: string }) {
 
   /// Company region store
   const {
+    regionsLoading,
     regions: { rows },
     region,
   } = useSelector((state: RootState) => state.companyRegion);
@@ -33,29 +35,32 @@ function RegionsList(props: { scale: string }) {
   }, []);
 
   /// Select region
-  const onSelectRegion = (region: CompanyRegion) => {
-    dispatch(setSelectedRegion(region));
+  const onSelectRegion = (value: CompanyRegion) => {
+    if (value.id === region?.id) return;
+    dispatch(setSelectedRegion(value));
   };
 
   return (
     <div style={{ scale: props.scale }} className="region-list">
-      <VisibilityComp
-        visibility={Boolean(region)}
-        children={<SelectedRegionBox />}
-      />
-      <Box sx={{ overflowY: "scroll", height: "100%" }}>
-        <List>
-          {rows?.map((item: CompanyRegion, index) => (
-            <ListItemButton
-              selected={item.id === region?.id}
-              onClick={() => onSelectRegion(item)}
-              key={index}
-            >
-              <ListItemText primary={item.name} />
-            </ListItemButton>
-          ))}
-        </List>
-      </Box>
+      <LoadingComp loading={regionsLoading}>
+        <VisibilityComp
+          visibility={Boolean(region)}
+          children={<SelectedRegionBox />}
+        />
+        <Box sx={{ overflowY: "scroll", height: "100%" }}>
+          <List>
+            {rows?.map((item: CompanyRegion, index) => (
+              <ListItemButton
+                selected={item.id === region?.id}
+                onClick={() => onSelectRegion(item)}
+                key={index}
+              >
+                <ListItemText primary={item.name} />
+              </ListItemButton>
+            ))}
+          </List>
+        </Box>
+      </LoadingComp>
     </div>
   );
 }

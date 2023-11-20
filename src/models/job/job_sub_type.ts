@@ -7,6 +7,7 @@ interface Translations {
 
 interface JobSubType {
     id?: number;
+    type_id?: number;
     name?: string;
     translations?: Translations;
     type?: JobType;

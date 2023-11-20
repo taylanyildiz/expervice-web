@@ -1,3 +1,4 @@
+import { UserPhone } from ".";
 import UserRole from "./user_role";
 
 interface User {
@@ -7,6 +8,7 @@ interface User {
     email?: string;
     status?: boolean;
     role?: UserRole;
+    user_phone?: UserPhone;
     created_at?: string;
     updated_at?: string;
 }

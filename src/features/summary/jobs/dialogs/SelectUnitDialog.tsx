@@ -8,7 +8,7 @@ import Unit from "@Models/units/unit";
 
 function SelectUnitDialog() {
   /// Job dialog hook
-  const { openDialog, closeDialog } = useJobDialog();
+  const { openJobDialog, closeDialog } = useJobDialog();
 
   /// Selected unit state
   const [unit, setUnit] = useState<Unit | null>(null);
@@ -33,7 +33,7 @@ function SelectUnitDialog() {
           <PrimaryButton
             onClick={() => {
               closeDialog();
-              openDialog({ unit: unit });
+              openJobDialog({ unit: unit });
             }}
             paddingX={1}
             paddingY={0.1}

@@ -6,7 +6,7 @@ import { EActionType } from "@Components/dialogs/DialogCustomActions";
 import { useEffect, useState } from "react";
 import { AppDispatch } from "@Store/index";
 import { useDispatch } from "react-redux";
-import { setUnit, setUnitId } from "@Store/unit_store";
+import { setUnit, setUnitDialogStatus, setUnitId } from "@Store/unit_store";
 import TabBar from "@Components/TabBar";
 import UnitInformation from "./UnitInformation";
 import { useFormik } from "formik";
@@ -19,8 +19,15 @@ import Colors from "@Themes/colors";
 import UnitJob from "./UnitJob";
 import { EJobType } from "@Features/summary/jobs/entities/job_enums";
 import UnitJobs from "./UnitJobs";
+import Customer from "@Models/customer/customer";
 
-function UnitDialog() {
+interface UnitDialogProps {
+  customerUser?: Customer | null;
+}
+
+function UnitDialog(props: UnitDialogProps) {
+  const { customerUser } = props;
+
   /// Dispatch
   const dispatch: AppDispatch = useDispatch<AppDispatch>();
 
@@ -124,10 +131,15 @@ function UnitDialog() {
 
   /// Set formik
   useEffect(() => {
-    if (!unit) return;
-    for (let [k, v] of Object.entries(unit)) {
-      formik.setFieldValue(k, v);
+    if (unit) {
+      for (let [k, v] of Object.entries(unit)) {
+        formik.setFieldValue(k, v);
+      }
     }
+    if (customerUser) {
+      formik.setFieldValue("customer", customerUser);
+    }
+    formik.setFieldValue("availableCustomer", Boolean(!customerUser));
   }, [unit]);
 
   /// Destroy
@@ -135,6 +147,7 @@ function UnitDialog() {
     return () => {
       dispatch(setUnitId(null));
       dispatch(setUnit(null));
+      dispatch(setUnitDialogStatus(false));
       unitRepo.getUnits();
     };
   }, []);
@@ -166,7 +179,7 @@ function UnitDialog() {
               },
               {
                 visibility: isEdit,
-                title: `All Jobs`,
+                title: `All Jobs (${unit?.job_count})`,
                 panel: <UnitJobs />,
               },
             ]}
