@@ -233,16 +233,29 @@ function NotificationIcon() {
             );
           }}
         >
-          {rows.map((item, index) => (
-            <Fragment key={`notification-item-${index}`}>
-              <NotificationItem
-                key={`notification-${index}`}
-                item={item}
-                onClick={() => handleClickItem(item)}
-              />
-              <Divider sx={{ m: 0, p: 0 }} key={`divider-${index}`} />
-            </Fragment>
-          ))}
+          <VisibilityComp visibility={rows.length !== 0}>
+            {rows.map((item, index) => (
+              <Fragment key={`notification-item-${index}`}>
+                <NotificationItem
+                  key={`notification-${index}`}
+                  item={item}
+                  onClick={() => handleClickItem(item)}
+                />
+                <Divider sx={{ m: 0, p: 0 }} key={`divider-${index}`} />
+              </Fragment>
+            ))}
+          </VisibilityComp>
+          <VisibilityComp visibility={rows.length === 0}>
+            <Box
+              mt={2}
+              width="100%"
+              display="flex"
+              alignItems="center"
+              justifyContent="center"
+            >
+              <Typography children="No Found Notifications" />
+            </Box>
+          </VisibilityComp>
         </List>
       </NotificationMenu>
     </div>

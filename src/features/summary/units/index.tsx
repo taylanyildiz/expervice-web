@@ -11,12 +11,14 @@ import {
   setSelectedUnits,
   setUnitDialogStatus,
   setUnitId,
+  setUnitsFilterDrawer,
 } from "@Store/unit_store";
 import PrimaryButton from "@Components/PrimaryButton";
 import VisibilityComp from "@Components/VisibilityComp";
 import { Typography } from "@mui/material";
 import { useDialog } from "@Utils/hooks/dialog_hook";
 import UnitRepository from "@Repo/unit_repository";
+import UnitsFilterDrawer from "./components/UnitFilterDrawer";
 
 function UnitsPage() {
   /// Query hook
@@ -29,7 +31,7 @@ function UnitsPage() {
   const dispatch: AppDispatch = useDispatch<AppDispatch>();
 
   /// Unit store
-  const { unitId, selectedUnits } = useUnit();
+  const { unitId, selectedUnits, filterCount } = useUnit();
 
   /// Visibility of more actions
   const moreActions = selectedUnits.length !== 0;
@@ -80,7 +82,8 @@ function UnitsPage() {
       <GridTableHeader
         title="Units"
         onAdd={() => openUnitDialog()}
-        onFilter={() => {}}
+        filterCount={filterCount}
+        onFilter={() => dispatch(setUnitsFilterDrawer(true))}
         onExport={() => {}}
         more={[
           <VisibilityComp visibility={moreActions}>
@@ -121,6 +124,7 @@ function UnitsPage() {
       />
       <UnitTabs />
       <Outlet />
+      <UnitsFilterDrawer />
     </div>
   );
 }

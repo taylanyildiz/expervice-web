@@ -1,6 +1,8 @@
 interface UnitFilter {
-    limit: number;
-    offset: number;
+    limit?: number | null;
+    offset?: number | null;
+    keyword?: string;
+    filter_type?: number;
     has_job?: boolean;
 }
 

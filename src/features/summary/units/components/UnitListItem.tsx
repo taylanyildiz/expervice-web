@@ -3,6 +3,8 @@ import { Grid, IconButton, Stack, Typography } from "@mui/material";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import UnitStatusBox from "../dialogs/UnitStatusBox";
 import JobTypeBox from "@Components/JobTypeBox";
+import VisibilityComp from "@Components/VisibilityComp";
+import Colors from "@Themes/colors";
 
 type Function = () => void;
 
@@ -14,9 +16,12 @@ interface UnitListItemProps {
 }
 
 function UnitListItem(props: UnitListItemProps) {
-  const { unit, onClick, onMap } = props;
+  const { unit, onClick, onMap, selected } = props;
   return (
-    <div className="unit-list-item">
+    <div
+      className="unit-list-item"
+      style={{ backgroundColor: selected ? Colors.selected : "" }}
+    >
       <div onClick={onClick} style={{ flex: 1 }}>
         <Stack flex={1} direction="column">
           <Grid container columnSpacing={1}>
@@ -38,9 +43,11 @@ function UnitListItem(props: UnitListItemProps) {
           <Typography fontSize={11} children={unit.street_address} />
         </Stack>
       </div>
-      <IconButton onClick={onMap}>
-        <LocationOnIcon />
-      </IconButton>
+      <VisibilityComp visibility={Boolean(unit.latitude && unit.longitude)}>
+        <IconButton onClick={onMap}>
+          <LocationOnIcon />
+        </IconButton>
+      </VisibilityComp>
     </div>
   );
 }

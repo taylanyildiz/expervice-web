@@ -28,6 +28,15 @@ class UnitRepository extends BaseRepository {
     }
 
     /**
+     * Get Jobless Units of company
+     */
+    public async getJoblessUnits(): Promise<{ rows: Unit[], count: number } | null> {
+        const response = await this.get("/", { params: { has_job: false } });
+        const data = response.data['data']['units'];
+        return data;
+    }
+
+    /**
      * Get Unit by id
      */
     public async getUnitById(id: number): Promise<boolean> {

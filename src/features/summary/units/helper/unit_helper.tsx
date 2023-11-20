@@ -11,12 +11,23 @@ import { equalInterface } from "@Utils/functions";
 import { setUnitDialogStatus, setUnitId } from "@Store/unit_store";
 import Customer from "@Models/customer/customer";
 import AssignCustomerDialog from "../dialogs/AssignCustomerDialog";
+import { EUnitFilterType } from "../entities/unit_enums";
 
 /**
  * Unit store
  */
 export function useUnit() {
-  return useSelector((state: RootState) => state.unit);
+  const store = useSelector((state: RootState) => state.unit);
+  const { filter } = store;
+  const [filterCount, setCount] = useState<number>(0);
+  useEffect(() => {
+    let count = 0;
+    if (filter?.filter_type !== EUnitFilterType.Name) ++count;
+    if (filter?.keyword && filter?.keyword?.length !== 0) ++count;
+    setCount(count);
+  }, [filter]);
+
+  return { ...store, filterCount };
 }
 
 /**

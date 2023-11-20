@@ -8,6 +8,7 @@ import { createSlice } from "@reduxjs/toolkit";
 /// Unit store props
 interface Props {
     layzLoading: boolean;
+    unitsFilterDrawerStatus: boolean;
     filter: UnitFilter | null;
     units: { rows: Unit[], count: number },
     unit: Unit | null;
@@ -22,7 +23,8 @@ interface Props {
 /// Unit initial states
 const initialState: Props = {
     layzLoading: true,
-    filter: { limit: 10, offset: 0 },
+    unitsFilterDrawerStatus: false,
+    filter: { limit: 10, offset: 0, filter_type: 1 },
     units: { rows: [], count: 0 },
     unit: null,
     unitDialogStatus: false,
@@ -40,6 +42,9 @@ const unit = createSlice({
     reducers: {
         setUnitLayz: (state, { payload }) => {
             state.layzLoading = payload;
+        },
+        setUnitsFilterDrawer: (state, { payload }) => {
+            state.unitsFilterDrawerStatus = payload;
         },
         setUnitFilter: (state, { payload }) => {
             state.filter = payload;
@@ -78,6 +83,7 @@ const unit = createSlice({
 export default unit.reducer;
 export const {
     setUnitLayz,
+    setUnitsFilterDrawer,
     setUnitFilter,
     setUnits,
     setUnitDialogStatus,

@@ -10,11 +10,12 @@ interface GridTableHeaderProps {
   onAdd: () => void;
   onFilter: () => void;
   onExport: () => void;
+  filterCount?: number | string;
   more?: ReactNode[];
 }
 
 function GridTableHeader(props: GridTableHeaderProps) {
-  const { title, onAdd, onFilter, onExport, more } = props;
+  const { title, onAdd, onFilter, onExport, more, filterCount } = props;
 
   return (
     <Grid p={2} container columnSpacing={1} alignItems="center">
@@ -43,7 +44,11 @@ function GridTableHeader(props: GridTableHeaderProps) {
           fontWeight="normal"
           fontSize={13}
           variant="outlined"
-          children="Filter"
+          children={
+            filterCount && filterCount != 0
+              ? `Filter (${filterCount})`
+              : "Filter"
+          }
           border="1px solid grey"
           suffix={<FilterAltIcon />}
           onClick={onFilter}

@@ -17,6 +17,7 @@ function UnitsTablePage() {
   const {
     layzLoading,
     units: { rows, count },
+    filter,
     selectedUnits,
   } = useUnit();
 
@@ -30,7 +31,7 @@ function UnitsTablePage() {
   });
 
   /// Filter
-  const filter: UnitFilter = useMemo(
+  const pagination: UnitFilter = useMemo(
     () => ({
       limit: paginationMode.pageSize,
       offset: paginationMode.pageSize * paginationMode.page,
@@ -38,9 +39,18 @@ function UnitsTablePage() {
     [paginationMode]
   );
 
+  /// Listen pagination and filter
+  useEffect(() => {
+    dispatch(
+      setUnitFilter({
+        ...filter,
+        ...pagination,
+      })
+    );
+  }, [pagination]);
+
   /// Initialize component
   useEffect(() => {
-    dispatch(setUnitFilter(filter));
     unitRepo.getUnits();
   }, [filter]);
 

@@ -84,6 +84,7 @@ class CompanyRegionRepository extends BaseRepository {
             rows: [...regions.rows, data],
             count: ++count,
         }));
+        store.dispatch(setSelectedRegion(data));
         return data;
     }
 
@@ -130,6 +131,11 @@ class CompanyRegionRepository extends BaseRepository {
             rows: values,
             count: --count,
         }));
+        if (values.length !== 0) {
+            store.dispatch(setSelectedRegion(values[0]));
+        } else {
+            store.dispatch(setSelectedRegion(null));
+        }
         return true;
     }
 
@@ -149,6 +155,7 @@ class CompanyRegionRepository extends BaseRepository {
             rows: [...rows, data],
             count: ++total,
         }));
+        store.dispatch(setSelectedGroup(data));
         return data;
     }
 
@@ -196,6 +203,11 @@ class CompanyRegionRepository extends BaseRepository {
             rows: values,
             count: --count,
         }));
+        if (values.length !== 0) {
+            store.dispatch(setSelectedGroup(values[0]));
+        } else {
+            store.dispatch(setSelectedGroup(null));
+        }
         return true;
     }
 
