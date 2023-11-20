@@ -219,11 +219,9 @@ function NotificationIcon() {
           sx={{ maxHeight: 400, overflowY: "scroll" }}
           onScroll={(e) => {
             const current = e.currentTarget;
-            const dif = current.scrollHeight - current.scrollTop;
-            const bottom =
-              dif === current.clientHeight ||
-              dif - 0.5 === current.clientHeight;
-
+            const dif =
+              current.scrollHeight - current.scrollTop - current.clientHeight;
+            const bottom = dif <= 10;
             if (!bottom) return;
             dispatch(
               setNotificationFilter({
