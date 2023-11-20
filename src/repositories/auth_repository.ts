@@ -16,7 +16,9 @@ class AuthRepository extends BaseRepository {
     public async login(user: UserLogin): Promise<boolean> {
         const path = Auth.login;
         const response = await this.post(path, user);
-        if (response.success) store.dispatch(setAccount(response.data['data']));
+        if (response.success) {
+            store.dispatch(setAccount(response.data['data']));
+        }
         SnackCustomBar.status(response);
         return response.success;
     }

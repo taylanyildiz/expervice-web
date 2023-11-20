@@ -13,7 +13,7 @@ import { ReactNode, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 
 interface SelectRegionProps {
-  values?: CompanyRegion[] | null;
+  values?: CompanyRegion[] | number[] | null;
   label?: string;
   fullWidth?: boolean;
   helperText?: ReactNode;
@@ -48,7 +48,13 @@ function SelectRegions(props: SelectRegionProps) {
 
   /// Initialize value
   useEffect(() => {
-    setOption(values ?? []);
+    const isNumber = values?.some((e) => typeof e === "number");
+    if (isNumber) {
+      const finder = rows.filter((e1) => values?.some((e2) => e1.id === e2));
+      setOption(finder);
+      return;
+    }
+    setOption((values ?? []) as CompanyRegion[]);
   }, [values]);
 
   return (

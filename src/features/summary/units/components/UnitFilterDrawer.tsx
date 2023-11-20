@@ -10,6 +10,7 @@ import { EUnitFilterType } from "../entities/unit_enums";
 import UnitFilter from "@Models/units/unit_filter";
 import { useFormik } from "formik";
 import { useEffect } from "react";
+import SelectRegions from "@Components/SelectRegions";
 
 function UnitsFilterDrawer() {
   /// Unit store
@@ -31,6 +32,7 @@ function UnitsFilterDrawer() {
   /// Formik
   const initialValues: UnitFilter = {
     keyword: "",
+    region_ids: [],
     filter_type: EUnitFilterType.Name,
   };
   const formik = useFormik({
@@ -78,6 +80,17 @@ function UnitsFilterDrawer() {
                 formik.setFieldValue("filter_type", e);
               }}
             />
+            <SelectRegions
+              label="Regions"
+              fullWidth
+              values={formik.values.region_ids}
+              onChanged={(regions) => {
+                formik.setFieldValue(
+                  "region_ids",
+                  regions?.map((e) => e.id) ?? []
+                );
+              }}
+            />
           </Stack>
           <Stack p={1} justifyContent="end" spacing={1} direction="row">
             <PrimaryButton
@@ -88,6 +101,7 @@ function UnitsFilterDrawer() {
                 formik.resetForm({
                   values: {
                     keyword: "",
+                    region_ids: [],
                     filter_type: EUnitFilterType.Name,
                     has_job: filter?.has_job,
                     limit: filter?.limit,

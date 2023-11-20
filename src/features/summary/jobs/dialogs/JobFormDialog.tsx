@@ -7,6 +7,7 @@ import { useEffect, useMemo, useState } from "react";
 import { EFormStatuses } from "../entities/job_enums";
 import VisibilityComp from "@Components/VisibilityComp";
 import { useDialog } from "@Utils/hooks/dialog_hook";
+import LoadingComp from "@Components/LoadingComp";
 
 interface JobFormDialogProps {
   form: JobForm;
@@ -120,7 +121,7 @@ function JobFormDialog(props: JobFormDialogProps) {
       <DialogCustomTitle title="Job Form" />
       <DialogContent>
         <Box height={600} mt={1} p={1} sx={{ backgroundColor: "white" }}>
-          <VisibilityComp visibility={!loading}>
+          <LoadingComp loading={loading}>
             <Grid direction="column" container height="100%" rowSpacing={1}>
               <Grid item>
                 <Grid
@@ -160,7 +161,7 @@ function JobFormDialog(props: JobFormDialogProps) {
                 />
               </Grid>
             </Grid>
-          </VisibilityComp>
+          </LoadingComp>
         </Box>
       </DialogContent>
     </>

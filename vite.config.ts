@@ -2,16 +2,24 @@ import { resolve } from 'path';
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react-swc'
 import viteHtmlResolveAlias from 'vite-plugin-html-resolve-alias'
+import { sentryVitePlugin } from "@sentry/vite-plugin";
+
 
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [
     react(),
     viteHtmlResolveAlias(),
+    sentryVitePlugin({
+      org: "acri",
+      project: "web-expervice",
+      authToken: "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"
+    })
   ],
   build: {
     outDir: "build",
     copyPublicDir: true,
+    sourcemap: true
   },
   resolve: {
     alias: [

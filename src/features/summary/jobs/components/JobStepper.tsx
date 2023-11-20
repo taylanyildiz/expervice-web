@@ -21,6 +21,9 @@ import JobRepository from "@Repo/job_repository";
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "@Store/index";
 import { setJob } from "@Store/job_store";
+import InsertDriveFileIcon from "@mui/icons-material/InsertDriveFile";
+import RichText from "@Components/RichText";
+import { getJobFormStatusTitle } from "../helper/job_enum_helper";
 
 interface JobStepperProps {
   job: Job | null;
@@ -30,6 +33,9 @@ interface JobStepperProps {
 function JobStepper(props: JobStepperProps) {
   const { job, onUpdate } = props;
   const steps = job?.job_statuses ?? [];
+
+  /// Job statuses which has form
+  const formLogs = steps.filter((e) => e.form);
 
   /// Job Dialog hook
   const { openJobImagesDialog, openJobFormDialog } = useJobDialog();
@@ -42,6 +48,9 @@ function JobStepper(props: JobStepperProps) {
 
   /// Job repository
   const jobRepo = new JobRepository();
+
+  /// Active last step
+  const activeStep: JobStatusLog = steps[steps.length - 1];
 
   /// Dispatch
   const dispatch: AppDispatch = useDispatch<AppDispatch>();
@@ -67,9 +76,6 @@ function JobStepper(props: JobStepperProps) {
     onUpdate?.(result);
     dispatch(setJob(result));
   };
-
-  /// Active last step
-  const activeStep: JobStatusLog = steps[steps.length - 1];
 
   /// Attachments
   const attachements = (step: JobStatusLog) => {
@@ -115,7 +121,7 @@ function JobStepper(props: JobStepperProps) {
       sx={{ overflow: "scroll" }}
     >
       <Grid container>
-        <Grid item flex={1}>
+        <Grid item flex={4}>
           <Stepper orientation="vertical">
             {steps.map((step) => (
               <Step active key={step.id}>
@@ -141,7 +147,7 @@ function JobStepper(props: JobStepperProps) {
             ))}
           </Stepper>
         </Grid>
-        <Grid item>
+        <Grid item flex={3}>
           <Grid
             container
             direction="column"
@@ -191,6 +197,70 @@ function JobStepper(props: JobStepperProps) {
                   {attachements(activeStep)}
                 </Grid>
               </Box>
+            </Grid>
+            <Grid item xs={12}>
+              <VisibilityComp visibility={formLogs.length !== 0}>
+                <Grid spacing={1} container direction="column">
+                  <Grid item mt={2}>
+                    <Typography variant="h1" fontSize={13} children="Forms" />
+                  </Grid>
+                  <Grid item xs={12}>
+                    {formLogs.map((jobStatus, index) => {
+                      const form = jobStatus.form;
+                      return (
+                        <Grid
+                          container
+                          sx={{
+                            ":hover": {
+                              cursor: "pointer",
+                            },
+                          }}
+                          onClick={() => {
+                            openJobFormDialog(form!);
+                          }}
+                          key={`job-form-${index}`}
+                          columnSpacing={1}
+                          direction="row"
+                          alignItems="center"
+                          minHeight={40}
+                        >
+                          <Grid item>
+                            <InsertDriveFileIcon />
+                          </Grid>
+                          <Grid item flex={1}>
+                            <Grid container direction="column">
+                              <Grid item>
+                                <RichText
+                                  fontSize={11}
+                                  color="black"
+                                  title="Name :"
+                                  content={form?.form_name}
+                                />
+                              </Grid>
+                              <Grid item>
+                                <RichText
+                                  fontSize={11}
+                                  color="black"
+                                  title="Job Status :"
+                                  content={jobStatus?.status?.name}
+                                />
+                              </Grid>
+                              <Grid item>
+                                <RichText
+                                  fontSize={11}
+                                  color="black"
+                                  title="Form Status :"
+                                  content={getJobFormStatusTitle(form?.status)}
+                                />
+                              </Grid>
+                            </Grid>
+                          </Grid>
+                        </Grid>
+                      );
+                    })}
+                  </Grid>
+                </Grid>
+              </VisibilityComp>
             </Grid>
           </Grid>
         </Grid>

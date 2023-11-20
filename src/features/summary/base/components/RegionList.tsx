@@ -8,6 +8,8 @@ import { setSelectedRegion } from "@Store/company_region_store";
 import SelectedRegionBox from "./SelectedRegionBox";
 import VisibilityComp from "@Components/VisibilityComp";
 import LoadingComp from "@Components/LoadingComp";
+import { setUnitFilter } from "@Store/unit_store";
+import { useUnit } from "@Features/summary/units/helper/unit_helper";
 
 /// Regions list
 function RegionsList(props: { scale: string }) {
@@ -20,6 +22,9 @@ function RegionsList(props: { scale: string }) {
     regions: { rows },
     region,
   } = useSelector((state: RootState) => state.companyRegion);
+
+  /// Unit store
+  const { filter: unitFilter } = useUnit();
 
   /// Dispatch
   const dispatch: AppDispatch = useDispatch<AppDispatch>();
@@ -38,6 +43,12 @@ function RegionsList(props: { scale: string }) {
   const onSelectRegion = (value: CompanyRegion) => {
     if (value.id === region?.id) return;
     dispatch(setSelectedRegion(value));
+    dispatch(
+      setUnitFilter({
+        ...unitFilter,
+        region_ids: [value.id],
+      })
+    );
   };
 
   return (

@@ -1,4 +1,6 @@
 import { boolean, object, string } from "yup";
+import { parseISO, compareAsc } from 'date-fns';
+
 
 export const unitValidator = object({
     status: boolean().notRequired(),
@@ -20,10 +22,12 @@ export const unitValidator = object({
     date: string().when(['contract_start_date', 'contract_end_date'], {
         is: (start: any, end: any) => {
             const hasAny = !Boolean(start || end);
+
             if (Boolean(start && end)) {
-                const startdate = new Date(start);
-                const enddate = new Date(end);
-                return startdate.getTime() < enddate.getTime();
+                const date1 = parseISO(start);
+                const date2 = parseISO(end);
+                const value = compareAsc(date2, date1);;
+                return value === 1;
             }
             return hasAny;
         },

@@ -11,5 +11,7 @@ export function getUnitFilterTitle(value?: EUnitFilterType): string {
             return "Identitiy Number";
         case EUnitFilterType.QrCode:
             return "QR Code";
+        case EUnitFilterType.Group:
+            return "Group Name";
     }
 }
