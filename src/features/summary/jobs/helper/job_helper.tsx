@@ -1,5 +1,5 @@
 import { RootState, store } from "@Store/index";
-import { setJobId } from "@Store/job_store";
+import { setJobDialogStatus, setJobId } from "@Store/job_store";
 import { useDialog } from "@Utils/hooks/dialog_hook";
 import { useSelector } from "react-redux";
 import JobDialog from "../dialogs/JobDialog";
@@ -27,9 +27,12 @@ export function useJob() {
  */
 export function useJobDialog() {
   const { openDialog, closeDialog } = useDialog();
+  const { jobDialogStatus } = useJob();
 
   return {
-    openDialog: (props?: { id?: number; unit?: Unit | null }) => {
+    openJobDialog: (props?: { id?: number; unit?: Unit | null }) => {
+      if (jobDialogStatus) return;
+      store.dispatch(setJobDialogStatus(true));
       if (props?.id) store.dispatch(setJobId(props?.id));
       openDialog(<JobDialog unit={props?.unit} />, "md");
     },
@@ -46,7 +49,9 @@ export function useJobDialog() {
   };
 }
 
-/// Create Job hook
+/**
+ * Create Job hook
+ */
 export function useJobCreate(formik: FormikProps<Job>) {
   const [job, setJob] = useState<JobProcess | null>(null);
 

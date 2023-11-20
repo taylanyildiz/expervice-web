@@ -4,7 +4,7 @@ import { EActionType } from "@Components/dialogs/DialogCustomActions";
 import { useEffect, useState } from "react";
 import { useJob, useJobCreate, useJobUpdate } from "../helper/job_helper";
 import { useDispatch } from "react-redux";
-import { setJob, setJobId } from "@Store/job_store";
+import { setJob, setJobDialogStatus, setJobId } from "@Store/job_store";
 import { useFormik } from "formik";
 import JobRepository from "@Repo/job_repository";
 import { useDialog } from "@Utils/hooks/dialog_hook";
@@ -91,6 +91,7 @@ function JobDialog(props?: { unit?: Unit | null }) {
     return () => {
       dispatch(setJobId(null));
       dispatch(setJob(null));
+      dispatch(setJobDialogStatus(false));
       jobRepo.getJobs();
     };
   }, []);

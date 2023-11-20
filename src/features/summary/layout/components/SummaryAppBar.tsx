@@ -1,12 +1,10 @@
 import Colors from "@Themes/colors";
 import { AppBar, Avatar, Grid, IconButton, Tooltip } from "@mui/material";
 import GroupsOutlinedIcon from "@mui/icons-material/GroupsOutlined";
-import NotificationsNoneOutlinedIcon from "@mui/icons-material/NotificationsNoneOutlined";
 import AddOutlinedIcon from "@mui/icons-material/AddOutlined";
 import MenuCustomLink from "@Components/MenuCustomLink";
 import ElevatorIcon from "@mui/icons-material/Elevator";
 import EscalatorIcon from "@mui/icons-material/Escalator";
-import FeedIcon from "@mui/icons-material/Feed";
 import ContactsIcon from "@mui/icons-material/Contacts";
 import WorkIcon from "@mui/icons-material/Work";
 import SettingsIcon from "@mui/icons-material/Settings";
@@ -18,17 +16,49 @@ import GroupOutlinedIcon from "@mui/icons-material/GroupOutlined";
 import EngineeringOutlinedIcon from "@mui/icons-material/EngineeringOutlined";
 import ERouter from "@Routes/router_enum";
 import { useNavigate } from "react-router-dom";
-import { clearAll } from "@Store/index";
+import { useDispatch, useSelector } from "react-redux";
+import { AppDispatch, RootState } from "@Store/index";
+import { logout } from "@Store/account_store";
+import NotificationIcon from "./NotificationIcon";
+import SummarizeIcon from "@mui/icons-material/Summarize";
+import UploadFileIcon from "@mui/icons-material/UploadFile";
+import { caption } from "@Utils/functions";
+import { useJobDialog } from "@Features/summary/jobs/helper/job_helper";
+import { useUnitDialog } from "@Features/summary/units/helper/unit_helper";
+import { useInternalDialog } from "@Features/summary/users/internal-users/helper/internal_user_helper";
+import { useTechnicianDialog } from "@Features/summary/users/technician-users/helper/technician_helper";
+import { useCustomerDialog } from "@Features/summary/users/customer-users/helpers/customer_user_helper";
+import { useFormDialog } from "@Features/summary/forms/helper/form_helper";
+import { useProfileDialog } from "@Features/summary/profile/helper/profile_helper";
+import ApartmentIcon from "@mui/icons-material/Apartment";
+import { useCompanyDialog } from "@Features/summary/company/helper/company_helper";
 
 function SummaryAppBar() {
   /// Navigate
   const navigate = useNavigate();
 
+  /// Account store
+  const { user } = useSelector((state: RootState) => state.account);
+  const displayName = `${user?.first_name} ${user?.last_name}`;
+  const isOwner = user?.role_id === 3;
+
+  /// Dispatch
+  const dispatch: AppDispatch = useDispatch<AppDispatch>();
+
   /// Logout handle
-  const onLogoutHandle = () => {
-    clearAll();
+  const onLogoutHandle = async () => {
+    dispatch(logout());
     navigate(ERouter.Base);
   };
+
+  const { openJobDialog } = useJobDialog();
+  const { openUnitDialog } = useUnitDialog();
+  const openInternalDialog = useInternalDialog();
+  const openTechnicianDialog = useTechnicianDialog();
+  const { openCustomerDialog } = useCustomerDialog();
+  const { openFormDialog } = useFormDialog();
+  const { openProfileDialog } = useProfileDialog();
+  const { openCompanyDialog } = useCompanyDialog();
 
   return (
     <AppBar
@@ -44,6 +74,11 @@ function SummaryAppBar() {
                 color="white"
                 title="Jobs"
                 children={[
+                  {
+                    prefix: <SummarizeIcon />,
+                    title: "Summary",
+                    to: ERouter.Summary,
+                  },
                   {
                     prefix: <WorkIcon />,
                     title: "All Jobs",
@@ -63,22 +98,7 @@ function SummaryAppBar() {
               />
             </Grid>
             <Grid item>
-              <MenuCustomLink
-                color="white"
-                title="Forms"
-                children={[
-                  {
-                    prefix: <FeedIcon />,
-                    title: "All Forms",
-                    onClick: () => {},
-                  },
-                  {
-                    prefix: <ContactsIcon />,
-                    title: "Customer Forms",
-                    onClick: () => {},
-                  },
-                ]}
-              />
+              <MenuCustomLink color="white" title="Forms" to={ERouter.Forms} />
             </Grid>
             <Grid item>
               <MenuCustomLink
@@ -115,6 +135,7 @@ function SummaryAppBar() {
           <Grid container alignItems="center">
             <Grid item>
               <MenuCustomLink
+                withIcon={false}
                 title={
                   <Tooltip title="Add">
                     <IconButton size="small">
@@ -122,13 +143,43 @@ function SummaryAppBar() {
                     </IconButton>
                   </Tooltip>
                 }
+                children={[
+                  {
+                    prefix: <WorkIcon />,
+                    title: "Add Job",
+                    onClick: openJobDialog,
+                  },
+                  {
+                    prefix: <DevicesIcon />,
+                    title: "Add Unit",
+                    onClick: openUnitDialog,
+                  },
+                  {
+                    prefix: <GroupOutlinedIcon />,
+                    title: "Add Technician User",
+                    onClick: openTechnicianDialog,
+                  },
+                  {
+                    prefix: <GroupOutlinedIcon />,
+                    title: "Add Internal User",
+                    onClick: openInternalDialog,
+                  },
+                  {
+                    prefix: <GroupOutlinedIcon />,
+                    title: "Add Customer User",
+                    onClick: openCustomerDialog,
+                  },
+                  {
+                    prefix: <UploadFileIcon />,
+                    title: "Add Form",
+                    onClick: openFormDialog,
+                  },
+                ]}
               />
             </Grid>
             <Grid item>
               <Tooltip title="Notifications">
-                <IconButton size="small">
-                  <NotificationsNoneOutlinedIcon sx={{ color: "white" }} />
-                </IconButton>
+                <NotificationIcon />
               </Tooltip>
             </Grid>
             <Grid item>
@@ -168,7 +219,7 @@ function SummaryAppBar() {
                   <Tooltip title="Profile">
                     <IconButton size="small">
                       <Avatar
-                        children="TY"
+                        children={caption(displayName)}
                         sx={{
                           width: 30,
                           height: 30,
@@ -182,8 +233,14 @@ function SummaryAppBar() {
                 children={[
                   {
                     prefix: <AccountBoxIcon />,
-                    title: "Profile",
-                    onClick: () => {},
+                    title: displayName,
+                    onClick: openProfileDialog,
+                  },
+                  {
+                    visibility: isOwner,
+                    prefix: <ApartmentIcon />,
+                    title: "Company Settings",
+                    onClick: openCompanyDialog,
                   },
                   {
                     prefix: <LogoutIcon />,

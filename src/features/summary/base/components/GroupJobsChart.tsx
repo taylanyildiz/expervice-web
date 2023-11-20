@@ -1,3 +1,4 @@
+import LoadingComp from "@Components/LoadingComp";
 import { RootState } from "@Store/index";
 import { Box } from "@mui/material";
 import { BarChart } from "@mui/x-charts";
@@ -6,7 +7,9 @@ import { useSelector } from "react-redux";
 
 function GroupJobsChart() {
   /// Company region store
-  const { groupInfo } = useSelector((state: RootState) => state.companyRegion);
+  const { groupInfo, groupInfoLoading } = useSelector(
+    (state: RootState) => state.companyRegion
+  );
 
   /// Data set of chart
   const [dataset, setDataset] = useState([{}]);
@@ -43,22 +46,28 @@ function GroupJobsChart() {
   return (
     <Box
       p={0}
-      sx={{ alignItems: "center", display: "flex", backgroundColor: "white" }}
+      sx={{
+        alignItems: "center",
+        justifyContent: "center",
+        display: "flex",
+        backgroundColor: "white",
+      }}
     >
-      <BarChart
-        dataset={dataset}
-        xAxis={[{ scaleType: "band", dataKey: "date" }]}
-        series={[
-          {
-            dataKey: "fault",
-            label: "Fault",
-            valueFormatter,
-          },
-          { dataKey: "maintenance", label: "Maintenance", valueFormatter },
-        ]}
-        width={900}
-        height={300}
-      />
+      <LoadingComp height={300} loading={groupInfoLoading}>
+        <BarChart
+          height={300}
+          dataset={dataset}
+          xAxis={[{ scaleType: "band", dataKey: "date" }]}
+          series={[
+            {
+              dataKey: "fault",
+              label: "Fault",
+              valueFormatter,
+            },
+            { dataKey: "maintenance", label: "Maintenance", valueFormatter },
+          ]}
+        />
+      </LoadingComp>
     </Box>
   );
 }

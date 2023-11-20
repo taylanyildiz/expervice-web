@@ -12,10 +12,11 @@ interface TabBarProps {
   tabs: TabBarContent[];
   divider?: boolean;
   backgroundColor?: string;
+  onChanged?: (value: string) => void;
 }
 
 function TabBar(props: TabBarProps) {
-  const { tabs, divider, backgroundColor } = props;
+  const { tabs, divider, backgroundColor, onChanged } = props;
   const tabsList = tabs.filter((e) => e.visibility ?? true);
 
   /// Selected state
@@ -23,12 +24,13 @@ function TabBar(props: TabBarProps) {
 
   /// Initialize component
   useEffect(() => {
-    setSelected("0");
+    handleChange(null, "0");
   }, []);
 
   /// Changed selected handle
-  const handleChange = (_: React.SyntheticEvent, newValue: string) => {
+  const handleChange = (_: any, newValue: string) => {
     setSelected(newValue);
+    onChanged?.(newValue);
   };
 
   return (

@@ -11,9 +11,9 @@ const columns: GridColDef<Customer>[] = [
     renderCell: (params) => {
       const row = params.row;
       const displayName = row.display_name;
-      const openDialog = useCustomerDialog();
+      const { openCustomerDialog } = useCustomerDialog();
       return (
-        <p className="grid-selectable" onClick={() => openDialog(row)}>
+        <p className="grid-selectable" onClick={() => openCustomerDialog(row)}>
           {displayName}
         </p>
       );

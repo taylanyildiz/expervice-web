@@ -14,7 +14,10 @@ const Constant = {
     unitLabels: "/unit-labels",
     jobSubTypes: "/job-sub-types",
     jobRoles: "/job-roles",
-    jobPriorities: "/job-priorities"
+    jobPriorities: "/job-priorities",
+    fieldTypes: "/field-types",
+    jobStatuses: "/job-statuses",
+    unsubReasons: "/unsub-reasons",
 }
 
 export default Constant;

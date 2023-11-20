@@ -2,12 +2,15 @@ import GMap from "@Components/GMap";
 import UnitRepository from "@Repo/unit_repository";
 import { AppDispatch } from "@Store/index";
 import { setUnitFilter, setUnitId } from "@Store/unit_store";
-import { Box, CircularProgress, Divider, List } from "@mui/material";
-import { ReactNode, useEffect, useMemo } from "react";
+import { Divider, Grid, List, Typography } from "@mui/material";
+import { ReactNode, useEffect, useMemo, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useUnit } from "../helper/unit_helper";
 import UnitListItem from "../components/UnitListItem";
-import { Marker } from "@react-google-maps/api";
+import { InfoWindow, Marker } from "@react-google-maps/api";
+import UnitFilter from "@Models/units/unit_filter";
+import Unit from "@Models/units/unit";
+import VisibilityComp from "@Components/VisibilityComp";
 
 function UnitsMapPage() {
   /// Unit repo
@@ -18,15 +21,39 @@ function UnitsMapPage() {
 
   /// Unit store
   const {
-    layzLoading: loading,
     units: { rows },
+    filter,
   } = useUnit();
+
+  /// Units with [display]
+  const [units, setUnits] = useState<(Unit & { display: boolean })[]>([]);
+
+  useEffect(() => {
+    const units = rows.map((e) => ({
+      ...e,
+      display: false,
+    }));
+    setUnits(units);
+  }, [rows]);
+
+  /// Unit filter state
+  const [unitFilter, setFilter] = useState<UnitFilter | null>(null);
+
+  /// Toogle pin
+  const handleTogglePin = (
+    unit: Unit & { display: boolean },
+    index: number
+  ) => {
+    const newList = [...units.map((e) => ({ ...e, display: false }))];
+    newList[index] = { ...unit, display: !unit.display };
+    setUnits(newList);
+  };
 
   /// Markers of units
   const markers: ReactNode[] = useMemo(() => {
-    return rows
+    return units
       .filter((e) => Boolean(e.latitude && e.longitude))
-      .map((e) => {
+      .map((e, i) => {
         return (
           <Marker
             key={e.id}
@@ -34,30 +61,72 @@ function UnitsMapPage() {
               lat: parseFloat(e.latitude!),
               lng: parseFloat(e.longitude!),
             }}
-          />
+            onClick={() => {
+              handleTogglePin(e, i);
+            }}
+          >
+            <VisibilityComp visibility={e.display}>
+              <InfoWindow
+                onCloseClick={() => {
+                  handleTogglePin(e, i);
+                }}
+                position={{
+                  lat: parseFloat(e.latitude!),
+                  lng: parseFloat(e.longitude!),
+                }}
+              >
+                <Grid container>
+                  <Grid item xs={12}>
+                    <Typography variant="h1" fontSize={13} children={e.name} />
+                  </Grid>
+                </Grid>
+              </InfoWindow>
+            </VisibilityComp>
+          </Marker>
         );
       });
-  }, [rows]);
+  }, [units]);
+
+  useEffect(() => {
+    dispatch(
+      setUnitFilter({
+        ...filter,
+        limit: null,
+        offset: null,
+      })
+    );
+  }, []);
+
+  useEffect(() => {
+    setFilter({
+      ...filter,
+      limit: null,
+      offset: null,
+    });
+  }, [filter]);
 
   /// Initialize component
   useEffect(() => {
-    dispatch(setUnitFilter(null));
+    if (!unitFilter) return;
     unitRepo.getUnits();
-  }, []);
+  }, [unitFilter]);
 
   return (
     <div className="units-map-page">
       <div className="units-map-list">
         <List>
-          {rows.map((e) => (
+          {units.map((e, i) => (
             <>
               <UnitListItem
                 key={e.id}
                 unit={e}
+                selected={e.display}
                 onClick={() => {
                   dispatch(setUnitId(e.id));
                 }}
-                onMap={() => {}}
+                onMap={() => {
+                  handleTogglePin(e, i);
+                }}
               />
               <Divider component="li" />
             </>

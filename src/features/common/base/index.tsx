@@ -5,8 +5,23 @@ import ScalableButton from "@Components/ScalableButton";
 import Colors from "@Themes/colors";
 import VideoBox from "./components/VideoBox";
 import CustomerBox from "./components/CustomerBox";
+import { useDispatch, useSelector } from "react-redux";
+import { AppDispatch, RootState } from "@Store/index";
+import { setAuthPlan } from "@Store/auth_store";
+import ERouter from "@Routes/router_enum";
 
 function CommonPage() {
+  /// Production store
+  const { production } = useSelector((state: RootState) => state.production);
+
+  /// Dispatch
+  const dispatch: AppDispatch = useDispatch<AppDispatch>();
+
+  const handleDemoClick = () => {
+    const plan = production?.plans?.[1];
+    dispatch(setAuthPlan(plan));
+  };
+
   return (
     <>
       <Grid container rowSpacing={15}>
@@ -49,6 +64,8 @@ function CommonPage() {
                       backgroundColor={Colors.secodary}
                       color={Colors.primaryDark}
                       children="Watch a free demo"
+                      onClick={handleDemoClick}
+                      link={ERouter.Regiter}
                     />
                   }
                 />

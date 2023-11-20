@@ -5,11 +5,11 @@ import { useCustomerDialog } from "./helpers/customer_user_helper";
 
 function CustomerUsersPage() {
   /// Customer dialog hook
-  const openCustomer = useCustomerDialog();
+  const { openCustomerDialog } = useCustomerDialog();
 
   /// Add handle
   const onAddHandle = () => {
-    openCustomer();
+    openCustomerDialog();
   };
 
   return (

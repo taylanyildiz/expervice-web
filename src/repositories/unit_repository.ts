@@ -28,6 +28,15 @@ class UnitRepository extends BaseRepository {
     }
 
     /**
+     * Get Jobless Units of company
+     */
+    public async getJoblessUnits(): Promise<{ rows: Unit[], count: number } | null> {
+        const response = await this.get("/", { params: { has_job: false } });
+        const data = response.data['data']['units'];
+        return data;
+    }
+
+    /**
      * Get Unit by id
      */
     public async getUnitById(id: number): Promise<boolean> {
@@ -119,6 +128,26 @@ class UnitRepository extends BaseRepository {
         if (!success) return;
         const data = response.data['data']['jobs'];
         store.dispatch(setUnitJobs(data));
+    }
+
+    /**
+     * Assign Units to customer
+     */
+    public async assign(units: number[], customer: number): Promise<boolean> {
+        const path = UnitConst.assign;
+        const response = await this.post(path, { units, customer_id: customer });
+        SnackCustomBar.status(response);
+        return response.success;
+    }
+
+    /**
+     * Assign Units to customer
+     */
+    public async deleteUnits(units: number[]): Promise<boolean> {
+        const path = "/";
+        const response = await this.delete(path, { data: { units } });
+        SnackCustomBar.status(response);
+        return response.success;
     }
 }
 

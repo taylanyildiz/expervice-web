@@ -3,22 +3,28 @@ import { PrimaryButton } from ".";
 import FilterAltIcon from "@mui/icons-material/FilterAlt";
 import AddIcon from "@mui/icons-material/Add";
 import Colors from "@Themes/colors";
+import { ReactNode } from "react";
 
 interface GridTableHeaderProps {
   title: string;
   onAdd: () => void;
   onFilter: () => void;
   onExport: () => void;
+  filterCount?: number | string;
+  more?: ReactNode[];
 }
 
 function GridTableHeader(props: GridTableHeaderProps) {
-  const { title, onAdd, onFilter, onExport } = props;
+  const { title, onAdd, onFilter, onExport, more, filterCount } = props;
 
   return (
-    <Grid p={2} container columnSpacing={1}>
+    <Grid p={2} container columnSpacing={1} alignItems="center">
       <Grid item flexGrow={1}>
         <Typography variant="h1" fontSize={20} children={title} />
       </Grid>
+      {more?.map((e, i) => (
+        <Grid key={`more-actions-${i}`} item children={e} />
+      ))}
       <Grid item>
         <PrimaryButton
           height={30}
@@ -38,7 +44,11 @@ function GridTableHeader(props: GridTableHeaderProps) {
           fontWeight="normal"
           fontSize={13}
           variant="outlined"
-          children="Filter"
+          children={
+            filterCount && filterCount != 0
+              ? `Filter (${filterCount})`
+              : "Filter"
+          }
           border="1px solid grey"
           suffix={<FilterAltIcon />}
           onClick={onFilter}

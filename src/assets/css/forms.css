@@ -1,0 +1,14 @@
+.forms-layout {
+  flex: 1;
+  overflow: hidden;
+  flex-direction: column;
+  display: flex;
+  background-color: white;
+}
+
+.forms-grid {
+  width: 100%;
+  flex-grow: 1;
+  height: 0px;
+  overflow: hidden;
+}

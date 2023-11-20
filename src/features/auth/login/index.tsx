@@ -4,7 +4,7 @@ import TextOutlineField from "@Components/TextOutlineField";
 import ERouter from "@Routes/router_enum";
 import Colors from "@Themes/colors";
 import { Box, Grid } from "@mui/material";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 import SocialMediaBox from "./components/SocialMediaBox";
 import StoreImageBox from "./components/StoreImageBox";
 import ForgotPasswordButton from "./components/ForgotPasswordButtons";
@@ -13,6 +13,8 @@ import UserLogin from "./entities/user_login";
 import { loginValidationSchema } from "./validator/login_validator";
 import AuthRepository from "@Repo/auth_repository";
 import { useDialog } from "@Utils/hooks/dialog_hook";
+import { useSelector } from "react-redux";
+import { RootState } from "@Store/index";
 
 function LoginPage() {
   /// Navigate
@@ -20,6 +22,9 @@ function LoginPage() {
 
   /// Auth repository
   const authRepo = new AuthRepository();
+
+  /// Account store
+  const { user } = useSelector((state: RootState) => state.account);
 
   /// Dialog hook
   const { openLoading } = useDialog();
@@ -45,6 +50,9 @@ function LoginPage() {
     validationSchema: loginValidationSchema,
     onSubmit: onSubmitHandle,
   });
+
+  /// Redirect to summary
+  if (user) return <Navigate to={ERouter.Summary} />;
 
   return (
     <Box className="login-page">

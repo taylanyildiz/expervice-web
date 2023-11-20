@@ -1,8 +1,5 @@
-import { useUnit } from "@Features/summary/units/helper/unit_helper";
 import Unit from "@Models/units/unit";
 import UnitRepository from "@Repo/unit_repository";
-import { AppDispatch } from "@Store/index";
-import { setUnitFilter } from "@Store/unit_store";
 import Colors from "@Themes/colors";
 import {
   Autocomplete,
@@ -13,7 +10,6 @@ import {
   styled,
 } from "@mui/material";
 import { ReactNode, useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
 
 const GroupHeader = styled("div")(({ theme }) => ({
   position: "sticky",
@@ -42,32 +38,22 @@ function SelectUnit(props: SelectUnitProps) {
   const { label, fullWidth, helperText, error, value, onChanged, clearIcon } =
     props;
 
-  /// Constant store
-  const {
-    layzLoading,
-    units: { rows },
-  } = useUnit();
-
   /// Unit repository
   const unitRepo = new UnitRepository();
 
-  /// Dispatch
-  const dispatch: AppDispatch = useDispatch<AppDispatch>();
-
   /// Options and option
-  const [options, setOptions] = useState<Unit[]>([]);
+  const [options, setOptions] = useState<{
+    rows: Unit[];
+    count: number;
+  }>({ rows: [], count: 0 });
   const [option, setOption] = useState<Unit | null>(null);
 
   /// Initialize component
   useEffect(() => {
-    dispatch(setUnitFilter({ has_job: false }));
-    unitRepo.getUnits();
+    unitRepo.getJoblessUnits().then((value) => {
+      setOptions(value ?? { rows: [], count: 0 });
+    });
   }, []);
-
-  /// When chaged [unitSubTypes]
-  useEffect(() => {
-    setOptions(rows ?? []);
-  }, [rows]);
 
   /// When cahnged value
   useEffect(() => {
@@ -76,9 +62,8 @@ function SelectUnit(props: SelectUnitProps) {
 
   return (
     <Autocomplete
-      loading={layzLoading}
       fullWidth={fullWidth}
-      options={options}
+      options={options.rows}
       value={option}
       clearIcon={clearIcon}
       groupBy={(option) => option?.group?.name ?? ""}

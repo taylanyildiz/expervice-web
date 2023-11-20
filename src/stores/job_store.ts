@@ -5,6 +5,7 @@ interface Props {
     layzLoading: boolean,
     jobFilter: JobFilter | null;
     jobs: { count: number, rows: Job[] },
+    jobDialogStatus: boolean;
     job: Job | null
     jobId: number | null,
 }
@@ -13,6 +14,7 @@ const initialState: Props = {
     layzLoading: false,
     jobFilter: { limit: 10, offset: 0 },
     jobs: { count: 0, rows: [] },
+    jobDialogStatus: false,
     job: null,
     jobId: null,
 }
@@ -31,6 +33,9 @@ const job = createSlice({
         setJobs: (state, { payload }) => {
             state.jobs = payload;
         },
+        setJobDialogStatus: (state, { payload }) => {
+            state.jobDialogStatus = payload;
+        },
         setJob: (state, { payload }) => {
             state.job = payload;
         },
@@ -41,4 +46,11 @@ const job = createSlice({
 });
 
 export default job.reducer;
-export const { setJob, setJobLayzLoading, setJobFilter, setJobs, setJobId } = job.actions;
+export const {
+    setJobLayzLoading,
+    setJobFilter,
+    setJobs,
+    setJobDialogStatus,
+    setJob,
+    setJobId
+} = job.actions;

@@ -25,11 +25,11 @@ function Header(props: { unit: Unit }) {
   const hasJob = Boolean(job);
 
   /// Job dialog hook
-  const { openDialog } = useJobDialog();
+  const { openJobDialog } = useJobDialog();
 
   /// Open job dialg
   const handleCreateJob = () => {
-    openDialog({ unit: props.unit });
+    openJobDialog({ unit: props.unit });
   };
 
   return (
@@ -67,7 +67,9 @@ function Header(props: { unit: Unit }) {
   );
 }
 
-function UnitInformation(props: { formik: FormikProps<Unit> }) {
+function UnitInformation(props: {
+  formik: FormikProps<Unit & { availableCustomer?: boolean }>;
+}) {
   const { formik } = props;
 
   /// Copy customer address
@@ -104,6 +106,7 @@ function UnitInformation(props: { formik: FormikProps<Unit> }) {
             <Grid item xs={9.5}>
               <SelectCustomer
                 fullWidth
+                disabled={!formik.values.availableCustomer}
                 label="Customer"
                 onChanged={(customer) => {
                   formik.setFieldValue("customer", customer);

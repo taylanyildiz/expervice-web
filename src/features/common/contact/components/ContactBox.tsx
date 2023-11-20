@@ -64,7 +64,7 @@ function ContactBox() {
               display="flex"
               justifySelf="end"
             >
-              <Box children={Images.contactUs({ height: 400 })} />
+              <Box children={Images.contactUs({ height: 400, width: 600 })} />
             </Grid>
           </Grid>
         </Grid>

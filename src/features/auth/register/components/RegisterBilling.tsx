@@ -1,5 +1,4 @@
 import CrediCard, { CreditFocus } from "@Components/CrediCard";
-import InputCustomMask from "@Components/InputCustomMask";
 import PrimaryButton from "@Components/PrimaryButton";
 import TextOutlineField from "@Components/TextOutlineField";
 import { Grid } from "@mui/material";
@@ -10,6 +9,7 @@ import { useRegister } from "@Utils/hooks/register_hook";
 import { RegisterBilling } from "../entities";
 import { useFormik } from "formik";
 import { registerBillingValidation } from "../validator/register_validator";
+import { CardNumberMask, CardYearMask } from "@Components/TextInputMask";
 
 function RegisterBilling() {
   /// Register hook
@@ -94,47 +94,35 @@ function RegisterBilling() {
             />
           </Grid>
           <Grid item xs={12}>
-            <InputCustomMask
-              mask="9999 9999 9999 9999"
-              placeholder=" "
-              onFocus={() => onFocusHandle("number")}
+            <TextOutlineField
+              fullWidth
+              name="card_number"
+              label="Card Number"
               onChange={formik.handleChange}
-              value={formik.values.card_number}
-              children={
-                <TextOutlineField
-                  fullWidth
-                  name="card_number"
-                  label="Card Number"
-                  helperText={
-                    formik.touched.card_number && formik.errors.card_number
-                  }
-                  error={Boolean(
-                    formik.touched.card_number && formik.errors.card_number
-                  )}
-                />
+              helperText={
+                formik.touched.card_number && formik.errors.card_number
               }
+              error={Boolean(
+                formik.touched.card_number && formik.errors.card_number
+              )}
+              inputComponent={CardNumberMask}
+              onFocus={() => setFocus("number")}
+              value={formik.values.card_number}
             />
           </Grid>
           <Grid item xs={12}>
             <Grid container columnSpacing={1}>
               <Grid item xs={6}>
-                <InputCustomMask
-                  mask="99/99"
-                  placeholder="MM/YY"
-                  onFocus={() => onFocusHandle("expiry")}
+                <TextOutlineField
+                  fullWidth
+                  name="expire"
+                  label="Expire Date"
+                  helperText={formik.touched.expire && formik.errors.expire}
+                  error={Boolean(formik.touched.expire && formik.errors.expire)}
+                  inputComponent={CardYearMask}
                   onChange={formik.handleChange}
+                  onFocus={() => setFocus("expiry")}
                   value={formik.values.expire}
-                  children={
-                    <TextOutlineField
-                      fullWidth
-                      name="expire"
-                      label="Expire Date"
-                      helperText={formik.touched.expire && formik.errors.expire}
-                      error={Boolean(
-                        formik.touched.expire && formik.errors.expire
-                      )}
-                    />
-                  }
                 />
               </Grid>
               <Grid item xs={6}>

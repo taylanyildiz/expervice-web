@@ -1,4 +1,4 @@
-import logger from "@Log/logger";
+// import logger from "@Log/logger";
 import { setAccessToken } from "@Store/account_store";
 import { store } from "@Store/index";
 import { Axios, AxiosRequestConfig, AxiosResponse, InternalAxiosRequestConfig } from "axios";
@@ -44,22 +44,24 @@ abstract class BaseRepository extends Axios {
 
     /// On request listen
     private async onRequest(config: InternalAxiosRequestConfig): Promise<InternalAxiosRequestConfig<any>> {
-        logger.info(
-            "\n******************************\n" +
-            "REQUEST INFO \n" +
-            `TYPE     => ${config.method}\n` +
-            `BASEURL  => ${config.baseURL}\n` +
-            `URL      => ${config.url}\n` +
-            `BODY     => ${JSON.stringify(config.data)}\n` +
-            `PARAMS   => ${JSON.stringify(config.params)}\n` +
-            "******************************\n"
-        );
+        // logger.info(
+        //     "\n******************************\n" +
+        //     "REQUEST INFO \n" +
+        //     `TYPE     => ${config.method}\n` +
+        //     `BASEURL  => ${config.baseURL}\n` +
+        //     `URL      => ${config.url}\n` +
+        //     `BODY     => ${JSON.stringify(config.data)}\n` +
+        //     `PARAMS   => ${JSON.stringify(config.params)}\n` +
+        //     "******************************\n"
+        // );
 
         const data = config.data;
         if (data) {
             for (var [key, value] of Object.entries(data)) {
-                if ((typeof value !== 'boolean' && !value) || (Array.isArray(value) && value.length === 0)) {
-                    delete config.data[key];
+                if (typeof value !== 'boolean') {
+                    if (value == '' || (!value && value != 0) || (Array.isArray(value) && value.length === 0)) {
+                        delete config.data[key];
+                    }
                 }
             }
         }
@@ -69,16 +71,16 @@ abstract class BaseRepository extends Axios {
 
     /// On reponse listen
     private async onResponse(value: AxiosResponse): Promise<AxiosResponse<any> & { success: boolean }> {
-        logger.info(
-            "\n******************************\n" +
-            "RESPONSE INFO \n" +
-            `TYPE     => ${value.config.method}\n` +
-            `STATUS   => ${value.status}\n` +
-            `BASEURL  => ${value.config.baseURL}\n` +
-            `URL      => ${value.config.url}\n` +
-            `BODY     => ${JSON.stringify(value.data)}\n` +
-            "******************************\n"
-        );
+        // logger.info(
+        //     "\n******************************\n" +
+        //     "RESPONSE INFO \n" +
+        //     `TYPE     => ${value.config.method}\n` +
+        //     `STATUS   => ${value.status}\n` +
+        //     `BASEURL  => ${value.config.baseURL}\n` +
+        //     `URL      => ${value.config.url}\n` +
+        //     `BODY     => ${JSON.stringify(value.data)}\n` +
+        //     "******************************\n"
+        // );
 
         /// Refresh token
         if (value.status === 401) {
@@ -110,7 +112,6 @@ abstract class BaseRepository extends Axios {
         const success = successCodes.includes(value.status);
         return Object.assign({}, value, { success });
     }
-
 
     /**
      * Get Request
