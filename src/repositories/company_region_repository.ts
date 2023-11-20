@@ -43,7 +43,7 @@ class CompanyRegionRepository extends BaseRepository {
      * Get region groups
      */
     public async getRegionGroups(): Promise<void> {
-        store.dispatch(setGroupsLoading(true));
+        store.dispatch(setGroupInfoLoading(true));
         const region = store.getState().companyRegion.region;
         const path = CompanyRegionConst.groups(region!.id!);
         const response = await this.get(path);

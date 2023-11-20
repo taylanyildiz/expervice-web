@@ -8,7 +8,6 @@ import { useDispatch } from "react-redux";
 import { useUnit } from "../helper/unit_helper";
 import UnitListItem from "../components/UnitListItem";
 import { InfoWindow, Marker } from "@react-google-maps/api";
-import UnitFilter from "@Models/units/unit_filter";
 import Unit from "@Models/units/unit";
 import VisibilityComp from "@Components/VisibilityComp";
 
@@ -35,9 +34,6 @@ function UnitsMapPage() {
     }));
     setUnits(units);
   }, [rows]);
-
-  /// Unit filter state
-  const [unitFilter, setFilter] = useState<UnitFilter | null>(null);
 
   /// Toogle pin
   const handleTogglePin = (
@@ -97,19 +93,10 @@ function UnitsMapPage() {
     );
   }, []);
 
-  useEffect(() => {
-    setFilter({
-      ...filter,
-      limit: null,
-      offset: null,
-    });
-  }, [filter]);
-
   /// Initialize component
   useEffect(() => {
-    if (!unitFilter) return;
     unitRepo.getUnits();
-  }, [unitFilter]);
+  }, [filter]);
 
   return (
     <div className="units-map-page">
