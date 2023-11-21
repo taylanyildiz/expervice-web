@@ -63,7 +63,7 @@ abstract class BaseRepository extends Axios {
         if (data) {
             for (var [key, value] of Object.entries(data)) {
                 if (typeof value !== 'boolean') {
-                    if (value == '' || (!value && value != 0) || (Array.isArray(value) && value.length === 0)) {
+                    if ((value == '' && value != 0) || (!value && value != 0) || (Array.isArray(value) && value.length === 0)) {
                         delete config.data[key];
                     }
                 }

@@ -34,11 +34,20 @@ interface SelectJobSubTypeProps {
   value?: JobSubType | number;
   clearIcon?: boolean;
   onChanged: (values: JobSubType | null | undefined) => void;
+  disabled?: boolean;
 }
 
 function SelectJobSubType(props: SelectJobSubTypeProps) {
-  const { label, fullWidth, helperText, error, value, clearIcon, onChanged } =
-    props;
+  const {
+    label,
+    fullWidth,
+    helperText,
+    error,
+    value,
+    clearIcon,
+    onChanged,
+    disabled,
+  } = props;
 
   /// Constant store
   const { jobSubTypes } = useSelector((state: RootState) => state.constant);
@@ -73,6 +82,7 @@ function SelectJobSubType(props: SelectJobSubTypeProps) {
 
   return (
     <Autocomplete
+      disabled={disabled}
       loading
       fullWidth={fullWidth}
       options={options}
@@ -86,7 +96,10 @@ function SelectJobSubType(props: SelectJobSubTypeProps) {
           <GroupItems>{params.children}</GroupItems>
         </li>
       )}
-      onChange={(_, v) => onChanged(v)}
+      onChange={(_, v) => {
+        if (!v) return;
+        onChanged(v);
+      }}
       renderInput={(props) => {
         return (
           <FormControl fullWidth={fullWidth}>

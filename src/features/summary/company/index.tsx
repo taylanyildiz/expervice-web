@@ -19,6 +19,7 @@ import Colors from "@Themes/colors";
 import CompanyRepository from "@Repo/company_repository";
 import { object, string } from "yup";
 import { urlRegex } from "@Utils/functions";
+import "../../../assets/css/company.css";
 
 function CompanyDialog() {
   /// User repository

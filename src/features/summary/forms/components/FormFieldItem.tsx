@@ -11,6 +11,7 @@ import {
   Stack,
   Typography,
 } from "@mui/material";
+import Colors from "@Themes/colors";
 
 interface FormFieldItemProps {
   field: Field;
@@ -20,9 +21,16 @@ interface FormFieldItemProps {
 
 function FormFieldItem(props: FormFieldItemProps) {
   const { field, onDelete, onEdit } = props;
+  const isTitle = field.field_type?.id === 4;
 
   return (
-    <ListItem sx={{ alignItems: "start" }}>
+    <ListItem
+      sx={{
+        alignItems: "start",
+        border: isTitle ? 4 : 1,
+        borderColor: isTitle ? Colors.primary : "divider",
+      }}
+    >
       <DragIndicatorIcon sx={{ width: 20, height: 20, mt: 1 }} />
       <ListItemText
         primary={

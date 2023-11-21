@@ -50,7 +50,8 @@ function GroupInfoBox() {
 
   /// Get company info
   const getInfo = async () => {
-    await companyRegionRepo.getGroupInfo();
+    if (!group) return;
+    await companyRegionRepo.getGroupInfo(group!.id!);
   };
 
   /// Initialize component

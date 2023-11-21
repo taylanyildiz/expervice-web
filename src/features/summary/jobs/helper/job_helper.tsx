@@ -1,5 +1,5 @@
 import { RootState, store } from "@Store/index";
-import { setJobDialogStatus, setJobId } from "@Store/job_store";
+import { setJobId } from "@Store/job_store";
 import { useDialog } from "@Utils/hooks/dialog_hook";
 import { useSelector } from "react-redux";
 import JobDialog from "../dialogs/JobDialog";
@@ -32,7 +32,6 @@ export function useJobDialog() {
   return {
     openJobDialog: (props?: { id?: number; unit?: Unit | null }) => {
       if (jobDialogStatus) return;
-      store.dispatch(setJobDialogStatus(true));
       if (props?.id) store.dispatch(setJobId(props?.id));
       openDialog(<JobDialog unit={props?.unit} />, "md");
     },

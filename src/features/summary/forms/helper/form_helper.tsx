@@ -12,7 +12,7 @@ import FormProcess from "../entities/form_process";
 import FormField from "../entities/form_field";
 import { EFormFielType } from "../entities/form_enums";
 import { equalInterface } from "@Utils/functions";
-import { setFormDialogStatus, setFormId } from "@Store/form_store";
+import { setFormId } from "@Store/form_store";
 
 export function useForm() {
   return useSelector((state: RootState) => state.form);
@@ -24,14 +24,13 @@ export function useFormDialog() {
   return {
     openFormDialog: (id?: number) => {
       if (formDialogStatus) return;
-      store.dispatch(setFormDialogStatus(true));
       if (id) store.dispatch(setFormId(id));
       openDialog(<FormPDFDialog />, "xl");
     },
     closeDialog,
     openFieldDialog: async (field?: Field): Promise<Field | null> => {
       return await new Promise((resolve) => {
-        openDialog(<FormFieldDialog field={field} onDone={resolve} />);
+        openDialog(<FormFieldDialog field={field} onDone={resolve} />, "xs");
       });
     },
     openCustomerDialog: async (

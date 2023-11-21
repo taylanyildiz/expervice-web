@@ -1,0 +1,58 @@
+.company-avatar {
+  background-color: transparent;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  border-radius: 50%;
+  position: relative;
+}
+
+.company-avatar-btn {
+  border-radius: 50%;
+  background-color: white;
+  position: absolute;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  bottom: 0px;
+  right: 0px;
+}
+
+.placeholder {
+  font-size: 14px;
+  letter-spacing: 3px;
+  line-height: 26px;
+  color: #3d4852;
+  font-weight: 400;
+  font-family: "Montserrat";
+  text-align: center;
+
+  span {
+    color: #688ee8;
+    cursor: pointer;
+  }
+}
+
+.file-drop {
+  width: 100%;
+  height: 140px;
+  margin-top: 2em;
+  border-radius: 5px;
+  filter: drop-shadow(0px 4px 3px rgba(51, 46, 58, 0.1));
+  border: 1px dashed #72757d;
+
+  & .file-drop-target {
+    height: 100%;
+    border-radius: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    flex-direction: column;
+
+    &.file-drop-dragging-over-target {
+      opacity: 0.3;
+    }
+
+    input[type="file"] {
+      width: 0;
+      height: 0;
+    }
+  }
+}

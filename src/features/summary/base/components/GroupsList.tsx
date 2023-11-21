@@ -36,7 +36,8 @@ function GroupsList() {
 
   /// Get region groups
   const getRegionGroups = async () => {
-    await companyRegionRepo.getRegionGroups();
+    if (!region) return;
+    await companyRegionRepo.getRegionGroups(region!.id!);
   };
 
   /// Initialize component

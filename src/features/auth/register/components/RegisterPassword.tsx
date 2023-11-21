@@ -7,7 +7,7 @@ import { useRegister } from "@Utils/hooks/register_hook";
 import {
   RegisterAccount,
   RegisterBilling,
-  RegisterPassword,
+  RegisterPassword as RegisterPasswordModel,
   RegisterPrimaryContact,
 } from "../entities";
 import { useFormik } from "formik";
@@ -36,7 +36,7 @@ function RegisterPassword() {
   const authRepo = new AuthRepository();
 
   /// Submit handle
-  const onSubmitHandle = async (values: RegisterPassword) => {
+  const onSubmitHandle = async (values: RegisterPasswordModel) => {
     const primaryContact: RegisterPrimaryContact = JSON.parse(
       sessionStorage.getItem("register_primary_contact")!
     );
@@ -89,7 +89,7 @@ function RegisterPassword() {
     formik.handleSubmit();
   };
 
-  const initialValues: RegisterPassword = {
+  const initialValues: RegisterPasswordModel = {
     password: "",
     confirm_password: "",
   };

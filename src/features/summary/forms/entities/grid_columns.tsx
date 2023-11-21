@@ -6,7 +6,8 @@ import VisibilityIcon from "@mui/icons-material/Visibility";
 import FormRepository from "@Repo/form_repository";
 import { useDialog } from "@Utils/hooks/dialog_hook";
 import { openBase64PDF } from "@Utils/functions";
-import { useFormDialog } from "../helper/form_helper";
+import { store } from "@Store/index";
+import { setFormId } from "@Store/form_store";
 
 const columns: GridColDef<Form>[] = [
   {
@@ -17,12 +18,11 @@ const columns: GridColDef<Form>[] = [
       const form = params.row;
       const formId = form.id;
       const formName = form.name;
-      const { openFormDialog } = useFormDialog();
       return (
         <div
           className="grid-selectable"
           onClick={() => {
-            openFormDialog(formId);
+            store.dispatch(setFormId(formId));
           }}
         >
           {formName}

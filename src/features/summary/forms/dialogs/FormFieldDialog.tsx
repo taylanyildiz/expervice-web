@@ -15,6 +15,7 @@ import { useEffect } from "react";
 import FieldDefaultValue from "../components/FieldDefaultValue";
 import TextOutlineField from "@Components/TextOutlineField";
 import { formFieldValidator } from "../validator/form_validator";
+import VisibilityComp from "@Components/VisibilityComp";
 
 interface FormFieldDialogProps {
   field?: Field;
@@ -55,6 +56,9 @@ function FormFieldDialog(props: FormFieldDialogProps) {
     }
   }, [field]);
 
+  /// Field type is [Title]
+  const isTitle = formik.values.field_type?.id === 4;
+
   return (
     <>
       <DialogCustomTitle title="Form Field" />
@@ -78,7 +82,7 @@ function FormFieldDialog(props: FormFieldDialogProps) {
                 }}
               />
             </Grid>
-            <Grid item xs={6}>
+            <Grid item xs={12}>
               <TextOutlineField
                 fullWidth
                 label="Field Label"
@@ -89,34 +93,41 @@ function FormFieldDialog(props: FormFieldDialogProps) {
                 onChange={formik.handleChange}
               />
             </Grid>
-            <Grid item xs={6}>
-              <TextOutlineField
-                fullWidth
-                label="Field Description"
-                name="description"
-                helperText={
-                  formik.touched.description && formik.errors.description
-                }
-                error={Boolean(
-                  formik.touched.description && formik.errors.description
-                )}
-                value={formik.values.description}
-                onChange={formik.handleChange}
-              />
-            </Grid>
+
+            <VisibilityComp visibility={!isTitle}>
+              <Grid item xs={12}>
+                <TextOutlineField
+                  fullWidth
+                  label="Field Description"
+                  name="description"
+                  helperText={
+                    formik.touched.description && formik.errors.description
+                  }
+                  error={Boolean(
+                    formik.touched.description && formik.errors.description
+                  )}
+                  value={formik.values.description}
+                  onChange={formik.handleChange}
+                />
+              </Grid>
+            </VisibilityComp>
+
             <Grid item xs={12}>
               <FieldDefaultValue formik={formik} />
             </Grid>
-            <Grid item>
-              <FormControlLabel
-                checked={formik.values.mandantory}
-                onChange={(_, checked) =>
-                  formik.setFieldValue("mandantory", checked)
-                }
-                control={<Checkbox size="small" />}
-                label={"Is Required field"}
-              />
-            </Grid>
+
+            <VisibilityComp visibility={!isTitle}>
+              <Grid item>
+                <FormControlLabel
+                  checked={formik.values.mandantory}
+                  onChange={(_, checked) =>
+                    formik.setFieldValue("mandantory", checked)
+                  }
+                  control={<Checkbox size="small" />}
+                  label={"Is Required field"}
+                />
+              </Grid>
+            </VisibilityComp>
           </Grid>
         </Box>
       </DialogContent>
