@@ -96,7 +96,10 @@ function SelectJobSubType(props: SelectJobSubTypeProps) {
           <GroupItems>{params.children}</GroupItems>
         </li>
       )}
-      onChange={(_, v) => onChanged(v)}
+      onChange={(_, v) => {
+        if (!v) return;
+        onChanged(v);
+      }}
       renderInput={(props) => {
         return (
           <FormControl fullWidth={fullWidth}>

@@ -21,7 +21,8 @@ function RegionInfoBox() {
 
   /// Get region weather
   const getRegionWeather = async () => {
-    await companyRegionRepo.getRegionWeather();
+    if (!region) return;
+    await companyRegionRepo.getRegionWeather(region!.id!);
   };
 
   /// Initialize component

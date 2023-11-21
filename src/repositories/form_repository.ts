@@ -49,13 +49,13 @@ class FormRepository extends BaseRepository {
     public async getForm(id: number): Promise<boolean> {
         const path = Formconst.form(id);
         const response = await this.get(path);
-        const sucess = response.success;
-        SnackCustomBar.status(response);
-        if (sucess) {
+        const success = response.success;
+        SnackCustomBar.status(response, { display: !success });
+        if (success) {
             const data = response.data['data']['form'];
             store.dispatch(setForm(data));
         }
-        return sucess;
+        return success;
     }
 
     /**

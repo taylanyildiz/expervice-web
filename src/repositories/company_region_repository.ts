@@ -20,17 +20,16 @@ class CompanyRegionRepository extends BaseRepository {
         const status = response.status;
         if (status !== 200) return;
         const data = response.data['data']['regions'];
-        store.dispatch(setRegions(data));
         store.dispatch(setRegionsLoading(false));
+        store.dispatch(setRegions(data));
     }
 
     /**
      * Get region groups
      */
-    public async getRegionWeather(): Promise<void> {
+    public async getRegionWeather(regionId: number): Promise<void> {
         store.dispatch(setWeatherLoading(true));
-        const region = store.getState().companyRegion.region;
-        const path = CompanyRegionConst.weather(region!.id!);
+        const path = CompanyRegionConst.weather(regionId);
         const response = await this.get(path);
         const status = response.status;
         if (status !== 200) return;
@@ -42,11 +41,9 @@ class CompanyRegionRepository extends BaseRepository {
     /**
      * Get region groups
      */
-    public async getRegionGroups(): Promise<void> {
+    public async getRegionGroups(regionId: number): Promise<void> {
         store.dispatch(setGroupInfoLoading(true));
-        const region = store.getState().companyRegion.region;
-        if (!region) return;
-        const path = CompanyRegionConst.groups(region!.id!);
+        const path = CompanyRegionConst.groups(regionId);
         const response = await this.get(path);
         const status = response.status;
         if (status !== 200) return;
@@ -58,12 +55,10 @@ class CompanyRegionRepository extends BaseRepository {
     /**
      * Get group info
      */
-    public async getGroupInfo(): Promise<void> {
+    public async getGroupInfo(groupId: number): Promise<void> {
         store.dispatch(setGroupInfoLoading(true));
-        const group_id = store.getState().companyRegion.group?.id;
         const path = CompanyRegionConst.groupInfo;
-        if (!group_id) return;
-        const response = await this.get(path, { params: { group_id } });
+        const response = await this.get(path, { params: { group_id: groupId } });
         const status = response.status;
         if (status !== 200) return;
         const data = response.data['data']['group'];

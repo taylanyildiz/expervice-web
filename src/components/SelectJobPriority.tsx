@@ -69,7 +69,10 @@ function SelectJobPriority(props: SelectJobPriorityProps) {
       clearIcon={false}
       getOptionLabel={(e) => e.name ?? ""}
       isOptionEqualToValue={(value, option) => value?.id === option?.id}
-      onChange={(_, v) => onChangedHandle(v)}
+      onChange={(_, v) => {
+        if (!v) return;
+        onChangedHandle(v);
+      }}
       renderInput={(props) => {
         return (
           <FormControl fullWidth={fullWidth}>

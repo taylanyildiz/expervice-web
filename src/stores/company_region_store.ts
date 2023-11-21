@@ -43,24 +43,23 @@ const companyRegion = createSlice({
     reducers: {
         setRegionsLoading: (state, { payload }) => {
             state.regionsLoading = payload;
+            state.group = null;
+            state.groups = { rows: [], count: 0 };
+            state.groupInfo = null;
+            state.groupsLoading = true;
+            state.groupInfoLoading = true;
+            state.weatherLoading = true;
         },
         setRegions: (state, { payload }) => {
             state.regions = payload;
-            state.group = null;
-            state.region = null;
-            state.groups = { rows: [], count: 0 };
-            state.groupInfo = null;
-            if (payload.rows.length != 0) {
-                state.region = payload.rows[0];
-            }
         },
         setSelectedRegion: (state, { payload }) => {
             state.region = payload;
+            state.groupsLoading = true;
+            state.weatherLoading = true;
             state.groups = { rows: [], count: 0 };
             state.group = null;
             state.groupInfo = null;
-            state.groupsLoading = true;
-            state.weatherLoading = true;
         },
         setEditRegion: (state, { payload }) => {
             state.editRegion = payload;

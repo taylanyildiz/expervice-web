@@ -30,7 +30,7 @@ export function useFormDialog() {
     closeDialog,
     openFieldDialog: async (field?: Field): Promise<Field | null> => {
       return await new Promise((resolve) => {
-        openDialog(<FormFieldDialog field={field} onDone={resolve} />);
+        openDialog(<FormFieldDialog field={field} onDone={resolve} />, "xs");
       });
     },
     openCustomerDialog: async (
