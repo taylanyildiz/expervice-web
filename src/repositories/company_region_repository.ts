@@ -45,6 +45,7 @@ class CompanyRegionRepository extends BaseRepository {
     public async getRegionGroups(): Promise<void> {
         store.dispatch(setGroupInfoLoading(true));
         const region = store.getState().companyRegion.region;
+        if (!region) return;
         const path = CompanyRegionConst.groups(region!.id!);
         const response = await this.get(path);
         const status = response.status;
@@ -61,6 +62,7 @@ class CompanyRegionRepository extends BaseRepository {
         store.dispatch(setGroupInfoLoading(true));
         const group_id = store.getState().companyRegion.group?.id;
         const path = CompanyRegionConst.groupInfo;
+        if (!group_id) return;
         const response = await this.get(path, { params: { group_id } });
         const status = response.status;
         if (status !== 200) return;

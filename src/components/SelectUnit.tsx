@@ -32,11 +32,20 @@ interface SelectUnitProps {
   value?: Unit | null;
   onChanged: (values: Unit | null) => void;
   clearIcon?: boolean;
+  disabled?: boolean;
 }
 
 function SelectUnit(props: SelectUnitProps) {
-  const { label, fullWidth, helperText, error, value, onChanged, clearIcon } =
-    props;
+  const {
+    label,
+    fullWidth,
+    helperText,
+    error,
+    value,
+    onChanged,
+    clearIcon,
+    disabled,
+  } = props;
 
   /// Unit repository
   const unitRepo = new UnitRepository();
@@ -51,7 +60,8 @@ function SelectUnit(props: SelectUnitProps) {
   /// Initialize component
   useEffect(() => {
     unitRepo.getJoblessUnits().then((value) => {
-      setOptions(value ?? { rows: [], count: 0 });
+      if (!value) return;
+      setOptions(value);
     });
   }, []);
 
@@ -62,11 +72,12 @@ function SelectUnit(props: SelectUnitProps) {
 
   return (
     <Autocomplete
+      disabled={disabled}
       fullWidth={fullWidth}
       options={options.rows}
       value={option}
       clearIcon={clearIcon}
-      groupBy={(option) => option?.group?.name ?? ""}
+      groupBy={(option) => `${option?.group?.name}`}
       getOptionLabel={(option) => option.name ?? ""}
       renderGroup={(params) => (
         <li key={params.key}>

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { DependencyList, EffectCallback, useEffect } from "react";
 import { useSearchParams, useLocation } from "react-router-dom";
 import { useDialog } from "./hooks/dialog_hook";
 import { LatLng } from "@Components/SelectLocation";
@@ -235,7 +235,6 @@ export function useLocationDialog() {
           "md"
         );
       });
-      return null;
     },
   };
 }
@@ -280,4 +279,19 @@ export function iyziParser(data: string) {
   scriptElement.type = "text/javascript";
   scriptElement.text = combinedScript;
   document.head.appendChild(scriptElement);
+}
+
+export function useCustomEffect(
+  destroy: (event?: Event) => void,
+  effect?: EffectCallback | null,
+  deps?: DependencyList
+): void {
+  useEffect(() => {
+    effect?.();
+    window.addEventListener("beforeunload", destroy);
+    return () => {
+      window.removeEventListener("beforeunload", destroy);
+      destroy();
+    };
+  }, deps);
 }

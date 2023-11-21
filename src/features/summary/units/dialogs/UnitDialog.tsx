@@ -20,6 +20,7 @@ import UnitJob from "./UnitJob";
 import { EJobType } from "@Features/summary/jobs/entities/job_enums";
 import UnitJobs from "./UnitJobs";
 import Customer from "@Models/customer/customer";
+import { useCustomEffect } from "@Utils/functions";
 
 interface UnitDialogProps {
   customerUser?: Customer | null;
@@ -73,7 +74,7 @@ function UnitDialog(props: UnitDialogProps) {
         if (customer) {
           result = await unitRepo.updateUnitCustomer(unitId!, customer);
         }
-        if (status) {
+        if (status == true) {
           result = await unitRepo.updateUnitStatus(unitId!);
         }
       }
@@ -146,15 +147,20 @@ function UnitDialog(props: UnitDialogProps) {
     formik.setFieldValue("availableCustomer", !Boolean(customerUser));
   }, [unit]);
 
-  /// Destroy
-  useEffect(() => {
-    return () => {
-      dispatch(setUnitId(null));
-      dispatch(setUnit(null));
-      dispatch(setUnitDialogStatus(false));
-      unitRepo.getUnits();
-    };
-  }, []);
+  const destroy = () => {
+    dispatch(setUnitDialogStatus(false));
+    dispatch(setUnitId(null));
+    dispatch(setUnit(null));
+    unitRepo.getUnits();
+  };
+
+  useCustomEffect(
+    destroy,
+    () => {
+      dispatch(setUnitDialogStatus(true));
+    },
+    []
+  );
 
   return (
     <>

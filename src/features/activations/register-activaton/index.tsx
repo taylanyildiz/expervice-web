@@ -6,6 +6,7 @@ import { Box, CircularProgress, Grid, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
 import { Link, Navigate, useNavigate } from "react-router-dom";
 import SuccessBox from "@Components/SuccessBox";
+import VisibilityComp from "@Components/VisibilityComp";
 
 function RegisterActivationPage() {
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
@@ -23,7 +24,7 @@ function RegisterActivationPage() {
   const authRepo = new AuthRepository();
 
   /// Activation account
-  const activateAccount = async () => {
+  const registerActivate = async () => {
     const result = await authRepo.activation({ email: email!, code: code! });
     if (typeof result === "boolean") {
       setCompleted(true);
@@ -35,7 +36,7 @@ function RegisterActivationPage() {
 
   /// Initialize component
   useEffect(() => {
-    if (email && code) activateAccount();
+    if (email && code) registerActivate();
   }, []);
 
   if (!email || !code) return <Navigate to={ERouter.Base} />;
@@ -49,24 +50,30 @@ function RegisterActivationPage() {
             children={Images.logoTextWithWhite({ height: 100 })}
           />
         </Grid>
-        <Grid item xs={12} minHeight={100}>
+        <Grid item minHeight={100}>
           <Grid container>
-            <Grid
-              item
-              xs={12}
-              children={<Typography color="white" children={errorMessage} />}
-            />
-            {!errorMessage && !completed && (
-              <Grid
-                item
-                xs={12}
-                mt={4}
-                children={<CircularProgress color="secondary" size={30} />}
-              />
-            )}
-            <Grid mt={2} item>
-              {completed && <SuccessBox color="white" />}
-            </Grid>
+            <VisibilityComp visibility={Boolean(errorMessage)}>
+              <Grid item>
+                <Typography
+                  p={1}
+                  sx={{ backgroundColor: "white" }}
+                  color="red"
+                  children={errorMessage}
+                />
+              </Grid>
+            </VisibilityComp>
+
+            <VisibilityComp visibility={!errorMessage && !completed}>
+              <Grid item xs={12} mt={4}>
+                <CircularProgress color="secondary" size={30} />
+              </Grid>
+            </VisibilityComp>
+
+            <VisibilityComp visibility={completed}>
+              <Grid xs={12} mt={2} item>
+                <SuccessBox color="white" />
+              </Grid>
+            </VisibilityComp>
           </Grid>
         </Grid>
       </Grid>

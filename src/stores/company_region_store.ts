@@ -49,7 +49,6 @@ const companyRegion = createSlice({
             state.group = null;
             state.region = null;
             state.groups = { rows: [], count: 0 };
-            state.group = null;
             state.groupInfo = null;
             if (payload.rows.length != 0) {
                 state.region = payload.rows[0];

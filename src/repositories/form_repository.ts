@@ -50,6 +50,7 @@ class FormRepository extends BaseRepository {
         const path = Formconst.form(id);
         const response = await this.get(path);
         const sucess = response.success;
+        SnackCustomBar.status(response);
         if (sucess) {
             const data = response.data['data']['form'];
             store.dispatch(setForm(data));

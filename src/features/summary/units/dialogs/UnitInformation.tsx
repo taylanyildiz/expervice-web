@@ -21,7 +21,8 @@ import { getOnlyDate, useLocationDialog } from "@Utils/functions";
 import { LatLng } from "@Components/SelectLocation";
 
 function Header(props: { unit: Unit }) {
-  const { job, status } = props.unit;
+  const unit = props.unit;
+  const { job, status } = unit;
   const hasJob = Boolean(job);
 
   /// Job dialog hook
@@ -50,7 +51,7 @@ function Header(props: { unit: Unit }) {
           </Grid>
         </Grid>
         <Grid item>
-          <VisibilityComp visibility={!hasJob}>
+          <VisibilityComp visibility={!hasJob && Boolean(unit.id)}>
             <PrimaryButton
               paddingX={0.3}
               paddingY={0.1}

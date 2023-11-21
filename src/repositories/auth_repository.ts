@@ -6,6 +6,7 @@ import { setAccount } from "@Store/account_store";
 import UserLogin from "@Features/auth/login/entities/user_login";
 import SnackCustomBar from "@Utils/snack_custom_bar";
 import { RegisterAccount } from "@Features/auth/register/entities";
+import { wait } from "@Utils/functions";
 
 class AuthRepository extends BaseRepository {
     constructor() {
@@ -38,14 +39,18 @@ class AuthRepository extends BaseRepository {
     public async activation(props: AuthActivation): Promise<boolean | string> {
         const path = Auth.activation;
         const response = await this.post(path, props);
-        const statusCode = response.status;
-        if (statusCode === 200) {
+        const success = response.success;
+        if (success) {
             const data = response.data;
             store.dispatch(setAccount(data))
+            SnackCustomBar.status(response);
+            await wait(2000);
+        } else {
+            const error = JSON.stringify(response.data?.error);
+            const message = response.data?.['message'] ?? error;
+            return message;
         }
-        const error = JSON.stringify(response.data?.error);
-        const message = response.data?.['message'] ?? error;
-        return statusCode === 200 ? true : message;
+        return success;
     }
 
     /**

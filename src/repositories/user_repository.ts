@@ -84,6 +84,13 @@ class UserRepository extends BaseRepository {
         return success;
     }
 
+    public async activation(value: any): Promise<boolean> {
+        const path = "/activation";
+        const response = await this.post(path, value);
+        SnackCustomBar.status(response);
+        return response.success;
+    }
+
 }
 
 export default UserRepository;
