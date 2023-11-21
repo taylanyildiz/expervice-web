@@ -24,6 +24,7 @@ interface SelectAvailableTechniciansProps {
   jobSubTypeId?: number;
   selecteds?: (number | undefined | null)[];
   onChanged: (values: TechnicianUser | null | undefined) => void;
+  disabled?: boolean;
 }
 
 function SelectAvailableTechnicians(props: SelectAvailableTechniciansProps) {
@@ -37,6 +38,7 @@ function SelectAvailableTechnicians(props: SelectAvailableTechniciansProps) {
     value,
     onChanged,
     selecteds,
+    disabled,
   } = props;
 
   /// Units store
@@ -80,6 +82,7 @@ function SelectAvailableTechnicians(props: SelectAvailableTechniciansProps) {
 
   return (
     <Autocomplete
+      disabled={disabled}
       fullWidth={fullWidth}
       options={options}
       value={option}

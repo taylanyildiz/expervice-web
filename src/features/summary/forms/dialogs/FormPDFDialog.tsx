@@ -17,6 +17,7 @@ import FormCustomersContent from "./FormCustomersContent";
 import { object, string } from "yup";
 import VisibilityComp from "@Components/VisibilityComp";
 import Colors from "@Themes/colors";
+import { useCustomEffect } from "@Utils/functions";
 
 function FormPDFDialog() {
   const { form, formId } = useForm();
@@ -89,6 +90,7 @@ function FormPDFDialog() {
   /// Formik
   const initialValues: Form = {
     name: "",
+    fields: [],
   };
   const formik = useFormik({
     initialValues,
@@ -108,12 +110,17 @@ function FormPDFDialog() {
     formName,
   } = useFormProcess(formik, form);
 
+  const getForm = async () => {
+    const result = await openLoading(async () => {
+      return await formRepo.getForm(formId!);
+    });
+    if (!result) closeDialog();
+  };
+
   /// Initialize component
   useEffect(() => {
     if (!formId) return;
-    openLoading(async () => {
-      await formRepo.getForm(formId);
-    });
+    getForm();
   }, [formId]);
 
   /// Template pdf
@@ -132,15 +139,20 @@ function FormPDFDialog() {
     }
   }, [form]);
 
-  /// Destory
-  useEffect(() => {
-    return () => {
-      dispatch(setForm(null));
-      dispatch(setFormId(null));
-      dispatch(setFormDialogStatus(false));
-      formRepo.getForms();
-    };
-  }, []);
+  const destory = () => {
+    dispatch(setFormDialogStatus(false));
+    dispatch(setForm(null));
+    dispatch(setFormId(null));
+    formRepo.getForms();
+  };
+
+  useCustomEffect(
+    destory,
+    () => {
+      dispatch(setFormDialogStatus(true));
+    },
+    []
+  );
 
   return (
     <>

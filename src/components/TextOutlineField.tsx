@@ -49,6 +49,7 @@ interface TextOutlineFieldProps {
   radius?: string | number;
   steps?: string;
   inputComponent?: any;
+  disabled?: boolean;
 }
 
 function TextOutlineField(props?: TextOutlineFieldProps) {
@@ -77,6 +78,7 @@ function TextOutlineField(props?: TextOutlineFieldProps) {
     prefixPadding,
     radius,
     inputComponent,
+    disabled,
   } = props ?? {};
 
   /// Show password state
@@ -111,7 +113,7 @@ function TextOutlineField(props?: TextOutlineFieldProps) {
   };
 
   return (
-    <FormControl fullWidth={fullWidth}>
+    <FormControl disabled={disabled} fullWidth={fullWidth}>
       <Typography
         align="left"
         children={label}
@@ -120,6 +122,7 @@ function TextOutlineField(props?: TextOutlineFieldProps) {
         color="black"
       />
       <TextField
+        disabled={disabled}
         placeholder={placeholder}
         ref={ref}
         value={value}

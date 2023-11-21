@@ -10,9 +10,13 @@ import TechnicianUser from "@Models/technician-user/technician_user";
 import JobRole from "@Models/job/job_role";
 import { EJobRoles } from "../entities/job_enums";
 import JobTechnician from "@Models/job/job_technician";
+import { isAvailableJobStatus } from "../helper/job_enum_helper";
+import VisibilityComp from "@Components/VisibilityComp";
 
 function JobTechnicians(props: { formik: FormikProps<Job> }) {
   const { formik } = props;
+  const statusAvailable = isAvailableJobStatus(formik.values.status_id);
+
   const technicians =
     formik.values?.job_technicians?.map((e) => ({ ...e })) ?? [];
 
@@ -68,6 +72,7 @@ function JobTechnicians(props: { formik: FormikProps<Job> }) {
               <Grid container columnSpacing={1}>
                 <Grid item xs={7}>
                   <SelectAvailableTechnicians
+                    disabled={Boolean(technician.id) || !statusAvailable}
                     fullWidth
                     label="Technician"
                     unitId={formik.values.unit?.id}
@@ -95,6 +100,7 @@ function JobTechnicians(props: { formik: FormikProps<Job> }) {
                 </Grid>
                 <Grid item xs={5}>
                   <SelectJobRole
+                    disabled={!statusAvailable}
                     fullWidth
                     label="Job Role"
                     value={technician.role_id}
@@ -118,23 +124,27 @@ function JobTechnicians(props: { formik: FormikProps<Job> }) {
               </Grid>
             </Grid>
             <Grid item>
-              <IconButton onClick={() => onDeleteHandle(index)}>
-                <DeleteOutlineOutlinedIcon />
-              </IconButton>
+              <VisibilityComp visibility={statusAvailable}>
+                <IconButton onClick={() => onDeleteHandle(index)}>
+                  <DeleteOutlineOutlinedIcon />
+                </IconButton>
+              </VisibilityComp>
             </Grid>
           </Grid>
         </Grid>
       ))}
       <Grid item xs={12}>
-        <PrimaryButton
-          onClick={onAddHandle}
-          variant="text"
-          fontWeight="normal"
-          fontSize={13}
-          color="blue"
-          prefix={<AddIcon />}
-          children="Add Technician"
-        />
+        <VisibilityComp visibility={statusAvailable}>
+          <PrimaryButton
+            onClick={onAddHandle}
+            variant="text"
+            fontWeight="normal"
+            fontSize={13}
+            color="blue"
+            prefix={<AddIcon />}
+            children="Add Technician"
+          />
+        </VisibilityComp>
       </Grid>
     </Grid>
   );

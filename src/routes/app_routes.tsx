@@ -1,4 +1,4 @@
-import RegisterActivationPage from "@Features/activations/register-activation";
+import RegisterActivationPage from "@Features/activations/register-activaton";
 import ForgotPasswordPage from "@Features/auth/forgot-password";
 import LoginPage from "@Features/auth/login";
 import RegisterPage from "@Features/auth/register";
@@ -22,6 +22,7 @@ import {
   createBrowserRouter,
 } from "react-router-dom";
 import ERouter from "./router_enum";
+import UserActivation from "@Features/activations/user-activation";
 
 /// Router Options
 const options = {
@@ -66,6 +67,10 @@ const routes: RouteObject[] = [
   {
     path: "/activation",
     element: <RegisterActivationPage />,
+  },
+  {
+    path: "/user",
+    element: <UserActivation />,
   },
   {
     path: "/",

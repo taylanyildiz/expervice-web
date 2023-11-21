@@ -11,7 +11,7 @@ const columns: GridColDef<TechnicianUser>[] = [
     renderCell: (params) => {
       const row = params.row;
       const firstName = row.first_name;
-      const lastName = row.first_name;
+      const lastName = row.last_name;
       const technicianDialog = useTechnicianDialog();
       return (
         <div className="grid-selectable" onClick={() => technicianDialog(row)}>

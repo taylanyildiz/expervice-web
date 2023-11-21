@@ -8,7 +8,7 @@ import { FormikProps } from "formik";
 import Unit from "@Models/units/unit";
 import { UnitUpdate } from "../entities/unit_update";
 import { equalInterface } from "@Utils/functions";
-import { setUnitDialogStatus, setUnitId } from "@Store/unit_store";
+import { setUnitId } from "@Store/unit_store";
 import Customer from "@Models/customer/customer";
 import AssignCustomerDialog from "../dialogs/AssignCustomerDialog";
 import { EUnitFilterType } from "../entities/unit_enums";
@@ -40,7 +40,6 @@ export function useUnitDialog() {
   return {
     openUnitDialog: (id?: number, option?: { customer?: Customer | null }) => {
       if (unitDialogStatus) return;
-      store.dispatch(setUnitDialogStatus(true));
       if (id) store.dispatch(setUnitId(id));
       openDialog(<UnitDialog customerUser={option?.customer} />, "md");
     },
@@ -99,6 +98,7 @@ export function useUnitUpdate(
     setInfo(null);
     setCustomer(null);
     setAnyUpdate(false);
+    setStatus(false);
 
     const newInfo: UnitUpdate = {
       id: value?.id,

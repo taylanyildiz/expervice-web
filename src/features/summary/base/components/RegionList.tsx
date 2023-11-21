@@ -39,6 +39,11 @@ function RegionsList(props: { scale: string }) {
     getRegions();
   }, []);
 
+  useEffect(() => {
+    if (region || rows.length === 0) return;
+    dispatch(setSelectedRegion(rows[0]));
+  }, [rows]);
+
   /// Select region
   const onSelectRegion = (value: CompanyRegion) => {
     if (value.id === region?.id) return;

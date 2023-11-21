@@ -10,6 +10,7 @@ import { useEffect, useState } from "react";
 import CompanyInfoProcess from "../entities/company_info_process";
 import { equalInterface } from "@Utils/functions";
 import CompanyAddressProcess from "../entities/company_address_process";
+import CompanyImageDialog from "../dialogs/CompanyImageDialog";
 
 /// User store
 export function useUser() {
@@ -26,6 +27,9 @@ export function useCompanyDialog() {
     openSubscriptionDialog: () => openDialog(<SubscriptionPlanDialog />, "sm"),
     openCancelSubscriptionDialog: () => {
       openDialog(<CancelSubscriptionDialog />, "xs");
+    },
+    openCompanyImageDialog: () => {
+      openDialog(<CompanyImageDialog />, "xs");
     },
   };
 }

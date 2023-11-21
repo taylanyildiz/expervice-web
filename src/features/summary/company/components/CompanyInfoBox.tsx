@@ -1,16 +1,14 @@
-import { Avatar, Box, Divider, Grid, Stack, Typography } from "@mui/material";
+import { Box, Divider, Grid, Stack, Typography } from "@mui/material";
 import { useUser } from "../helper/company_helper";
-import { caption } from "@Utils/functions";
-import Colors from "@Themes/colors";
 import RichText from "@Components/RichText";
 import MailOutlineOutlinedIcon from "@mui/icons-material/MailOutlineOutlined";
 import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
 import LanguageOutlinedIcon from "@mui/icons-material/LanguageOutlined";
+import CompanyAvatar from "./CompanyAvatar";
 
 function CompanyInfoBox() {
   /// User store
   const { company } = useUser();
-  const image = company?.company_image;
   const address = company?.company_address;
 
   return (
@@ -23,19 +21,7 @@ function CompanyInfoBox() {
           children="Company Information"
         />
         <Grid container p={1} columnSpacing={2} alignItems="center">
-          <Grid item>
-            <Avatar
-              sx={{
-                width: 60,
-                height: 60,
-                color: "white",
-                backgroundColor: Colors.primary,
-              }}
-              alt={company?.name}
-              children={caption(company?.name)}
-              src={image?.image_url}
-            />
-          </Grid>
+          <Grid item children={<CompanyAvatar />} />
           <Grid item>
             <Stack direction="column">
               <Typography variant="h1" fontSize={16} children={company?.name} />

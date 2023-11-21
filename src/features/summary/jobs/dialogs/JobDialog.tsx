@@ -19,6 +19,7 @@ import { EJobPriorites } from "../entities/job_enums";
 import { jobValidaotr } from "../validator/job_validator";
 import VisibilityComp from "@Components/VisibilityComp";
 import Colors from "@Themes/colors";
+import { useCustomEffect } from "@Utils/functions";
 
 function JobDialog(props?: { unit?: Unit | null }) {
   const { unit } = props ?? {};
@@ -71,6 +72,13 @@ function JobDialog(props?: { unit?: Unit | null }) {
     }
   }, [job]);
 
+  const getJob = async () => {
+    const result = openLoading(async () => {
+      return await jobRepo.job(jobId!);
+    });
+    if (!result) closeDialog();
+  };
+
   /// Initialize unit
   useEffect(() => {
     if (unit) {
@@ -81,20 +89,23 @@ function JobDialog(props?: { unit?: Unit | null }) {
   /// Get Job By Id
   useEffect(() => {
     if (!jobId) return;
-    openLoading(async () => {
-      await jobRepo.job(jobId);
-    });
+    getJob();
   }, [jobId]);
 
-  /// Destroy component
-  useEffect(() => {
-    return () => {
-      dispatch(setJobId(null));
-      dispatch(setJob(null));
-      dispatch(setJobDialogStatus(false));
-      jobRepo.getJobs();
-    };
-  }, []);
+  const destroy = () => {
+    dispatch(setJobDialogStatus(false));
+    dispatch(setJobId(null));
+    dispatch(setJob(null));
+    jobRepo.getJobs();
+  };
+
+  useCustomEffect(
+    destroy,
+    () => {
+      dispatch(setJobDialogStatus(true));
+    },
+    []
+  );
 
   const process = async (): Promise<Job | null> => {
     const result = await openLoading(async () => {

@@ -3,13 +3,14 @@ import UnitRepository from "@Repo/unit_repository";
 import { AppDispatch } from "@Store/index";
 import { setUnitFilter, setUnitId } from "@Store/unit_store";
 import { Divider, Grid, List, Typography } from "@mui/material";
-import { ReactNode, useEffect, useMemo, useState } from "react";
+import { ReactNode, useEffect, useMemo, useRef, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useUnit } from "../helper/unit_helper";
 import UnitListItem from "../components/UnitListItem";
 import { InfoWindow, Marker } from "@react-google-maps/api";
 import Unit from "@Models/units/unit";
 import VisibilityComp from "@Components/VisibilityComp";
+import { EJobType } from "@Features/summary/jobs/entities/job_enums";
 
 function UnitsMapPage() {
   /// Unit repo
@@ -43,6 +44,7 @@ function UnitsMapPage() {
     const newList = [...units.map((e) => ({ ...e, display: false }))];
     newList[index] = { ...unit, display: !unit.display };
     setUnits(newList);
+    ref.current?.children.item(index)?.scrollIntoView({ behavior: "smooth" });
   };
 
   /// Markers of units
@@ -50,6 +52,9 @@ function UnitsMapPage() {
     return units
       .filter((e) => Boolean(e.latitude && e.longitude))
       .map((e, i) => {
+        const hasFault = Boolean(e.job);
+        const isFault = e.job?.type_id === EJobType.Fault;
+        const color = hasFault ? (isFault ? "red" : "blue") : "green";
         return (
           <Marker
             key={e.id}
@@ -59,6 +64,9 @@ function UnitsMapPage() {
             }}
             onClick={() => {
               handleTogglePin(e, i);
+            }}
+            icon={{
+              url: `http://maps.google.com/mapfiles/ms/icons/${color}-dot.png`,
             }}
           >
             <VisibilityComp visibility={e.display}>
@@ -98,12 +106,15 @@ function UnitsMapPage() {
     unitRepo.getUnits();
   }, [filter]);
 
+  /// Ref of scroll
+  const ref = useRef<HTMLDivElement | null>(null);
+
   return (
     <div className="units-map-page">
-      <div className="units-map-list">
-        <List>
+      <div ref={ref} className="units-map-list">
+        <>
           {units.map((e, i) => (
-            <>
+            <List>
               <UnitListItem
                 key={e.id}
                 unit={e}
@@ -116,9 +127,9 @@ function UnitsMapPage() {
                 }}
               />
               <Divider component="li" />
-            </>
+            </List>
           ))}
-        </List>
+        </>
       </div>
       <div className="units-map">
         <GMap
