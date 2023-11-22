@@ -177,6 +177,10 @@ const theme = createTheme({
                     paddingLeft: 10,
                     paddingRight: 10,
                     backgroundColor: "#F2F4F9"
+                },
+                row: {
+                    paddingLeft: 10,
+                    paddingRight: 10,
                 }
 
             },

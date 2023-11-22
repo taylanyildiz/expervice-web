@@ -3,8 +3,7 @@ import { AppBar, Avatar, Grid, IconButton, Tooltip } from "@mui/material";
 import GroupsOutlinedIcon from "@mui/icons-material/GroupsOutlined";
 import AddOutlinedIcon from "@mui/icons-material/AddOutlined";
 import MenuCustomLink from "@Components/MenuCustomLink";
-import ElevatorIcon from "@mui/icons-material/Elevator";
-import EscalatorIcon from "@mui/icons-material/Escalator";
+import FmdGoodIcon from "@mui/icons-material/FmdGood";
 import ContactsIcon from "@mui/icons-material/Contacts";
 import WorkIcon from "@mui/icons-material/Work";
 import SettingsIcon from "@mui/icons-material/Settings";
@@ -107,24 +106,13 @@ function SummaryAppBar() {
                 children={[
                   {
                     prefix: <DevicesIcon />,
-                    title: "All Units",
+                    title: "Units List",
                     to: ERouter.Units,
                   },
                   {
-                    prefix: <ElevatorIcon />,
-                    title: "Elevators",
-                    to: {
-                      pathname: ERouter.Units,
-                      search: "unit_type=1",
-                    },
-                  },
-                  {
-                    prefix: <EscalatorIcon />,
-                    title: "Escalators",
-                    to: {
-                      pathname: ERouter.Units,
-                      search: "unit_type=2",
-                    },
+                    prefix: <FmdGoodIcon />,
+                    title: "Units Map",
+                    to: ERouter.UnitsMap,
                   },
                 ]}
               />

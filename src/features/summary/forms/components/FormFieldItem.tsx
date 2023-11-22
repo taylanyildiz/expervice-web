@@ -37,61 +37,85 @@ function FormFieldItem(props: FormFieldItemProps) {
           <Typography
             variant="h1"
             fontSize={13}
+            maxWidth={200}
+            overflow="clip"
+            textOverflow="ellipsis"
             children={field.field_type?.name}
           />
         }
         secondary={
-          <Stack direction="column">
-            <Typography
-              fontWeight="bold"
-              fontSize={11}
-              children={
-                <>
-                  Label : <b style={{ fontWeight: "normal" }}>{field.label}</b>
-                </>
-              }
-            />
-            <VisibilityComp visibility={Boolean(field.description)}>
+          <Stack direction="row">
+            <Stack direction="column">
               <Typography
                 fontWeight="bold"
                 fontSize={11}
+                maxWidth={200}
+                overflow="clip"
+                textOverflow="ellipsis"
                 children={
                   <>
-                    Description :{" "}
-                    <b style={{ fontWeight: "normal" }}>{field.description}</b>
+                    Label :{" "}
+                    <b style={{ fontWeight: "normal" }}>{field.label}</b>
                   </>
                 }
               />
-            </VisibilityComp>
+              <VisibilityComp visibility={Boolean(field.description)}>
+                <Typography
+                  fontWeight="bold"
+                  fontSize={11}
+                  maxWidth={200}
+                  overflow="clip"
+                  textOverflow="ellipsis"
+                  children={
+                    <>
+                      Description :{" "}
+                      <b style={{ fontWeight: "normal" }}>
+                        {field.description}
+                      </b>
+                    </>
+                  }
+                />
+              </VisibilityComp>
 
-            <VisibilityComp visibility={Boolean(field.options?.length !== 0)}>
-              <Typography
-                fontWeight="bold"
-                fontSize={11}
-                children={
-                  <>
-                    Options :{" "}
-                    <b style={{ fontWeight: "normal" }}>
-                      {field.options?.map((e) => `${e.label}, `)}
-                    </b>
-                  </>
-                }
-              />
-            </VisibilityComp>
-            <VisibilityComp visibility={Boolean(field.default_value)}>
-              <Typography
-                fontWeight="bold"
-                fontSize={11}
-                children={
-                  <>
-                    Default Value :{" "}
-                    <b style={{ fontWeight: "normal" }}>
-                      {field.default_value}
-                    </b>
-                  </>
-                }
-              />
-            </VisibilityComp>
+              <VisibilityComp
+                visibility={Boolean(
+                  field.options && field.options?.length !== 0
+                )}
+              >
+                <Typography
+                  fontWeight="bold"
+                  fontSize={11}
+                  maxWidth={200}
+                  overflow="clip"
+                  textOverflow="ellipsis"
+                  children={
+                    <>
+                      Options :{" "}
+                      <b style={{ fontWeight: "normal" }}>
+                        {field.options?.map((e) => `${e.label}, `)}
+                      </b>
+                    </>
+                  }
+                />
+              </VisibilityComp>
+              <VisibilityComp visibility={Boolean(field.default_value)}>
+                <Typography
+                  fontWeight="bold"
+                  fontSize={11}
+                  maxWidth={200}
+                  overflow="clip"
+                  textOverflow="ellipsis"
+                  children={
+                    <>
+                      Default Value :{" "}
+                      <b style={{ fontWeight: "normal" }}>
+                        {field.default_value}
+                      </b>
+                    </>
+                  }
+                />
+              </VisibilityComp>
+            </Stack>
           </Stack>
         }
       />

@@ -182,7 +182,7 @@ function JobDialog(props?: { unit?: Unit | null }) {
   return (
     <>
       <DialogCustomTitle title={title} />
-      <VisibilityComp visibility={anyUpdate}>
+      <VisibilityComp visibility={anyUpdate && isEdit}>
         <Box pl={1} m={0} sx={{ backgroundColor: Colors.warning }}>
           <Typography
             fontSize={13}

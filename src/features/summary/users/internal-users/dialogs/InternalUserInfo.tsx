@@ -32,17 +32,23 @@ function InternalUserInfo() {
             </Grid>
           </Grid>
         </Box>
-        <Grid container m={1}>
-          <Grid item xs={12}>
-            <RichText title="Name :" content={displayName} />
-          </Grid>
-          <Grid item xs={12}>
-            <RichText visibility={hasEmail} title="Email :" content={email} />
-          </Grid>
-          <Grid item xs={12}>
-            <RichText visibility={hasPhone} title="Phone :" content={phone} />
-          </Grid>
-        </Grid>
+        <Stack direction="column" p={1}>
+          <RichText color="black" title="Name :" content={displayName} />
+          <RichText
+            color="black"
+            visibility={hasEmail}
+            title="Email :"
+            content={email}
+            fontSize={11}
+          />
+          <RichText
+            color="black"
+            visibility={hasPhone}
+            title="Phone :"
+            content={phone}
+            fontSize={11}
+          />
+        </Stack>
       </Stack>
     </Box>
   );

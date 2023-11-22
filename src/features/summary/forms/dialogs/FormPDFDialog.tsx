@@ -12,7 +12,12 @@ import FormRepository from "@Repo/form_repository";
 import { useDialog } from "@Utils/hooks/dialog_hook";
 import { AppDispatch } from "@Store/index";
 import { useDispatch } from "react-redux";
-import { setForm, setFormDialogStatus, setFormId } from "@Store/form_store";
+import {
+  setForm,
+  setFormDialogStatus,
+  setFormId,
+  setFormPdfTemplate,
+} from "@Store/form_store";
 import FormCustomersContent from "./FormCustomersContent";
 import { object, string } from "yup";
 import VisibilityComp from "@Components/VisibilityComp";
@@ -143,6 +148,7 @@ function FormPDFDialog() {
     dispatch(setFormDialogStatus(false));
     dispatch(setForm(null));
     dispatch(setFormId(null));
+    dispatch(setFormPdfTemplate(null));
     formRepo.getForms();
   };
 

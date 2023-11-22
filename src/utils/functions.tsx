@@ -3,6 +3,7 @@ import { useSearchParams, useLocation } from "react-router-dom";
 import { useDialog } from "./hooks/dialog_hook";
 import { LatLng } from "@Components/SelectLocation";
 import SelectLocationDialog from "@Components/dialogs/SelectLocationDialog";
+import { Crop } from "react-image-crop";
 
 /**
  * Url regex
@@ -295,3 +296,55 @@ export function useCustomEffect(
     };
   }, deps);
 }
+
+/**
+ * Cropped image
+ * @param image
+ * @param pixelCrop
+ * @returns
+ */
+export const getCroppedImg = (
+  src: HTMLImageElement,
+  crop: Crop
+): Promise<{ url: string; formData: FormData }> => {
+  const scaleX = src.naturalWidth / src.width;
+  const scaleY = src.naturalHeight / src.height;
+  const canvas = document.createElement("canvas");
+  const ctx = canvas.getContext("2d")!;
+  canvas.width = crop.width!;
+  canvas.height = crop.height!;
+
+  ctx.drawImage(
+    src,
+    crop.x! * scaleX,
+    crop.y! * scaleY,
+    crop.width! * scaleX,
+    crop.height! * scaleY,
+    0,
+    0,
+    crop.width!,
+    crop.height!
+  );
+
+  return new Promise((resolve) => {
+    canvas.toBlob(
+      (blob) => {
+        if (!blob) {
+          console.error("Canvas is empty");
+          return;
+        }
+
+        /// Url
+        const url = URL.createObjectURL(blob);
+
+        /// File
+        const formData = new FormData();
+        formData.append("image", blob, "newfile.jpeg");
+
+        resolve({ url, formData });
+      },
+      "image/jpeg",
+      1.0
+    );
+  });
+};
