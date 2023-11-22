@@ -23,7 +23,7 @@ function FormPdFDialogContent(props: FormPdFDialogContentProps) {
   const formRepo = new FormRepository();
 
   /// Form store
-  const { formPdfTemplate, reviewLoading } = useForm();
+  const { formPdfTemplate, formTemplateLoading } = useForm();
 
   /// Form Dialog hook
   const { openFieldDialog } = useFormDialog();
@@ -81,7 +81,7 @@ function FormPdFDialogContent(props: FormPdFDialogContentProps) {
       <Grid item xs={1}>
         <LoadingButton
           size="small"
-          loading={reviewLoading}
+          loading={formTemplateLoading}
           loadingPosition="start"
           startIcon={<ChevronRightIcon />}
           variant="outlined"

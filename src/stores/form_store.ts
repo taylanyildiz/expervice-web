@@ -4,7 +4,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 interface Props {
     formLayzLoading: boolean;
-    reviewLoading: boolean;
+    formTemplateLoading: boolean;
     forms: { rows: Form[], count: number };
     formFilter: { limit: number, offset: number } | null,
     formDialogStatus: boolean;
@@ -16,7 +16,7 @@ interface Props {
 
 const initialState: Props = {
     formLayzLoading: true,
-    reviewLoading: true,
+    formTemplateLoading: true,
     formFilter: { limit: 10, offset: 0 },
     forms: { rows: [], count: 0 },
     formDialogStatus: false,
@@ -55,7 +55,7 @@ const form = createSlice({
             state.formPdfTemplate = payload;
         },
         setFormReviewLoading: (state, { payload }) => {
-            state.reviewLoading = payload;
+            state.formTemplateLoading = payload;
         }
     },
 });
