@@ -1,7 +1,7 @@
 import { store } from "@Store/index";
 import BaseRepository from "./base_repository";
 import Formconst from "./end-points/form";
-import { setForm, setFormCustomers, setFormLayzLoading, setFormPdfTemplate, setForms } from "@Store/form_store";
+import { setForm, setFormCustomers, setFormLayzLoading, setFormPdfTemplate, setFormReviewLoading, setForms } from "@Store/form_store";
 import SnackCustomBar from "@Utils/snack_custom_bar";
 import FormTemplateProcess from "@Features/summary/forms/entities/form_template_process";
 import FormProcess from "@Features/summary/forms/entities/form_process";
@@ -63,10 +63,12 @@ class FormRepository extends BaseRepository {
      */
     public async formPdfTemplate(form: FormTemplateProcess): Promise<boolean> {
         const path = Formconst.template();
+        store.dispatch(setFormReviewLoading(true));
         const response = await this.post(path, form);
         const success = response.success;
         const data = response.data?.['data']?.['pdf'];
         store.dispatch(setFormPdfTemplate(data));
+        store.dispatch(setFormReviewLoading(false));
         return success;
     }
 

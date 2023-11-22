@@ -22,7 +22,10 @@ function FileCustomDrop(props: FileCustomDropProps) {
     const arrayList = file.name.split(".") as any[];
     const extension = arrayList[arrayList.length - 1];
 
-    if (extension !== undefined && expectedExtensions.includes(extension)) {
+    if (
+      extension !== undefined &&
+      expectedExtensions.includes(extension.toLowerCase())
+    ) {
       let reader = new FileReader();
       reader.addEventListener("load", () => {
         const image = reader.result;

@@ -50,6 +50,7 @@ function ImageCropper(props: ImageCropperProps) {
 
   useEffect(() => {
     onCompleted?.(image, crop);
+    onChanged?.(image, crop);
   }, [image]);
 
   return (

@@ -9,6 +9,7 @@ import { useForm, useFormDialog } from "../helper/form_helper";
 import LoadingComp from "@Components/LoadingComp";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import FormRepository from "@Repo/form_repository";
+import { LoadingButton } from "@mui/lab";
 
 interface FormPdFDialogContentProps {
   formik: FormikProps<Form>;
@@ -22,7 +23,7 @@ function FormPdFDialogContent(props: FormPdFDialogContentProps) {
   const formRepo = new FormRepository();
 
   /// Form store
-  const { formPdfTemplate } = useForm();
+  const { formPdfTemplate, reviewLoading } = useForm();
 
   /// Form Dialog hook
   const { openFieldDialog } = useFormDialog();
@@ -38,8 +39,8 @@ function FormPdFDialogContent(props: FormPdFDialogContentProps) {
   };
 
   /// Handle review form
-  const onReviewHandle = () => {
-    formRepo.formPdfTemplate({
+  const onReviewHandle = async () => {
+    await formRepo.formPdfTemplate({
       name: formik.values.name,
       fields: formik.values.fields,
     });
@@ -78,12 +79,14 @@ function FormPdFDialogContent(props: FormPdFDialogContentProps) {
         </Stack>
       </Grid>
       <Grid item xs={1}>
-        <PrimaryButton
-          suffix={<ChevronRightIcon />}
+        <LoadingButton
+          size="small"
+          loading={reviewLoading}
+          loadingPosition="start"
+          startIcon={<ChevronRightIcon />}
           variant="outlined"
-          children="Review"
-          color="blue"
           onClick={onReviewHandle}
+          children="Review"
         />
       </Grid>
       <Grid item xs={5}>
