@@ -87,6 +87,7 @@ function SelectJobStatus(props: SelectJobStatusProps) {
       getOptionLabel={(option) => option.name ?? ""}
       groupBy={(option) => option?.job_type?.name ?? ""}
       onChange={(_, v) => onChanged(v)}
+      isOptionEqualToValue={(value, option) => value?.id === option?.id}
       renderGroup={(params) => (
         <li key={params.key}>
           <GroupHeader>{params.group}</GroupHeader>

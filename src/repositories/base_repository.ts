@@ -32,6 +32,9 @@ abstract class BaseRepository extends Axios {
                 }
             },
             transformRequest: (e) => {
+                if (e instanceof FormData) {
+                    return e;
+                }
                 return JSON.stringify(e);
             },
             validateStatus: (_) => true,
@@ -103,7 +106,7 @@ abstract class BaseRepository extends Axios {
                     data: value.config.data,
                     params: value.config.params,
                     headers: {
-                        'Content-Type': 'application/json; charset=UTF-8',
+                        // 'Content-Type': 'application/json; charset=UTF-8',
                         "Access-Control-Allow-Origin": "*",
                         "x-access-token": access_token,
                     },
@@ -176,6 +179,7 @@ abstract class BaseRepository extends Axios {
             ...config
         });
     }
+
 }
 
 export default BaseRepository;

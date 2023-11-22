@@ -36,4 +36,6 @@ export { default as SelectFormFieldType } from "./SelectFormFieldType";
 export { default as SelectJobStatus } from "./SelectJobStatus";
 export { default as SelectForm } from "./SelectForm";
 export { default as Condition2Comp } from "./Condition2Comp";
+export { default as FileCustomDrop } from "./FileCustomDrop";
 export { DialogCustomTitle, DialogCustomActions } from "./dialogs";
+export { default as ImageCropper } from "./ImageCropper";

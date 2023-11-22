@@ -90,6 +90,7 @@ function SelectJobSubType(props: SelectJobSubTypeProps) {
       clearIcon={clearIcon}
       groupBy={(option) => option?.type?.name ?? ""}
       getOptionLabel={(option) => option.name ?? ""}
+      isOptionEqualToValue={(value, option) => value?.id === option?.id}
       renderGroup={(params) => (
         <li key={params.key}>
           <GroupHeader>{params.group}</GroupHeader>

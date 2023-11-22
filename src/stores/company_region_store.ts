@@ -43,23 +43,28 @@ const companyRegion = createSlice({
     reducers: {
         setRegionsLoading: (state, { payload }) => {
             state.regionsLoading = payload;
-            state.group = null;
-            state.groups = { rows: [], count: 0 };
-            state.groupInfo = null;
-            state.groupsLoading = true;
-            state.groupInfoLoading = true;
-            state.weatherLoading = true;
         },
         setRegions: (state, { payload }) => {
             state.regions = payload;
+            const rows = payload?.rows;
+            if (rows?.length === 0) {
+                state.region = null;
+            } else {
+                const index = rows.findIndex((e: any) => e.id === state.region?.id);
+                if (index === -1) state.region = rows[0];
+                else state.region ??= rows[0];
+            }
+            console.log("");
+
         },
         setSelectedRegion: (state, { payload }) => {
             state.region = payload;
+            state.groupInfo = null;
+            state.weather = null;
+            state.group = null;
+            state.groupInfoLoading = true;
             state.groupsLoading = true;
             state.weatherLoading = true;
-            state.groups = { rows: [], count: 0 };
-            state.group = null;
-            state.groupInfo = null;
         },
         setEditRegion: (state, { payload }) => {
             state.editRegion = payload;
@@ -75,8 +80,13 @@ const companyRegion = createSlice({
         },
         setGroups: (state, { payload }) => {
             state.groups = payload;
-            if (state.groups?.rows && state.groups.rows?.length != 0) {
-                state.group = state.groups.rows[0];
+            const rows = payload?.rows;
+            if (rows?.length === 0) {
+                state.group = null;
+            } else {
+                const index = rows.findIndex((e: any) => e.id === state.group?.id);
+                if (index === -1) state.group = rows[0];
+                else state.group ??= rows[0];
             }
         },
         setSelectedGroup: (state, { payload }) => {

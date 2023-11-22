@@ -17,7 +17,8 @@ function SummaryPage() {
   );
 
   const isRegionEmpty = regions?.rows?.length === 0 && !regionsLoading;
-  const isGroupEmpty = groups?.rows?.length === 0 && !groupsLoading;
+  const isGroupEmpty =
+    groups?.rows?.length === 0 && !groupsLoading && !regionsLoading;
 
   return (
     <div className="summary-layout">
