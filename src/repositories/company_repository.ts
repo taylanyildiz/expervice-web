@@ -2,6 +2,8 @@ import CompanyInfoProcess from "@Features/summary/company/entities/company_info_
 import BaseRepository from "./base_repository";
 import SnackCustomBar from "@Utils/snack_custom_bar";
 import CompanyAddressProcess from "@Features/summary/company/entities/company_address_process";
+import { store } from "@Store/index";
+import { setCompany } from "@Store/user_store";
 
 class CompanyRepository extends BaseRepository {
     constructor() {
@@ -28,6 +30,40 @@ class CompanyRepository extends BaseRepository {
         return success;
     }
 
+    public async updateImage(image: FormData): Promise<boolean> {
+        const path = "/image";
+        const response = await this.put(path, image, {
+            headers: {
+                "Content-Type": "multipart/form-data",
+            },
+        });
+        const success = response.success;
+        SnackCustomBar.status(response);
+        if (success) {
+            const data = response.data['data']['image']
+            const company = store.getState().user.company;
+            store.dispatch(setCompany({
+                ...company,
+                company_image: data,
+            }))
+        }
+        return success;
+    }
+
+    public async deleteImage(): Promise<boolean> {
+        const path = "/image";
+        const response = await this.delete(path);
+        const success = response.success;
+        SnackCustomBar.status(response);
+        if (success) {
+            const company = store.getState().user.company;
+            store.dispatch(setCompany({
+                ...company,
+                company_image: null,
+            }))
+        }
+        return success;
+    }
 
 }
 

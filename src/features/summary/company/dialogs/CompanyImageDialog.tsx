@@ -1,70 +1,102 @@
 import PrimaryButton from "@Components/PrimaryButton";
-import { Box, Stack, Typography } from "@mui/material";
-import { useMemo, useRef, useState } from "react";
-import ReactCrop, { type Crop } from "react-image-crop";
-import { FileDrop } from "react-file-drop";
+import { Avatar, Box, Stack, Typography } from "@mui/material";
+import { useMemo, useState } from "react";
+import { type Crop } from "react-image-crop";
 import "react-image-crop/dist/ReactCrop.css";
 import "../../../../assets/css/company.css";
 import VisibilityComp from "@Components/VisibilityComp";
+import FileCustomDrop from "@Components/FileCustomDrop";
+import { getCroppedImg } from "@Utils/functions";
+import ImageCropper from "@Components/ImageCropper";
+import InsertPhotoIcon from "@mui/icons-material/InsertPhoto";
+import { useUser } from "../helper/company_helper";
+import CompanyRepository from "@Repo/company_repository";
+import { useDialog } from "@Utils/hooks/dialog_hook";
 
 function CompanyImageDialog() {
-  const expectedExtensions = ["png", "jpg", "jpeg"];
+  /// User store
+  const { company } = useUser();
+  const companyImage = company?.company_image?.image_url;
 
-  const inputRef = useRef<any>();
+  /// Crop Image src and element state
+  const [src, setSrc] = useState<string | ArrayBuffer | null>(null);
+  const [newSrc, setNewSrc] = useState<string | ArrayBuffer | null>(null);
+  const [image, setImage] = useState<HTMLImageElement | null>(null);
+  const [crop, setCrop] = useState<Crop | null>(null);
 
-  const [crop, setCrop] = useState<Crop>();
-  const [image, setImage] = useState<null | ArrayBuffer | string>();
+  /// Ready image to crop
+  const readyCrop = useMemo(() => Boolean(src), [src]);
 
-  const readyCrop = useMemo(() => Boolean(image), [image]);
+  /// Company repository
+  const companyRepo = new CompanyRepository();
 
-  const fileHandler = (files: FileList | null) => {
-    if (!files) return;
-    const arrayList = files[0].name.split(".") as any[];
-    const extension = arrayList[arrayList.length - 1];
+  /// Dialog hook
+  const { openLoading, closeDialog, openConfirm } = useDialog();
 
-    if (extension !== undefined && expectedExtensions.includes(extension)) {
-      const reader = new FileReader();
-      reader.addEventListener("load", () => {
-        console.log(reader);
-        setImage(reader.result);
+  const onSave = async () => {
+    if (image && crop?.width && crop?.height) {
+      const formData = (await getCroppedImg(image!, crop)).formData;
+      const result = await openLoading(async () => {
+        return await companyRepo.updateImage(formData);
       });
-      reader.readAsDataURL(files[0]);
-    } else {
-      alert("file type not supported");
+      if (!result) return;
+      closeDialog();
     }
   };
 
-  const filePicker = () => {
-    inputRef?.current?.click();
+  const onDelete = async () => {
+    if (companyImage) {
+      const confirm = await openConfirm(
+        "Delete Image",
+        "Are you sure to delete image?"
+      );
+      if (!confirm) return;
+      return await openLoading(async () => {
+        return await companyRepo.deleteImage();
+      });
+    }
+    setSrc(null);
+    setImage(null);
+    setNewSrc(null);
+  };
+
+  /// Changed cropper
+  const handleChanCrop = (image: HTMLImageElement | null, crop: Crop) => {
+    setCrop(crop);
+    setImage(image);
+  };
+
+  /// Completed cropper
+  const handleCompCrop = async (image: HTMLImageElement | null, crop: Crop) => {
+    const croppedImageUrl = (await getCroppedImg(image!, crop)).url;
+    if (!croppedImageUrl) return;
+    setNewSrc(croppedImageUrl);
   };
 
   return (
-    <Box p={4} pb={1} sx={{ backgroundColor: "white" }}>
+    <Box p={2} pb={1} sx={{ backgroundColor: "white" }}>
       <Stack>
-        <Typography variant="h1" fontSize={20} children="Company Image" />
+        <Stack direction="row" spacing={1} alignItems="center">
+          <Avatar
+            sx={{ height: 60, width: 60, mt: 1 }}
+            src={(newSrc as string | null) ?? companyImage}
+            children={<InsertPhotoIcon />}
+          />
+          <Typography variant="h1" fontSize={20} children="Company Image" />
+        </Stack>
+
+        {/* Image Crop */}
         <VisibilityComp visibility={readyCrop}>
-          <ReactCrop
-            style={{ marginTop: 10 }}
-            crop={crop}
-            onChange={(c) => setCrop(c)}
-          >
-            <img src={image as string} />
-          </ReactCrop>
+          <ImageCropper
+            src={src}
+            onChanged={handleChanCrop}
+            onCompleted={handleCompCrop}
+          />
         </VisibilityComp>
+
+        {/* Drag File */}
         <VisibilityComp visibility={!readyCrop}>
-          <FileDrop onTargetClick={filePicker} onDrop={(f) => fileHandler(f)}>
-            <p className="placeholder">
-              DRAG FILE HERE <br /> OR <span>BROWSE</span>
-            </p>
-            <input
-              ref={inputRef}
-              accept=".png, .jpg, .jpeg"
-              value=""
-              style={{ visibility: "hidden", opacity: 0 }}
-              type="file"
-              onChange={(e) => fileHandler(e.target.files)}
-            />
-          </FileDrop>
+          <FileCustomDrop onChanged={setSrc} />
         </VisibilityComp>
 
         <Box mt={4} display="flex" justifyContent="end">
@@ -74,12 +106,14 @@ function CompanyImageDialog() {
               fontWeight="normal"
               color="black"
               children="Delete"
+              onClick={onDelete}
             />
             <PrimaryButton
               variant="contained"
               fontWeight="normal"
               color="white"
               children="Save"
+              onClick={onSave}
             />
           </Stack>
         </Box>
