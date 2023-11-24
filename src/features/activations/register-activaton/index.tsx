@@ -4,7 +4,7 @@ import ERouter from "@Routes/router_enum";
 import { useQuery } from "@Utils/functions";
 import { Box, CircularProgress, Grid, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 import SuccessBox from "@Components/SuccessBox";
 import VisibilityComp from "@Components/VisibilityComp";
 
@@ -37,10 +37,9 @@ function RegisterActivationPage() {
   /// Initialize component
   useEffect(() => {
     if (email && code) registerActivate();
-    console.log(`Email: ${email}\nCode: ${code}\n`);
-  }, [email, code]);
+  }, []);
 
-  // if (!email || !code) return <Navigate to={ERouter.Base} />;
+  if (!email || !code) return <Navigate to={ERouter.Base} />;
 
   return (
     <Box className="login-page">
