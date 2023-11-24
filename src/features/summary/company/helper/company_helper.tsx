@@ -1,7 +1,7 @@
 import { useDialog } from "@Utils/hooks/dialog_hook";
 import CompanyDialog from "..";
 import { useSelector } from "react-redux";
-import { RootState } from "@Store/index";
+import { RootState, store } from "@Store/index";
 import SubscriptionPlanDialog from "../dialogs/SubscriptionPlanDialog";
 import CancelSubscriptionDialog from "../dialogs/CancelSubscriptionDialog";
 import { FormikProps } from "formik";
@@ -11,10 +11,33 @@ import CompanyInfoProcess from "../entities/company_info_process";
 import { equalInterface } from "@Utils/functions";
 import CompanyAddressProcess from "../entities/company_address_process";
 import CompanyImageDialog from "../dialogs/CompanyImageDialog";
+import { EUserRoleType } from "../entities/company_enums";
+import User from "@Models/user";
 
 /// User store
 export function useUser() {
   return useSelector((state: RootState) => state.user);
+}
+
+export function useAccount() {
+  let user: User | undefined = undefined;
+  try {
+    user = useSelector((state: RootState) => state.account).user;
+  } catch (e) {
+    user = store.getState().account.user;
+  }
+  const role = user?.role?.role_type_id;
+  const isTechnician = role === EUserRoleType.TechnicianUser;
+  const isInternal = role === EUserRoleType.InternalUser;
+  const isCustomer = role === EUserRoleType.CustomerUser;
+  const isOwner = role === EUserRoleType.Owner;
+  return {
+    user,
+    isTechnician,
+    isCustomer,
+    isInternal,
+    isOwner,
+  };
 }
 
 /**

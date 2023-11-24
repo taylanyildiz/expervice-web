@@ -11,7 +11,7 @@ export function useSummaryDialog() {
   return {
     openRegionDialog: (region?: CompanyRegion | null) => {
       if (region) store.dispatch(setEditRegion(region));
-      openDialog(<RegionDialog />, "sm");
+      openDialog(<RegionDialog />, "md");
     },
     openGroupDialog: (group?: CompanyGroup | null) => {
       if (group) store.dispatch(setEditGroup(group));

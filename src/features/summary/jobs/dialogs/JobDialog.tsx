@@ -73,7 +73,7 @@ function JobDialog(props?: { unit?: Unit | null }) {
   }, [job]);
 
   const getJob = async () => {
-    const result = openLoading(async () => {
+    const result = await openLoading(async () => {
       return await jobRepo.job(jobId!);
     });
     if (!result) closeDialog();

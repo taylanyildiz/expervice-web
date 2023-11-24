@@ -32,7 +32,7 @@ function FormPDFDialog() {
   const dispatch: AppDispatch = useDispatch<AppDispatch>();
 
   /// Dialog hook
-  const { openLoading, closeDialog } = useDialog();
+  const { openLoading, closeDialog, openConfirm } = useDialog();
 
   /// Form repository
   const formRepo = new FormRepository();
@@ -44,8 +44,18 @@ function FormPDFDialog() {
   const [actionType, setActionType] = useState<EActionType | null>(null);
 
   /// Action handle
-  const onChangedActionHandle = (type: EActionType) => {
+  const onChangedActionHandle = async (type: EActionType) => {
     if (type === EActionType.Delete) {
+      const confirm = await openConfirm(
+        "Delete Form",
+        "Are you sure to delete form"
+      );
+      if (confirm) {
+        const result = await openLoading(async () => {
+          return await formRepo.deleteForm(form!.id!);
+        });
+        if (result) closeDialog();
+      }
       return;
     }
     setActionType(type);
@@ -53,8 +63,8 @@ function FormPDFDialog() {
   };
 
   /// Process form
-  const process = async (): Promise<Form | null> => {
-    const result = await openLoading(async () => {
+  const process = async (): Promise<void> => {
+    await openLoading(async () => {
       // Create form
       if (!isEdit) return await formRepo.createForm(formProcess!);
       if (formName) await formRepo.updateForm(form!.id!, formName);
@@ -71,17 +81,12 @@ function FormPDFDialog() {
       }
       await formRepo.getForm(form!.id!);
     });
-    return result;
   };
 
   /// Submit handle
   const onSubmitHandle = async () => {
-    let result = await process();
-    if (!result) return;
+    await process();
     switch (actionType) {
-      case EActionType.Save:
-        dispatch(setForm(result));
-        break;
       case EActionType.SaveClose:
         closeDialog();
         break;

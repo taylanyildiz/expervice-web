@@ -33,7 +33,7 @@ function UnitDialog(props: UnitDialogProps) {
   const dispatch: AppDispatch = useDispatch<AppDispatch>();
 
   /// Dialog hook
-  const { openLoading, closeDialog } = useDialog();
+  const { openLoading, closeDialog, openConfirm } = useDialog();
 
   /// Unit Repository
   const unitRepo = new UnitRepository();
@@ -54,8 +54,18 @@ function UnitDialog(props: UnitDialogProps) {
   const [actionType, setActionType] = useState<EActionType | null>(null);
 
   /// Changed action type
-  const onChangedAction = (type: EActionType) => {
+  const onChangedAction = async (type: EActionType) => {
     if (type === EActionType.Delete) {
+      const confirm = await openConfirm(
+        "Delete Unit",
+        "Are you sure to delete unit?"
+      );
+      if (confirm) {
+        const result = await openLoading(async () => {
+          return unitRepo.deleteUnit(unit!.id!);
+        });
+        if (result) closeDialog();
+      }
       return;
     }
     setActionType(type);
@@ -122,8 +132,8 @@ function UnitDialog(props: UnitDialogProps) {
 
   /// Get Unit
   const getUnit = async () => {
-    const result = openLoading(async () => {
-      await unitRepo.getUnitById(unitId!);
+    const result = await openLoading(async () => {
+      return await unitRepo.getUnitById(unitId!);
     });
     if (!result) closeDialog();
   };
