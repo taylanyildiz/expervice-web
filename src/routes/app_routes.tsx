@@ -69,7 +69,7 @@ const routes: RouteObject[] = [
     element: <RegisterActivationPage />,
   },
   {
-    path: "/user",
+    path: "/user/activation",
     element: <UserActivation />,
   },
   {

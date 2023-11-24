@@ -4,9 +4,8 @@ import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
 import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
 import { useDispatch, useSelector } from "react-redux";
 import Colors from "@Themes/colors";
-import { useDialog } from "@Utils/hooks/dialog_hook";
 import { setEditGroup } from "@Store/company_region_store";
-import GroupDialog from "../dialogs/GroupDialog";
+import { useSummaryDialog } from "../helper/summary_helper";
 
 function SelectedGroupBox() {
   /// Company Region stroe
@@ -16,7 +15,7 @@ function SelectedGroupBox() {
   const dispatch: AppDispatch = useDispatch();
 
   /// Dialog hooks
-  const { openDialog } = useDialog();
+  const { openGroupDialog } = useSummaryDialog();
 
   /// Creator display name
   const creatorDisplayName = `${group?.creator?.first_name} ${group?.creator?.last_name}`;
@@ -25,7 +24,7 @@ function SelectedGroupBox() {
   /// to open group dialog
   const onClickInfo = () => {
     dispatch(setEditGroup(group));
-    openDialog(<GroupDialog />, "xs");
+    openGroupDialog(group);
   };
 
   return (

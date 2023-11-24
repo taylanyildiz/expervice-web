@@ -15,9 +15,8 @@ import VisibilityComp from "@Components/VisibilityComp";
 import SelectedGroupBox from "./SelectedGroupBox";
 import { CompanyGroup } from "@Models/index";
 import { setSelectedGroup } from "@Store/company_region_store";
-import { useDialog } from "@Utils/hooks/dialog_hook";
-import GroupDialog from "../dialogs/GroupDialog";
 import LoadingComp from "@Components/LoadingComp";
+import { useSummaryDialog } from "../helper/summary_helper";
 
 function GroupsList() {
   /// Company region store
@@ -26,7 +25,7 @@ function GroupsList() {
   );
 
   /// Dialog hook
-  const { openDialog } = useDialog();
+  const { openGroupDialog } = useSummaryDialog();
 
   /// Dispatch
   const dispatch: AppDispatch = useDispatch<AppDispatch>();
@@ -53,7 +52,7 @@ function GroupsList() {
 
   /// Create group handle
   const onCreateGroupHandle = () => {
-    openDialog(<GroupDialog />, "xs");
+    openGroupDialog();
   };
 
   return (

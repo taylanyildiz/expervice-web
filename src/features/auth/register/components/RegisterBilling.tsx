@@ -6,10 +6,10 @@ import { useEffect, useState } from "react";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import Colors from "@Themes/colors";
 import { useRegister } from "@Utils/hooks/register_hook";
-import { RegisterBilling } from "../entities";
 import { useFormik } from "formik";
 import { registerBillingValidation } from "../validator/register_validator";
 import { CardNumberMask, CardYearMask } from "@Components/TextInputMask";
+import { RegisterBilling as RegisterBillingModel } from "../entities";
 
 function RegisterBilling() {
   /// Register hook
@@ -28,12 +28,12 @@ function RegisterBilling() {
   };
 
   /// Submit handle
-  const onSubmitHandle = (values: RegisterBilling) => {
+  const onSubmitHandle = (values: RegisterBillingModel) => {
     sessionStorage.setItem("register_billing", JSON.stringify(values));
     onNext();
   };
 
-  const initialValues: RegisterBilling = {
+  const initialValues: RegisterBillingModel = {
     card_holder_name: "",
     card_number: "",
     cvc: "",
@@ -50,7 +50,7 @@ function RegisterBilling() {
   const setValues = () => {
     const value = sessionStorage.getItem("register_billing");
     if (!value) return;
-    const billing: RegisterBilling = JSON.parse(value);
+    const billing: RegisterBillingModel = JSON.parse(value);
     for (var [k, v] of Object.entries(billing)) {
       formik.setFieldValue(k, v);
     }

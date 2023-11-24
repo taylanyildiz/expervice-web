@@ -1,15 +1,14 @@
 import { Stack, Typography } from "@mui/material";
 import ReceiptLongIcon from "@mui/icons-material/ReceiptLong";
 import PrimaryButton from "@Components/PrimaryButton";
-import { useDialog } from "@Utils/hooks/dialog_hook";
-import GroupDialog from "../dialogs/GroupDialog";
+import { useSummaryDialog } from "../helper/summary_helper";
 
 function GroupsEmptyBox() {
   /// Dialog hook
-  const { openDialog } = useDialog();
+  const { openGroupDialog } = useSummaryDialog();
 
   const handleClick = () => {
-    openDialog(<GroupDialog />, "xs");
+    openGroupDialog();
   };
 
   return (

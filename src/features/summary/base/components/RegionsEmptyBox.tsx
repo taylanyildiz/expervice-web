@@ -1,15 +1,14 @@
 import { Stack, Typography } from "@mui/material";
 import ReceiptLongIcon from "@mui/icons-material/ReceiptLong";
 import PrimaryButton from "@Components/PrimaryButton";
-import { useDialog } from "@Utils/hooks/dialog_hook";
-import RegionDialog from "../dialogs/RegionDialog";
+import { useSummaryDialog } from "../helper/summary_helper";
 
 function RegionsEmptyBox() {
   /// Dialog hook
-  const { openDialog } = useDialog();
+  const { openRegionDialog } = useSummaryDialog();
 
   const handleClick = () => {
-    openDialog(<RegionDialog />, "md");
+    openRegionDialog();
   };
 
   return (

@@ -15,6 +15,7 @@ export { default as StatusBox } from "./StatusBox";
 export { default as TabBar } from "./TabBar";
 export { default as SelectUserRole } from "./SelectUserRole";
 export { default as SelectRegions } from "./SelectRegions";
+export { default as SelectRegion } from "./SelectRegion";
 export { default as RichText } from "./RichText";
 export { default as SelectUserGroup } from "./SelectUserGroup";
 export { default as SelectGroupRole } from "./SelectGroupRole";

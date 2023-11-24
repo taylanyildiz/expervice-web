@@ -61,7 +61,7 @@ class FormRepository extends BaseRepository {
     /**
      * Form Template
      */
-    public async formPdfTemplate(form: FormTemplateProcess): Promise<boolean> {
+    public async formPdfTemplate(form?: FormTemplateProcess): Promise<boolean> {
         const path = Formconst.template();
         store.dispatch(setFormReviewLoading(true));
         const response = await this.post(path, form);

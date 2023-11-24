@@ -14,8 +14,7 @@ import "../../../../assets/css/summary.css";
 import { AppDispatch, RootState } from "@Store/index";
 import { setLeftSideBarStatus } from "@Store/summary_store";
 import RegionsList from "./RegionList";
-import { useDialog } from "@Utils/hooks/dialog_hook";
-import RegionDialog from "../dialogs/RegionDialog";
+import { useSummaryDialog } from "../helper/summary_helper";
 
 /// Animated arrow button
 function ArrowButton() {
@@ -52,14 +51,14 @@ function SummarySideBar() {
   );
 
   /// Dialog hooks
-  const { openDialog } = useDialog();
+  const { openRegionDialog } = useSummaryDialog();
 
   const width = open ? 280 : 25;
   const scale = open ? 1.0 : 0.0;
 
   /// Create new reigon dialog open
   const onClickNewRegionHandle = () => {
-    openDialog(<RegionDialog />, "md");
+    openRegionDialog();
   };
 
   return (
