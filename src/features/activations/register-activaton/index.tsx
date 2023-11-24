@@ -39,7 +39,7 @@ function RegisterActivationPage() {
     if (email && code) registerActivate();
   }, []);
 
-  if (!email || !code) return <Navigate to={ERouter.Base} />;
+  // if (!email || !code) return <Navigate to={ERouter.Base} />;
 
   return (
     <Box className="login-page">
