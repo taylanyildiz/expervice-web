@@ -32,14 +32,6 @@ const columns: GridColDef<Form>[] = [
   },
   {
     flex: 1,
-    field: "region",
-    headerName: "Region",
-    valueGetter: (params) => {
-      return params.row.region?.name;
-    },
-  },
-  {
-    flex: 1,
     field: "customer_count",
     headerName: "Customer Count",
     sortable: false,
