@@ -41,7 +41,6 @@ const rootPersistConfig = {
     version: 1.0,
     key: 'root',
     storage,
-    blackList: [auth, account, companyRegion],
 }
 
 /// Persisted Reducer

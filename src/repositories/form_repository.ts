@@ -5,7 +5,6 @@ import { setForm, setFormCustomers, setFormLayzLoading, setFormPdfTemplate, setF
 import SnackCustomBar from "@Utils/snack_custom_bar";
 import FormTemplateProcess from "@Features/summary/forms/entities/form_template_process";
 import FormProcess from "@Features/summary/forms/entities/form_process";
-import Form from "@Models/form/form";
 import FormField from "@Features/summary/forms/entities/form_field";
 
 class FormRepository extends BaseRepository {
@@ -29,6 +28,16 @@ class FormRepository extends BaseRepository {
             store.dispatch(setForms(data));
         }
         return success;
+    }
+
+    /**
+     * Delete form
+     */
+    public async deleteForm(id: number): Promise<boolean> {
+        const path = Formconst.form(id);
+        const response = await this.delete(path);
+        SnackCustomBar.status(response);
+        return response.success;
     }
 
     /**
@@ -61,7 +70,7 @@ class FormRepository extends BaseRepository {
     /**
      * Form Template
      */
-    public async formPdfTemplate(form: FormTemplateProcess): Promise<boolean> {
+    public async formPdfTemplate(form?: FormTemplateProcess): Promise<boolean> {
         const path = Formconst.template();
         store.dispatch(setFormReviewLoading(true));
         const response = await this.post(path, form);
@@ -87,12 +96,16 @@ class FormRepository extends BaseRepository {
     /**
      * Create form
      */
-    public async createForm(form: FormProcess): Promise<Form | null> {
+    public async createForm(form: FormProcess): Promise<boolean> {
         const path = "/";
         const response = await this.post(path, form);
         SnackCustomBar.status(response);
-        const data = response.data?.['data']?.['form'];
-        return data;
+        const success = response.success;
+        if (success) {
+            const data = response.data['data']['form'];
+            store.dispatch(setForm(data));
+        }
+        return success;
     }
 
     /**
@@ -107,11 +120,10 @@ class FormRepository extends BaseRepository {
     /**
      * Add field to form
      */
-    public async addFields(id: number, fields: FormField[]): Promise<Form | null> {
+    public async addFields(id: number, fields: FormField[]): Promise<boolean> {
         const path = Formconst.fields(id);
         const response = await this.post(path, { fields });
-        const data = response.data?.['data']?.['form'];
-        return data;
+        return response.success;
     }
 
     /**

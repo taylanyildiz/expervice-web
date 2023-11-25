@@ -1,22 +1,17 @@
-import { AppDispatch, RootState } from "@Store/index";
+import { RootState } from "@Store/index";
 import { Box, Grid, IconButton, Typography } from "@mui/material";
 import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
 import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import Colors from "@Themes/colors";
-import { setEditRegion } from "@Store/company_region_store";
-import { useDialog } from "@Utils/hooks/dialog_hook";
-import RegionDialog from "../dialogs/RegionDialog";
+import { useSummaryDialog } from "../helper/summary_helper";
 
 function SelectedRegionBox() {
   /// Company Region stroe
   const { region } = useSelector((state: RootState) => state.companyRegion);
 
   /// Dialog hooks
-  const { openDialog } = useDialog();
-
-  /// Dispatch
-  const dispatch: AppDispatch = useDispatch<AppDispatch>();
+  const { openRegionDialog } = useSummaryDialog();
 
   /// Creator display name
   const creatorDisplayName = `${region?.creator?.first_name} ${region?.creator?.last_name}`;
@@ -27,8 +22,7 @@ function SelectedRegionBox() {
   /// Click info icon
   /// to open region dialog
   const onClickInfo = () => {
-    dispatch(setEditRegion(region));
-    openDialog(<RegionDialog />, "md");
+    openRegionDialog(region);
   };
 
   return (

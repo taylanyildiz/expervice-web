@@ -14,8 +14,9 @@ import "../../../../assets/css/summary.css";
 import { AppDispatch, RootState } from "@Store/index";
 import { setLeftSideBarStatus } from "@Store/summary_store";
 import RegionsList from "./RegionList";
-import { useDialog } from "@Utils/hooks/dialog_hook";
-import RegionDialog from "../dialogs/RegionDialog";
+import { useSummaryDialog } from "../helper/summary_helper";
+import { useAccount } from "@Features/summary/company/helper/company_helper";
+import VisibilityComp from "@Components/VisibilityComp";
 
 /// Animated arrow button
 function ArrowButton() {
@@ -46,20 +47,23 @@ function ArrowButton() {
 }
 
 function SummarySideBar() {
+  /// Account store
+  const { isInternal, isOwner } = useAccount();
+
   /// Summary store
   const { leftSideBarStatus: open } = useSelector(
     (state: RootState) => state.summary
   );
 
   /// Dialog hooks
-  const { openDialog } = useDialog();
+  const { openRegionDialog } = useSummaryDialog();
 
   const width = open ? 280 : 25;
   const scale = open ? 1.0 : 0.0;
 
   /// Create new reigon dialog open
   const onClickNewRegionHandle = () => {
-    openDialog(<RegionDialog />, "md");
+    openRegionDialog();
   };
 
   return (
@@ -77,22 +81,24 @@ function SummarySideBar() {
           />
         </Grid>
         <Grid item xs={12} children={<Divider />} />
-        <Grid item xs={12} mt={2}>
-          <PrimaryButton
-            height={30}
-            fullWidth
-            children="New Region"
-            color="white"
-            fontWeight="normal"
-            fontSize={13}
-            backgroundColor={Colors.primaryLight}
-            onClick={onClickNewRegionHandle}
-          />
-        </Grid>
+        <VisibilityComp visibility={isOwner || isInternal}>
+          <Grid item xs={12} mt={2}>
+            <PrimaryButton
+              height={30}
+              fullWidth
+              children="New Region"
+              color="white"
+              fontWeight="normal"
+              fontSize={13}
+              backgroundColor={Colors.primaryLight}
+              onClick={onClickNewRegionHandle}
+            />
+          </Grid>
+        </VisibilityComp>
         <Grid item xs={12} mt={1}>
           <Grid container alignItems="center">
             <Grid item sx={{ flexGrow: 1 }}>
-              <Typography children="Regions" fontSize={14} />
+              <Typography fontWeight="bold" children="Regions" fontSize={14} />
             </Grid>
             <Grid item>
               <IconButton>

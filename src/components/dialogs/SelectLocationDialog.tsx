@@ -57,7 +57,7 @@ function SelectLocationDialog(props: SelectLocationDialogProps) {
           <Typography
             paddingX={10}
             sx={{ backgroundColor: "white" }}
-            children={`${marker?.lat} / ${marker?.lng}`}
+            children={`${marker?.lat ?? "--"} / ${marker?.lng ?? "--"}`}
           />
         </Box>
       </DialogContent>

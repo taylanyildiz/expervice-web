@@ -10,6 +10,7 @@ import { AppDispatch } from "@Store/index";
 import { useDispatch } from "react-redux";
 import { setUnitJobsFilter } from "@Store/unit_store";
 import Job from "@Models/job/job";
+import { useJobDialog } from "@Features/summary/jobs/helper/job_helper";
 
 function UnitJobs() {
   /// Dispatch
@@ -44,6 +45,23 @@ function UnitJobs() {
   }, [unitId, jobsFilter]);
 
   const columns: GridColDef<Job>[] = [
+    {
+      field: "id",
+      headerName: "ID",
+      renderCell: (params) => {
+        const { openJobDialog } = useJobDialog();
+        return (
+          <p
+            className="grid-selectable"
+            onClick={() => {
+              openJobDialog({ id: params.row.id });
+            }}
+          >
+            {params.row.id}
+          </p>
+        );
+      },
+    },
     {
       field: "priority",
       align: "left",

@@ -17,6 +17,9 @@ function SummaryLayout() {
     (state: RootState) => state.account
   );
 
+  /// Check user
+  if (!user) return <Navigate to={ERouter.Login} />;
+
   /// Last
   const [lastMessage, setLastMessage] = useState<MessagePayload | null>(null);
 
@@ -47,9 +50,6 @@ function SummaryLayout() {
       SnackCustomBar.notification(payload);
     });
   }, [lastMessage]);
-
-  /// Check user
-  if (!user) return <Navigate to={ERouter.Login} />;
 
   return (
     <div className="summary">

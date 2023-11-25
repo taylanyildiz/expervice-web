@@ -5,6 +5,7 @@ import { Avatar, Grid, Typography } from "@mui/material";
 import { caption, dateToFormat } from "@Utils/functions";
 import { EActionType } from "@Components/dialogs/DialogCustomActions";
 import { useUnit } from "../helper/unit_helper";
+import { useAccount } from "@Features/summary/company/helper/company_helper";
 
 interface UnitDialogActionProps {
   onChanged: (type: EActionType) => void;
@@ -12,6 +13,9 @@ interface UnitDialogActionProps {
 
 function UnitDialogAction(props: UnitDialogActionProps) {
   const { onChanged } = props;
+
+  /// Account store
+  const { isInternal, isOwner } = useAccount();
 
   const { unit } = useUnit();
   const isEdit = Boolean(unit);
@@ -24,6 +28,7 @@ function UnitDialogAction(props: UnitDialogActionProps) {
 
   return (
     <DialogCustomActions
+      actionVisibility={isInternal || isOwner}
       actions={[
         <VisibilityComp
           visibility={isEdit}
