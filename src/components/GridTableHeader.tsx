@@ -1,5 +1,5 @@
 import { Grid, Typography } from "@mui/material";
-import { PrimaryButton } from ".";
+import { PrimaryButton, VisibilityComp } from ".";
 import FilterAltIcon from "@mui/icons-material/FilterAlt";
 import AddIcon from "@mui/icons-material/Add";
 import Colors from "@Themes/colors";
@@ -12,10 +12,12 @@ interface GridTableHeaderProps {
   onExport: () => void;
   filterCount?: number | string;
   more?: ReactNode[];
+  visibilityAdd?: boolean;
 }
 
 function GridTableHeader(props: GridTableHeaderProps) {
-  const { title, onAdd, onFilter, onExport, more, filterCount } = props;
+  const { title, onAdd, onFilter, onExport, more, filterCount, visibilityAdd } =
+    props;
 
   return (
     <Grid p={2} container columnSpacing={1} alignItems="center">
@@ -54,19 +56,21 @@ function GridTableHeader(props: GridTableHeaderProps) {
           onClick={onFilter}
         />
       </Grid>
-      <Grid item>
-        <PrimaryButton
-          height={30}
-          color="white"
-          fontWeight="normal"
-          fontSize={13}
-          variant="contained"
-          children="Add"
-          backgroundColor={Colors.primaryLight}
-          suffix={<AddIcon />}
-          onClick={onAdd}
-        />
-      </Grid>
+      <VisibilityComp visibility={visibilityAdd ?? true}>
+        <Grid item>
+          <PrimaryButton
+            height={30}
+            color="white"
+            fontWeight="normal"
+            fontSize={13}
+            variant="contained"
+            children="Add"
+            backgroundColor={Colors.primaryLight}
+            suffix={<AddIcon />}
+            onClick={onAdd}
+          />
+        </Grid>
+      </VisibilityComp>
     </Grid>
   );
 }

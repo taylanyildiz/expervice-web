@@ -25,6 +25,7 @@ import {
 import ERouter from "./router_enum";
 import UserActivation from "@Features/activations/user-activation";
 import { useAccount } from "@Features/summary/company/helper/company_helper";
+import { store } from "@Store/index";
 
 /// Router Options
 const options = {
@@ -77,6 +78,11 @@ const routes: RouteObject[] = [
   {
     path: "/",
     element: <SummaryLayout />,
+    loader: () => {
+      const { user } = store.getState().account;
+      if (!user) return redirect("/");
+      return null;
+    },
     children: [
       {
         path: "summary",

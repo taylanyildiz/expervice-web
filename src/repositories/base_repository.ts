@@ -1,7 +1,9 @@
 // import logger from "@Log/logger";
-import { setAccessToken } from "@Store/account_store";
+import { logout, setAccessToken } from "@Store/account_store";
 import { store } from "@Store/index";
 import { Axios, AxiosRequestConfig, AxiosResponse, InternalAxiosRequestConfig } from "axios";
+let isRefreshing = false;
+let refreshSubscribers: ((e: any) => void)[] = [];
 
 interface SuccessParams {
     success: boolean;
@@ -22,7 +24,7 @@ abstract class BaseRepository extends Axios {
             headers: {
                 'Content-Type': 'application/json; charset=UTF-8',
                 "Access-Control-Allow-Origin": "*",
-                "x-access-token": store.getState().account.accessToken,
+                "x-access-token": store.getState().account?.accessToken,
             },
             transformResponse: (e) => {
                 try {
@@ -37,16 +39,17 @@ abstract class BaseRepository extends Axios {
                 }
                 return JSON.stringify(e);
             },
-            validateStatus: (_) => true,
+            validateStatus: (status) => status !== 401,
         });
 
         // Bind the methods to the class instance
         this.onRequest = this.onRequest.bind(this);
         this.onResponse = this.onResponse.bind(this);
+        this.onRejected = this.onRejected.bind(this);
 
         // Listen interceptors
         this.interceptors.request.use(this.onRequest);
-        this.interceptors.response.use(this.onResponse);
+        this.interceptors.response.use(this.onResponse, this.onRejected);
     }
 
     /// On request listen
@@ -89,35 +92,46 @@ abstract class BaseRepository extends Axios {
         //     "******************************\n"
         // );
 
-        /// Refresh token
-        if (value.status === 401) {
-            const refresh_token = store.getState().account.refreshToken;
+        const successCodes = [200, 201];
+        const success = successCodes.includes(value.status);
+        return Object.assign({}, value, { success });
+    }
+
+    /// Reponse error
+    private async onRejected(error: any): Promise<any> {
+        const refresh_token = store.getState().account.refreshToken;
+        const originalRequest = error.config;
+        if (isRefreshing) {
+            return new Promise((resolve) => {
+                refreshSubscribers.push((token: string) => {
+                    originalRequest.headers['x-access-token'] = token;
+                    resolve(this.request(originalRequest));
+                });
+            });
+        }
+        isRefreshing = true;
+        try {
             const response = await this.request({
                 baseURL: import.meta.env.VITE_API_URL,
                 url: "/users/token",
                 method: "POST",
                 data: { refresh_token },
             });
-            if (response.status === 200) {
+            if (response.status !== 200) {
                 const access_token = response.data['data']['access_token'];
                 store.dispatch(setAccessToken(access_token));
-                value = await this.request({
-                    method: value.config.method,
-                    data: value.config.data,
-                    params: value.config.params,
-                    headers: {
-                        // 'Content-Type': 'application/json; charset=UTF-8',
-                        "Access-Control-Allow-Origin": "*",
-                        "x-access-token": access_token,
-                    },
-                });
+                originalRequest.headers['x-access-token'] = access_token;
+                refreshSubscribers.forEach((callback) => callback(access_token));
+                refreshSubscribers = [];
+                return this.request(originalRequest);
             }
+        } catch (_) {
+            return Object.assign({}, error.response, { success: false });
+        } finally {
+            isRefreshing = false;
         }
-
-
-        const successCodes = [200, 201];
-        const success = successCodes.includes(value.status);
-        return Object.assign({}, value, { success });
+        store.dispatch(logout());
+        return Object.assign({}, error.response, { success: false });
     }
 
     /**

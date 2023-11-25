@@ -7,8 +7,11 @@ import { AppDispatch } from "@Store/index";
 import { useDispatch } from "react-redux";
 import { useQuery } from "@Utils/functions";
 import { setJobDialogStatus, setJobId } from "@Store/job_store";
+import { useAccount } from "../company/helper/company_helper";
 
 function JobsPage() {
+  /// Account store
+  const { isInternal, isOwner } = useAccount();
   /// Job dialog hook
   const { openJobDialog, closeDialog, openUnitDialog } = useJobDialog();
   /// Query hook
@@ -43,6 +46,7 @@ function JobsPage() {
   return (
     <div className="jobs-layout">
       <GridTableHeader
+        visibilityAdd={isInternal || isOwner}
         title="Jobs"
         onAdd={() => {
           openUnitDialog();

@@ -17,8 +17,12 @@ import { CompanyGroup } from "@Models/index";
 import { setSelectedGroup } from "@Store/company_region_store";
 import LoadingComp from "@Components/LoadingComp";
 import { useSummaryDialog } from "../helper/summary_helper";
+import { useAccount } from "@Features/summary/company/helper/company_helper";
 
 function GroupsList() {
+  /// Account store
+  const { isInternal, isOwner } = useAccount();
+
   /// Company region store
   const { groups, group, region, groupsLoading } = useSelector(
     (state: RootState) => state.companyRegion
@@ -63,9 +67,11 @@ function GroupsList() {
             <Typography variant="h1" fontSize={19} children="Groups" />
           </Grid>
           <Grid item>
-            <IconButton onClick={onCreateGroupHandle}>
-              <AddIcon />
-            </IconButton>
+            <VisibilityComp visibility={isInternal || isOwner}>
+              <IconButton onClick={onCreateGroupHandle}>
+                <AddIcon />
+              </IconButton>
+            </VisibilityComp>
           </Grid>
         </Grid>
       </Grid>
