@@ -29,6 +29,10 @@ import { useJobDialog } from "@Features/summary/jobs/helper/job_helper";
 import { useUnitDialog } from "@Features/summary/units/helper/unit_helper";
 import VisibilityComp from "@Components/VisibilityComp";
 import Colors from "@Themes/colors";
+import { useMatch } from "react-router-dom";
+import ERouter from "@Routes/router_enum";
+import { setUnitId } from "@Store/unit_store";
+import { setJobId } from "@Store/job_store";
 
 /// Badge styled
 const StyledBadge = styled(Badge)<BadgeProps>(() => ({
@@ -123,6 +127,10 @@ function NotificationMenu(props: {
 }
 
 function NotificationIcon() {
+  const unitMatch = useMatch(ERouter.Units);
+  const unitMapMatch = useMatch(ERouter.UnitsMap);
+  const jobMatch = useMatch(ERouter.Jobs);
+
   /// Notification store
   const {
     notifications: { rows, unread_count },
@@ -170,12 +178,21 @@ function NotificationIcon() {
       case ENotificationType.CustomerFormSign:
         break;
       case ENotificationType.JobTechnicianCreate:
+        if (jobMatch) {
+          return dispatch(setJobId(jobId));
+        }
         openJobDialog({ id: parseInt(jobId!) });
         break;
       case ENotificationType.JobUpdate:
+        if (jobMatch) {
+          return dispatch(setJobId(jobId));
+        }
         openJobDialog({ id: parseInt(jobId!) });
         break;
       case ENotificationType.JobCreated:
+        if (jobMatch) {
+          return dispatch(setJobId(jobId));
+        }
         openJobDialog({ id: parseInt(jobId!) });
         break;
       case ENotificationType.JobTechnicianRemoved:
@@ -187,9 +204,15 @@ function NotificationIcon() {
       case ENotificationType.TechnicianJobRoleUpdate:
         break;
       case ENotificationType.UnitCreate:
+        if (unitMapMatch || unitMatch) {
+          return dispatch(setUnitId(unitId));
+        }
         openUnitDialog(parseInt(unitId!));
         break;
       case ENotificationType.UnitStatusUpdate:
+        if (unitMapMatch || unitMatch) {
+          return dispatch(setUnitId(unitId));
+        }
         openUnitDialog(parseInt(unitId!));
         break;
     }

@@ -4,11 +4,15 @@ import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
 import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
 import { useDispatch, useSelector } from "react-redux";
 import Colors from "@Themes/colors";
-import { useDialog } from "@Utils/hooks/dialog_hook";
 import { setEditGroup } from "@Store/company_region_store";
-import GroupDialog from "../dialogs/GroupDialog";
+import { useSummaryDialog } from "../helper/summary_helper";
+import { useAccount } from "@Features/summary/company/helper/company_helper";
+import VisibilityComp from "@Components/VisibilityComp";
 
 function SelectedGroupBox() {
+  /// Account store
+  const { isInternal, isOwner } = useAccount();
+
   /// Company Region stroe
   const { group } = useSelector((state: RootState) => state.companyRegion);
 
@@ -16,7 +20,7 @@ function SelectedGroupBox() {
   const dispatch: AppDispatch = useDispatch();
 
   /// Dialog hooks
-  const { openDialog } = useDialog();
+  const { openGroupDialog } = useSummaryDialog();
 
   /// Creator display name
   const creatorDisplayName = `${group?.creator?.first_name} ${group?.creator?.last_name}`;
@@ -25,7 +29,7 @@ function SelectedGroupBox() {
   /// to open group dialog
   const onClickInfo = () => {
     dispatch(setEditGroup(group));
-    openDialog(<GroupDialog />, "xs");
+    openGroupDialog(group);
   };
 
   return (
@@ -51,20 +55,22 @@ function SelectedGroupBox() {
             </Grid>
           </Grid>
         </Grid>
-        <Grid item xs={2}>
-          <Grid container rowSpacing={0.4}>
-            <Grid item xs={12}>
-              <IconButton sx={{ p: 0 }} onClick={onClickInfo}>
-                <InfoOutlinedIcon sx={{ height: 20, width: 20 }} />
-              </IconButton>
-            </Grid>
-            <Grid item xs={12} columnSpacing={2}>
-              <IconButton sx={{ p: 0 }}>
-                <HomeOutlinedIcon sx={{ height: 20, width: 20 }} />
-              </IconButton>
+        <VisibilityComp visibility={isInternal || isOwner}>
+          <Grid item xs={2}>
+            <Grid container rowSpacing={0.4}>
+              <Grid item xs={12}>
+                <IconButton sx={{ p: 0 }} onClick={onClickInfo}>
+                  <InfoOutlinedIcon sx={{ height: 20, width: 20 }} />
+                </IconButton>
+              </Grid>
+              <Grid item xs={12} columnSpacing={2}>
+                <IconButton sx={{ p: 0 }}>
+                  <HomeOutlinedIcon sx={{ height: 20, width: 20 }} />
+                </IconButton>
+              </Grid>
             </Grid>
           </Grid>
-        </Grid>
+        </VisibilityComp>
       </Grid>
     </Box>
   );

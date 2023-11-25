@@ -20,9 +20,11 @@ import {
   Outlet,
   RouteObject,
   createBrowserRouter,
+  redirect,
 } from "react-router-dom";
 import ERouter from "./router_enum";
 import UserActivation from "@Features/activations/user-activation";
+import { useAccount } from "@Features/summary/company/helper/company_helper";
 
 /// Router Options
 const options = {
@@ -69,7 +71,7 @@ const routes: RouteObject[] = [
     element: <RegisterActivationPage />,
   },
   {
-    path: "/user",
+    path: "/user/activation",
     element: <UserActivation />,
   },
   {
@@ -97,6 +99,11 @@ const routes: RouteObject[] = [
       {
         path: "forms",
         element: <FormsPage />,
+        loader: () => {
+          const { isInternal, isOwner } = useAccount();
+          if (isInternal || isOwner) return null;
+          return redirect(ERouter.Summary);
+        },
       },
       {
         path: "jobs",
@@ -105,6 +112,11 @@ const routes: RouteObject[] = [
       {
         path: "users",
         element: <Outlet />,
+        loader: () => {
+          const { isInternal, isOwner } = useAccount();
+          if (isInternal || isOwner) return null;
+          return redirect(ERouter.Summary);
+        },
         children: [
           {
             index: true,

@@ -10,7 +10,7 @@ import { phoneMaskParse, useQuery } from "@Utils/functions";
 import { useDialog } from "@Utils/hooks/dialog_hook";
 import { Box, Grid, Stack, Typography } from "@mui/material";
 import { useFormik } from "formik";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link, Navigate } from "react-router-dom";
 import { object, string } from "yup";
 
@@ -22,6 +22,7 @@ enum UserType {
 
 interface UserActivation {
   type?: string | null;
+  email?: string;
   first_name?: string | null;
   last_name?: string | null;
   phone_code?: string | null;
@@ -53,11 +54,21 @@ function UserActivation() {
 
   if (!email || !code || !type) return <Navigate to={ERouter.Base} />;
 
+  /// Initialize component
+  useEffect(() => {
+    if (email && code && type) {
+      formik.setFieldValue("email", email);
+      formik.setFieldValue("code", code);
+      formik.setFieldValue("type", type);
+    }
+  }, [email, code, type]);
+
   const submitHandle = async (value: UserActivation) => {
     const { code: phoneCode, number } = phoneMaskParse(value.phone!)!;
 
     const activation: Activation = {
       type: type,
+      email: email,
       code: code,
       first_name: value.first_name,
       last_name: value.last_name,
@@ -72,6 +83,7 @@ function UserActivation() {
   };
 
   const initialValues: UserActivation = {
+    type: "",
     password: "",
     first_name: "",
     last_name: "",

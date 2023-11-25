@@ -15,18 +15,21 @@ import VisibilityComp from "@Components/VisibilityComp";
 import SelectedGroupBox from "./SelectedGroupBox";
 import { CompanyGroup } from "@Models/index";
 import { setSelectedGroup } from "@Store/company_region_store";
-import { useDialog } from "@Utils/hooks/dialog_hook";
-import GroupDialog from "../dialogs/GroupDialog";
 import LoadingComp from "@Components/LoadingComp";
+import { useSummaryDialog } from "../helper/summary_helper";
+import { useAccount } from "@Features/summary/company/helper/company_helper";
 
 function GroupsList() {
+  /// Account store
+  const { isInternal, isOwner } = useAccount();
+
   /// Company region store
   const { groups, group, region, groupsLoading } = useSelector(
     (state: RootState) => state.companyRegion
   );
 
   /// Dialog hook
-  const { openDialog } = useDialog();
+  const { openGroupDialog } = useSummaryDialog();
 
   /// Dispatch
   const dispatch: AppDispatch = useDispatch<AppDispatch>();
@@ -53,7 +56,7 @@ function GroupsList() {
 
   /// Create group handle
   const onCreateGroupHandle = () => {
-    openDialog(<GroupDialog />, "xs");
+    openGroupDialog();
   };
 
   return (
@@ -64,9 +67,11 @@ function GroupsList() {
             <Typography variant="h1" fontSize={19} children="Groups" />
           </Grid>
           <Grid item>
-            <IconButton onClick={onCreateGroupHandle}>
-              <AddIcon />
-            </IconButton>
+            <VisibilityComp visibility={isInternal || isOwner}>
+              <IconButton onClick={onCreateGroupHandle}>
+                <AddIcon />
+              </IconButton>
+            </VisibilityComp>
           </Grid>
         </Grid>
       </Grid>

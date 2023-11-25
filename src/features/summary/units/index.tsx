@@ -19,8 +19,12 @@ import { Typography } from "@mui/material";
 import { useDialog } from "@Utils/hooks/dialog_hook";
 import UnitRepository from "@Repo/unit_repository";
 import UnitsFilterDrawer from "./components/UnitFilterDrawer";
+import { useAccount } from "../company/helper/company_helper";
 
 function UnitsPage() {
+  /// Account store
+  const { isInternal, isOwner } = useAccount();
+
   /// Query hook
   const [path, deletePath, setPath] = useQuery();
 
@@ -81,6 +85,7 @@ function UnitsPage() {
     <div className="units-layout">
       <GridTableHeader
         title="Units"
+        visibilityAdd={isInternal || isOwner}
         onAdd={() => openUnitDialog()}
         filterCount={filterCount}
         onFilter={() => dispatch(setUnitsFilterDrawer(true))}

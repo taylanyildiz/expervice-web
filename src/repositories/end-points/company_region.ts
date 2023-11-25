@@ -6,6 +6,7 @@ const CompanyRegion = {
     groupInfo: "groups/info",
     group: (id: number) => `/groups/${id}`,
     groupUnits: (id: number) => `/groups/${id}/units`,
+    image: (id: number) => `/${id}/image`,
 }
 
 export default CompanyRegion;

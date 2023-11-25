@@ -2,15 +2,19 @@ import GMap from "@Components/GMap";
 import UnitRepository from "@Repo/unit_repository";
 import { AppDispatch } from "@Store/index";
 import { setUnitFilter, setUnitId } from "@Store/unit_store";
-import { Divider, Grid, List, Typography } from "@mui/material";
+import { Box, Divider, Grid, List, Stack, Typography } from "@mui/material";
 import { ReactNode, useEffect, useMemo, useRef, useState } from "react";
 import { useDispatch } from "react-redux";
-import { useUnit } from "../helper/unit_helper";
+import { useUnit, useUnitDialog } from "../helper/unit_helper";
 import UnitListItem from "../components/UnitListItem";
 import { InfoWindow, Marker } from "@react-google-maps/api";
 import Unit from "@Models/units/unit";
 import VisibilityComp from "@Components/VisibilityComp";
 import { EJobType } from "@Features/summary/jobs/entities/job_enums";
+import LoadingComp from "@Components/LoadingComp";
+import Condition2Comp from "@Components/Condition2Comp";
+import ReceiptLongIcon from "@mui/icons-material/ReceiptLong";
+import PrimaryButton from "@Components/PrimaryButton";
 
 function UnitsMapPage() {
   /// Unit repo
@@ -19,8 +23,12 @@ function UnitsMapPage() {
   /// Dispatch
   const dispatch: AppDispatch = useDispatch<AppDispatch>();
 
+  /// Unit dialog
+  const { openUnitDialog } = useUnitDialog();
+
   /// Unit store
   const {
+    layzLoading,
     units: { rows },
     filter,
   } = useUnit();
@@ -112,24 +120,52 @@ function UnitsMapPage() {
   return (
     <div className="units-map-page">
       <div ref={ref} className="units-map-list">
-        <>
-          {units.map((e, i) => (
-            <List>
-              <UnitListItem
-                key={e.id}
-                unit={e}
-                selected={e.display}
-                onClick={() => {
-                  dispatch(setUnitId(e.id));
-                }}
-                onMap={() => {
-                  handleTogglePin(e, i);
-                }}
-              />
-              <Divider component="li" />
-            </List>
-          ))}
-        </>
+        <LoadingComp loading={layzLoading}>
+          <Condition2Comp
+            showFirst={units.length !== 0}
+            firstComp={units.map((e, i) => (
+              <List>
+                <UnitListItem
+                  key={e.id}
+                  unit={e}
+                  selected={e.display}
+                  onClick={() => {
+                    dispatch(setUnitId(e.id));
+                  }}
+                  onMap={() => {
+                    handleTogglePin(e, i);
+                  }}
+                />
+                <Divider component="li" />
+              </List>
+            ))}
+            secondComp={
+              <Box
+                height="100%"
+                width="100%"
+                display="flex"
+                alignItems="center"
+                justifyContent="center"
+              >
+                <Stack>
+                  <ReceiptLongIcon
+                    sx={{ color: "black", height: 100, width: 100 }}
+                  />
+                  <Typography children="No Found Unit" />
+                  <PrimaryButton
+                    fontWeight="normal"
+                    color="white"
+                    variant="contained"
+                    children="Add Unit"
+                    onClick={() => {
+                      openUnitDialog();
+                    }}
+                  />
+                </Stack>
+              </Box>
+            }
+          />
+        </LoadingComp>
       </div>
       <div className="units-map">
         <GMap

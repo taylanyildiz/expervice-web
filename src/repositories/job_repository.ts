@@ -144,6 +144,7 @@ class JobRepository extends BaseRepository {
     public async deleteJob(id: number): Promise<boolean> {
         const path = JobConsts.job(id);
         const response = await this.delete(path);
+        SnackCustomBar.status(response);
         return response.success;
     }
 

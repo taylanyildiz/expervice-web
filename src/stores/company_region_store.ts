@@ -47,15 +47,15 @@ const companyRegion = createSlice({
         setRegions: (state, { payload }) => {
             state.regions = payload;
             const rows = payload?.rows;
-            if (rows?.length === 0) {
-                state.region = null;
-            } else {
-                const index = rows.findIndex((e: any) => e.id === state.region?.id);
-                if (index === -1) state.region = rows[0];
-                else state.region ??= rows[0];
+            if (rows) {
+                if (rows?.length === 0) {
+                    state.region = null;
+                } else {
+                    const index = rows?.findIndex((e: any) => e.id === state.region?.id);
+                    if (index === -1) state.region = rows[0];
+                    else state.region ??= rows[0];
+                }
             }
-            console.log("");
-
         },
         setSelectedRegion: (state, { payload }) => {
             state.region = payload;
@@ -81,12 +81,14 @@ const companyRegion = createSlice({
         setGroups: (state, { payload }) => {
             state.groups = payload;
             const rows = payload?.rows;
-            if (rows?.length === 0) {
-                state.group = null;
-            } else {
-                const index = rows.findIndex((e: any) => e.id === state.group?.id);
-                if (index === -1) state.group = rows[0];
-                else state.group ??= rows[0];
+            if (rows) {
+                if (rows?.length === 0) {
+                    state.group = null;
+                } else {
+                    const index = rows?.findIndex((e: any) => e.id === state.group?.id);
+                    if (index === -1) state.group = rows[0];
+                    else state.group ??= rows[0];
+                }
             }
         },
         setSelectedGroup: (state, { payload }) => {

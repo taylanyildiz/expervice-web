@@ -8,6 +8,7 @@ import UnitFilter from "@Models/units/unit_filter";
 import UnitRepository from "@Repo/unit_repository";
 import { setSelectedUnits, setUnitFilter } from "@Store/unit_store";
 import { useUnit } from "../helper/unit_helper";
+import { useAccount } from "@Features/summary/company/helper/company_helper";
 
 function UnitsTablePage() {
   /// Dispatch
@@ -23,6 +24,9 @@ function UnitsTablePage() {
 
   /// Unit repository
   const unitRepo = new UnitRepository();
+
+  /// Account store
+  const { isOwner, isInternal } = useAccount();
 
   /// Pagination mode
   const [paginationMode, setPaginationMode] = useState<GridPaginationModel>({
@@ -65,8 +69,8 @@ function UnitsTablePage() {
     <div className="units-grid">
       <DataGrid
         pagination
-        checkboxSelection
-        disableRowSelectionOnClick
+        checkboxSelection={isInternal || isOwner}
+        disableRowSelectionOnClick={!(isInternal || isOwner)}
         loading={layzLoading}
         disableColumnMenu
         sortingMode="server"

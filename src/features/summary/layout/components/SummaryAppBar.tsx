@@ -15,8 +15,8 @@ import GroupOutlinedIcon from "@mui/icons-material/GroupOutlined";
 import EngineeringOutlinedIcon from "@mui/icons-material/EngineeringOutlined";
 import ERouter from "@Routes/router_enum";
 import { useNavigate } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-import { AppDispatch, RootState } from "@Store/index";
+import { useDispatch } from "react-redux";
+import { AppDispatch } from "@Store/index";
 import { logout } from "@Store/account_store";
 import NotificationIcon from "./NotificationIcon";
 import SummarizeIcon from "@mui/icons-material/Summarize";
@@ -30,22 +30,31 @@ import { useCustomerDialog } from "@Features/summary/users/customer-users/helper
 import { useFormDialog } from "@Features/summary/forms/helper/form_helper";
 import { useProfileDialog } from "@Features/summary/profile/helper/profile_helper";
 import ApartmentIcon from "@mui/icons-material/Apartment";
-import { useCompanyDialog } from "@Features/summary/company/helper/company_helper";
+import {
+  useAccount,
+  useCompanyDialog,
+} from "@Features/summary/company/helper/company_helper";
+import { useDialog } from "@Utils/hooks/dialog_hook";
+import VisibilityComp from "@Components/VisibilityComp";
 
 function SummaryAppBar() {
   /// Navigate
   const navigate = useNavigate();
 
   /// Account store
-  const { user } = useSelector((state: RootState) => state.account);
+  const { user, isInternal, isOwner } = useAccount();
   const displayName = `${user?.first_name} ${user?.last_name}`;
-  const isOwner = user?.role_id === 3;
+
+  /// Dialog hook
+  const { openConfirm } = useDialog();
 
   /// Dispatch
   const dispatch: AppDispatch = useDispatch<AppDispatch>();
 
   /// Logout handle
   const onLogoutHandle = async () => {
+    const confirm = await openConfirm("Logout", "Are you sure to logout");
+    if (!confirm) return;
     dispatch(logout());
     navigate(ERouter.Base);
   };
@@ -68,6 +77,7 @@ function SummaryAppBar() {
       <Grid container alignItems="center">
         <Grid item sx={{ flexGrow: 1 }}>
           <Grid container columnSpacing={5}>
+            {/* Jobs */}
             <Grid item>
               <MenuCustomLink
                 color="white"
@@ -96,9 +106,17 @@ function SummaryAppBar() {
                 ]}
               />
             </Grid>
-            <Grid item>
-              <MenuCustomLink color="white" title="Forms" to={ERouter.Forms} />
-            </Grid>
+            {/* Forms */}
+            <VisibilityComp visibility={isInternal || isOwner}>
+              <Grid item>
+                <MenuCustomLink
+                  color="white"
+                  title="Forms"
+                  to={ERouter.Forms}
+                />
+              </Grid>
+            </VisibilityComp>
+            {/* Units */}
             <Grid item>
               <MenuCustomLink
                 color="white"
@@ -138,26 +156,31 @@ function SummaryAppBar() {
                     onClick: openJobDialog,
                   },
                   {
+                    visibility: isInternal || isOwner,
                     prefix: <DevicesIcon />,
                     title: "Add Unit",
                     onClick: openUnitDialog,
                   },
                   {
+                    visibility: isInternal || isOwner,
                     prefix: <GroupOutlinedIcon />,
                     title: "Add Technician User",
                     onClick: openTechnicianDialog,
                   },
                   {
+                    visibility: isInternal || isOwner,
                     prefix: <GroupOutlinedIcon />,
                     title: "Add Internal User",
                     onClick: openInternalDialog,
                   },
                   {
+                    visibility: isInternal || isOwner,
                     prefix: <GroupOutlinedIcon />,
                     title: "Add Customer User",
                     onClick: openCustomerDialog,
                   },
                   {
+                    visibility: isInternal || isOwner,
                     prefix: <UploadFileIcon />,
                     title: "Add Form",
                     onClick: openFormDialog,
@@ -170,36 +193,39 @@ function SummaryAppBar() {
                 <NotificationIcon />
               </Tooltip>
             </Grid>
-            <Grid item>
-              <MenuCustomLink
-                color="white"
-                withIcon={false}
-                title={
-                  <Tooltip title="Users">
-                    <IconButton size="small">
-                      <GroupsOutlinedIcon sx={{ color: "white" }} />
-                    </IconButton>
-                  </Tooltip>
-                }
-                children={[
-                  {
-                    to: ERouter.InternalUsers,
-                    prefix: <GroupOutlinedIcon />,
-                    title: "Internal Users",
-                  },
-                  {
-                    to: ERouter.CustomerUsers,
-                    prefix: <ContactsIcon />,
-                    title: "Customer Users",
-                  },
-                  {
-                    to: ERouter.TechnicianUsers,
-                    prefix: <EngineeringOutlinedIcon />,
-                    title: "Technician Users",
-                  },
-                ]}
-              />
-            </Grid>
+            {/* Users */}
+            <VisibilityComp visibility={isInternal || isOwner}>
+              <Grid item>
+                <MenuCustomLink
+                  color="white"
+                  withIcon={false}
+                  title={
+                    <Tooltip title="Users">
+                      <IconButton size="small">
+                        <GroupsOutlinedIcon sx={{ color: "white" }} />
+                      </IconButton>
+                    </Tooltip>
+                  }
+                  children={[
+                    {
+                      to: ERouter.InternalUsers,
+                      prefix: <GroupOutlinedIcon />,
+                      title: "Internal Users",
+                    },
+                    {
+                      to: ERouter.CustomerUsers,
+                      prefix: <ContactsIcon />,
+                      title: "Customer Users",
+                    },
+                    {
+                      to: ERouter.TechnicianUsers,
+                      prefix: <EngineeringOutlinedIcon />,
+                      title: "Technician Users",
+                    },
+                  ]}
+                />
+              </Grid>
+            </VisibilityComp>
             <Grid item>
               <MenuCustomLink
                 withIcon={false}
@@ -225,7 +251,7 @@ function SummaryAppBar() {
                     onClick: openProfileDialog,
                   },
                   {
-                    visibility: isOwner,
+                    visibility: isOwner || isInternal,
                     prefix: <ApartmentIcon />,
                     title: "Company Settings",
                     onClick: openCompanyDialog,

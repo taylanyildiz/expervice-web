@@ -141,11 +141,21 @@ class UnitRepository extends BaseRepository {
     }
 
     /**
-     * Assign Units to customer
+     * Delete units
      */
     public async deleteUnits(units: number[]): Promise<boolean> {
         const path = "/";
         const response = await this.delete(path, { data: { units } });
+        SnackCustomBar.status(response);
+        return response.success;
+    }
+
+    /**
+     * Delete unit
+     */
+    public async deleteUnit(id: number): Promise<boolean> {
+        const path = UnitConst.unit(id);
+        const response = await this.delete(path);
         SnackCustomBar.status(response);
         return response.success;
     }

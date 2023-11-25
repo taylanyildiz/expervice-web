@@ -28,11 +28,13 @@ interface LinkProps {
   hover?: boolean;
   children?: LinkChildren[];
   withIcon?: boolean;
+  visibility?: boolean;
 }
 
 function MenuCustomLink(props: LinkProps) {
-  let { title, to, children, color, withIcon } = props;
+  let { title, to, children, color, withIcon, visibility } = props;
   withIcon ??= true;
+  if (!(visibility ?? true)) return <></>;
 
   /// Menu item target
   const [target, setTarget] = useState<HTMLElement | null>(null);

@@ -1,4 +1,4 @@
-import { Avatar, DialogContent, Grid, Typography } from "@mui/material";
+import { Avatar, Box, DialogContent, Grid, Typography } from "@mui/material";
 import {
   CitySelect,
   CountrySelect,
@@ -9,7 +9,7 @@ import {
   DialogCustomTitle,
   VisibilityComp,
 } from "@Components/index";
-import { useFormik } from "formik";
+import { FormikProps, useFormik } from "formik";
 import { City, CompanyRegion, Country, State } from "@Models/index";
 import regionValidator from "../validator/region_validator";
 import RegionProcess from "../entities/region_process";
@@ -22,10 +22,189 @@ import { AppDispatch, RootState } from "@Store/index";
 import { setEditRegion } from "@Store/company_region_store";
 import { caption, dateToFormat } from "@Utils/functions";
 
+function RegionContent(props: { formik: FormikProps<CompanyRegion> }) {
+  const { formik } = props;
+
+  /// Select country
+  const onChangedCountryHandle = (country?: Country | null) => {
+    formik.setFieldValue("country", country);
+  };
+
+  /// Select country
+  const onChangedStateHandle = (state?: State | null) => {
+    formik.setFieldValue("state", state);
+  };
+
+  /// Select country
+  const onChangedCityHandle = (city?: City | null) => {
+    formik.setFieldValue("city", city);
+  };
+
+  return (
+    <Grid container>
+      <Grid item xs={12}>
+        <TextOutlineField
+          fullWidth
+          name="name"
+          label="Region Name"
+          value={formik.values?.name}
+          onChange={formik.handleChange}
+          helperText={formik.touched.name && formik.errors.name}
+          error={Boolean(formik.errors.name && formik.touched.name)}
+        />
+      </Grid>
+      <Grid item xs={12}>
+        <CountrySelect
+          label="Country"
+          fullWidth
+          value={formik.values?.country}
+          onChanged={onChangedCountryHandle}
+          helperText={formik.touched.country && formik.errors.country}
+          error={Boolean(formik.errors.country && formik.touched.country)}
+        />
+      </Grid>
+      <Grid item xs={12}>
+        <TextOutlineField
+          fullWidth
+          name="street_address"
+          label="Street Address"
+          value={formik.values?.street_address}
+          onChange={formik.handleChange}
+          helperText={
+            formik.touched.street_address && formik.errors.street_address
+          }
+          error={Boolean(
+            formik.errors.street_address && formik.touched.street_address
+          )}
+        />
+      </Grid>
+      <Grid item xs={12}>
+        <Grid container columnSpacing={1}>
+          <Grid item xs={5}>
+            <StateSelect
+              fullWidth
+              label="State"
+              countryId={formik.values.country?.id}
+              value={formik.values?.state}
+              onChanged={onChangedStateHandle}
+              helperText={formik.touched.state && formik.errors.state}
+              error={Boolean(formik.errors.state && formik.touched.state)}
+            />
+          </Grid>
+          <Grid item xs={4}>
+            <CitySelect
+              fullWidth
+              label="City"
+              stateId={formik.values.state?.id}
+              value={formik.values?.city}
+              onChanged={onChangedCityHandle}
+              helperText={formik.touched.city && formik.errors.city}
+              error={Boolean(formik.errors.city && formik.touched.city)}
+            />
+          </Grid>
+          <Grid item xs={3}>
+            <TextOutlineField
+              fullWidth
+              name="zip_code"
+              label="Zip Code"
+              value={formik.values?.zip_code}
+              onChange={formik.handleChange}
+              helperText={formik.touched.zip_code && formik.errors.zip_code}
+              error={Boolean(formik.errors.zip_code && formik.touched.zip_code)}
+            />
+          </Grid>
+        </Grid>
+      </Grid>
+    </Grid>
+  );
+}
+
+function RegionActions(props: { onChanged: (type: EActionType) => void }) {
+  const { onChanged } = props;
+  const { editRegion } = useSelector((state: RootState) => state.companyRegion);
+  const creatorDisplayName = `${editRegion?.creator?.first_name} ${editRegion?.creator?.last_name}`;
+  const isEdit = Boolean(editRegion);
+
+  return (
+    <DialogCustomActions
+      leading={{
+        visibility: isEdit,
+        children: (
+          <Grid container alignItems="center" columnSpacing={1}>
+            <Grid item>
+              <Typography
+                variant="body1"
+                fontSize={12}
+                color="grey"
+                children={`Created by ${creatorDisplayName}`}
+              />
+            </Grid>
+            <Grid item>
+              <Avatar
+                sx={{
+                  height: 30,
+                  width: 30,
+                  fontSize: 12,
+                  color: "white",
+                  backgroundColor: "grey",
+                }}
+                children={caption(creatorDisplayName)}
+              />
+            </Grid>
+            <Grid item>
+              <Typography
+                variant="body1"
+                fontSize={12}
+                color="grey"
+                children={dateToFormat(editRegion?.created_at)}
+              />
+            </Grid>
+          </Grid>
+        ),
+      }}
+      actions={[
+        <VisibilityComp
+          visibility={isEdit}
+          children={
+            <PrimaryButton
+              height={30}
+              fontWeight="normal"
+              color="black"
+              children="Delete"
+              variant="outlined"
+              onClick={() => onChanged(EActionType.Delete)}
+            />
+          }
+        />,
+        <PrimaryButton
+          height={30}
+          fontWeight="normal"
+          color="white"
+          children="Save"
+          onClick={() => onChanged(EActionType.Save)}
+        />,
+        <PrimaryButton
+          height={30}
+          fontWeight="normal"
+          color="white"
+          children="Save & New"
+          onClick={() => onChanged(EActionType.SaveNew)}
+        />,
+        <PrimaryButton
+          height={30}
+          fontWeight="normal"
+          color="white"
+          children="Save & Close"
+          onClick={() => onChanged(EActionType.SaveClose)}
+        />,
+      ]}
+    />
+  );
+}
+
 function RegionDialog() {
   /// Region store
   const { editRegion } = useSelector((state: RootState) => state.companyRegion);
-  const creatorDisplayName = `${editRegion?.creator?.first_name} ${editRegion?.creator?.last_name}`;
 
   /// Is edit or create dialog
   const isEdit = Boolean(editRegion);
@@ -117,21 +296,6 @@ function RegionDialog() {
     };
   }, []);
 
-  /// Select country
-  const onChangedCountryHandle = (country?: Country | null) => {
-    formik.setFieldValue("country", country);
-  };
-
-  /// Select country
-  const onChangedStateHandle = (state?: State | null) => {
-    formik.setFieldValue("state", state);
-  };
-
-  /// Select country
-  const onChangedCityHandle = (city?: City | null) => {
-    formik.setFieldValue("city", city);
-  };
-
   /// On changed action
   const onChangedAction = async (type: EActionType) => {
     if (type === EActionType.Delete) {
@@ -158,162 +322,11 @@ function RegionDialog() {
     <>
       <DialogCustomTitle title={title} />
       <DialogContent>
-        <Grid
-          container
-          p={2}
-          mt={1}
-          sx={{ borderRadius: 1, backgroundColor: "white" }}
-        >
-          <Grid item xs={12}>
-            <TextOutlineField
-              fullWidth
-              name="name"
-              label="Region Name"
-              value={formik.values?.name}
-              onChange={formik.handleChange}
-              helperText={formik.touched.name && formik.errors.name}
-              error={Boolean(formik.errors.name && formik.touched.name)}
-            />
-          </Grid>
-          <Grid item xs={12}>
-            <CountrySelect
-              label="Country"
-              fullWidth
-              value={formik.values?.country}
-              onChanged={onChangedCountryHandle}
-              helperText={formik.touched.country && formik.errors.country}
-              error={Boolean(formik.errors.country && formik.touched.country)}
-            />
-          </Grid>
-          <Grid item xs={12}>
-            <TextOutlineField
-              fullWidth
-              name="street_address"
-              label="Street Address"
-              value={formik.values?.street_address}
-              onChange={formik.handleChange}
-              helperText={
-                formik.touched.street_address && formik.errors.street_address
-              }
-              error={Boolean(
-                formik.errors.street_address && formik.touched.street_address
-              )}
-            />
-          </Grid>
-          <Grid item xs={12}>
-            <Grid container columnSpacing={1}>
-              <Grid item xs={5}>
-                <StateSelect
-                  fullWidth
-                  label="State"
-                  countryId={formik.values.country?.id}
-                  value={formik.values?.state}
-                  onChanged={onChangedStateHandle}
-                  helperText={formik.touched.state && formik.errors.state}
-                  error={Boolean(formik.errors.state && formik.touched.state)}
-                />
-              </Grid>
-              <Grid item xs={4}>
-                <CitySelect
-                  fullWidth
-                  label="City"
-                  stateId={formik.values.state?.id}
-                  value={formik.values?.city}
-                  onChanged={onChangedCityHandle}
-                  helperText={formik.touched.city && formik.errors.city}
-                  error={Boolean(formik.errors.city && formik.touched.city)}
-                />
-              </Grid>
-              <Grid item xs={3}>
-                <TextOutlineField
-                  fullWidth
-                  name="zip_code"
-                  label="Zip Code"
-                  value={formik.values?.zip_code}
-                  onChange={formik.handleChange}
-                  helperText={formik.touched.zip_code && formik.errors.zip_code}
-                  error={Boolean(
-                    formik.errors.zip_code && formik.touched.zip_code
-                  )}
-                />
-              </Grid>
-            </Grid>
-          </Grid>
-        </Grid>
+        <Box mt={1} sx={{ backgroundColor: "white", p: 1 }}>
+          <RegionContent formik={formik} />
+        </Box>
       </DialogContent>
-      <DialogCustomActions
-        leading={{
-          visibility: isEdit,
-          children: (
-            <Grid container alignItems="center" columnSpacing={1}>
-              <Grid item>
-                <Typography
-                  variant="body1"
-                  fontSize={12}
-                  color="grey"
-                  children={`Created by ${creatorDisplayName}`}
-                />
-              </Grid>
-              <Grid item>
-                <Avatar
-                  sx={{
-                    height: 30,
-                    width: 30,
-                    fontSize: 12,
-                    color: "white",
-                    backgroundColor: "grey",
-                  }}
-                  children={caption(creatorDisplayName)}
-                />
-              </Grid>
-              <Grid item>
-                <Typography
-                  variant="body1"
-                  fontSize={12}
-                  color="grey"
-                  children={dateToFormat(editRegion?.created_at)}
-                />
-              </Grid>
-            </Grid>
-          ),
-        }}
-        actions={[
-          <VisibilityComp
-            visibility={isEdit}
-            children={
-              <PrimaryButton
-                height={30}
-                fontWeight="normal"
-                color="black"
-                children="Delete"
-                variant="outlined"
-                onClick={() => onChangedAction(EActionType.Delete)}
-              />
-            }
-          />,
-          <PrimaryButton
-            height={30}
-            fontWeight="normal"
-            color="white"
-            children="Save"
-            onClick={() => onChangedAction(EActionType.Save)}
-          />,
-          <PrimaryButton
-            height={30}
-            fontWeight="normal"
-            color="white"
-            children="Save & New"
-            onClick={() => onChangedAction(EActionType.SaveNew)}
-          />,
-          <PrimaryButton
-            height={30}
-            fontWeight="normal"
-            color="white"
-            children="Save & Close"
-            onClick={() => onChangedAction(EActionType.SaveClose)}
-          />,
-        ]}
-      />
+      <RegionActions onChanged={onChangedAction} />
     </>
   );
 }
