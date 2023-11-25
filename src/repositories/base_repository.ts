@@ -117,7 +117,7 @@ abstract class BaseRepository extends Axios {
                 method: "POST",
                 data: { refresh_token },
             });
-            if (response.status !== 200) {
+            if (response.status === 200) {
                 const access_token = response.data['data']['access_token'];
                 store.dispatch(setAccessToken(access_token));
                 originalRequest.headers['x-access-token'] = access_token;
