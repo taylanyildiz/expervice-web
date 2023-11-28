@@ -44,15 +44,7 @@ function GroupJobsChart() {
   const valueFormatter = (value: number) => `${value ?? 0}`;
 
   return (
-    <Box
-      p={0}
-      sx={{
-        alignItems: "center",
-        justifyContent: "center",
-        display: "flex",
-        backgroundColor: "white",
-      }}
-    >
+    <Box sx={{ backgroundColor: "white" }}>
       <LoadingComp height={300} loading={groupInfoLoading}>
         <BarChart
           height={300}

@@ -1,7 +1,7 @@
-import { Grid, Typography } from "@mui/material";
+import theme from "@Themes/index";
+import { Grid, Stack, Typography } from "@mui/material";
 import "aos/dist/aos.css";
 
-/// Info Image Props
 interface InfoImageBoxProps {
   title: string;
   subTitle: string;
@@ -14,32 +14,32 @@ function InfoImageBox(props: InfoImageBoxProps) {
   const isLeft = (position ?? "left") === "left"; // Image position
 
   return (
-    <Grid container columnSpacing={15}>
-      {isLeft && <Grid xs={6} item children={<InfoImage image={image} />} />}
-      <Grid item xs={6}>
+    <Grid
+      direction="row"
+      sx={{
+        [theme.breakpoints.down("md")]: {
+          flexDirection: "column",
+        },
+      }}
+      container
+      columnSpacing={8}
+    >
+      {isLeft && <Grid item xs children={<InfoImage image={image} />} />}
+      <Grid item xs>
         <div data-aos="fade-up" data-aos-delay="100">
-          <Grid container direction="column" rowSpacing={1}>
-            <Grid
-              item
-              children={<Typography variant="h3" children={title} />}
+          <Stack direction="column" spacing={2}>
+            <Typography variant="h3" textAlign="start" children={title} />
+            <Typography
+              variant="subtitle1"
+              fontWeight="100"
+              color="black"
+              children={subTitle}
+              textAlign="start"
             />
-            <Grid
-              item
-              children={
-                <Typography
-                  variant="subtitle1"
-                  fontWeight="100"
-                  color="black"
-                  children={subTitle}
-                />
-              }
-            />
-          </Grid>
+          </Stack>
         </div>
       </Grid>
-      {!isLeft && (
-        <Grid item xs={6} children={<InfoImage end image={image} />} />
-      )}
+      {!isLeft && <Grid item xs children={<InfoImage image={image} end />} />}
     </Grid>
   );
 }
@@ -47,27 +47,26 @@ function InfoImageBox(props: InfoImageBoxProps) {
 function InfoImage(props: { image: string; end?: boolean }) {
   const { image, end } = props;
   return (
-    <>
-      <div
-        data-aos="fade-up"
-        data-aos-delay="200"
-        style={{
-          justifyContent: end ? "end" : "start",
-          display: "flex",
-        }}
-      >
-        <img
-          style={{ position: "absolute" }}
-          src={image}
-          height={300}
-          width={400}
-        />
-      </div>
+    <div
+      data-aos="fade-up"
+      data-aos-delay="200"
+      style={{
+        display: "flex",
+        justifyContent: end ? "end" : "start",
+        maxWidth: 500,
+        height: 400,
+        minWidth: 200,
+      }}
+    >
       <img
-        height={400}
+        src={image}
+        style={{ position: "absolute", width: "90%", height: "70%" }}
+      />
+      <img
+        style={{ maxHeight: "100%", maxWidth: "100%" }}
         src="https://buildertrend.com/wp-content/uploads/2022/11/Value-Prop_Stand-out_Pattern.svg"
       />
-    </>
+    </div>
   );
 }
 export default InfoImageBox;

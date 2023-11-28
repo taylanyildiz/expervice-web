@@ -5,6 +5,7 @@ import { useRef } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "@Store/index";
 import ERouter from "@Routes/router_enum";
+import SummaryDrawer from "./components/SummaryDrawer";
 
 function CommonLayout() {
   /// Ref of scroll
@@ -21,6 +22,7 @@ function CommonLayout() {
       <CommonAppBar />
       <div ref={ref} style={{ flex: 1 }} children={<Outlet />} />
       <CommonFooter scrollRef={ref} />
+      <SummaryDrawer />
     </div>
   );
 }

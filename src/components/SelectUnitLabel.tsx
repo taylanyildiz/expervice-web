@@ -63,6 +63,7 @@ function SelectUnitLabel(props: SelectUnitLabelProps) {
       loading
       value={option}
       options={options}
+      clearIcon={false}
       isOptionEqualToValue={(option, value) => option?.id === value?.id}
       getOptionLabel={(option) => option.name ?? ""}
       onChange={(_, value) => onChanged(value)}

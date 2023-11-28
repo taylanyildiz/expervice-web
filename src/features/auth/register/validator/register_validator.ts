@@ -33,7 +33,6 @@ export const registerBillingValidation = object({
     cvc: string().required().min(3, "Invalid cvc"),
     expire: mixed().test("valid", "Invalid expire", function (val: any) {
         const newValue = val?.replace(/\//g, "");
-        console.log(newValue);
         const length = newValue?.length;
         return length === 4;
     })

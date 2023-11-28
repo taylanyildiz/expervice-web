@@ -3,11 +3,15 @@ import { createSlice } from "@reduxjs/toolkit"
 /// Summary store props
 interface Props {
     leftSideBarStatus: boolean,
+    commonSideBar: boolean,
+    summarySidebar: boolean,
 }
 
 /// Summary initial states
 const initialState: Props = {
     leftSideBarStatus: true,
+    commonSideBar: false,
+    summarySidebar: false,
 }
 
 
@@ -18,9 +22,15 @@ const summary = createSlice({
     reducers: {
         setLeftSideBarStatus: (state, { payload }) => {
             state.leftSideBarStatus = payload;
+        },
+        setCommonSideBar: (state, { payload }) => {
+            state.commonSideBar = payload;
+        },
+        setSummarySideBar: (state, { payload }) => {
+            state.summarySidebar = payload;
         }
     }
 });
 
 export default summary.reducer;
-export const { setLeftSideBarStatus } = summary.actions;
+export const { setLeftSideBarStatus, setCommonSideBar, setSummarySideBar } = summary.actions;
