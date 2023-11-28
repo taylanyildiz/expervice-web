@@ -5,7 +5,7 @@ import Colors from "@Themes/colors";
 
 function ContactInfo() {
   return (
-    <Grid container direction="column" rowSpacing={3}>
+    <Grid container rowSpacing={3}>
       <Grid
         item
         children={
@@ -37,7 +37,7 @@ function ContactInfo() {
           />
         }
       />
-      <Grid item>
+      <Grid item xs={12}>
         <Grid
           container
           columnSpacing={2}

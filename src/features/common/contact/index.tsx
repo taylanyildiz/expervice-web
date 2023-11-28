@@ -8,10 +8,10 @@ function ContactPage() {
     <>
       <Grid container rowSpacing={10}>
         <Grid item xs={12} children={<ContactBox />} />
-        <Grid item xs={12} px={20}>
-          <Grid container>
-            <Grid item xs={7} children={<ContactInfo />} />
-            <Grid item xs={5} children={<ContactFormBox />} />
+        <Grid item xs={12} px={10}>
+          <Grid container columnSpacing={10} rowSpacing={4}>
+            <Grid item xs children={<ContactInfo />} />
+            <Grid item xs children={<ContactFormBox />} />
           </Grid>
         </Grid>
       </Grid>

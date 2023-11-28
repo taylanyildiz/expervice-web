@@ -30,12 +30,15 @@ import { useCustomerDialog } from "@Features/summary/users/customer-users/helper
 import { useFormDialog } from "@Features/summary/forms/helper/form_helper";
 import { useProfileDialog } from "@Features/summary/profile/helper/profile_helper";
 import ApartmentIcon from "@mui/icons-material/Apartment";
+import MenuIcon from "@mui/icons-material/Menu";
 import {
   useAccount,
   useCompanyDialog,
 } from "@Features/summary/company/helper/company_helper";
 import { useDialog } from "@Utils/hooks/dialog_hook";
 import VisibilityComp from "@Components/VisibilityComp";
+import theme from "@Themes/index";
+import { setSummarySideBar } from "@Store/summary_store";
 
 function SummaryAppBar() {
   /// Navigate
@@ -76,7 +79,15 @@ function SummaryAppBar() {
     >
       <Grid container alignItems="center">
         <Grid item sx={{ flexGrow: 1 }}>
-          <Grid container columnSpacing={5}>
+          <Grid
+            sx={{
+              [theme.breakpoints.down("md")]: {
+                display: "none",
+              },
+            }}
+            container
+            columnSpacing={5}
+          >
             {/* Jobs */}
             <Grid item>
               <MenuCustomLink
@@ -135,6 +146,23 @@ function SummaryAppBar() {
                 ]}
               />
             </Grid>
+          </Grid>
+          <Grid
+            item
+            sx={{
+              [theme.breakpoints.up("md")]: {
+                display: "none",
+              },
+            }}
+          >
+            <IconButton
+              onClick={() => {
+                dispatch(setSummarySideBar(true));
+              }}
+              sx={{ color: "white" }}
+            >
+              <MenuIcon sx={{ height: 30, width: 30 }} />
+            </IconButton>
           </Grid>
         </Grid>
         <Grid item>

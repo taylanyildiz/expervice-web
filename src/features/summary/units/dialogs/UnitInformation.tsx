@@ -9,6 +9,7 @@ import {
   TextQRField,
   PrimaryButton,
   VisibilityComp,
+  DisabledComp,
 } from "@Components/index";
 import { Box, Grid, IconButton, Typography } from "@mui/material";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
@@ -19,6 +20,7 @@ import UnitStatusBox from "./UnitStatusBox";
 import { useJobDialog } from "@Features/summary/jobs/helper/job_helper";
 import { getOnlyDate, useLocationDialog } from "@Utils/functions";
 import { LatLng } from "@Components/SelectLocation";
+import { useAccount } from "@Features/summary/company/helper/company_helper";
 
 function Header(props: { unit: Unit }) {
   const unit = props.unit;
@@ -73,6 +75,9 @@ function UnitInformation(props: {
 }) {
   const { formik } = props;
 
+  /// Account store
+  const { isInternal, isOwner } = useAccount();
+
   /// Copy customer address
   const onCopyAddress = () => {
     const customer = formik.values?.customer;
@@ -90,127 +95,137 @@ function UnitInformation(props: {
   return (
     <>
       <Header unit={formik.values} />
-      <Grid container mt={2} columnSpacing={3}>
-        <Grid item xs={7}>
-          <Grid container>
-            <Grid item xs={12}>
-              <TextOutlineField
-                fullWidth
-                name="name"
-                label="Unit Name"
-                value={formik.values.name}
-                onChange={formik.handleChange}
-                error={Boolean(formik.errors.name && formik.touched.name)}
-                helperText={formik.touched.name && formik.errors.name}
-              />
+      <Box>
+        <DisabledComp disabled={!(isInternal || isOwner)}>
+          <Grid container mt={2} columnSpacing={3}>
+            <Grid item xs={7}>
+              <Grid container>
+                <Grid item xs={12}>
+                  <TextOutlineField
+                    fullWidth
+                    name="name"
+                    label="Unit Name"
+                    value={formik.values.name}
+                    onChange={formik.handleChange}
+                    error={Boolean(formik.errors.name && formik.touched.name)}
+                    helperText={formik.touched.name && formik.errors.name}
+                  />
+                </Grid>
+                <Grid item xs={9.5}>
+                  <SelectCustomer
+                    fullWidth
+                    disabled={!formik.values.availableCustomer}
+                    label="Customer"
+                    onChanged={(customer) => {
+                      formik.setFieldValue("customer", customer);
+                    }}
+                    value={formik.values.customer}
+                    error={Boolean(
+                      formik.errors.customer && formik.touched.customer
+                    )}
+                    helperText={
+                      formik.touched.customer && formik.errors.customer
+                    }
+                  />
+                </Grid>
+                <Grid item xs={2.5} pl={1} alignItems="center" display="flex">
+                  <PrimaryButton
+                    disabled={!Boolean(formik.values.customer)}
+                    variant="text"
+                    children="Copy Address"
+                    fontSize={10}
+                    onClick={onCopyAddress}
+                  />
+                </Grid>
+                <Grid item xs={12} children={<Contract formik={formik} />} />
+                <Grid item xs={12} children={<Address formik={formik} />} />
+              </Grid>
             </Grid>
-            <Grid item xs={9.5}>
-              <SelectCustomer
-                fullWidth
-                disabled={!formik.values.availableCustomer}
-                label="Customer"
-                onChanged={(customer) => {
-                  formik.setFieldValue("customer", customer);
-                }}
-                value={formik.values.customer}
-                error={Boolean(
-                  formik.errors.customer && formik.touched.customer
-                )}
-                helperText={formik.touched.customer && formik.errors.customer}
-              />
+            <Grid item xs={5}>
+              <Grid container>
+                <Grid item xs={12} my={2}>
+                  <UnitStatusButton formik={formik} />
+                </Grid>
+                <Grid item xs={12}>
+                  <SelectUnitSubType
+                    fullWidth
+                    label="Unit Sub Type"
+                    onChanged={(subType) => {
+                      formik.setFieldValue("unit_sub_type", subType);
+                    }}
+                    value={formik.values.unit_sub_type}
+                    error={Boolean(
+                      formik.errors.unit_sub_type &&
+                        formik.touched.unit_sub_type
+                    )}
+                    helperText={
+                      formik.touched.unit_sub_type &&
+                      formik.errors.unit_sub_type
+                    }
+                  />
+                </Grid>
+                <Grid item xs={12}>
+                  <SelectUnitLabel
+                    fullWidth
+                    label="Unit Label"
+                    onChanged={(label) => {
+                      formik.setFieldValue("unit_label", label);
+                    }}
+                    value={formik.values.unit_label}
+                    error={Boolean(
+                      formik.errors.unit_label && formik.touched.unit_label
+                    )}
+                    helperText={
+                      formik.touched.unit_label && formik.errors.unit_label
+                    }
+                  />
+                </Grid>
+                <Grid item xs={12}>
+                  <TextOutlineField
+                    fullWidth
+                    name="identity_number"
+                    label="Identity Number"
+                    value={formik.values.identity_number}
+                    onChange={formik.handleChange}
+                    error={Boolean(
+                      formik.errors.identity_number &&
+                        formik.touched.identity_number
+                    )}
+                    helperText={
+                      formik.touched.identity_number &&
+                      formik.errors.identity_number
+                    }
+                  />
+                </Grid>
+                <Grid item xs={12}>
+                  <TextOutlineField
+                    fullWidth
+                    name="imei"
+                    label="IMEI"
+                    value={formik.values.imei}
+                    onChange={formik.handleChange}
+                    error={Boolean(formik.errors.imei && formik.touched.imei)}
+                    helperText={formik.touched.imei && formik.errors.imei}
+                  />
+                </Grid>
+                <Grid item xs={12}>
+                  <TextQRField
+                    fullWidth
+                    name="qr_code"
+                    label="QR Code"
+                    value={formik.values.qr_code}
+                    onChange={formik.handleChange}
+                    error={Boolean(
+                      formik.errors.qr_code && formik.touched.qr_code
+                    )}
+                    helperText={formik.touched.qr_code && formik.errors.qr_code}
+                  />
+                </Grid>
+              </Grid>
             </Grid>
-            <Grid item xs={2.5} pl={1} alignItems="center" display="flex">
-              <PrimaryButton
-                disabled={!Boolean(formik.values.customer)}
-                variant="text"
-                children="Copy Address"
-                fontSize={10}
-                onClick={onCopyAddress}
-              />
-            </Grid>
-            <Grid item xs={12} children={<Contract formik={formik} />} />
-            <Grid item xs={12} children={<Address formik={formik} />} />
           </Grid>
-        </Grid>
-        <Grid item xs={5}>
-          <Grid container>
-            <Grid item xs={12} my={2}>
-              <UnitStatusButton formik={formik} />
-            </Grid>
-            <Grid item xs={12}>
-              <SelectUnitSubType
-                fullWidth
-                label="Unit Sub Type"
-                onChanged={(subType) => {
-                  formik.setFieldValue("unit_sub_type", subType);
-                }}
-                value={formik.values.unit_sub_type}
-                error={Boolean(
-                  formik.errors.unit_sub_type && formik.touched.unit_sub_type
-                )}
-                helperText={
-                  formik.touched.unit_sub_type && formik.errors.unit_sub_type
-                }
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <SelectUnitLabel
-                fullWidth
-                label="Unit Label"
-                onChanged={(label) => {
-                  formik.setFieldValue("unit_label", label);
-                }}
-                value={formik.values.unit_label}
-                error={Boolean(
-                  formik.errors.unit_label && formik.touched.unit_label
-                )}
-                helperText={
-                  formik.touched.unit_label && formik.errors.unit_label
-                }
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <TextOutlineField
-                fullWidth
-                name="identity_number"
-                label="Identity Number"
-                value={formik.values.identity_number}
-                onChange={formik.handleChange}
-                error={Boolean(
-                  formik.errors.identity_number &&
-                    formik.touched.identity_number
-                )}
-                helperText={
-                  formik.touched.identity_number &&
-                  formik.errors.identity_number
-                }
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <TextOutlineField
-                fullWidth
-                name="imei"
-                label="IMEI"
-                value={formik.values.imei}
-                onChange={formik.handleChange}
-                error={Boolean(formik.errors.imei && formik.touched.imei)}
-                helperText={formik.touched.imei && formik.errors.imei}
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <TextQRField
-                fullWidth
-                name="qr_code"
-                label="QR Code"
-                value={formik.values.qr_code}
-                onChange={formik.handleChange}
-                error={Boolean(formik.errors.qr_code && formik.touched.qr_code)}
-                helperText={formik.touched.qr_code && formik.errors.qr_code}
-              />
-            </Grid>
-          </Grid>
-        </Grid>
-      </Grid>
+        </DisabledComp>
+      </Box>
     </>
   );
 }
