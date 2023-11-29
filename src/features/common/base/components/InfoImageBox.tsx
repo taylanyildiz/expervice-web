@@ -1,5 +1,5 @@
 import theme from "@Themes/index";
-import { Grid, Stack, Typography } from "@mui/material";
+import { Grid, Stack, Typography, useMediaQuery } from "@mui/material";
 import "aos/dist/aos.css";
 
 interface InfoImageBoxProps {
@@ -12,6 +12,7 @@ interface InfoImageBoxProps {
 function InfoImageBox(props: InfoImageBoxProps) {
   const { title, subTitle, position, image } = props;
   const isLeft = (position ?? "left") === "left"; // Image position
+  const matches = useMediaQuery("(max-width:1200px)");
 
   return (
     <Grid
@@ -24,7 +25,9 @@ function InfoImageBox(props: InfoImageBoxProps) {
       container
       columnSpacing={8}
     >
-      {isLeft && <Grid item xs children={<InfoImage image={image} />} />}
+      {(isLeft || matches) && (
+        <Grid item xs children={<InfoImage image={image} />} />
+      )}
       <Grid item xs>
         <div data-aos="fade-up" data-aos-delay="100">
           <Stack direction="column" spacing={2}>
@@ -39,7 +42,9 @@ function InfoImageBox(props: InfoImageBoxProps) {
           </Stack>
         </div>
       </Grid>
-      {!isLeft && <Grid item xs children={<InfoImage image={image} end />} />}
+      {!isLeft && !matches && (
+        <Grid item xs children={<InfoImage image={image} end />} />
+      )}
     </Grid>
   );
 }

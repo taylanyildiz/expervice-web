@@ -60,6 +60,7 @@ function SummaryAppBar() {
     if (!confirm) return;
     dispatch(logout());
     navigate(ERouter.Base);
+    navigate(0);
   };
 
   const { openJobDialog } = useJobDialog();
