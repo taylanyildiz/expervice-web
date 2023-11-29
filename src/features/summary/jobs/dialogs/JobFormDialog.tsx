@@ -2,12 +2,13 @@ import PrimaryButton from "@Components/PrimaryButton";
 import { DialogCustomTitle } from "@Components/dialogs";
 import JobForm from "@Models/job/job_form";
 import JobRepository from "@Repo/job_repository";
-import { Box, DialogContent, Grid, Typography } from "@mui/material";
+import { Box, DialogContent, Stack, Typography } from "@mui/material";
 import { useEffect, useMemo, useState } from "react";
 import { EFormStatuses } from "../entities/job_enums";
 import VisibilityComp from "@Components/VisibilityComp";
 import { useDialog } from "@Utils/hooks/dialog_hook";
 import LoadingComp from "@Components/LoadingComp";
+import { useAccount } from "@Features/summary/company/helper/company_helper";
 
 interface JobFormDialogProps {
   form: JobForm;
@@ -15,6 +16,9 @@ interface JobFormDialogProps {
 
 function JobFormDialog(props: JobFormDialogProps) {
   const { form } = props;
+
+  /// Account store
+  const { isInternal, isOwner } = useAccount();
 
   /// Reject button visibility
   const btnVisibility = useMemo(() => {
@@ -122,45 +126,48 @@ function JobFormDialog(props: JobFormDialogProps) {
       <DialogContent>
         <Box height={600} mt={1} p={1} sx={{ backgroundColor: "white" }}>
           <LoadingComp loading={loading}>
-            <Grid direction="column" container height="100%" rowSpacing={1}>
-              <Grid item>
-                <Grid
-                  container
-                  columnSpacing={1}
-                  justifyContent="end"
-                  alignItems="center"
-                >
-                  <Grid item>
-                    <Typography fontSize={13} children={desc} />
-                  </Grid>
-                  <Grid item>
-                    <PrimaryButton
-                      fontWeight="normal"
-                      variant="outlined"
-                      children={title}
-                      onClick={handleConfirm}
+            <Stack direction="column" height="100%">
+              <Stack
+                direction="row"
+                alignItems="center"
+                justifyContent="space-between"
+              >
+                <Typography variant="h1" fontSize={15} children="FORM" />
+                <VisibilityComp visibility={isOwner || isInternal}>
+                  <Stack direction="row" spacing={1} alignItems="center">
+                    <Typography
+                      fontWeight={500}
+                      fontSize={13}
+                      children={desc}
                     />
-                  </Grid>
-                  <Grid item>
-                    <VisibilityComp visibility={btnVisibility}>
+                    <Stack direction="row" spacing={1}>
                       <PrimaryButton
                         fontWeight="normal"
                         variant="outlined"
-                        children="Reject Signature"
-                        onClick={handleReject}
+                        children={title}
+                        onClick={handleConfirm}
                       />
-                    </VisibilityComp>
-                  </Grid>
-                </Grid>
-              </Grid>
-              <Grid item flex={1}>
-                <embed
-                  width="100%"
-                  height="100%"
-                  src={`data:application/pdf;base64,${base64}`}
-                />
-              </Grid>
-            </Grid>
+                      <VisibilityComp visibility={btnVisibility}>
+                        <PrimaryButton
+                          fontWeight="normal"
+                          variant="contained"
+                          backgroundColor="red"
+                          color="white"
+                          children="Reject Signature"
+                          onClick={handleReject}
+                        />
+                      </VisibilityComp>
+                    </Stack>
+                  </Stack>
+                </VisibilityComp>
+              </Stack>
+              <embed
+                width="100%"
+                height="100%"
+                style={{ marginTop: 10 }}
+                src={`data:application/pdf;base64,${base64}`}
+              />
+            </Stack>
           </LoadingComp>
         </Box>
       </DialogContent>

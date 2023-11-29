@@ -94,7 +94,7 @@ const theme = createTheme({
             defaultProps: {
                 disableGutters: true,
                 sx: {
-                    paddingX: 10,
+                    paddingX: 4,
                     paddingTop: 3,
                     paddingBottom: 1,
                     backgroundColor: 'white',

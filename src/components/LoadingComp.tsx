@@ -17,6 +17,8 @@ function LoadingComp(props: LoadingCompProps) {
         height={height ?? "100%"}
         justifyContent="center"
         alignItems="center"
+        overflow="hidden"
+        position="inherit"
       >
         <CircularProgress />
       </Box>

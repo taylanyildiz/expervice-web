@@ -81,8 +81,8 @@ function CompanyDialog() {
     validationSchema: object({
       name: string().required().min(2, "Invalid name"),
       web_site: string().matches(urlRegex, "Invalid web site"),
-      phone_number: string().min(2, "Invalid phone"),
-      fax_number: string().min(2, "Invalid fax"),
+      phone_number: string().nullable().min(2, "Invalid phone"),
+      fax_number: string().nullable().min(2, "Invalid fax"),
       company_address: object({
         country: object().nullable().required(),
         state: object().required(),

@@ -10,6 +10,7 @@ import "../../../assets/css/summary.css";
 import { MessagePayload } from "firebase/messaging";
 import SnackCustomBar from "@Utils/snack_custom_bar";
 import { setDeviceToken } from "@Store/account_store";
+import SummaryDrawer from "./components/SummaryDrawer";
 
 function SummaryLayout() {
   /// Account store
@@ -46,7 +47,6 @@ function SummaryLayout() {
   useEffect(() => {
     onMessageListener().then((payload) => {
       setLastMessage(payload);
-      console.log(`Payload: ${payload}`);
       SnackCustomBar.notification(payload);
     });
   }, [lastMessage]);
@@ -55,6 +55,7 @@ function SummaryLayout() {
     <div className="summary">
       <SummaryAppBar />
       <Outlet />
+      <SummaryDrawer />
     </div>
   );
 }
