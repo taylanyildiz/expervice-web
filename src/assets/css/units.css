@@ -18,11 +18,15 @@
   flex-direction: row;
   overflow-y: hidden;
   height: calc(100vh - 161px);
+  position: relative;
 }
 
 .units-map-list {
-  flex: 2;
   overflow-y: scroll;
+  background-color: white;
+  width: 300px;
+  z-index: 10;
+  height: 100%;
 }
 
 .units-map {

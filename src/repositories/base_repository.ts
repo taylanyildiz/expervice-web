@@ -2,8 +2,10 @@
 import { logout, setAccessToken } from "@Store/account_store";
 import { store } from "@Store/index";
 import { Axios, AxiosRequestConfig, AxiosResponse, InternalAxiosRequestConfig } from "axios";
+
+type Function = (e: any) => void;
 let isRefreshing = false;
-let refreshSubscribers: ((e: any) => void)[] = [];
+let refreshSubscribers: Function[] = [];
 
 interface SuccessParams {
     success: boolean;
@@ -98,6 +100,7 @@ abstract class BaseRepository extends Axios {
     }
 
     /// Reponse error
+    /// Only [401] Authorization Error
     private async onRejected(error: any): Promise<any> {
         const refresh_token = store.getState().account.refreshToken;
         const originalRequest = error.config;
@@ -120,12 +123,14 @@ abstract class BaseRepository extends Axios {
             if (response.status === 200) {
                 const access_token = response.data['data']['access_token'];
                 store.dispatch(setAccessToken(access_token));
+
                 originalRequest.headers['x-access-token'] = access_token;
                 refreshSubscribers.forEach((callback) => callback(access_token));
                 refreshSubscribers = [];
                 return this.request(originalRequest);
             }
         } catch (_) {
+            store.dispatch(logout());
             return Object.assign({}, error.response, { success: false });
         } finally {
             isRefreshing = false;

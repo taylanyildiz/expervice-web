@@ -70,7 +70,7 @@ function UnitsTablePage() {
       <DataGrid
         pagination
         checkboxSelection={isInternal || isOwner}
-        disableRowSelectionOnClick={!(isInternal || isOwner)}
+        disableRowSelectionOnClick
         loading={layzLoading}
         disableColumnMenu
         sortingMode="server"

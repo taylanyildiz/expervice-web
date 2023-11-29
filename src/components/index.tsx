@@ -40,3 +40,4 @@ export { default as Condition2Comp } from "./Condition2Comp";
 export { default as FileCustomDrop } from "./FileCustomDrop";
 export { DialogCustomTitle, DialogCustomActions } from "./dialogs";
 export { default as ImageCropper } from "./ImageCropper";
+export { default as DisabledComp } from "./DisabledComp";

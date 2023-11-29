@@ -2,19 +2,17 @@ import GMap from "@Components/GMap";
 import UnitRepository from "@Repo/unit_repository";
 import { AppDispatch } from "@Store/index";
 import { setUnitFilter, setUnitId } from "@Store/unit_store";
-import { Box, Divider, Grid, List, Stack, Typography } from "@mui/material";
+import { Divider, List, Typography } from "@mui/material";
 import { ReactNode, useEffect, useMemo, useRef, useState } from "react";
 import { useDispatch } from "react-redux";
-import { useUnit, useUnitDialog } from "../helper/unit_helper";
+import { useUnit } from "../helper/unit_helper";
 import UnitListItem from "../components/UnitListItem";
 import { InfoWindow, Marker } from "@react-google-maps/api";
 import Unit from "@Models/units/unit";
-import VisibilityComp from "@Components/VisibilityComp";
 import { EJobType } from "@Features/summary/jobs/entities/job_enums";
 import LoadingComp from "@Components/LoadingComp";
 import Condition2Comp from "@Components/Condition2Comp";
-import ReceiptLongIcon from "@mui/icons-material/ReceiptLong";
-import PrimaryButton from "@Components/PrimaryButton";
+import UnitEmptyBox from "../components/UnitEmptyBox";
 
 function UnitsMapPage() {
   /// Unit repo
@@ -22,9 +20,6 @@ function UnitsMapPage() {
 
   /// Dispatch
   const dispatch: AppDispatch = useDispatch<AppDispatch>();
-
-  /// Unit dialog
-  const { openUnitDialog } = useUnitDialog();
 
   /// Unit store
   const {
@@ -35,6 +30,9 @@ function UnitsMapPage() {
 
   /// Units with [display]
   const [units, setUnits] = useState<(Unit & { display: boolean })[]>([]);
+
+  /// Hast lat lng units
+  const filterUnits = units.filter((e) => Boolean(e.latitude && e.longitude));
 
   useEffect(() => {
     const units = rows.map((e) => ({
@@ -57,46 +55,38 @@ function UnitsMapPage() {
 
   /// Markers of units
   const markers: ReactNode[] = useMemo(() => {
-    return units
-      .filter((e) => Boolean(e.latitude && e.longitude))
-      .map((e, i) => {
-        const hasFault = Boolean(e.job);
-        const isFault = e.job?.type_id === EJobType.Fault;
-        const color = hasFault ? (isFault ? "red" : "blue") : "green";
-        return (
-          <Marker
-            key={e.id}
-            position={{
-              lat: parseFloat(e.latitude!),
-              lng: parseFloat(e.longitude!),
-            }}
-            onClick={() => {
-              handleTogglePin(e, i);
-            }}
-            icon={{
-              url: `http://maps.google.com/mapfiles/ms/icons/${color}-dot.png`,
-            }}
-          >
-            <VisibilityComp visibility={e.display}>
-              <InfoWindow
-                onCloseClick={() => {
-                  handleTogglePin(e, i);
-                }}
-                position={{
-                  lat: parseFloat(e.latitude!),
-                  lng: parseFloat(e.longitude!),
-                }}
-              >
-                <Grid container>
-                  <Grid item xs={12}>
-                    <Typography variant="h1" fontSize={13} children={e.name} />
-                  </Grid>
-                </Grid>
-              </InfoWindow>
-            </VisibilityComp>
-          </Marker>
-        );
-      });
+    return filterUnits.map((e, i) => {
+      const hasFault = Boolean(e.job);
+      const isFault = e.job?.type_id === EJobType.Fault;
+      const color = hasFault ? (isFault ? "red" : "blue") : "green";
+      const position = {
+        lat: parseFloat(e.latitude!),
+        lng: parseFloat(e.longitude!),
+      };
+      return (
+        <Marker
+          key={e.id}
+          position={position}
+          onClick={() => {
+            handleTogglePin(e, i);
+          }}
+          icon={{
+            url: `http://maps.google.com/mapfiles/ms/icons/${color}-dot.png`,
+          }}
+        >
+          {e.display && (
+            <InfoWindow
+              position={position}
+              onCloseClick={() => {
+                handleTogglePin(e, i);
+              }}
+            >
+              <Typography variant="h1" fontSize={13} children={e.name} />
+            </InfoWindow>
+          )}
+        </Marker>
+      );
+    });
   }, [units]);
 
   useEffect(() => {
@@ -123,8 +113,9 @@ function UnitsMapPage() {
         <LoadingComp loading={layzLoading}>
           <Condition2Comp
             showFirst={units.length !== 0}
+            secondComp={<UnitEmptyBox />}
             firstComp={units.map((e, i) => (
-              <List>
+              <List disablePadding>
                 <UnitListItem
                   key={e.id}
                   unit={e}
@@ -139,31 +130,6 @@ function UnitsMapPage() {
                 <Divider component="li" />
               </List>
             ))}
-            secondComp={
-              <Box
-                height="100%"
-                width="100%"
-                display="flex"
-                alignItems="center"
-                justifyContent="center"
-              >
-                <Stack>
-                  <ReceiptLongIcon
-                    sx={{ color: "black", height: 100, width: 100 }}
-                  />
-                  <Typography children="No Found Unit" />
-                  <PrimaryButton
-                    fontWeight="normal"
-                    color="white"
-                    variant="contained"
-                    children="Add Unit"
-                    onClick={() => {
-                      openUnitDialog();
-                    }}
-                  />
-                </Stack>
-              </Box>
-            }
           />
         </LoadingComp>
       </div>
@@ -171,8 +137,12 @@ function UnitsMapPage() {
         <GMap
           width="100%"
           height="100%"
-          center={{ lat: -40, lng: 20 }}
+          zoom={30}
           children={markers}
+          locations={filterUnits?.map((e) => ({
+            lat: parseFloat(e.latitude!),
+            lng: parseFloat(e.longitude!),
+          }))}
         />
       </div>
     </div>

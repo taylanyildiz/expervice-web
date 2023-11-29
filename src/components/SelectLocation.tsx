@@ -1,5 +1,5 @@
 import { GoogleMap, Marker, useJsApiLoader } from "@react-google-maps/api";
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 
 export type LatLng = { lat: number; lng: number };
 
@@ -18,9 +18,14 @@ function SelectLocation(props: SelectLocationProps) {
     googleMapsApiKey: import.meta.env.VITE_GOOGLE_MAP_KEY,
   });
 
+  const [map, setMap] = useState<google.maps.Map | null>(null);
+
   /// Selected marker
   const marker = useMemo(() => {
     if (!value) return null;
+    const bounds = new window.google.maps.LatLngBounds();
+    if (value) bounds.extend(value);
+    map?.fitBounds(bounds);
     return <Marker position={{ lat: value.lat, lng: value.lng }} />;
   }, [value]);
 
@@ -28,7 +33,9 @@ function SelectLocation(props: SelectLocationProps) {
 
   const onLoad = (map: google.maps.Map) => {
     const bounds = new window.google.maps.LatLngBounds();
+    if (value) bounds.extend(value);
     map.fitBounds(bounds);
+    setMap(map);
   };
 
   const onUnmount = (_: google.maps.Map) => {
@@ -45,7 +52,7 @@ function SelectLocation(props: SelectLocationProps) {
         onChanged({ lat: lat, lng: long });
       }}
       center={value ?? { lat: 30, lng: 33 }}
-      zoom={11}
+      zoom={10}
       onLoad={onLoad}
       onUnmount={onUnmount}
     >

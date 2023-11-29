@@ -1,31 +1,52 @@
 import { GoogleMap, useJsApiLoader } from "@react-google-maps/api";
-import { ReactNode } from "react";
+import { ReactNode, useEffect, useState } from "react";
+import { LatLng } from "./SelectLocation";
 
 interface GMapProps {
   zoom?: number;
-  center: { lat: number; lng: number };
+  center?: { lat: number; lng: number };
   height?: number | string;
   width?: number | string;
   children?: ReactNode;
+  onLoad?: (bounds: google.maps.LatLngBounds) => void;
+  locations?: LatLng[];
 }
 
 function GMap(props: GMapProps) {
-  const { zoom, center, height, width, children } = props;
+  const {
+    zoom,
+    center,
+    height,
+    width,
+    children,
+    onLoad: onLoadMap,
+    locations,
+  } = props;
 
+  /// Map state
+  const [map, setMap] = useState<google.maps.Map | null>(null);
+
+  /// Listen locations
+  useEffect(() => {
+    if (!locations || !map) return;
+    const bounds = new window.google.maps.LatLngBounds();
+    for (const location of locations) bounds.extend(location);
+    map.fitBounds(bounds);
+  }, [locations]);
+
+  /// Load map
   const { isLoaded } = useJsApiLoader({
     id: "google-map-script",
     googleMapsApiKey: import.meta.env.VITE_GOOGLE_MAP_KEY,
   });
-
   if (!isLoaded) return <></>;
 
-  const onLoad = (map: google.maps.Map) => {
+  /// Load map
+  const onLoad = async (map: google.maps.Map) => {
     const bounds = new window.google.maps.LatLngBounds();
+    onLoadMap?.(bounds);
     map.fitBounds(bounds);
-  };
-
-  const onUnmount = (_: google.maps.Map) => {
-    // do your stuff before map is unmounted
+    setMap(map);
   };
 
   return (
@@ -34,11 +55,8 @@ function GMap(props: GMapProps) {
       center={center}
       zoom={zoom}
       onLoad={onLoad}
-      onUnmount={onUnmount}
-    >
-      {/* Child components, such as markers, info windows, etc. */}
-      {children}
-    </GoogleMap>
+      children={children}
+    />
   );
 }
 

@@ -17,6 +17,11 @@
   display: flex;
 }
 
+.summary-right-side {
+  flex: 1;
+  overflow-x: hidden;
+}
+
 .summary-side-bar {
   height: calc(100vh - 50px);
   background-color: white;
@@ -67,9 +72,9 @@
 
 .summary-base-groups {
   top: 60px;
+  min-width: 250px;
   border-radius: 3px;
   height: calc(100vh - 70px);
-  margin-left: 10px;
   background-color: white;
   position: sticky;
 }
@@ -79,4 +84,17 @@
   display: flex;
   overflow: hidden;
   transform-origin: center left;
+}
+
+@media only screen and (max-width: 900px) {
+  .summary-side-bar {
+    position: fixed;
+    z-index: 300;
+  }
+  .summary-base-groups {
+    position: inherit;
+  }
+  .summary-right-side {
+    margin-left: 40px;
+  }
 }

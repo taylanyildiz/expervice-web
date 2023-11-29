@@ -9,6 +9,7 @@ import { AppDispatch, RootState } from "@Store/index";
 import ProductionRepository from "@Repo/production_repository";
 import { useEffect, useState } from "react";
 import LoadingComp from "@Components/LoadingComp";
+import theme from "@Themes/index";
 
 function PricingPage() {
   const { production } = useSelector((state: RootState) => state.production);
@@ -39,25 +40,31 @@ function PricingPage() {
 
   return (
     <>
-      <Grid container justifyContent="center" pt={5} px={20} rowSpacing={3}>
-        <Grid
-          item
-          px={10}
-          xs={12}
-          children={
-            <Typography
-              variant="h1"
-              textAlign="center"
-              children="The right pricing package for every construction team"
-            />
-          }
-        />
+      <Grid container pt={5} justifyContent="center" rowSpacing={10}>
+        <Grid item xs={12}>
+          <Typography
+            px={25}
+            variant="h1"
+            textAlign={"center"}
+            sx={{
+              [theme.breakpoints.only("xs")]: {
+                px: 10,
+              },
+            }}
+            children={`The right pricing package for every construction team`}
+          />
+        </Grid>
         <Grid item>
           <LoadingComp loading={loading}>
-            <Grid container spacing={5} alignItems="end">
+            <Grid
+              container
+              spacing={5}
+              alignItems="end"
+              justifyContent="center"
+            >
               {plans.map((plan, index) => {
                 return (
-                  <Grid key={plan.id} item>
+                  <Grid key={`plan-${plan.id}`} item>
                     <PricingBox
                       best={index === 1}
                       title={plan.translations?.name?.en}

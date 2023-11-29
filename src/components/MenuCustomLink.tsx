@@ -29,10 +29,23 @@ interface LinkProps {
   children?: LinkChildren[];
   withIcon?: boolean;
   visibility?: boolean;
+  fontWeight?: string | number | "bold" | "normal";
+  onClick?: () => void;
+  border?: string;
 }
 
 function MenuCustomLink(props: LinkProps) {
-  let { title, to, children, color, withIcon, visibility } = props;
+  let {
+    title,
+    to,
+    children,
+    color,
+    withIcon,
+    visibility,
+    fontWeight,
+    onClick,
+    border,
+  } = props;
   withIcon ??= true;
   if (!(visibility ?? true)) return <></>;
 
@@ -46,6 +59,7 @@ function MenuCustomLink(props: LinkProps) {
   ) => {
     const target = e.currentTarget;
     setTarget(target);
+    onClick?.();
   };
 
   /// Close menu handle
@@ -59,6 +73,7 @@ function MenuCustomLink(props: LinkProps) {
         <Typography
           className="link-router-typografy"
           color={color}
+          fontWeight={fontWeight}
           sx={{
             ":hover": {
               color: color,
@@ -81,7 +96,12 @@ function MenuCustomLink(props: LinkProps) {
 
   return (
     <>
-      <div onClick={onOpenMenuHandle}>
+      <div
+        style={{
+          border: border,
+        }}
+        onClick={onOpenMenuHandle}
+      >
         {to ? (
           <Link className="link-router" to={to ?? "#"}>
             {linktHeader}
