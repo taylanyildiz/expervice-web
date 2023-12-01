@@ -7,6 +7,8 @@ import SnackCustomBar from "@Utils/snack_custom_bar";
 import JobProcess from "@Features/summary/jobs/entities/job_process";
 import JobUpdate from "@Features/summary/jobs/entities/job_update";
 import { EJobStatuses } from "@Features/summary/jobs/entities/job_enums";
+import { setUnit } from "@Store/unit_store";
+import { isAvailableJobStatus } from "@Features/summary/jobs/helper/job_enum_helper";
 
 class JobRepository extends BaseRepository {
     constructor() {
@@ -82,12 +84,19 @@ class JobRepository extends BaseRepository {
      * Create Job
      */
     public async createJob(job: JobProcess): Promise<Job | null> {
+        const { unit } = store.getState().unit
         const path = "/";
         const response = await this.post(path, job);
         const success = response.success;
         SnackCustomBar.status(response);
         if (!success) return null;
         const data = response.data['data']['job'];
+        if (unit) {
+            store.dispatch(setUnit({
+                ...unit,
+                job: data,
+            }))
+        }
         return data;
     }
 
@@ -153,9 +162,21 @@ class JobRepository extends BaseRepository {
      */
     public async updateJobStatus(id: number, status: EJobStatuses): Promise<Job | null> {
         const path = JobConsts.jobStatus(id, status);
+        const { unit } = store.getState().unit
         const response = await this.put(path);
         SnackCustomBar.status(response);
-        return response.data?.['data']?.['job'];
+        const success = response.success;
+        const data = response.data?.['data']?.['job'];
+        if (success) {
+            const available = isAvailableJobStatus(data.status_id);
+            if (unit) {
+                store.dispatch(setUnit({
+                    ...unit,
+                    job: available ? data : null,
+                }))
+            }
+        }
+        return data;
     }
 }
 

@@ -14,6 +14,7 @@ class SubscriptionRepository extends BaseRepository {
         const path = Subscription.cancel;
         const response = await this.post(path, { reason_id: reasonId, description });
         const success = response.success;
+        SnackCustomBar.status(response);
         return success;
     }
 
@@ -37,6 +38,14 @@ class SubscriptionRepository extends BaseRepository {
     public async upgradePlan(id: number, planId: number): Promise<boolean> {
         const path = Subscription.plan(id, planId);
         const response = await this.put(path);
+        const success = response.success;
+        SnackCustomBar.status(response);
+        return success;
+    }
+
+    public async cancelCancellation(): Promise<boolean> {
+        const path = Subscription.cancelCancellation;
+        const response = await this.post(path);
         const success = response.success;
         SnackCustomBar.status(response);
         return success;

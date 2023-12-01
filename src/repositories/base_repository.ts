@@ -5,7 +5,7 @@ import { Axios, AxiosRequestConfig, AxiosResponse, InternalAxiosRequestConfig } 
 
 type Function = (e: any) => void;
 let isRefreshing = false;
-let refreshSubscribers: Function[] = [];
+let refreshSubscribers: { callback: Function, path: any }[] = [];
 
 interface SuccessParams {
     success: boolean;
@@ -106,9 +106,12 @@ abstract class BaseRepository extends Axios {
         const originalRequest = error.config;
         if (isRefreshing) {
             return new Promise((resolve) => {
-                refreshSubscribers.push((token: string) => {
-                    originalRequest.headers['x-access-token'] = token;
-                    resolve(this.request(originalRequest));
+                refreshSubscribers.push({
+                    callback: (token: string) => {
+                        originalRequest.headers['x-access-token'] = token;
+                        resolve(this.request(originalRequest));
+                    },
+                    path: originalRequest,
                 });
             });
         }
@@ -125,7 +128,7 @@ abstract class BaseRepository extends Axios {
                 store.dispatch(setAccessToken(access_token));
 
                 originalRequest.headers['x-access-token'] = access_token;
-                refreshSubscribers.forEach((callback) => callback(access_token));
+                refreshSubscribers.forEach(({ callback }) => callback(access_token));
                 refreshSubscribers = [];
                 return this.request(originalRequest);
             }

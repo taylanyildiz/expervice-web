@@ -72,7 +72,7 @@
 
 .summary-base-groups {
   top: 60px;
-  min-width: 250px;
+  max-width: 250px;
   border-radius: 3px;
   height: calc(100vh - 70px);
   background-color: white;
@@ -93,6 +93,8 @@
   }
   .summary-base-groups {
     position: inherit;
+    max-width: 100%;
+    margin-bottom: 10px;
   }
   .summary-right-side {
     margin-left: 40px;

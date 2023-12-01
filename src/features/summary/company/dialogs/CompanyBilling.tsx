@@ -8,6 +8,8 @@ import { DataGrid } from "@mui/x-data-grid";
 import LocalPrintshopIcon from "@mui/icons-material/LocalPrintshop";
 import EmptyGrid from "@Components/EmptyGrid";
 import SubscriptionInfoBox from "../components/SubscriptionInfoBox";
+import VisibilityComp from "@Components/VisibilityComp";
+import SubscriptionCancelBox from "../components/SubscriptionCancelBox";
 
 function CompanyBilling() {
   /// User repository
@@ -18,6 +20,7 @@ function CompanyBilling() {
 
   /// User store
   const { subscription } = useUser();
+  const isCanceled: boolean = Boolean(subscription?.cancellation_date);
 
   /// Loading state
   const [loading, setLoading] = useState<boolean>(true);
@@ -58,6 +61,9 @@ function CompanyBilling() {
   return (
     <LoadingComp loading={loading} height={400}>
       <Stack direction="column" spacing={3}>
+        <VisibilityComp visibility={isCanceled}>
+          <SubscriptionCancelBox />
+        </VisibilityComp>
         <SubscriptionInfoBox payment={nextPayment} />
         <Stack>
           <Typography variant="h1" fontSize={15} children="Order History" />

@@ -15,12 +15,14 @@ import PaymentOutlinedIcon from "@mui/icons-material/PaymentOutlined";
 import { dateToFormat, iyziParser } from "@Utils/functions";
 import { useDialog } from "@Utils/hooks/dialog_hook";
 import SubscriptionRepository from "@Repo/subscription_repository";
+import VisibilityComp from "@Components/VisibilityComp";
 
 function SubscriptionInfoBox(props: { payment?: Order | null }) {
   const { payment } = props;
 
   /// User store
   const { subscription } = useUser();
+  const isCanceled: boolean = Boolean(subscription?.cancellation_date);
 
   /// Subscription repository
   const subRepo = new SubscriptionRepository();
@@ -74,41 +76,43 @@ function SubscriptionInfoBox(props: { payment?: Order | null }) {
                     children="Expervice Offerings"
                   />
                 </Stack>
-                <Stack
-                  height="100%"
-                  display="flex"
-                  flexDirection="row"
-                  spacing={1}
-                  direction="row"
-                >
-                  <PrimaryButton
-                    height={30}
-                    variant="outlined"
-                    fontWeight="normal"
-                    children="Cancel Subscription"
-                    onClick={openCancelSubscriptionDialog}
-                  />
-                  <PrimaryButton
-                    height={30}
-                    variant="outlined"
-                    fontWeight="normal"
-                    backgroundColor={Colors.primaryLight}
-                    color="white"
-                    children="Manage Subscription"
-                    onClick={openSubscriptionDialog}
-                  />
-                  <Tooltip title="Payment">
-                    <IconButton
-                      disableRipple
-                      disableFocusRipple
-                      disableTouchRipple
-                      sx={{ p: 0, color: "blue" }}
-                      onClick={handlePayment}
-                    >
-                      <PaymentOutlinedIcon />
-                    </IconButton>
-                  </Tooltip>
-                </Stack>
+                <VisibilityComp visibility={!isCanceled}>
+                  <Stack
+                    height="100%"
+                    display="flex"
+                    flexDirection="row"
+                    spacing={1}
+                    direction="row"
+                  >
+                    <PrimaryButton
+                      height={30}
+                      variant="outlined"
+                      fontWeight="normal"
+                      children="Cancel Subscription"
+                      onClick={openCancelSubscriptionDialog}
+                    />
+                    <PrimaryButton
+                      height={30}
+                      variant="outlined"
+                      fontWeight="normal"
+                      backgroundColor={Colors.primaryLight}
+                      color="white"
+                      children="Manage Subscription"
+                      onClick={openSubscriptionDialog}
+                    />
+                    <Tooltip title="Payment">
+                      <IconButton
+                        disableRipple
+                        disableFocusRipple
+                        disableTouchRipple
+                        sx={{ p: 0, color: "blue" }}
+                        onClick={handlePayment}
+                      >
+                        <PaymentOutlinedIcon />
+                      </IconButton>
+                    </Tooltip>
+                  </Stack>
+                </VisibilityComp>
               </Stack>
               <Stack direction="row" justifyContent="space-between">
                 <Stack flex={1} direction="column">

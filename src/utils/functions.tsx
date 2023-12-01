@@ -100,17 +100,22 @@ export async function wait(ms?: number): Promise<void> {
  * Date to Format string
  */
 export function dateToFormat(
-  date: string | Date | null | undefined
+  date: string | Date | null | undefined,
+  onlyDate?: boolean
 ): string | null {
   if (date == null) return null;
-  const options: Intl.DateTimeFormatOptions = {
+  let options: Intl.DateTimeFormatOptions = {
     weekday: "short",
     month: "short",
     day: "numeric",
-    hour: "numeric",
-    minute: "numeric",
     timeZone: "UTC",
   };
+  if (!(onlyDate ?? false)) {
+    options = Object.assign({}, options, {
+      hour: "numeric",
+      minute: "numeric",
+    });
+  }
   if (typeof date === "string") {
     date = new Date(date);
   }
@@ -348,3 +353,10 @@ export const getCroppedImg = (
     );
   });
 };
+
+export function calculateDiffDay(date1?: Date, date2?: Date) {
+  if (!date1 || !date2) return 0;
+  const diff = date1.getTime() - date2.getTime();
+  const dayDifference = Math.ceil(diff / (1000 * 60 * 60 * 24));
+  return Math.abs(dayDifference);
+}
