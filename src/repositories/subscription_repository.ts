@@ -18,12 +18,13 @@ class SubscriptionRepository extends BaseRepository {
         return success;
     }
 
-    public async updateCard(): Promise<any> {
+    public async updateCard(): Promise<string | null> {
         const path = Subscription.card;
         const response = await this.put(path);
         const success = response.success;
         SnackCustomBar.status(response, { display: !success })
-        return response.data?.['data'];
+        const data = response.data?.['data']['checkoutFormContent'];
+        return data;
     }
 
     public async getSubsOrder(id: number): Promise<CompanySubscriptionOrder | null> {

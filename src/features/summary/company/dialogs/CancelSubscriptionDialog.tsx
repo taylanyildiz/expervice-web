@@ -61,7 +61,16 @@ function CancelSubscriptionBox(props: {
   );
 }
 
-function CancelSubscriptionDialog() {
+function CancelSubscriptionDialog(props: { onDone: (value: boolean) => void }) {
+  const { onDone } = props;
+
+  /// Destroy
+  useEffect(() => {
+    return () => {
+      onDone(false);
+    };
+  }, []);
+
   /// Dialog hook
   const { openLoading, openConfirm, closeDialog } = useDialog();
 
@@ -94,8 +103,7 @@ function CancelSubscriptionDialog() {
         value.description
       );
     });
-    if (!result) return;
-    closeDialog();
+    onDone(result);
   };
 
   /// Formik

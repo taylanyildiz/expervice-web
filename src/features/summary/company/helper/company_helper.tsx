@@ -48,8 +48,17 @@ export function useCompanyDialog() {
   return {
     openCompanyDialog: () => openDialog(<CompanyDialog />, "md"),
     openSubscriptionDialog: () => openDialog(<SubscriptionPlanDialog />, "sm"),
-    openCancelSubscriptionDialog: () => {
-      openDialog(<CancelSubscriptionDialog />, "xs");
+    openCancelSubscriptionDialog: async (): Promise<boolean> => {
+      return new Promise((resolve) => {
+        openDialog(
+          <CancelSubscriptionDialog
+            onDone={(value) => {
+              resolve(value);
+            }}
+          />,
+          "xs"
+        );
+      });
     },
     openCompanyImageDialog: () => {
       openDialog(<CompanyImageDialog />, "xs");

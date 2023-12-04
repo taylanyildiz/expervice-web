@@ -23,7 +23,15 @@ function UserInformationBox() {
           children="User Information"
         />
         <Grid container p={1} columnSpacing={2}>
-          <Grid item children={<Avatar children={caption(displayName)} />} />
+          <Grid
+            item
+            children={
+              <Avatar
+                sx={{ color: "white", height: 60, width: 60 }}
+                children={caption(displayName)}
+              />
+            }
+          />
           <Grid item>
             <Typography variant="h1" fontSize={20} children={displayName} />
             <Stack direction="row" alignItems="center" spacing={1}>

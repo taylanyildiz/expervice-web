@@ -278,13 +278,12 @@ export function timeAgo(input?: Date | string) {
 /**
  * Iyzipay parser
  */
-export function iyziParser(data: string) {
+export function iyziParser(data: string): HTMLScriptElement {
   const scripts = [...data.matchAll(scriptRegex)];
   const combinedScript = scripts.map((script) => script[1]).join("\n");
   const scriptElement = document.createElement("script");
-  scriptElement.type = "text/javascript";
   scriptElement.text = combinedScript;
-  document.head.appendChild(scriptElement);
+  return document.body.appendChild(scriptElement);
 }
 
 export function useCustomEffect(

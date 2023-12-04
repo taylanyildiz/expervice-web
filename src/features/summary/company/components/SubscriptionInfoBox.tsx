@@ -40,8 +40,15 @@ function SubscriptionInfoBox(props: { payment?: Order | null }) {
       return subRepo.updateCard();
     });
     if (!result) return;
+    iyziParser(result);
+  };
+
+  /// Cancel subscription
+  const handleCancelSubscription = async () => {
+    const result = await openCancelSubscriptionDialog();
+    if (!result) return;
     closeDialog();
-    iyziParser(result.checkoutFormContent);
+    window.location.reload();
   };
 
   return (
@@ -89,7 +96,7 @@ function SubscriptionInfoBox(props: { payment?: Order | null }) {
                       variant="outlined"
                       fontWeight="normal"
                       children="Cancel Subscription"
-                      onClick={openCancelSubscriptionDialog}
+                      onClick={handleCancelSubscription}
                     />
                     <PrimaryButton
                       height={30}

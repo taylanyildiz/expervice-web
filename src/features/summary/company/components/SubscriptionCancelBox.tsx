@@ -14,7 +14,7 @@ function SubscriptionCancelBox() {
   const subRepository = new SubscriptionRepository();
 
   /// Dialog hook
-  const { openConfirm, openLoading, closeDialog } = useDialog();
+  const { openConfirm, openLoading } = useDialog();
 
   const now = new Date();
   const difDay = calculateDiffDay(now, cancelDate);
@@ -30,7 +30,7 @@ function SubscriptionCancelBox() {
       return subRepository.cancelCancellation();
     });
     if (!result) return;
-    closeDialog();
+    window.location.reload();
   };
 
   return (

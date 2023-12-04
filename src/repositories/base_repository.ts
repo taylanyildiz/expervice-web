@@ -1,6 +1,7 @@
 // import logger from "@Log/logger";
 import { logout, setAccessToken } from "@Store/account_store";
 import { store } from "@Store/index";
+import SnackCustomBar from "@Utils/snack_custom_bar";
 import { Axios, AxiosRequestConfig, AxiosResponse, InternalAxiosRequestConfig } from "axios";
 
 type Function = (e: any) => void;
@@ -104,6 +105,7 @@ abstract class BaseRepository extends Axios {
     private async onRejected(error: any): Promise<any> {
         const refresh_token = store.getState().account.refreshToken;
         const originalRequest = error.config;
+
         if (isRefreshing) {
             return new Promise((resolve) => {
                 refreshSubscribers.push({
@@ -116,28 +118,27 @@ abstract class BaseRepository extends Axios {
             });
         }
         isRefreshing = true;
-        try {
-            const response = await this.request({
-                baseURL: import.meta.env.VITE_API_URL,
-                url: "/users/token",
-                method: "POST",
-                data: { refresh_token },
-            });
-            if (response.status === 200) {
-                const access_token = response.data['data']['access_token'];
-                store.dispatch(setAccessToken(access_token));
 
-                originalRequest.headers['x-access-token'] = access_token;
-                refreshSubscribers.forEach(({ callback }) => callback(access_token));
-                refreshSubscribers = [];
-                return this.request(originalRequest);
-            }
-        } catch (_) {
-            store.dispatch(logout());
-            return Object.assign({}, error.response, { success: false });
-        } finally {
-            isRefreshing = false;
+        const response = await this.request({
+            baseURL: import.meta.env.VITE_API_URL,
+            url: "/users/token",
+            method: "POST",
+            data: { refresh_token },
+        });
+        SnackCustomBar.status(response, { display: response.status !== 200 })
+
+        if (response.status === 200) {
+            const access_token = response.data['data']['access_token'];
+            store.dispatch(setAccessToken(access_token));
+
+            originalRequest.headers['x-access-token'] = access_token;
+            refreshSubscribers.forEach(({ callback }) => callback(access_token));
+            refreshSubscribers = [];
+            return this.request(originalRequest);
         }
+
+        isRefreshing = false;
+        window.location.reload();
         store.dispatch(logout());
         return Object.assign({}, error.response, { success: false });
     }
