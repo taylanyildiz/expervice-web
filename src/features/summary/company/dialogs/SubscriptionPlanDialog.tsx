@@ -29,7 +29,7 @@ function SubscriptionPlanDialog() {
   const subRepo = new SubscriptionRepository();
 
   /// Dialog hook
-  const { openLoading, openConfirm, closeDialog } = useDialog();
+  const { openLoading, openConfirm } = useDialog();
 
   /// Selected plan
   const [plan, setPlan] = useState<ProductionPlan | null>(null);
@@ -68,13 +68,11 @@ function SubscriptionPlanDialog() {
       </section>
     );
     if (!confirm) return;
-    closeDialog();
-    3;
     const result = await openLoading(async () => {
-      return subRepo.upgradePlan(subscription!.id!, plan!.id!);
+      return subRepo.upgradePlan(subscription!.id!);
     });
     if (!result) return;
-    closeDialog();
+    window.location.reload();
   };
 
   return (

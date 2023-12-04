@@ -27,8 +27,8 @@ class SubscriptionRepository extends BaseRepository {
         return data;
     }
 
-    public async getSubsOrder(id: number): Promise<CompanySubscriptionOrder | null> {
-        const path = Subscription.order(id);
+    public async getSubsOrder(): Promise<CompanySubscriptionOrder | null> {
+        const path = Subscription.order;
         const response = await this.get(path);
         const success = response.success;
         SnackCustomBar.status(response, { display: !success });
@@ -36,8 +36,8 @@ class SubscriptionRepository extends BaseRepository {
         return response.data?.['data']['subscription'];
     }
 
-    public async upgradePlan(id: number, planId: number): Promise<boolean> {
-        const path = Subscription.plan(id, planId);
+    public async upgradePlan(planId: number): Promise<boolean> {
+        const path = Subscription.plan(planId);
         const response = await this.put(path);
         const success = response.success;
         SnackCustomBar.status(response);

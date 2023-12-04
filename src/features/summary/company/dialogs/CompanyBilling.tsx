@@ -52,7 +52,7 @@ function CompanyBilling() {
 
   useEffect(() => {
     if (!subscription) return;
-    subRepo.getSubsOrder(subscription!.id!).then((value) => {
+    subRepo.getSubsOrder().then((value) => {
       setSubOrder(value);
       setLoading(false);
     });
