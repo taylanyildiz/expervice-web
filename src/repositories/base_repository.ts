@@ -127,18 +127,30 @@ abstract class BaseRepository extends Axios {
         });
         SnackCustomBar.status(response, { display: response.status !== 200 })
 
-        if (response.status === 200) {
-            const access_token = response.data['data']['access_token'];
-            store.dispatch(setAccessToken(access_token));
+        try {
+            const response = await this.request({
+                baseURL: import.meta.env.VITE_API_URL,
+                url: "/users/token",
+                method: "POST",
+                data: { refresh_token },
+            });
+            if (response.status === 200) {
+                const access_token = response.data['data']['access_token'];
+                store.dispatch(setAccessToken(access_token));
 
-            originalRequest.headers['x-access-token'] = access_token;
-            refreshSubscribers.forEach(({ callback }) => callback(access_token));
-            refreshSubscribers = [];
-            return this.request(originalRequest);
+                originalRequest.headers['x-access-token'] = access_token;
+                refreshSubscribers.forEach(({ callback }) => callback(access_token));
+                refreshSubscribers = [];
+                return this.request(originalRequest);
+            }
+        } catch (_) {
+            store.dispatch(logout());
+            window.location.reload();
+            return Object.assign({}, error.response, { success: false });
+        } finally {
+            isRefreshing = false;
         }
 
-        isRefreshing = false;
-        window.location.reload();
         store.dispatch(logout());
         return Object.assign({}, error.response, { success: false });
     }
