@@ -72,7 +72,7 @@
 
 .summary-base-groups {
   top: 60px;
-  min-width: 250px;
+  width: 250px;
   border-radius: 3px;
   height: calc(100vh - 70px);
   background-color: white;
@@ -91,10 +91,15 @@
     position: fixed;
     z-index: 300;
   }
-  .summary-base-groups {
-    position: inherit;
-  }
   .summary-right-side {
     margin-left: 40px;
+  }
+}
+
+@media screen and (max-width: 1200px) {
+  .summary-base-groups {
+    position: inherit;
+    max-width: 100%;
+    margin-bottom: 10px;
   }
 }

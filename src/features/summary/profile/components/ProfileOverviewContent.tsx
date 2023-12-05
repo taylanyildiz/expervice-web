@@ -74,8 +74,9 @@ function ProfileOverviewContent(props: ProfileOverviewContentProps) {
           <Grid item xs={6}>
             <TextOutlineField
               fullWidth
-              name="email"
-              label="Email"
+              name="user_phone"
+              label="Phone"
+              type="tel"
               onChange={(e) => {
                 const value = e.target.value ?? "";
                 const { code, number } = phoneMaskParse(value)!;

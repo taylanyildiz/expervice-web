@@ -24,7 +24,7 @@ export function useUnit() {
     let count = 0;
     if (filter?.filter_type !== EUnitFilterType.Name) ++count;
     if (filter?.keyword && filter?.keyword?.length !== 0) ++count;
-    if (filter?.region_ids?.length !== 0) ++count;
+    if (filter?.region_ids && filter?.region_ids?.length !== 0) ++count;
     setCount(count);
   }, [filter]);
 

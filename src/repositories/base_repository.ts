@@ -1,11 +1,12 @@
 // import logger from "@Log/logger";
 import { logout, setAccessToken } from "@Store/account_store";
 import { store } from "@Store/index";
+import SnackCustomBar from "@Utils/snack_custom_bar";
 import { Axios, AxiosRequestConfig, AxiosResponse, InternalAxiosRequestConfig } from "axios";
 
 type Function = (e: any) => void;
 let isRefreshing = false;
-let refreshSubscribers: Function[] = [];
+let refreshSubscribers: { callback: Function, path: any }[] = [];
 
 interface SuccessParams {
     success: boolean;
@@ -104,15 +105,28 @@ abstract class BaseRepository extends Axios {
     private async onRejected(error: any): Promise<any> {
         const refresh_token = store.getState().account.refreshToken;
         const originalRequest = error.config;
+
         if (isRefreshing) {
             return new Promise((resolve) => {
-                refreshSubscribers.push((token: string) => {
-                    originalRequest.headers['x-access-token'] = token;
-                    resolve(this.request(originalRequest));
+                refreshSubscribers.push({
+                    callback: (token: string) => {
+                        originalRequest.headers['x-access-token'] = token;
+                        resolve(this.request(originalRequest));
+                    },
+                    path: originalRequest,
                 });
             });
         }
         isRefreshing = true;
+
+        const response = await this.request({
+            baseURL: import.meta.env.VITE_API_URL,
+            url: "/users/token",
+            method: "POST",
+            data: { refresh_token },
+        });
+        SnackCustomBar.status(response, { display: response.status !== 200 })
+
         try {
             const response = await this.request({
                 baseURL: import.meta.env.VITE_API_URL,
@@ -125,16 +139,18 @@ abstract class BaseRepository extends Axios {
                 store.dispatch(setAccessToken(access_token));
 
                 originalRequest.headers['x-access-token'] = access_token;
-                refreshSubscribers.forEach((callback) => callback(access_token));
+                refreshSubscribers.forEach(({ callback }) => callback(access_token));
                 refreshSubscribers = [];
                 return this.request(originalRequest);
             }
         } catch (_) {
             store.dispatch(logout());
+            window.location.reload();
             return Object.assign({}, error.response, { success: false });
         } finally {
             isRefreshing = false;
         }
+
         store.dispatch(logout());
         return Object.assign({}, error.response, { success: false });
     }

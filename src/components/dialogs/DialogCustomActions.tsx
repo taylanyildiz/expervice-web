@@ -31,7 +31,7 @@ function DialogCustomActions(
   const { leading, actions, actionsSpace, rowSpace, actionVisibility } = props;
 
   return (
-    <DialogActions {...props}>
+    <DialogActions {...props} sx={{ zIndex: 4 }}>
       <Grid container rowSpacing={rowSpace ?? 1} alignItems="center">
         <Grid
           item

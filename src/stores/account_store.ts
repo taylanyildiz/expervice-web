@@ -35,12 +35,8 @@ const account = createSlice({
         setRefreshToken: (state, { payload }) => {
             state.refreshToken = payload;
         },
-        logout: (state) => {
-            state.refreshToken = undefined;
-            state.accessToken = undefined;
-            state.user = undefined;
-            state.deviceToken = null;
-            localStorage.clear();
+        logout: () => {
+            localStorage.removeItem("persist:root");
         }
     }
 });

@@ -9,6 +9,7 @@ import VisibilityComp from "@Components/VisibilityComp";
 import { useDialog } from "@Utils/hooks/dialog_hook";
 import LoadingComp from "@Components/LoadingComp";
 import { useAccount } from "@Features/summary/company/helper/company_helper";
+import { useJob } from "../helper/job_helper";
 
 interface JobFormDialogProps {
   form: JobForm;
@@ -16,6 +17,9 @@ interface JobFormDialogProps {
 
 function JobFormDialog(props: JobFormDialogProps) {
   const { form } = props;
+
+  /// Job store
+  const { job } = useJob();
 
   /// Account store
   const { isInternal, isOwner } = useAccount();
@@ -84,6 +88,15 @@ function JobFormDialog(props: JobFormDialogProps) {
     getForm();
   }, [form]);
 
+  /// Destroy
+  useEffect(() => {
+    return () => {
+      openLoading(async () => {
+        await jobRepo.job(job!.id!);
+      });
+    };
+  }, []);
+
   const handleConfirm = () => {
     switch (form.status) {
       case EFormStatuses.PendingConfirmed:
@@ -104,20 +117,19 @@ function JobFormDialog(props: JobFormDialogProps) {
       const result = await jobRepo.updateFormStatus(form.id, status);
       return result;
     });
-    if (result) {
-      closeDialog();
-    }
+    if (!result) return;
+    closeDialog();
   };
 
   const sendCustomerForm = async () => {
     const result = await openLoading(async () => {
-      if (form.status === EFormStatuses.Approved)
+      if (form.status === EFormStatuses.Approved) {
         return await jobRepo.sendFormCustomer(form.id);
+      }
       return await jobRepo.sendFormCustomerToSign(form.id);
     });
-    if (result) {
-      closeDialog();
-    }
+    if (!result) return;
+    closeDialog();
   };
 
   return (

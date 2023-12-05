@@ -30,7 +30,7 @@ const user = createSlice({
         },
         setSubscription: (state, { payload }) => {
             state.subscription = payload;
-        }
+        },
     }
 });
 

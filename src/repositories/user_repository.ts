@@ -4,7 +4,7 @@ import { setCompany, setSubscription, setUserGroups } from "@Store/user_store";
 import User from "./end-points/user";
 import UserPassword from "@Features/summary/profile/entities/user_password";
 import SnackCustomBar from "@Utils/snack_custom_bar";
-import { setUser } from "@Store/account_store";
+import { logout, setAccessToken, setUser } from "@Store/account_store";
 import UserProfile from "@Features/summary/profile/entities/user_profile";
 import { deleteDeviceToken } from "@Utils/firebase";
 
@@ -89,6 +89,19 @@ class UserRepository extends BaseRepository {
         const response = await this.post(path, value);
         SnackCustomBar.status(response);
         return response.success;
+    }
+
+    public async refreshToken(): Promise<void> {
+        const path = "/token";
+        const refresh_token = store.getState().account.refreshToken;
+        const response = await this.post(path, { refresh_token });
+        const success = response.success;
+        if (!success) {
+            store.dispatch(logout());
+            return;
+        }
+        const data = response.data['data']['access_token'];
+        store.dispatch(setAccessToken(data));
     }
 
 }
