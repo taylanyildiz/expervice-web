@@ -34,6 +34,7 @@ interface ProviderContext {
     title: ReactNode | string,
     content: ReactNode | string
   ) => Promise<boolean>;
+  closeAll: () => void;
 }
 
 /// Dialog Context
@@ -42,6 +43,7 @@ const DialogContext = createContext<ProviderContext>({
   openLoading: emptyPromise,
   closeDialog: empty,
   openConfirm: emptyPromiseBoolean,
+  closeAll: empty,
 });
 
 /// Dailog Hooks
@@ -192,19 +194,23 @@ export default function DialogProvider(props: { children: ReactNode }) {
     });
   };
 
+  const closeAll = () => {
+    setDialogs([]);
+  };
+
   /// Context values
   const contextValue: ProviderContext = {
     openDialog,
     closeDialog,
     openLoading,
     openConfirm,
+    closeAll,
   };
 
   return (
     <DialogContext.Provider value={contextValue}>
       {props.children}
 
-      {/* Dialogs */}
       {dialogs.map((dialog, i) => {
         const { onClose, ...dialogParams } = dialog;
         const handleKill = () => {
