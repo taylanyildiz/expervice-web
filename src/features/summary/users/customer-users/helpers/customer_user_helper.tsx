@@ -134,9 +134,16 @@ export function useCustomerDialog() {
   const { openDialog } = useDialog();
 
   return {
-    openCustomerDialog: (customer?: Customer) => {
+    openCustomerDialog: async (
+      customer?: Customer
+    ): Promise<Customer | null> => {
       store.dispatch(setCustomer(customer));
-      openDialog(<CustomerDialog />, "md");
+      return new Promise((resolve) => {
+        openDialog(
+          <CustomerDialog onDone={(customer) => resolve(customer)} />,
+          "md"
+        );
+      });
     },
     openCustomerFormDialog: async (
       onDone: (form: any) => Promise<boolean>

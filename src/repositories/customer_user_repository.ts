@@ -94,8 +94,8 @@ class CustomerUserRepository extends BaseRepository {
      */
     public async deleteCustomer(): Promise<boolean> {
         const { customer } = store.getState().customer;
-        const path = Customer.invite(customer!.id!);
-        const response = await this.post(path);
+        const path = Customer.customer(customer!.id!);
+        const response = await this.delete(path);
         SnackCustomBar.status(response);
         if (response.success) {
             store.dispatch(setCustomer(null));

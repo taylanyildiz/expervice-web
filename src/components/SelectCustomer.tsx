@@ -108,9 +108,14 @@ function SelectCustomer(props: SelectCustomerProps) {
         const displayName = option.display_name;
         return (
           <li {...props} key={option.id} style={{ fontSize: 13 }}>
-            <Grid container columnSpacing={1}>
+            <Grid
+              container
+              direction="row"
+              alignItems="center"
+              columnSpacing={1}
+            >
               <Grid item children={avatar(displayName)} />
-              <Grid item children={displayName} />
+              <Grid item xs children={displayName} />
             </Grid>
           </li>
         );
