@@ -24,7 +24,9 @@ import Colors from "@Themes/colors";
 import CustomerForms from "./CustomerForms";
 import CustomerUnits from "./CustomerUnits";
 
-function CustomerDialog() {
+function CustomerDialog(props: { onDone?: (customer: Customer) => void }) {
+  const { onDone } = props;
+
   /// Customer hook
   const { customer } = useCustomer();
   const isEdit = Boolean(customer);
@@ -92,6 +94,7 @@ function CustomerDialog() {
         break;
       case EActionType.SaveClose:
         closeDialog();
+        onDone?.(result);
         break;
       case EActionType.SaveNew:
         formik.resetForm();

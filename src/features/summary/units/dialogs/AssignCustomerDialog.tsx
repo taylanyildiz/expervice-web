@@ -129,8 +129,10 @@ function AssignCustomerDialog() {
   };
 
   /// Open create customer dialog
-  const handleCreateCustomer = () => {
-    openCustomerDialog();
+  const handleCreateCustomer = async () => {
+    const result = await openCustomerDialog();
+    if (!result) return;
+    formik.setFieldValue("customer", result);
   };
 
   /// Submit handle

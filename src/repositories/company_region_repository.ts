@@ -59,7 +59,15 @@ class CompanyRegionRepository extends BaseRepository {
         store.dispatch(setGroupInfoLoading(true));
         store.dispatch(setGroupInfo(null));
         const path = CompanyRegionConst.groupInfo;
-        const response = await this.get(path, { params: { group_id: groupId } });
+        const start_date = new Date();
+        const end_date = new Date();
+        start_date.setMonth(start_date.getMonth() - 1);
+        const params = {
+            group_id: groupId,
+            start_date,
+            end_date,
+        };
+        const response = await this.get(path, { params });
         const status = response.status;
         if (status !== 200) return;
         const data = response.data['data']['group'];
