@@ -26,7 +26,7 @@ function GroupJobsChart() {
         values.push({
           fault: isFault ? job.count : 0,
           maintenance: !isFault ? job.count : 0,
-          date: job.date,
+          date: new Date(job.date!).getTime(),
         });
       } else {
         values[index] = { ...values[index], [named]: job.count };
@@ -49,7 +49,19 @@ function GroupJobsChart() {
         <BarChart
           height={300}
           dataset={dataset}
-          xAxis={[{ scaleType: "band", dataKey: "date" }]}
+          xAxis={[
+            {
+              scaleType: "band",
+              dataKey: "date",
+              valueFormatter: (date) => {
+                if (!date) return "";
+                return new Date(date).toLocaleDateString("en-EN", {
+                  day: "2-digit",
+                  month: "short",
+                });
+              },
+            },
+          ]}
           series={[
             {
               dataKey: "fault",

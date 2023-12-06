@@ -103,3 +103,8 @@
     margin-bottom: 10px;
   }
 }
+
+.x {
+  background-color: red;
+  color: red;
+}

@@ -137,11 +137,17 @@ export function getOnlyDate(date: string | null | undefined): string | null {
  */
 export function caption(value?: string) {
   if (!value) return null;
-  const splitValue = value.split(" ");
-  if (splitValue.length === 1) {
-    return value[0].toUpperCase();
+  try {
+    const splitValue = value
+      .replace(/[^a-zA-Z0-9ğüşıöçİĞÜŞÖÇ ]/g, "")
+      .split("");
+    if (splitValue.length === 1) {
+      return value[0].toUpperCase();
+    }
+    return `${splitValue[0][0].toUpperCase()}${splitValue[1][0].toUpperCase()}`;
+  } catch (error) {
+    return "";
   }
-  return `${splitValue[0][0].toUpperCase()}${splitValue[1][0].toUpperCase()}`;
 }
 
 /**
