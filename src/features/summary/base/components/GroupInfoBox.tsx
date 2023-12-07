@@ -41,7 +41,7 @@ function InfoBox(props: InfoProps) {
 
 function GroupInfoBox() {
   /// Company region store
-  const { group, groupInfo, groupInfoLoading } = useSelector(
+  const { group, groupInfo, groupInfoLoading, groupInfoFilter } = useSelector(
     (state: RootState) => state.companyRegion
   );
 
@@ -57,7 +57,7 @@ function GroupInfoBox() {
   /// Initialize component
   useEffect(() => {
     getInfo();
-  }, [group]);
+  }, [group, groupInfoFilter]);
 
   return (
     <Box p={4} sx={{ backgroundColor: "white", borderRadius: 1 }}>

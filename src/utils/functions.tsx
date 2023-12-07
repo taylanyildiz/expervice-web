@@ -418,7 +418,7 @@ export function getCustomDate(type: ECustomDate | null): {
       end = null;
       break;
     case ECustomDate.Past7:
-      start.setDate(start.getDate() - 1);
+      start.setDate(start.getDate() - 7);
       break;
     case ECustomDate.Past14:
       start.setDate(start.getDate() - 14);
