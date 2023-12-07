@@ -4,6 +4,7 @@ import { useDialog } from "./hooks/dialog_hook";
 import { LatLng } from "@Components/SelectLocation";
 import SelectLocationDialog from "@Components/dialogs/SelectLocationDialog";
 import { Crop } from "react-image-crop";
+import { ECustomDate } from "@Models/enums";
 
 /**
  * Url regex
@@ -364,4 +365,86 @@ export function calculateDiffDay(date1?: Date, date2?: Date) {
   const diff = date1.getTime() - date2.getTime();
   const dayDifference = Math.ceil(diff / (1000 * 60 * 60 * 24));
   return Math.abs(dayDifference);
+}
+
+/**
+ * Get String of Custom Date
+ */
+export function getCustomDateTile(type: ECustomDate): string {
+  switch (type) {
+    case ECustomDate.All:
+      return "All Dates";
+    case ECustomDate.Custom:
+      return "Custom Dates";
+    case ECustomDate.Past7:
+      return "Past 7 Days";
+    case ECustomDate.Past14:
+      return "Past 14 Days";
+    case ECustomDate.Past30:
+      return "Past 30 Days";
+    case ECustomDate.Past45:
+      return "Past 45 Days";
+    case ECustomDate.Past90:
+      return "Past 90 Days";
+    case ECustomDate.Today:
+      return "Today";
+    case ECustomDate.Past180:
+      return "Past 180 Days";
+    case ECustomDate.Past360:
+      return "Past 360 Days";
+    default:
+      return "";
+  }
+}
+
+/**
+ * Get custom dates {start,end}
+ * @param type
+ * { start: Date; end: Date }
+ */
+export function getCustomDate(type: ECustomDate | null): {
+  start: Date | null;
+  end: Date | null;
+} {
+  let start: Date | null = new Date();
+  let end: Date | null = new Date();
+  switch (type) {
+    case ECustomDate.All:
+      start = null;
+      end = null;
+      break;
+    case ECustomDate.Custom:
+      start = null;
+      end = null;
+      break;
+    case ECustomDate.Past7:
+      start.setDate(start.getDate() - 1);
+      break;
+    case ECustomDate.Past14:
+      start.setDate(start.getDate() - 14);
+      break;
+    case ECustomDate.Past30:
+      start.setDate(start.getDate() - 30);
+      break;
+    case ECustomDate.Past45:
+      start.setDate(start.getDate() - 45);
+      break;
+    case ECustomDate.Past90:
+      start.setDate(start.getDate() - 90);
+      break;
+    case ECustomDate.Today:
+      start.setHours(0, 0, 0, 0);
+      break;
+    case ECustomDate.Past180:
+      start.setDate(start.getDate() - 180);
+      break;
+    case ECustomDate.Past360:
+      start.setDate(start.getDate() - 360);
+      break;
+    default:
+      start = null;
+      end = null;
+      break;
+  }
+  return { start, end };
 }

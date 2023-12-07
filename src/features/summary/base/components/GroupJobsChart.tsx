@@ -1,31 +1,46 @@
 import LoadingComp from "@Components/LoadingComp";
 import { RootState } from "@Store/index";
-import { Box } from "@mui/material";
-import { BarChart } from "@mui/x-charts";
+import { Box, Stack } from "@mui/material";
 import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import ReactApexChart from "react-apexcharts";
+import "apexcharts";
+import Colors from "@Themes/colors";
+import SelectDate from "@Components/SelectDate";
+import { setGroupInfoFilter } from "@Store/company_region_store";
+
+type DataSet = {
+  fault: number;
+  maintenance: number;
+  date: number;
+};
 
 function GroupJobsChart() {
   /// Company region store
-  const { groupInfo, groupInfoLoading } = useSelector(
-    (state: RootState) => state.companyRegion
-  );
+  const {
+    groupInfo,
+    groupInfoLoading,
+    groupInfoFilter: filter,
+  } = useSelector((state: RootState) => state.companyRegion);
+
+  /// Dispatch
+  const dispatch = useDispatch();
 
   /// Data set of chart
-  const [dataset, setDataset] = useState([{}]);
+  const [dataset, setDataset] = useState<DataSet[]>([]);
 
   /// Initialize chart values
   const initChartValues = () => {
-    const values: any = [];
-    if (!groupInfo?.jobs || groupInfo.jobs.length == 0) return setDataset([{}]);
+    const values: DataSet[] = [];
+    if (!groupInfo?.jobs || groupInfo.jobs.length == 0) return setDataset([]);
     for (let job of groupInfo.jobs) {
       const isFault = job.type_id === 1;
       const named = isFault ? "fault" : "maintenance";
       const index = values.findIndex((e: any) => e.date === job.date);
       if (index === -1) {
         values.push({
-          fault: isFault ? job.count : 0,
-          maintenance: !isFault ? job.count : 0,
+          fault: isFault ? job.count! : 0,
+          maintenance: !isFault ? job.count! : 0,
           date: new Date(job.date!).getTime(),
         });
       } else {
@@ -40,38 +55,70 @@ function GroupJobsChart() {
     initChartValues();
   }, [groupInfo]);
 
-  /// Formatter
-  const valueFormatter = (value: number) => `${value ?? 0}`;
-
   return (
     <Box sx={{ backgroundColor: "white" }}>
-      <LoadingComp height={300} loading={groupInfoLoading}>
-        <BarChart
-          height={300}
-          dataset={dataset}
-          xAxis={[
-            {
-              scaleType: "band",
-              dataKey: "date",
-              valueFormatter: (date) => {
-                if (!date) return "";
-                return new Date(date).toLocaleDateString("en-EN", {
-                  day: "2-digit",
-                  month: "short",
-                });
+      <Stack direction="column">
+        <Box m={1} width={200} justifyContent="end" alignSelf="end">
+          <SelectDate
+            label="Date"
+            value={filter?.dateType}
+            onChanged={(dateType, start, end) => {
+              dispatch(
+                setGroupInfoFilter({
+                  dateType,
+                  start_date: start,
+                  end_date: end,
+                })
+              );
+            }}
+          />
+        </Box>
+        <LoadingComp height={300} loading={groupInfoLoading}>
+          <ReactApexChart
+            type="bar"
+            height={300}
+            series={[
+              {
+                name: "Fault",
+                data: dataset.map((e) => [e.date, e.fault]),
+                color: Colors.error,
               },
-            },
-          ]}
-          series={[
-            {
-              dataKey: "fault",
-              label: "Fault",
-              valueFormatter,
-            },
-            { dataKey: "maintenance", label: "Maintenance", valueFormatter },
-          ]}
-        />
-      </LoadingComp>
+              {
+                name: "Maintenance",
+                data: dataset.map((e) => [e.date, e.maintenance]),
+                color: Colors.info,
+              },
+            ]}
+            options={{
+              chart: {
+                id: "area-datetime",
+                type: "bar",
+                height: 350,
+                zoom: {
+                  autoScaleYaxis: true,
+                },
+              },
+              dataLabels: {
+                enabled: false,
+              },
+              xaxis: {
+                type: "datetime",
+                max: filter?.end_date?.getTime() ?? null,
+                min: filter?.start_date?.getTime() ?? null,
+                tickAmount: 1,
+              },
+              tooltip: {
+                x: {
+                  format: "dd MMM yyyy",
+                },
+              },
+              fill: {
+                colors: [Colors.error, Colors.info],
+              },
+            }}
+          />
+        </LoadingComp>
+      </Stack>
     </Box>
   );
 }

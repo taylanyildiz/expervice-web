@@ -283,7 +283,16 @@ const theme = createTheme({
                 },
             },
         },
+        // MuiAutocomplete: {
+        //     styleOverrides: {
+        //         input: {
+        //             height: 10
+        //         }
+        //     }
+        // }
     }
 });
+
+
 
 export default theme;

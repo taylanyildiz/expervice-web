@@ -58,10 +58,10 @@ class CompanyRegionRepository extends BaseRepository {
     public async getGroupInfo(groupId: number): Promise<void> {
         store.dispatch(setGroupInfoLoading(true));
         store.dispatch(setGroupInfo(null));
+        const filter = store.getState().companyRegion.groupInfoFilter;
         const path = CompanyRegionConst.groupInfo;
-        const start_date = new Date();
-        const end_date = new Date();
-        start_date.setMonth(start_date.getMonth() - 1);
+        const start_date = filter?.start_date;
+        const end_date = filter?.end_date;
         const params = {
             group_id: groupId,
             start_date,
