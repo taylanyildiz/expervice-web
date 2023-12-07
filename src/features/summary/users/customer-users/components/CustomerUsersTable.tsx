@@ -14,6 +14,7 @@ function CustomerUsersTable() {
   const {
     customers: { rows, count },
     layzLoading,
+    customerFilter,
   } = useCustomer();
 
   /// Customer repository
@@ -31,17 +32,21 @@ function CustomerUsersTable() {
   /// Customer filter
   const filter: CustomerFilter = useMemo(
     () => ({
+      ...customerFilter,
       limit: paginationMode.pageSize,
       offset: paginationMode.pageSize * paginationMode.page,
     }),
     [paginationMode]
   );
 
-  /// Initialize component
   useEffect(() => {
     dispatch(setCustomerFilter(filter));
-    customerRepo.getCustomers();
   }, [filter]);
+
+  /// Initialize component
+  useEffect(() => {
+    customerRepo.getCustomers();
+  }, [customerFilter]);
 
   return (
     <div className="customer-users-grid">
