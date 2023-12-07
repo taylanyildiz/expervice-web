@@ -1,4 +1,11 @@
-import { Box, Divider, Drawer, Stack, Typography } from "@mui/material";
+import {
+  Box,
+  Divider,
+  Drawer,
+  IconButton,
+  Stack,
+  Typography,
+} from "@mui/material";
 import { useUnit } from "../helper/unit_helper";
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "@Store/index";
@@ -11,6 +18,7 @@ import UnitFilter from "@Models/units/unit_filter";
 import { useFormik } from "formik";
 import { useEffect } from "react";
 import SelectRegions from "@Components/SelectRegions";
+import CloseIcon from "@mui/icons-material/Close";
 
 function UnitsFilterDrawer() {
   /// Unit store
@@ -52,12 +60,21 @@ function UnitsFilterDrawer() {
     <Drawer anchor="right" open={open} onClose={handleClose}>
       <Box width={300} height="100%">
         <Stack spacing={1} height="100%">
-          <Typography
-            p={1}
-            variant="h1"
-            fontSize={14}
-            children="Units Filter"
-          />
+          <Stack
+            direction="row"
+            justifyContent="space-between"
+            alignItems="center"
+          >
+            <Typography
+              p={1}
+              variant="h1"
+              fontSize={17}
+              children="Units Filter"
+            />
+            <IconButton onClick={handleClose}>
+              <CloseIcon />
+            </IconButton>
+          </Stack>
           <Divider />
           <Stack
             sx={{ borderBottom: 1, borderColor: "divider" }}

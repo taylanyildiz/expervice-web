@@ -16,9 +16,9 @@ class CustomerUserRepository extends BaseRepository {
      * Get company customer user
      */
     public async getCustomers(): Promise<boolean> {
-        const { filter } = store.getState().customer;
+        const { customerFilter } = store.getState().customer;
         store.dispatch(setLayzLoading(true));
-        const response = await this.get("/", { params: filter });
+        const response = await this.get("/", { params: customerFilter });
         if (response.success) {
             const data = response.data['data']['customers'];
             store.dispatch(setCustomers(data));

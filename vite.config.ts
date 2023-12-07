@@ -21,6 +21,9 @@ export default defineConfig({
     copyPublicDir: true,
     sourcemap: true
   },
+  define: {
+    global: "window",
+  },
   resolve: {
     alias: [
       {

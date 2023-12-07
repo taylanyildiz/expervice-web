@@ -1,5 +1,7 @@
 import Customer from "@Models/customer/customer";
+import { ECustomerFilterType, ECustomerSortType } from "@Models/customer/customer_enums";
 import CustomerFilter from "@Models/customer/customer_filter";
+import { ESortDirection } from "@Models/enums";
 import FormCustomer from "@Models/form/form_customer";
 import Unit from "@Models/units/unit";
 import { createSlice } from "@reduxjs/toolkit";
@@ -7,21 +9,30 @@ import { createSlice } from "@reduxjs/toolkit";
 /// Customer props
 interface Props {
     layzLoading: boolean;
-    filter: CustomerFilter | null;
+    customerFilter: CustomerFilter | null;
     customers: { rows: Customer[], count: number };
     customer: Customer | null;
     customerForms: { rows: FormCustomer[], count: 0 };
     customerUnits: { rows: Unit[], count: 0 },
+    customerFilterDrawer: boolean;
 }
 
 /// Cutomer initial states
 const initialState: Props = {
     layzLoading: true,
-    filter: { limit: 10, offset: 0 },
+    customerFilter: {
+        limit: 10,
+        offset: 0,
+        keyword: "",
+        filter_type: ECustomerFilterType.DisplayName,
+        sort_type: ECustomerSortType.CreatedAt,
+        sort_direction: ESortDirection.Ascending
+    },
     customers: { rows: [], count: 0 },
     customer: null,
     customerForms: { rows: [], count: 0 },
     customerUnits: { rows: [], count: 0 },
+    customerFilterDrawer: false,
 }
 
 /// Customer slice
@@ -33,7 +44,7 @@ const customer = createSlice({
             state.layzLoading = payload;
         },
         setCustomerFilter: (state, { payload }) => {
-            state.filter = payload;
+            state.customerFilter = payload;
         },
         setCustomers: (state, { payload }) => {
             state.customers = payload;
@@ -46,6 +57,9 @@ const customer = createSlice({
         },
         setCustomerUnits: (state, { payload }) => {
             state.customerUnits = payload;
+        },
+        setCustomerFilterDrawer: (state, { payload }) => {
+            state.customerFilterDrawer = payload;
         }
     }
 });
@@ -59,4 +73,5 @@ export const {
     setCustomerFilter,
     setCustomerForms,
     setCustomerUnits,
+    setCustomerFilterDrawer,
 } = customer.actions;
