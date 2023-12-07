@@ -10,6 +10,7 @@ import CustomerUpdate from "../entities/customer_update";
 import { equalInterface } from "@Utils/functions";
 import { ECustomerStatus } from "../entities/customer_enums";
 import CustomerFormDialog from "../dialogs/CustomerFormDialog";
+import { ECustomerFilterType } from "@Models/customer/customer_enums";
 
 /**
  * Customer user store hook
@@ -162,4 +163,24 @@ export function useCustomerDialog() {
       });
     },
   };
+}
+
+/**
+ * Customer filter count hook
+ */
+export function useCutomerFilterCount() {
+  const [count, setCount] = useState<number>(0);
+  const { customerFilter } = useCustomer();
+  useEffect(() => {
+    let filterCount = 0;
+    if (customerFilter?.keyword) ++filterCount;
+    if (
+      customerFilter?.filter_type &&
+      customerFilter?.filter_type !== ECustomerFilterType.DisplayName
+    ) {
+      ++filterCount;
+    }
+    setCount(filterCount);
+  }, [customerFilter]);
+  return count;
 }

@@ -1,3 +1,5 @@
+import GroupInfoFilter from "@Features/summary/base/entities/group_info_filter";
+import { ECustomDate } from "@Models/enums";
 import { CompanyGroup, CompanyGroupInfo, CompanyRegion, CompanyRegionWeather } from "@Models/index";
 import { createSlice } from "@reduxjs/toolkit";
 
@@ -16,6 +18,7 @@ interface Props {
     group?: CompanyGroup | null;
     groupInfoLoading: boolean;
     groupInfo?: CompanyGroupInfo | null;
+    groupInfoFilter: GroupInfoFilter | null;
     editRegion: CompanyRegion | null;
     editGroup: CompanyGroup | null;
 }
@@ -32,6 +35,11 @@ const initialState: Props = {
     group: null,
     groupInfoLoading: true,
     groupInfo: null,
+    groupInfoFilter: {
+        dateType: ECustomDate.Past30,
+        start_date: new Date(new Date().setMonth(new Date().getMonth() - 1)),
+        end_date: new Date(),
+    },
     editRegion: null,
     editGroup: null,
 }
@@ -102,6 +110,9 @@ const companyRegion = createSlice({
         },
         setEditGroup: (state, { payload }) => {
             state.editGroup = payload;
+        },
+        setGroupInfoFilter: (state, { payload }) => {
+            state.groupInfoFilter = payload;
         }
     }
 });
@@ -120,4 +131,5 @@ export const {
     setGroupInfo,
     setEditRegion,
     setEditGroup,
+    setGroupInfoFilter
 } = companyRegion.actions;
