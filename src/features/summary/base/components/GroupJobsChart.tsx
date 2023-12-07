@@ -4,7 +4,6 @@ import { Box, Stack } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import ReactApexChart from "react-apexcharts";
-import "apexcharts";
 import Colors from "@Themes/colors";
 import SelectDate from "@Components/SelectDate";
 import { setGroupInfoFilter } from "@Store/company_region_store";
@@ -103,8 +102,8 @@ function GroupJobsChart() {
               },
               xaxis: {
                 type: "datetime",
-                max: filter?.end_date?.getTime() ?? null,
-                min: filter?.start_date?.getTime() ?? null,
+                max: filter?.end_date && filter?.end_date?.getTime(),
+                min: filter?.start_date && filter?.start_date?.getTime(),
                 tickAmount: 1,
               },
               tooltip: {
