@@ -102,8 +102,9 @@ function GroupJobsChart() {
               },
               xaxis: {
                 type: "datetime",
-                max: filter?.end_date && filter?.end_date?.getTime(),
-                min: filter?.start_date && filter?.start_date?.getTime(),
+                max: filter?.end_date && new Date(filter.end_date).getTime(),
+                min:
+                  filter?.start_date && new Date(filter.start_date).getTime(),
                 tickAmount: 1,
               },
               tooltip: {

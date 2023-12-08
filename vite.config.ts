@@ -41,6 +41,7 @@ export default defineConfig({
       { find: '@Repo', replacement: resolve(__dirname, './src/repositories') },
       { find: '@Log', replacement: resolve(__dirname, './src/logs') },
       { find: '@Store', replacement: resolve(__dirname, './src/stores') },
+      { find: '@Local', replacement: resolve(__dirname, './src/localization') },
     ]
   },
 })

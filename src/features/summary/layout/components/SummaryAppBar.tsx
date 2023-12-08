@@ -39,6 +39,7 @@ import { useDialog } from "@Utils/hooks/dialog_hook";
 import VisibilityComp from "@Components/VisibilityComp";
 import theme from "@Themes/index";
 import { setSummarySideBar } from "@Store/summary_store";
+import i18n from "@Local/index";
 
 function SummaryAppBar() {
   /// Navigate
@@ -93,26 +94,26 @@ function SummaryAppBar() {
             <Grid item>
               <MenuCustomLink
                 color="white"
-                title="Jobs"
+                title={i18n.t("jobs")}
                 children={[
                   {
                     prefix: <SummarizeIcon />,
-                    title: "Summary",
+                    title: i18n.t("summary"),
                     to: ERouter.Summary,
                   },
                   {
                     prefix: <WorkIcon />,
-                    title: "All Jobs",
+                    title: i18n.t("allJobs"),
                     to: ERouter.Jobs,
                   },
                   {
                     prefix: <ReportIcon />,
-                    title: "Faults",
+                    title: i18n.t("faults"),
                     to: { pathname: ERouter.Jobs, search: "type=1" },
                   },
                   {
                     prefix: <SettingsIcon />,
-                    title: "Maintenaces",
+                    title: i18n.t("maintenances"),
                     to: { pathname: ERouter.Jobs, search: "type=2" },
                   },
                 ]}
@@ -123,7 +124,7 @@ function SummaryAppBar() {
               <Grid item>
                 <MenuCustomLink
                   color="white"
-                  title="Forms"
+                  title={i18n.t("forms")}
                   to={ERouter.Forms}
                 />
               </Grid>
@@ -132,16 +133,16 @@ function SummaryAppBar() {
             <Grid item>
               <MenuCustomLink
                 color="white"
-                title="Units"
+                title={i18n.t("units")}
                 children={[
                   {
                     prefix: <DevicesIcon />,
-                    title: "Units List",
+                    title: i18n.t("unitsList"),
                     to: ERouter.Units,
                   },
                   {
                     prefix: <FmdGoodIcon />,
-                    title: "Units Map",
+                    title: i18n.t("unitsMap"),
                     to: ERouter.UnitsMap,
                   },
                 ]}
@@ -172,7 +173,7 @@ function SummaryAppBar() {
               <MenuCustomLink
                 withIcon={false}
                 title={
-                  <Tooltip title="Add">
+                  <Tooltip title={i18n.t("add")}>
                     <IconButton size="small">
                       <AddOutlinedIcon sx={{ color: "white" }} />
                     </IconButton>
@@ -181,44 +182,44 @@ function SummaryAppBar() {
                 children={[
                   {
                     prefix: <WorkIcon />,
-                    title: "Add Job",
+                    title: i18n.t("addJob"),
                     onClick: openJobDialog,
                   },
                   {
                     visibility: isInternal || isOwner,
                     prefix: <DevicesIcon />,
-                    title: "Add Unit",
+                    title: i18n.t("addUnit"),
                     onClick: openUnitDialog,
                   },
                   {
                     visibility: isInternal || isOwner,
                     prefix: <GroupOutlinedIcon />,
-                    title: "Add Technician User",
+                    title: i18n.t("addTechnicianUser"),
                     onClick: openTechnicianDialog,
                   },
                   {
                     visibility: isInternal || isOwner,
                     prefix: <GroupOutlinedIcon />,
-                    title: "Add Internal User",
+                    title: i18n.t("addInternalUser"),
                     onClick: openInternalDialog,
                   },
                   {
                     visibility: isInternal || isOwner,
                     prefix: <GroupOutlinedIcon />,
-                    title: "Add Customer User",
+                    title: i18n.t("addCustomerUser"),
                     onClick: openCustomerDialog,
                   },
                   {
                     visibility: isInternal || isOwner,
                     prefix: <UploadFileIcon />,
-                    title: "Add Form",
+                    title: i18n.t("addForm"),
                     onClick: openFormDialog,
                   },
                 ]}
               />
             </Grid>
             <Grid item>
-              <Tooltip title="Notifications">
+              <Tooltip title={i18n.t("addTechnicianUser")}>
                 <NotificationIcon />
               </Tooltip>
             </Grid>
@@ -229,7 +230,7 @@ function SummaryAppBar() {
                   color="white"
                   withIcon={false}
                   title={
-                    <Tooltip title="Users">
+                    <Tooltip title={i18n.t("users")}>
                       <IconButton size="small">
                         <GroupsOutlinedIcon sx={{ color: "white" }} />
                       </IconButton>
@@ -239,17 +240,17 @@ function SummaryAppBar() {
                     {
                       to: ERouter.InternalUsers,
                       prefix: <GroupOutlinedIcon />,
-                      title: "Internal Users",
+                      title: i18n.t("internalUsers"),
                     },
                     {
                       to: ERouter.CustomerUsers,
                       prefix: <ContactsIcon />,
-                      title: "Customer Users",
+                      title: i18n.t("customerUsers"),
                     },
                     {
                       to: ERouter.TechnicianUsers,
                       prefix: <EngineeringOutlinedIcon />,
-                      title: "Technician Users",
+                      title: i18n.t("technicianUsers"),
                     },
                   ]}
                 />
@@ -259,7 +260,7 @@ function SummaryAppBar() {
               <MenuCustomLink
                 withIcon={false}
                 title={
-                  <Tooltip title="Profile">
+                  <Tooltip title={i18n.t("profile")}>
                     <IconButton size="small">
                       <Avatar
                         children={caption(displayName)}
@@ -282,12 +283,12 @@ function SummaryAppBar() {
                   {
                     visibility: isOwner || isInternal,
                     prefix: <ApartmentIcon />,
-                    title: "Company Settings",
+                    title: i18n.t("companySettings"),
                     onClick: openCompanyDialog,
                   },
                   {
                     prefix: <LogoutIcon />,
-                    title: "Logout",
+                    title: i18n.t("logout"),
                     onClick: onLogoutHandle,
                   },
                 ]}

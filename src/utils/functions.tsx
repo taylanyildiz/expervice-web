@@ -360,11 +360,25 @@ export const getCroppedImg = (
   });
 };
 
+/**
+ * Diff 2 date with days
+ * @param date1
+ * @param date2
+ * @returns
+ */
 export function calculateDiffDay(date1?: Date, date2?: Date) {
   if (!date1 || !date2) return 0;
   const diff = date1.getTime() - date2.getTime();
   const dayDifference = Math.ceil(diff / (1000 * 60 * 60 * 24));
   return Math.abs(dayDifference);
+}
+
+/**
+ * Compare check with 2 string
+ * @returns
+ */
+export function compareString(key1: string, key2: string): boolean {
+  return key1.toLowerCase().search(key2.toLowerCase()) === 0;
 }
 
 /**

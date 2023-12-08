@@ -16,7 +16,7 @@ function SubscriptionCancelBox() {
   /// Dialog hook
   const { openConfirm, openLoading } = useDialog();
 
-  const now = new Date();
+  const now = new Date(subscription?.created_at!);
   const difDay = calculateDiffDay(now, cancelDate);
 
   /// Cancel cancellation

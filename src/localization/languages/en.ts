@@ -1,0 +1,28 @@
+const en = {
+    summary: "Summary",
+    jobs: "Jobs",
+    allJobs: "All Jobs",
+    fault: "Faults",
+    maintenances: "Maintenances",
+    forms: "Forms",
+    units: "Units",
+    unitsMap: "Units Map",
+    unitsList: "Units List",
+    add: "Add",
+    addJob: "Add Job",
+    addUnit: "Add Unit",
+    addTechnicianUser: "Add Technician User",
+    addInternalUser: "Add Internal User",
+    addCustomerUser: "Add Customer User",
+    addForm: "Add Form",
+    notifications: "Notifications",
+    users: "Users",
+    internalUser: "Internal Users",
+    customerUsers: "Customer Users",
+    technicianUsers: "Technician Users",
+    profile: "Profile",
+    companySettings: "Company Settings",
+    logout: "Logout",
+}
+
+export default en;

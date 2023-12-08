@@ -1,4 +1,4 @@
-import { Box, Divider, Grid, IconButton, Typography } from "@mui/material";
+import { Box, Divider, Grid, Typography } from "@mui/material";
 import ArrowLeftIcon from "@mui/icons-material/ArrowLeft";
 import { useDispatch, useSelector } from "react-redux";
 import Images from "@Assets/images";
@@ -8,8 +8,6 @@ import PrimaryButton from "@Components/PrimaryButton";
 import Colors from "@Themes/colors";
 import TextOutlineField from "@Components/TextOutlineField";
 import SearchIcon from "@mui/icons-material/Search";
-import FilterAltIcon from "@mui/icons-material/FilterAlt";
-import SwapVertIcon from "@mui/icons-material/SwapVert";
 import "../../../../assets/css/summary.css";
 import { AppDispatch, RootState } from "@Store/index";
 import { setLeftSideBarStatus } from "@Store/summary_store";
@@ -17,6 +15,13 @@ import RegionsList from "./RegionList";
 import { useSummaryDialog } from "../helper/summary_helper";
 import { useAccount } from "@Features/summary/company/helper/company_helper";
 import VisibilityComp from "@Components/VisibilityComp";
+import { useEffect, useMemo, useState } from "react";
+import { compareString } from "@Utils/functions";
+import CompanyRegionRepository from "@Repo/company_region_repository";
+import { setSelectedRegion } from "@Store/company_region_store";
+import RegionFilterPopover from "./RegionFilterPopover";
+import { ERegionFilterType, ERegionSortType } from "../entities/enums";
+import RegionSortPopover from "./RegionSortPopover";
 
 /// Animated arrow button
 function ArrowButton() {
@@ -55,6 +60,56 @@ function SummarySideBar() {
     (state: RootState) => state.summary
   );
 
+  /// Company region store
+  const {
+    regions: { rows },
+    region,
+  } = useSelector((state: RootState) => state.companyRegion);
+
+  /// Dispatch
+  const dispatch = useDispatch();
+
+  /// Region repository
+  const companyRegionRepo = new CompanyRegionRepository();
+
+  /// Search and filter and sort state
+  const [search, setSearch] = useState<string>("");
+  const [filterType, setFilterType] = useState<ERegionFilterType | null>(
+    ERegionFilterType.Name
+  );
+  const [sortType, setSortType] = useState<ERegionSortType | null>(
+    ERegionSortType.Alphabetically
+  );
+
+  /// Region list
+  const regions = useMemo(() => {
+    const filtered = rows.filter((e) => {
+      const name = compareString(e.name!, search);
+      const address = compareString(e.street_address!, search);
+      const zipcode = compareString(e.zip_code!, search);
+      switch (filterType) {
+        case ERegionFilterType.Name:
+          return name;
+        case ERegionFilterType.Address:
+          return address;
+        case ERegionFilterType.Zipcode:
+          return zipcode;
+        default:
+          return name;
+      }
+    });
+    return filtered.sort((a, b) => {
+      switch (sortType) {
+        case ERegionSortType.Alphabetically:
+          return a.name!.localeCompare(b.name!);
+        case ERegionSortType.CreatedDate:
+          return Date.parse(a.created_at!) - Date.parse(b.created_at!);
+        default:
+          return 1;
+      }
+    });
+  }, [search, rows]);
+
   /// Dialog hooks
   const { openRegionDialog } = useSummaryDialog();
 
@@ -65,6 +120,21 @@ function SummarySideBar() {
   const onClickNewRegionHandle = () => {
     openRegionDialog();
   };
+
+  /// Get regions of company
+  const getRegions = async () => {
+    await companyRegionRepo.getRegions();
+  };
+
+  /// Initialize component
+  useEffect(() => {
+    getRegions();
+  }, []);
+
+  useEffect(() => {
+    if (region || rows.length === 0) return;
+    dispatch(setSelectedRegion(rows[0]));
+  }, [rows]);
 
   return (
     <Box className="summary-side-bar" sx={{ width: width }}>
@@ -101,22 +171,34 @@ function SummarySideBar() {
               <Typography fontWeight="bold" children="Regions" fontSize={14} />
             </Grid>
             <Grid item>
-              <IconButton>
-                <FilterAltIcon fontSize="small" />
-              </IconButton>
+              <RegionFilterPopover
+                filterType={filterType}
+                onChanged={(type) => setFilterType(type)}
+              />
             </Grid>
             <Grid item>
-              <IconButton>
-                <SwapVertIcon fontSize="small" />
-              </IconButton>
+              <RegionSortPopover
+                sortType={sortType}
+                onChanged={(type) => {
+                  setSortType(type);
+                }}
+              />
             </Grid>
           </Grid>
         </Grid>
         <Grid item xs={12} mt={1}>
-          <TextOutlineField fullWidth height={30} suffix={<SearchIcon />} />
+          <TextOutlineField
+            fullWidth
+            height={30}
+            value={search}
+            onChange={(e) => {
+              setSearch(e.target.value);
+            }}
+            suffix={<SearchIcon />}
+          />
         </Grid>
       </Grid>
-      <RegionsList scale={`calc(${scale})`} />
+      <RegionsList scale={`calc(${scale})`} regions={regions} />
       <ArrowButton />
     </Box>
   );
