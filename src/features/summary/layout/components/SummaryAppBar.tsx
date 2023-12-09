@@ -39,7 +39,7 @@ import { useDialog } from "@Utils/hooks/dialog_hook";
 import VisibilityComp from "@Components/VisibilityComp";
 import theme from "@Themes/index";
 import { setSummarySideBar } from "@Store/summary_store";
-import i18n from "@Local/index";
+import TranslateHelper from "@Local/index";
 
 function SummaryAppBar() {
   /// Navigate
@@ -94,26 +94,26 @@ function SummaryAppBar() {
             <Grid item>
               <MenuCustomLink
                 color="white"
-                title={i18n.t("jobs")}
+                title={TranslateHelper.jobs()}
                 children={[
                   {
                     prefix: <SummarizeIcon />,
-                    title: i18n.t("summary"),
+                    title: TranslateHelper.summary(),
                     to: ERouter.Summary,
                   },
                   {
                     prefix: <WorkIcon />,
-                    title: i18n.t("allJobs"),
+                    title: TranslateHelper.allJobs(),
                     to: ERouter.Jobs,
                   },
                   {
                     prefix: <ReportIcon />,
-                    title: i18n.t("faults"),
+                    title: TranslateHelper.fault(),
                     to: { pathname: ERouter.Jobs, search: "type=1" },
                   },
                   {
                     prefix: <SettingsIcon />,
-                    title: i18n.t("maintenances"),
+                    title: TranslateHelper.maintenances(),
                     to: { pathname: ERouter.Jobs, search: "type=2" },
                   },
                 ]}
@@ -124,7 +124,7 @@ function SummaryAppBar() {
               <Grid item>
                 <MenuCustomLink
                   color="white"
-                  title={i18n.t("forms")}
+                  title={TranslateHelper.forms()}
                   to={ERouter.Forms}
                 />
               </Grid>
@@ -133,16 +133,16 @@ function SummaryAppBar() {
             <Grid item>
               <MenuCustomLink
                 color="white"
-                title={i18n.t("units")}
+                title={TranslateHelper.units()}
                 children={[
                   {
                     prefix: <DevicesIcon />,
-                    title: i18n.t("unitsList"),
+                    title: TranslateHelper.unitsList(),
                     to: ERouter.Units,
                   },
                   {
                     prefix: <FmdGoodIcon />,
-                    title: i18n.t("unitsMap"),
+                    title: TranslateHelper.unitsMap(),
                     to: ERouter.UnitsMap,
                   },
                 ]}
@@ -173,7 +173,7 @@ function SummaryAppBar() {
               <MenuCustomLink
                 withIcon={false}
                 title={
-                  <Tooltip title={i18n.t("add")}>
+                  <Tooltip title={TranslateHelper.add()}>
                     <IconButton size="small">
                       <AddOutlinedIcon sx={{ color: "white" }} />
                     </IconButton>
@@ -182,44 +182,44 @@ function SummaryAppBar() {
                 children={[
                   {
                     prefix: <WorkIcon />,
-                    title: i18n.t("addJob"),
+                    title: TranslateHelper.addJob(),
                     onClick: openJobDialog,
                   },
                   {
                     visibility: isInternal || isOwner,
                     prefix: <DevicesIcon />,
-                    title: i18n.t("addUnit"),
+                    title: TranslateHelper.addUnit(),
                     onClick: openUnitDialog,
                   },
                   {
                     visibility: isInternal || isOwner,
                     prefix: <GroupOutlinedIcon />,
-                    title: i18n.t("addTechnicianUser"),
+                    title: TranslateHelper.addTechnicianUser(),
                     onClick: openTechnicianDialog,
                   },
                   {
                     visibility: isInternal || isOwner,
                     prefix: <GroupOutlinedIcon />,
-                    title: i18n.t("addInternalUser"),
+                    title: TranslateHelper.addInternalUser(),
                     onClick: openInternalDialog,
                   },
                   {
                     visibility: isInternal || isOwner,
                     prefix: <GroupOutlinedIcon />,
-                    title: i18n.t("addCustomerUser"),
+                    title: TranslateHelper.addCustomerUser(),
                     onClick: openCustomerDialog,
                   },
                   {
                     visibility: isInternal || isOwner,
                     prefix: <UploadFileIcon />,
-                    title: i18n.t("addForm"),
+                    title: TranslateHelper.addForm(),
                     onClick: openFormDialog,
                   },
                 ]}
               />
             </Grid>
             <Grid item>
-              <Tooltip title={i18n.t("addTechnicianUser")}>
+              <Tooltip title={TranslateHelper.notifications()}>
                 <NotificationIcon />
               </Tooltip>
             </Grid>
@@ -230,7 +230,7 @@ function SummaryAppBar() {
                   color="white"
                   withIcon={false}
                   title={
-                    <Tooltip title={i18n.t("users")}>
+                    <Tooltip title={TranslateHelper.users()}>
                       <IconButton size="small">
                         <GroupsOutlinedIcon sx={{ color: "white" }} />
                       </IconButton>
@@ -240,17 +240,17 @@ function SummaryAppBar() {
                     {
                       to: ERouter.InternalUsers,
                       prefix: <GroupOutlinedIcon />,
-                      title: i18n.t("internalUsers"),
+                      title: TranslateHelper.internalUsers(),
                     },
                     {
                       to: ERouter.CustomerUsers,
                       prefix: <ContactsIcon />,
-                      title: i18n.t("customerUsers"),
+                      title: TranslateHelper.customerUsers(),
                     },
                     {
                       to: ERouter.TechnicianUsers,
                       prefix: <EngineeringOutlinedIcon />,
-                      title: i18n.t("technicianUsers"),
+                      title: TranslateHelper.technicianUsers(),
                     },
                   ]}
                 />
@@ -260,7 +260,7 @@ function SummaryAppBar() {
               <MenuCustomLink
                 withIcon={false}
                 title={
-                  <Tooltip title={i18n.t("profile")}>
+                  <Tooltip title={TranslateHelper.profile()}>
                     <IconButton size="small">
                       <Avatar
                         children={caption(displayName)}
@@ -283,12 +283,12 @@ function SummaryAppBar() {
                   {
                     visibility: isOwner || isInternal,
                     prefix: <ApartmentIcon />,
-                    title: i18n.t("companySettings"),
+                    title: TranslateHelper.companySettings(),
                     onClick: openCompanyDialog,
                   },
                   {
                     prefix: <LogoutIcon />,
-                    title: i18n.t("logout"),
+                    title: TranslateHelper.logout(),
                     onClick: onLogoutHandle,
                   },
                 ]}

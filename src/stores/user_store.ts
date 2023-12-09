@@ -26,8 +26,8 @@ const user = createSlice({
     reducers: {
         setLanguage: (state, { payload }) => {
             state.language = payload;
-            if (!payload) return;
-            window.location.reload();
+            if (!payload || !(payload.reload ?? true)) return;
+            // window.location.reload();
         },
         setUserGroups: (state, { payload }) => {
             state.groups = payload;
