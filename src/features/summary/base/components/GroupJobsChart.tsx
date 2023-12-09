@@ -1,6 +1,6 @@
 import LoadingComp from "@Components/LoadingComp";
 import { RootState } from "@Store/index";
-import { Box, Stack } from "@mui/material";
+import { Box, Stack, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import ReactApexChart from "react-apexcharts";
@@ -57,21 +57,30 @@ function GroupJobsChart() {
   return (
     <Box sx={{ backgroundColor: "white" }}>
       <Stack direction="column">
-        <Box m={1} width={200} justifyContent="end" alignSelf="end">
-          <SelectDate
-            label="Date"
-            value={filter?.dateType}
-            onChanged={(dateType, start, end) => {
-              dispatch(
-                setGroupInfoFilter({
-                  dateType,
-                  start_date: start,
-                  end_date: end,
-                })
-              );
-            }}
-          />
-        </Box>
+        <Stack
+          direction="row"
+          m={1}
+          justifyContent="space-between"
+          alignItems="center"
+          display="flex"
+        >
+          <Typography variant="h1" fontSize={15} children="Group Jobs" />
+          <Box width={200}>
+            <SelectDate
+              label="Date"
+              value={filter?.dateType}
+              onChanged={(dateType, start, end) => {
+                dispatch(
+                  setGroupInfoFilter({
+                    dateType,
+                    start_date: start,
+                    end_date: end,
+                  })
+                );
+              }}
+            />
+          </Box>
+        </Stack>
         <LoadingComp height={300} loading={groupInfoLoading}>
           <ReactApexChart
             type="bar"

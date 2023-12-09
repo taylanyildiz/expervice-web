@@ -172,7 +172,7 @@ function FormCustomersContent() {
             <Table>
               <TableHead>
                 <TableRow>
-                  <TableCell />
+                  <TableCell width={10} />
                   <TableCell children="Display Name" />
                   <TableCell children="Email" />
                   <TableCell children="Forms" />
@@ -190,7 +190,9 @@ function FormCustomersContent() {
                         );
                         setCustomers(values);
                       }}
-                      sx={{ cursor: "pointer" }}
+                      sx={{
+                        "& > *": { borderBottom: "unset" },
+                      }}
                     >
                       <TableCell>
                         {customer.display ? (
@@ -203,58 +205,61 @@ function FormCustomersContent() {
                       <TableCell children={customer.email} />
                       <TableCell children={customer.customer_forms?.length} />
                     </TableRow>
-                    <TableCell
-                      key={index + customers.length}
-                      style={{ paddingBottom: 0, paddingTop: 0 }}
-                      colSpan={4}
-                    >
-                      <Collapse in={customer.display}>
-                        <Table size="small">
-                          <TableHead>
-                            <TableRow>
-                              <TableCell>Name</TableCell>
-                              <TableCell>Job Type</TableCell>
-                              <TableCell>Unit Type</TableCell>
-                              <TableCell>Current Job Status</TableCell>
-                              <TableCell>Next Job Status</TableCell>
-                              <TableCell />
-                            </TableRow>
-                          </TableHead>
-                          <TableBody>
-                            {customer.customer_forms?.map((form, index) => (
-                              <TableRow key={index + 2 * customers.length}>
-                                <TableCell children={form.name} />
-                                <TableCell children={form.job_sub_type?.name} />
-                                <TableCell
-                                  children={form.unit_sub_type?.name}
-                                />
-                                <TableCell
-                                  children={form.current_job_status?.name}
-                                />
-                                <TableCell
-                                  children={form.next_job_status?.name}
-                                />
-
-                                <TableCell>
-                                  <IconButton
-                                    onClick={() => handlePdfView(form.id!)}
-                                  >
-                                    <VisibilityIcon />
-                                  </IconButton>
-                                  <IconButton
-                                    onClick={() =>
-                                      handleDelete(form.id!, index)
-                                    }
-                                  >
-                                    <DeleteOutlinedIcon />
-                                  </IconButton>
-                                </TableCell>
+                    <TableRow>
+                      <TableCell
+                        style={{ paddingBottom: 0, paddingTop: 0 }}
+                        colSpan={4}
+                      >
+                        <Collapse unmountOnExit in={customer.display}>
+                          <Table size="small">
+                            <TableHead>
+                              <TableRow>
+                                <TableCell>Name</TableCell>
+                                <TableCell>Job Type</TableCell>
+                                <TableCell>Unit Type</TableCell>
+                                <TableCell>Current Job Status</TableCell>
+                                <TableCell>Next Job Status</TableCell>
+                                <TableCell />
                               </TableRow>
-                            ))}
-                          </TableBody>
-                        </Table>
-                      </Collapse>
-                    </TableCell>
+                            </TableHead>
+                            <TableBody>
+                              {customer.customer_forms?.map((form, index) => (
+                                <TableRow key={index + 2 * customers.length}>
+                                  <TableCell children={form.name} />
+                                  <TableCell
+                                    children={form.job_sub_type?.name}
+                                  />
+                                  <TableCell
+                                    children={form.unit_sub_type?.name}
+                                  />
+                                  <TableCell
+                                    children={form.current_job_status?.name}
+                                  />
+                                  <TableCell
+                                    children={form.next_job_status?.name}
+                                  />
+
+                                  <TableCell>
+                                    <IconButton
+                                      onClick={() => handlePdfView(form.id!)}
+                                    >
+                                      <VisibilityIcon />
+                                    </IconButton>
+                                    <IconButton
+                                      onClick={() =>
+                                        handleDelete(form.id!, index)
+                                      }
+                                    >
+                                      <DeleteOutlinedIcon />
+                                    </IconButton>
+                                  </TableCell>
+                                </TableRow>
+                              ))}
+                            </TableBody>
+                          </Table>
+                        </Collapse>
+                      </TableCell>
+                    </TableRow>
                   </>
                 ))}
               </TableBody>
