@@ -6,6 +6,7 @@ import { useFormik } from "formik";
 import { object, string } from "yup";
 import AuthRepository from "@Repo/auth_repository";
 import { useDialog } from "@Utils/hooks/dialog_hook";
+import TranslateHelper from "@Local/index";
 
 function ForgotPasswordEmail() {
   /// Forgot password hooks
@@ -48,7 +49,7 @@ function ForgotPasswordEmail() {
       <Grid item xs={12}>
         <TextOutlineField
           fullWidth
-          label="Email"
+          label={TranslateHelper.email()}
           name="email"
           onChange={formik.handleChange}
           value={formik.values.email}
@@ -61,7 +62,7 @@ function ForgotPasswordEmail() {
           fullWidth
           height={30}
           fontSize={13}
-          children="Send Code"
+          children={TranslateHelper.sendCode()}
           color="white"
           fontWeight="normal"
           onClick={onNextHandle}

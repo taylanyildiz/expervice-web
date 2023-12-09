@@ -1,4 +1,5 @@
 import { ForgotPasswordStep } from "@Features/auth/forgot-password/entities";
+import TranslateHelper from "@Local/index";
 import { ReactNode, createContext, useContext, useState } from "react";
 
 /// Empty function
@@ -42,18 +43,18 @@ function ForgotPasswordProvider(props: ForgotPasswordProps) {
   /// Page steppers
   const [steps, setSteps] = useState<ForgotPasswordStep[]>([
     {
-      title: "Reset your password",
-      desc: "Please enter the email associated with your account and we'll send you an email with a password reset code to get you logged in.",
+      title: TranslateHelper.resetYourPassword(),
+      desc: TranslateHelper.forgotPasswordHeader1(),
       completed: false,
     },
     {
-      title: "Confirmation Code",
-      desc: "Please enter the code which one we send to your email",
+      title: TranslateHelper.confirmCode(),
+      desc: TranslateHelper.forgotPasswordHeader2(),
       completed: false,
     },
     {
-      title: "Reset Password",
-      desc: "Please enter password to reset",
+      title: TranslateHelper.resetPassword(),
+      desc: TranslateHelper.forgotPasswordHeader3(),
       completed: false,
     },
   ]);

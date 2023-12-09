@@ -15,7 +15,7 @@ function ForgotPasswordSuccess() {
   const navigate = useNavigate();
 
   /// Timing
-  const [time, setTimer] = useState<number>(60);
+  const [timer, setTimer] = useState<number>(2);
 
   /// Initialize component
   /// Listen [completedAll]
@@ -23,14 +23,18 @@ function ForgotPasswordSuccess() {
     if (!completedAll) return;
     const interval = setInterval(() => {
       setTimer((value) => --value);
-      if (time <= 0) {
-        navigate(ERouter.Login);
-        clearInterval(interval);
-        return;
-      }
     }, 1000);
-    return () => clearInterval(interval);
+    return () => {
+      clearInterval(interval);
+    };
   }, [completedAll]);
+
+  useEffect(() => {
+    if (timer <= 0) {
+      navigate(ERouter.Login);
+      return;
+    }
+  }, [timer]);
 
   /// If not completed all
   if (!completedAll) return <></>;
@@ -52,7 +56,7 @@ function ForgotPasswordSuccess() {
             <div style={{ alignItems: "center", display: "flex" }}>
               <section>Go Login</section>
               <section style={{ fontSize: 10, color: "grey" }}>
-                ({time})
+                ({timer})
               </section>
             </div>
           }

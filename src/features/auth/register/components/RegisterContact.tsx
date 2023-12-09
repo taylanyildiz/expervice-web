@@ -14,6 +14,7 @@ import Colors from "@Themes/colors";
 import { useRegister } from "@Utils/hooks/register_hook";
 import { useEffect } from "react";
 import { PhoneMask } from "@Components/TextInputMask";
+import TranslateHelper from "@Local/index";
 
 function RegisterContact() {
   /// Register hooks
@@ -76,7 +77,7 @@ function RegisterContact() {
         <PrimaryButton
           onClick={onNextHandle}
           height={30}
-          children="Continue to Billing"
+          children={TranslateHelper.continueBilling()}
           backgroundColor={Colors.primaryLight}
           color="white"
           fontWeight="normal"
@@ -102,7 +103,7 @@ function PrimaryContact(props: {
           <Grid item xs={6}>
             <TextOutlineField
               fullWidth
-              label="Primary Contact First Name"
+              label={TranslateHelper.primaryContactFirstName()}
               name="first_name"
               type="text"
               onChange={formik.handleChange}
@@ -118,7 +119,7 @@ function PrimaryContact(props: {
               fullWidth
               name="last_name"
               type="text"
-              label="Primary Contact Last Name"
+              label={TranslateHelper.primaryContactLastName()}
               onChange={formik.handleChange}
               value={formik.values.last_name}
               helperText={formik.touched.last_name && formik.errors.last_name}
@@ -134,7 +135,7 @@ function PrimaryContact(props: {
           fullWidth
           name="email"
           type="email"
-          label="Primary Contact Email"
+          label={TranslateHelper.primaryContactEmail()}
           onChange={formik.handleChange}
           value={formik.values.email}
           helperText={formik.touched.email && formik.errors.email}
@@ -146,7 +147,7 @@ function PrimaryContact(props: {
           fullWidth
           name="phone"
           type="tel"
-          label="Primary Contact Phone"
+          label={TranslateHelper.primaryContactPhone()}
           onChange={formik.handleChange}
           helperText={formik.touched.phone && formik.errors.phone}
           error={Boolean(formik.touched.phone && formik.errors.phone)}
@@ -168,7 +169,7 @@ function BusinessInformation(props: {
         <Typography
           variant="h1"
           fontSize={20}
-          children="Business Information"
+          children={TranslateHelper.businessInformation()}
         />
       </Grid>
       <Grid item xs={12} mt={2}>
@@ -176,7 +177,7 @@ function BusinessInformation(props: {
           fullWidth
           name="company_name"
           type="text"
-          label="Business Name"
+          label={TranslateHelper.businessName()}
           onChange={formik.handleChange}
           value={formik.values.company_name}
           helperText={formik.touched.company_name && formik.errors.company_name}
@@ -190,7 +191,7 @@ function BusinessInformation(props: {
           fullWidth
           name="company_web_site"
           type="text"
-          label="Website"
+          label={TranslateHelper.webSite()}
           onChange={formik.handleChange}
           value={formik.values.company_web_site}
           helperText={
@@ -208,7 +209,7 @@ function BusinessInformation(props: {
               fullWidth
               name="company_phone"
               type="tel"
-              label="Business Phone"
+              label={TranslateHelper.businessPhone()}
               onChange={formik.handleChange}
               value={formik.values.company_phone}
               helperText={
@@ -224,7 +225,7 @@ function BusinessInformation(props: {
               fullWidth
               name="company_fax"
               type="tel"
-              label="Business Fax"
+              label={TranslateHelper.businessFax()}
               value={formik.values.company_fax}
               helperText={
                 formik.touched.company_fax && formik.errors.company_fax
@@ -268,7 +269,7 @@ function BusinessAddress(props: {
       <Grid item xs={12} mt={2}>
         <CountrySelect
           fullWidth
-          label="Country"
+          label={TranslateHelper.country()}
           onChanged={onChangedCountry}
           value={formik.values.country}
           helperText={formik.touched.country && formik.errors.country}
@@ -280,7 +281,7 @@ function BusinessAddress(props: {
           fullWidth
           name="street_address"
           type="text"
-          label="Street Address"
+          label={TranslateHelper.streetAddress()}
           onChange={formik.handleChange}
           value={formik.values.street_address}
           helperText={
@@ -296,7 +297,7 @@ function BusinessAddress(props: {
           <Grid item xs={5}>
             <StateSelect
               fullWidth
-              label="State"
+              label={TranslateHelper.state()}
               countryId={formik.values.country?.id}
               onChanged={onChangedState}
               value={formik.values.state}
@@ -307,7 +308,7 @@ function BusinessAddress(props: {
           <Grid item xs={4}>
             <CitySelect
               fullWidth
-              label="City"
+              label={TranslateHelper.city()}
               stateId={formik.values.state?.id}
               onChanged={onChangedCity}
               value={formik.values.city}
@@ -320,7 +321,7 @@ function BusinessAddress(props: {
               fullWidth
               name="zip_code"
               type="text"
-              label="Zip Code"
+              label={TranslateHelper.zipCode()}
               onChange={formik.handleChange}
               value={formik.values.zip_code}
               helperText={formik.touched.zip_code && formik.errors.zip_code}

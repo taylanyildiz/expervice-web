@@ -1,10 +1,11 @@
 import CompanyInfo from "@Models/company/company_info";
 import CompanySubscription from "@Models/company/company_subscription";
-import { CompanyGroup } from "@Models/index";
+import { CompanyGroup, Language } from "@Models/index";
 import { createSlice } from "@reduxjs/toolkit";
 
 /// User store props
 interface Props {
+    language: Language | null,
     groups: { rows: CompanyGroup[], count: number },
     company: CompanyInfo | null;
     subscription: CompanySubscription | null;
@@ -12,6 +13,7 @@ interface Props {
 
 /// User inital states
 const initialState: Props = {
+    language: null,
     groups: { rows: [], count: 0 },
     company: null,
     subscription: null,
@@ -22,6 +24,11 @@ const user = createSlice({
     name: 'user',
     initialState,
     reducers: {
+        setLanguage: (state, { payload }) => {
+            state.language = payload;
+            if (!payload) return;
+            window.location.reload();
+        },
         setUserGroups: (state, { payload }) => {
             state.groups = payload;
         },
@@ -35,4 +42,4 @@ const user = createSlice({
 });
 
 export default user.reducer;
-export const { setUserGroups, setCompany, setSubscription } = user.actions;
+export const { setLanguage, setUserGroups, setCompany, setSubscription } = user.actions;

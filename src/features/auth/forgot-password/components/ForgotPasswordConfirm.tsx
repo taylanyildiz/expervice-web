@@ -6,6 +6,7 @@ import { useFormik } from "formik";
 import { object, string } from "yup";
 import { useDialog } from "@Utils/hooks/dialog_hook";
 import AuthRepository from "@Repo/auth_repository";
+import TranslateHelper from "@Local/index";
 
 function ForgotPasswordConfirm() {
   /// Forgot password hooks
@@ -53,7 +54,7 @@ function ForgotPasswordConfirm() {
       <Grid item xs={12}>
         <TextOutlineField
           fullWidth
-          label="Code"
+          label={TranslateHelper.code()}
           name="code"
           maxLength={6}
           onChange={formik.handleChange}
@@ -67,7 +68,7 @@ function ForgotPasswordConfirm() {
           fullWidth
           height={30}
           fontSize={13}
-          children="Confirm"
+          children={TranslateHelper.confirm()}
           color="white"
           fontWeight="normal"
           onClick={onNextHandle}

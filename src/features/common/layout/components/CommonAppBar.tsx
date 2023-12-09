@@ -1,13 +1,14 @@
 import { MenuCustomLink } from "@Components/index";
 import ERouter from "@Routes/router_enum";
 import { AppBar, Grid, Toolbar } from "@mui/material";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@Store/index";
 import AppBarLogo from "./AppBarLogo";
 import theme from "@Themes/index";
 import AppBarActions from "./AppBarActions";
-
 import AppBarMenuButton from "./AppBarMenuButton";
+import { setLanguage } from "@Store/user_store";
+import TranslateHelper from "@Local/index";
 
 function CommonAppBar() {
   return (
@@ -66,30 +67,56 @@ function AppBarLinks() {
   /// Langauges from Constant Store
   const { languages } = useSelector((state: RootState) => state.constant);
 
+  /// Dispatch
+  const dispatch = useDispatch();
+
   return (
     <Grid container columnSpacing={5} mb={1}>
       <Grid
         item
-        children={<MenuCustomLink title="Product" to={ERouter.Product} />}
-      />
-      <Grid
-        item
-        children={<MenuCustomLink title="Pricing" to={ERouter.Pricing} />}
-      />
-      <Grid
-        item
-        children={<MenuCustomLink title="Resources" to={ERouter.Resources} />}
-      />
-      <Grid
-        item
-        children={<MenuCustomLink title="Support" to={ERouter.Support} />}
+        children={
+          <MenuCustomLink
+            title={TranslateHelper.product()}
+            to={ERouter.Product}
+          />
+        }
       />
       <Grid
         item
         children={
           <MenuCustomLink
-            title="Languages"
+            title={TranslateHelper.pricing()}
+            to={ERouter.Pricing}
+          />
+        }
+      />
+      <Grid
+        item
+        children={
+          <MenuCustomLink
+            title={TranslateHelper.resources()}
+            to={ERouter.Resources}
+          />
+        }
+      />
+      <Grid
+        item
+        children={
+          <MenuCustomLink
+            title={TranslateHelper.support()}
+            to={ERouter.Support}
+          />
+        }
+      />
+      <Grid
+        item
+        children={
+          <MenuCustomLink
+            title={TranslateHelper.languages()}
             children={languages.map((e) => ({
+              onClick: () => {
+                dispatch(setLanguage(e));
+              },
               title: e.native,
               suffix: e.emoji,
             }))}

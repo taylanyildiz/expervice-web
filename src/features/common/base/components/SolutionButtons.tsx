@@ -5,6 +5,7 @@ import CircleButton from "@Components/CircleButton";
 import ScalableButton from "@Components/ScalableButton";
 import RoofingOutlinedIcon from "@mui/icons-material/RoofingOutlined";
 import Colors from "@Themes/colors";
+import TranslateHelper from "@Local/index";
 
 function SolutionButtons() {
   return (
@@ -20,7 +21,10 @@ function SolutionButtons() {
         textAlign="center"
         xs={12}
         children={
-          <Typography variant="h3" children="Management solutions for" />
+          <Typography
+            variant="h3"
+            children={TranslateHelper.managementSolotionFor()}
+          />
         }
       />
       <Grid item>
@@ -42,7 +46,12 @@ function SolutionButtons() {
               />
               <Grid
                 item
-                children={<Typography variant="body1" children="Business" />}
+                children={
+                  <Typography
+                    variant="body1"
+                    children={TranslateHelper.business()}
+                  />
+                }
               />
               <Grid
                 item
@@ -51,7 +60,7 @@ function SolutionButtons() {
                     backgroundColor="transparent"
                     variant="text"
                     suffix={<ArrowForwardIcon />}
-                    children="Learn More"
+                    children={TranslateHelper.learnMore()}
                   />
                 }
               />
@@ -76,7 +85,12 @@ function SolutionButtons() {
               />
               <Grid
                 item
-                children={<Typography variant="body1" children="Customer" />}
+                children={
+                  <Typography
+                    variant="body1"
+                    children={TranslateHelper.customer()}
+                  />
+                }
               />
               <Grid
                 item
@@ -85,7 +99,7 @@ function SolutionButtons() {
                     backgroundColor="transparent"
                     variant="text"
                     suffix={<ArrowForwardIcon />}
-                    children="Learn More"
+                    children={TranslateHelper.learnMore()}
                   />
                 }
               />

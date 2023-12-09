@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 import ERouter from "@Routes/router_enum";
 import PrimaryButton from "@Components/PrimaryButton";
 import Colors from "@Themes/colors";
+import TranslateHelper from "@Local/index";
 
 function RegisterSuccess() {
   /// Register hooks
@@ -15,7 +16,7 @@ function RegisterSuccess() {
   const navigate = useNavigate();
 
   /// Timing
-  const [timer, setTimer] = useState<number>(2);
+  const [timer, setTimer] = useState<number>(60);
 
   /// Initialize component
   /// Listen [completedAll]
@@ -41,7 +42,7 @@ function RegisterSuccess() {
 
   return (
     <Box sx={{ boxShadow: 10, borderRadius: 4, px: 10, py: 10 }}>
-      <SuccessBox message="Your account has been created successfully, you can complete your activation with the e-mail we sent to your e-mail address." />
+      <SuccessBox message={TranslateHelper.registerSuccessHeader()} />
       <PrimaryButton
         variant="text"
         fontWeight="normal"
@@ -50,7 +51,7 @@ function RegisterSuccess() {
         onClick={() => navigate(ERouter.Login)}
         children={
           <div style={{ alignItems: "center", display: "flex" }}>
-            <section>Go Login</section>
+            <section>{TranslateHelper.goLogin()}</section>
             <section style={{ fontSize: 10, color: "grey" }}>({timer})</section>
           </div>
         }

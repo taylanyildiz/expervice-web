@@ -1,7 +1,8 @@
 import ScalableButton from "@Components/ScalableButton";
 import Colors from "@Themes/colors";
-import { Box, Grid, Typography } from "@mui/material";
+import { Box, Grid, Stack, Typography } from "@mui/material";
 import DoneIcon from "@mui/icons-material/Done";
+import TranslateHelper from "@Local/index";
 
 /// Pricing Props
 interface PricingProps {
@@ -58,7 +59,7 @@ function PricingBox(props: PricingProps) {
               color={Colors.primaryDark}
               fontSize={18}
               onClick={onClick}
-              children="Get Started"
+              children={TranslateHelper.getStarted()}
             />
           }
         />
@@ -73,30 +74,21 @@ function PricingBox(props: PricingProps) {
             />
           }
         />
-        <Grid item display="flex" alignSelf="start">
-          <Grid container direction="column">
-            {permissions?.map((e, index) => (
-              <Grid key={index} item>
-                <Grid container direction="row" columnSpacing={1}>
-                  <Grid
-                    item
-                    children={<DoneIcon sx={{ color: Colors.secodary }} />}
-                  />
-                  <Grid
-                    item
-                    children={
-                      <Typography
-                        variant="subtitle2"
-                        fontSize={15}
-                        children={e}
-                      />
-                    }
-                  />
-                </Grid>
-              </Grid>
-            ))}
-          </Grid>
-        </Grid>
+
+        <Stack spacing={1} direction="column">
+          {permissions?.map((e, index) => (
+            <Typography
+              alignItems="start"
+              display="flex"
+              key={index}
+              variant="subtitle2"
+              fontSize={15}
+            >
+              <DoneIcon sx={{ color: Colors.secodary, pr: 1 }} />
+              <span>{e}</span>
+            </Typography>
+          ))}
+        </Stack>
       </Grid>
     </Box>
   );
@@ -115,7 +107,11 @@ function PricingBox(props: PricingProps) {
             pt={1}
             pb={3}
             children={
-              <Typography variant="h1" fontSize={15} children="BEST VALUE" />
+              <Typography
+                variant="h1"
+                fontSize={15}
+                children={TranslateHelper.bestValue()}
+              />
             }
           />
           <Grid item children={component("0px 0px 2% 2%", 0)} />
