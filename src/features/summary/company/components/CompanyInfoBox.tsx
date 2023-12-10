@@ -5,6 +5,7 @@ import MailOutlineOutlinedIcon from "@mui/icons-material/MailOutlineOutlined";
 import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
 import LanguageOutlinedIcon from "@mui/icons-material/LanguageOutlined";
 import CompanyAvatar from "./CompanyAvatar";
+import TranslateHelper from "@Local/index";
 
 function CompanyInfoBox() {
   /// User store
@@ -18,7 +19,7 @@ function CompanyInfoBox() {
           p={1}
           variant="h1"
           fontSize={17}
-          children="Company Information"
+          children={TranslateHelper.companyInformation()}
         />
         <Grid container p={1} columnSpacing={2} alignItems="center">
           <Grid item children={<CompanyAvatar />} />
@@ -51,7 +52,11 @@ function CompanyInfoBox() {
           </Grid>
           <Grid item display="flex" alignSelf="start">
             <Stack direction="column">
-              <Typography variant="h1" fontSize={14} children="Address" />
+              <Typography
+                variant="h1"
+                fontSize={14}
+                children={TranslateHelper.address()}
+              />
               <Typography
                 fontSize={13}
                 children={`${address?.state?.name} / ${address?.city?.name}`}

@@ -10,6 +10,7 @@ import EmptyGrid from "@Components/EmptyGrid";
 import SubscriptionInfoBox from "../components/SubscriptionInfoBox";
 import VisibilityComp from "@Components/VisibilityComp";
 import SubscriptionCancelBox from "../components/SubscriptionCancelBox";
+import TranslateHelper from "@Local/index";
 
 function CompanyBilling() {
   /// User repository
@@ -66,7 +67,11 @@ function CompanyBilling() {
         </VisibilityComp>
         <SubscriptionInfoBox payment={nextPayment} />
         <Stack>
-          <Typography variant="h1" fontSize={15} children="Order History" />
+          <Typography
+            variant="h1"
+            fontSize={15}
+            children={TranslateHelper.orderHistory()}
+          />
           <Box height={300}>
             <DataGrid
               sx={{ mt: 1 }}
@@ -81,7 +86,7 @@ function CompanyBilling() {
                   field: "status",
                   align: "center",
                   headerAlign: "center",
-                  headerName: "Payment Status",
+                  headerName: TranslateHelper.paymentStatus(),
                   valueGetter: (prop) => {
                     return prop.row.paymentAttempts?.[0].paymentStatus;
                   },
@@ -91,7 +96,7 @@ function CompanyBilling() {
                   field: "price",
                   align: "center",
                   headerAlign: "center",
-                  headerName: "Payment Price",
+                  headerName: TranslateHelper.paymentPrice(),
                   valueGetter: (prop) => {
                     return `₺ ${prop.row.price}`;
                   },
@@ -101,7 +106,7 @@ function CompanyBilling() {
                   field: "date",
                   align: "center",
                   headerAlign: "center",
-                  headerName: "Payment Date",
+                  headerName: TranslateHelper.paymentDate(),
                   valueGetter: (prop) => {
                     const payment = prop.row.paymentAttempts?.[0];
                     return new Date(payment?.createdDate!);

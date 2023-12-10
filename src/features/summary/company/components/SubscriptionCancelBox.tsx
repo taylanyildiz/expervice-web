@@ -4,6 +4,7 @@ import { useUser } from "../helper/company_helper";
 import { calculateDiffDay, dateToFormat } from "@Utils/functions";
 import { useDialog } from "@Utils/hooks/dialog_hook";
 import SubscriptionRepository from "@Repo/subscription_repository";
+import TranslateHelper from "@Local/index";
 
 function SubscriptionCancelBox() {
   /// User store
@@ -22,8 +23,8 @@ function SubscriptionCancelBox() {
   /// Cancel cancellation
   const handleCancel = async () => {
     const confirm = await openConfirm(
-      "Cancel subscription cancellation",
-      "Are you sure to cancel subscription cancellation?"
+      TranslateHelper.cancelSubscriptionCancel(),
+      TranslateHelper.sureCancelSubscriptionCancel()
     );
     if (!confirm) return;
     const result = await openLoading(async () => {
@@ -43,13 +44,13 @@ function SubscriptionCancelBox() {
           )}`}
         />
         <Typography
-          children={`${difDay} days left until your membership expires`}
+          children={TranslateHelper.daysLeftSubscription({ day: difDay })}
         />
       </Stack>
       <PrimaryButton
         fontWeight="normal"
         variant="outlined"
-        children="Cancel"
+        children={TranslateHelper.cancel()}
         onClick={handleCancel}
       />
     </Stack>

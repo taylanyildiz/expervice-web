@@ -17,9 +17,9 @@ import { useDialog } from "@Utils/hooks/dialog_hook";
 import VisibilityComp from "@Components/VisibilityComp";
 import Colors from "@Themes/colors";
 import CompanyRepository from "@Repo/company_repository";
-import { object, string } from "yup";
-import { urlRegex } from "@Utils/functions";
 import "../../../assets/css/company.css";
+import { companyValidator } from "./validator/company_validator";
+import TranslateHelper from "@Local/index";
 
 function CompanyDialog() {
   /// User repository
@@ -78,19 +78,7 @@ function CompanyDialog() {
   const initialValues: CompanyInfo = {};
   const formik = useFormik({
     initialValues,
-    validationSchema: object({
-      name: string().required().min(2, "Invalid name"),
-      web_site: string().matches(urlRegex, "Invalid web site"),
-      phone_number: string().nullable().min(2, "Invalid phone"),
-      fax_number: string().nullable().min(2, "Invalid fax"),
-      company_address: object({
-        country: object().nullable().required(),
-        state: object().required(),
-        city: object().required(),
-        street_address: string().required().min(2, "Invalid address"),
-        zip_code: string().required().min(2, "Invalid zip"),
-      }),
-    }),
+    validationSchema: companyValidator,
     onSubmit: onSubmitHandle,
   });
 
@@ -116,11 +104,11 @@ function CompanyDialog() {
             <TabBar
               tabs={[
                 {
-                  title: "Overview",
+                  title: TranslateHelper.overView(),
                   panel: <CompanyOverview formik={formik} />,
                 },
                 {
-                  title: "Billing",
+                  title: TranslateHelper.billing(),
                   panel: <CompanyBilling />,
                 },
               ]}
@@ -134,7 +122,7 @@ function CompanyDialog() {
             fontWeight="normal"
             color="white"
             variant="contained"
-            children="Save"
+            children={TranslateHelper.save()}
             onClick={handleSave}
           />,
         ]}

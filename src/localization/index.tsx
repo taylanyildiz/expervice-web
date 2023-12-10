@@ -712,4 +712,100 @@ export default class TranslateHelper {
   public static unitCreate(): string {
     return "unitCreate".tr();
   }
+  public static overView(): string {
+    return "overView".tr();
+  }
+  public static userInformation(): string {
+    return "userInformation".tr();
+  }
+  public static oldPassword(): string {
+    return "oldPassword".tr();
+  }
+  public static passwordDoesntMatch(): string {
+    return "passwordDoesntMatch".tr();
+  }
+  public static companyInformation(): string {
+    return "companyInformation".tr();
+  }
+  public static cancelSubscriptionCancel(): string {
+    return "cancelSubscriptionCancel".tr();
+  }
+  public static sureCancelSubscriptionCancel(): string {
+    return "sureCancelSubscriptionCancel".tr();
+  }
+  public static daysLeftSubscription(props: { day: any }): string {
+    return "daysLeftSubscription".tr(props);
+  }
+  public static subscriptionInformation(): string {
+    return "subscriptionInformation".tr();
+  }
+  public static experviceOfferings(): string {
+    return "experviceOfferings".tr();
+  }
+  public static cancelSubscription(): string {
+    return "cancelSubscription".tr();
+  }
+  public static sureCancelSubscription(): string {
+    return "sureCancelSubscription".tr();
+  }
+  public static manageSubscription(): string {
+    return "manageSubscription".tr();
+  }
+  public static billingInformation(): string {
+    return "billingInformation".tr();
+  }
+  public static nextPaymentDate(): string {
+    return "nextPaymentDate".tr();
+  }
+  public static nextPayment(): string {
+    return "nextPayment".tr();
+  }
+  public static currentPlan(): string {
+    return "currentPlan".tr();
+  }
+  public static cancelSubscriptionHeader(): string {
+    return "cancelSubscriptionHeader".tr();
+  }
+  public static cancelSubscriptionDesc(): string {
+    return "cancelSubscriptionDesc".tr();
+  }
+  public static description(): string {
+    return "description".tr();
+  }
+  public static orderHistory(): string {
+    return "orderHistory".tr();
+  }
+  public static paymentStatus(): string {
+    return "paymentStatus".tr();
+  }
+  public static paymentPrice(): string {
+    return "paymentPrice".tr();
+  }
+  public static paymentDate(): string {
+    return "paymentDate".tr();
+  }
+  public static deleteImage(): string {
+    return "deleteImage".tr();
+  }
+  public static sureDeleteImage(): string {
+    return "sureDeleteImage".tr();
+  }
+  public static companyImage(): string {
+    return "companyImage".tr();
+  }
+  public static faxNumber(): string {
+    return "faxNumber".tr();
+  }
+  public static upgradePlan(): string {
+    return "upgradePlan".tr();
+  }
+  public static editSubscription(): string {
+    return "editSubscription".tr();
+  }
+  public static availablePlans(): string {
+    return "availablePlans".tr();
+  }
+  public static selectPlan(): string {
+    return "selectPlan".tr();
+  }
 }

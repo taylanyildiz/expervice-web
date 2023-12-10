@@ -12,6 +12,8 @@ import ProfileOverviewContent from "./components/ProfileOverviewContent";
 import VisibilityComp from "@Components/VisibilityComp";
 import UserRepository from "@Repo/user_repository";
 import { useDialog } from "@Utils/hooks/dialog_hook";
+import TranslateHelper from "@Local/index";
+import { profileValidator } from "./validator/profile_validator";
 
 function ProfileDialog() {
   /// Account store
@@ -45,6 +47,7 @@ function ProfileDialog() {
   };
   const formik = useFormik({
     initialValues,
+    validationSchema: profileValidator,
     onSubmit: onSubmitHandle,
   });
 
@@ -77,7 +80,7 @@ function ProfileDialog() {
           <TabBar
             tabs={[
               {
-                title: "Overivew",
+                title: TranslateHelper.overView(),
                 panel: <ProfileOverviewContent formik={formik} />,
               },
             ]}
@@ -90,7 +93,7 @@ function ProfileDialog() {
             variant="outlined"
             fontWeight="normal"
             color="white"
-            children="Save"
+            children={TranslateHelper.save()}
             backgroundColor={Colors.primaryDark}
             onClick={() => formik.handleSubmit()}
           />,
