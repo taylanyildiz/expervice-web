@@ -1,3 +1,4 @@
+import { useUser } from "@Features/summary/company/helper/company_helper";
 import GroupRole from "@Models/technician-user/group_role";
 import ConstantRepository from "@Repo/constant_repository";
 import { RootState } from "@Store/index";
@@ -29,7 +30,11 @@ function SelectGroupRole(props: SelectGroupRoleProps) {
   /// Constant store
   const { groupRoles } = useSelector((state: RootState) => state.constant);
 
-  ///
+  /// User store
+  const { language } = useUser();
+  const lng = language?.language_code ?? "en";
+
+  /// Option - Options state
   const [options, setOptions] = useState<GroupRole[]>([]);
   const [option, setOption] = useState<GroupRole | null>(null);
 
@@ -51,7 +56,7 @@ function SelectGroupRole(props: SelectGroupRoleProps) {
       value={option}
       isOptionEqualToValue={(option, value) => option?.id === value?.id}
       onChange={(_, value) => onChanged(value)}
-      getOptionLabel={(option) => option.name ?? ""}
+      getOptionLabel={(option) => option.translations?.name?.[lng] ?? ""}
       renderInput={(props) => {
         return (
           <FormControl fullWidth={fullWidth}>

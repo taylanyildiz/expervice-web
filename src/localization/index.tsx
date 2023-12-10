@@ -424,7 +424,7 @@ export default class TranslateHelper {
   public static groupName(): string {
     return "groupName".tr();
   }
-  public static createdBy(props: { name: string }): string {
+  public static createdBy(props: { name: any }): string {
     return "createdBy".tr(props);
   }
   public static invalidName(): string {
@@ -807,5 +807,59 @@ export default class TranslateHelper {
   }
   public static selectPlan(): string {
     return "selectPlan".tr();
+  }
+  public static yes(): string {
+    return "yes".tr();
+  }
+  public static no(): string {
+    return "no".tr();
+  }
+  public static region(): string {
+    return "region".tr();
+  }
+  public static groupRole(): string {
+    return "groupRole".tr();
+  }
+  public static userNotInvited(): string {
+    return "userNotInvited".tr();
+  }
+  public static inviteUser(): string {
+    return "inviteUser".tr();
+  }
+  public static inviteAccepted(): string {
+    return "inviteAccepted".tr();
+  }
+  public static userInactive(): string {
+    return "userInactive".tr();
+  }
+  public static invitePending(): string {
+    return "invitePending".tr();
+  }
+  public static resendInvite(): string {
+    return "resendInvite".tr();
+  }
+  public static cancelInvite(): string {
+    return "cancelInvite".tr();
+  }
+  public static inviteWillSent(): string {
+    return "inviteWillSent".tr();
+  }
+  public static inactive(): string {
+    return "inactive".tr();
+  }
+  public static userStatus(): string {
+    return "userStatus".tr();
+  }
+  public static securityLogin(): string {
+    return "securityLogin".tr();
+  }
+  public static deleteTechnician(): string {
+    return "deleteTechnician".tr();
+  }
+  public static sureDeleteTechnician(): string {
+    return "sureDeleteTechnician".tr();
+  }
+  public static contactInformation(): string {
+    return "contactInformation".tr();
   }
 }

@@ -23,6 +23,7 @@ import TechnicianRepository from "@Repo/technician_repository";
 import VisibilityComp from "@Components/VisibilityComp";
 import Colors from "@Themes/colors";
 import { technicianValidator } from "../validator/technician_validator";
+import TranslateHelper from "@Local/index";
 
 function TechnicianDialog() {
   /// Technician store
@@ -48,8 +49,8 @@ function TechnicianDialog() {
   const onChangedAction = async (type: EActionType) => {
     if (type === EActionType.Delete) {
       const confirm = await openConfirm(
-        "Delete Technician",
-        "Are you sure to delete technician"
+        TranslateHelper.deleteTechnician(),
+        TranslateHelper.sureDeleteTechnician()
       );
       if (confirm) {
         const result = await openLoading(async () => {
@@ -157,11 +158,11 @@ function TechnicianDialog() {
           <TabBar
             tabs={[
               {
-                title: "Contact Information",
+                title: TranslateHelper.contactInformation(),
                 panel: <TechnicianContactInformation formik={formik} />,
               },
               {
-                title: "Security & Login",
+                title: TranslateHelper.securityLogin(),
                 panel: <TechnicianSecurity formik={formik} />,
               },
             ]}

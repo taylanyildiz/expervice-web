@@ -37,7 +37,11 @@ function ForgotPasswordEmail() {
   const initialValues = { email: "" };
   const formik = useFormik({
     initialValues,
-    validationSchema: object({ email: string().email().required() }),
+    validationSchema: object({
+      email: string()
+        .email(TranslateHelper.invalid())
+        .required(TranslateHelper.required()),
+    }),
     onSubmit: onSubmitHandle,
   });
 

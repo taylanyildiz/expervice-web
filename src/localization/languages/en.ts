@@ -269,7 +269,25 @@ const en: ObjectString = {
     upgradePlan: "Upgrade Plan",
     editSubscription: "Edit Subscription",
     availablePlans: "Available Plans",
-    selectPlan: "Select Plan"
+    selectPlan: "Select Plan",
+    yes: "Yes",
+    no: "No",
+    region: "Region",
+    groupRole: "Group Role",
+    userNotInvited: "User has not been invited",
+    inviteUser: "Invite User",
+    inviteAccepted: "Invite Accepted",
+    userInactive: "User Inactive",
+    invitePending: "Invite Pending",
+    resendInvite: "Re-Send Invite",
+    cancelInvite: "Cancel Invite",
+    inviteWillSent: "Invite will be sent on save",
+    inactive: "Inactive",
+    userStatus: "User Status",
+    securityLogin: "Security & Login",
+    deleteTechnician: "Delete Technician",
+    sureDeleteTechnician: "Are you sure to delete technician?",
+    contactInformation: "Contact Information",
 }
 
 export default en;
