@@ -1,13 +1,14 @@
 import { array, object, string } from "yup";
 import { EFormFielType } from "../entities/form_enums";
+import TranslateHelper from "@Local/index";
 
 export const formFieldValidator = object({
-    field_type: object().nullable().required(),
-    label: string().required().min(2, "Invalid label"),
+    field_type: object().nullable().required(TranslateHelper.required()),
+    label: string().required().min(2, TranslateHelper.invalid()),
     description: string()
         .nullable()
         .notRequired()
-        .min(2, "Invalid description"),
+        .min(2, TranslateHelper.invalid()),
     options: array().when(["field_type_id"], {
         is: (fieldType: number | null) => {
             const isDropdown = fieldType === EFormFielType.DropDown;
@@ -19,9 +20,9 @@ export const formFieldValidator = object({
                 .nullable()
                 .of(
                     object({
-                        label: string().nullable().required().min(2, "Invalid label"),
+                        label: string().nullable().required(TranslateHelper.required()).min(2, TranslateHelper.invalid()),
                     })
                 )
-                .min(1, "Min 1 option"),
+                .min(1, TranslateHelper.invalid()),
     }),
 })

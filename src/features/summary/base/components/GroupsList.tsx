@@ -18,6 +18,7 @@ import { setSelectedGroup } from "@Store/company_region_store";
 import LoadingComp from "@Components/LoadingComp";
 import { useSummaryDialog } from "../helper/summary_helper";
 import { useAccount } from "@Features/summary/company/helper/company_helper";
+import TranslateHelper from "@Local/index";
 
 function GroupsList() {
   /// Account store
@@ -64,7 +65,11 @@ function GroupsList() {
       <Grid item xs={12}>
         <Grid container alignItems="center">
           <Grid item flexGrow={1} p={2}>
-            <Typography variant="h1" fontSize={19} children="Groups" />
+            <Typography
+              variant="h1"
+              fontSize={19}
+              children={TranslateHelper.groups()}
+            />
           </Grid>
           <Grid item>
             <VisibilityComp visibility={isInternal || isOwner}>

@@ -7,6 +7,7 @@ import ReactApexChart from "react-apexcharts";
 import Colors from "@Themes/colors";
 import SelectDate from "@Components/SelectDate";
 import { setGroupInfoFilter } from "@Store/company_region_store";
+import TranslateHelper from "@Local/index";
 
 type DataSet = {
   fault: number;
@@ -64,10 +65,13 @@ function GroupJobsChart() {
           alignItems="center"
           display="flex"
         >
-          <Typography variant="h1" fontSize={15} children="Group Jobs" />
+          <Typography
+            variant="h1"
+            fontSize={15}
+            children={TranslateHelper.groupJobs()}
+          />
           <Box width={200}>
             <SelectDate
-              label="Date"
               value={filter?.dateType}
               onChanged={(dateType, start, end) => {
                 dispatch(
@@ -87,12 +91,12 @@ function GroupJobsChart() {
             height={300}
             series={[
               {
-                name: "Fault",
+                name: TranslateHelper.fault(),
                 data: dataset.map((e) => [e.date, e.fault]),
                 color: Colors.error,
               },
               {
-                name: "Maintenance",
+                name: TranslateHelper.maintenance(),
                 data: dataset.map((e) => [e.date, e.maintenance]),
                 color: Colors.info,
               },

@@ -5,6 +5,7 @@ import UnitStatusBox from "../dialogs/UnitStatusBox";
 import JobTypeBox from "@Components/JobTypeBox";
 import VisibilityComp from "@Components/VisibilityComp";
 import Colors from "@Themes/colors";
+import { useUser } from "@Features/summary/company/helper/company_helper";
 
 type Function = () => void;
 
@@ -17,6 +18,11 @@ interface UnitListItemProps {
 
 function UnitListItem(props: UnitListItemProps) {
   const { unit, onClick, onMap, selected } = props;
+
+  /// User store
+  const { language } = useUser();
+  const lng = language?.language_code ?? "en";
+
   return (
     <div
       className="unit-list-item"
@@ -38,7 +44,7 @@ function UnitListItem(props: UnitListItemProps) {
           <Typography
             variant="h1"
             fontSize={11}
-            children={unit.unit_sub_type?.name}
+            children={unit.unit_sub_type?.translations?.name?.[lng]}
           />
           <Typography fontSize={11} children={unit.street_address} />
         </Stack>

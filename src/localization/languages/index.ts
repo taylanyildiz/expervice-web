@@ -50,6 +50,6 @@ declare global {
 /**
  * Localization Extension
  */
-String.prototype.tr = function () {
-    return detecLanguage(this as string);
+String.prototype.tr = function (opt?: ObjectStringToAny) {
+    return detecLanguage(this as string, opt);
 };

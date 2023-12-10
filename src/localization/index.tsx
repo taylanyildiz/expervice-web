@@ -1,135 +1,715 @@
 import "./languages/index";
 
 export default class TranslateHelper {
-  public static product: () => string = () => "product".tr();
-  public static pricing: () => string = () => "pricing".tr();
-  public static resources: () => string = () => "resources".tr();
-  public static support: () => string = () => "support".tr();
-  public static languages: () => string = () => "languages".tr();
-  public static contact: () => string = () => "contact".tr();
-  public static login: () => string = () => "login".tr();
-  public static scheduleDemo: () => string = () => "scheduleDemo".tr();
-  public static tryItNow: () => string = () => "tryItNow".tr();
-  public static pricingHeader: () => string = () => "pricingHeader".tr();
-  public static getStarted: () => string = () => "getStarted".tr();
-  public static bestValue: () => string = () => "bestValue".tr();
-  public static wellcomeHeader1: () => string = () => "wellcomeHeader1".tr();
-  public static wellcomeHeader2: () => string = () => "wellcomeHeader2".tr();
-  public static wellcomeHeader3: () => string = () => "wellcomeHeader3".tr();
-  public static managementSolotionFor: () => string = () =>
-    "managementSolotionFor".tr();
-  public static business: () => string = () => "business".tr();
-  public static customer: () => string = () => "customer".tr();
-  public static learnMore: () => string = () => "learnMore".tr();
-  public static turnsOutHeader: () => string = () => "turnsOutHeader".tr();
-  public static turnsOutHeader1: () => string = () => "turnsOutHeader1".tr();
-  public static turnsOutDesc1: () => string = () => "turnsOutDesc1".tr();
-  public static turnsOutHeader2: () => string = () => "turnsOutHeader2".tr();
-  public static turnsOutDesc2: () => string = () => "turnsOutDesc2".tr();
-  public static turnsOutHeader3: () => string = () => "turnsOutHeader3".tr();
-  public static turnsOutDesc3: () => string = () => "turnsOutDesc3".tr();
-  public static buildFor: () => string = () => "buildFor".tr();
-  public static buildForDesc1: () => string = () => "buildForDesc1".tr();
-  public static buildForDesc2: () => string = () => "buildForDesc2".tr();
-  public static customerOptinion: () => string = () => "customerOptinion".tr();
-  public static contactUs: () => string = () => "contactUs".tr();
-  public static contactUsHeader1: () => string = () => "contactUsHeader1".tr();
-  public static contactUsDesc1: () => string = () => "contactUsDesc1".tr();
-  public static contactUsHeader2: () => string = () => "contactUsHeader2".tr();
-  public static contactUsDesc2: () => string = () => "contactUsDesc2".tr();
-  public static contactForm: () => string = () => "contactForm".tr();
-  public static fullName: () => string = () => "fullName".tr();
-  public static email: () => string = () => "email".tr();
-  public static phone: () => string = () => "phone".tr();
-  public static subject: () => string = () => "subject".tr();
-  public static message: () => string = () => "message".tr();
-  public static send: () => string = () => "send".tr();
-  public static password: () => string = () => "password".tr();
-  public static forgotYour: () => string = () => "forgotYour".tr();
-  public static resetYourPassword: () => string = () =>
-    "resetYourPassword".tr();
-  public static confirmCode: () => string = () => "confirmCode".tr();
-  public static resetPassword: () => string = () => "resetPassword".tr();
-  public static sendCode: () => string = () => "sendCode".tr();
-  public static code: () => string = () => "code".tr();
-  public static confirm: () => string = () => "confirm".tr();
-  public static forgotPasswordHeader1: () => string = () =>
-    "forgotPasswordHeader1".tr();
-  public static forgotPasswordHeader2: () => string = () =>
-    "forgotPasswordHeader2".tr();
-  public static forgotPasswordHeader3: () => string = () =>
-    "forgotPasswordHeader3".tr();
-  public static forgotPasswordHeader4: () => string = () =>
-    "forgotPasswordHeader4".tr();
-  public static confirmPassword: () => string = () => "confirmPassword".tr();
-  public static goLogin: () => string = () => "goLogin".tr();
-  public static createExperviceAccount: () => string = () =>
-    "createExperviceAccount".tr();
-  public static alreadyExistCustomer: () => string = () =>
-    "alreadyExistCustomer".tr();
-  public static billing: () => string = () => "billing".tr();
-  public static finished: () => string = () => "finished".tr();
-  public static primaryContact: () => string = () => "primaryContact".tr();
-  public static primaryContactFirstName: () => string = () =>
-    "primaryContactFirstName".tr();
-  public static primaryContactLastName: () => string = () =>
-    "primaryContactLastName".tr();
-  public static primaryContactEmail: () => string = () =>
-    "primaryContactEmail".tr();
-  public static primaryContactPhone: () => string = () =>
-    "primaryContactPhone".tr();
-  public static businessInformation: () => string = () =>
-    "businessInformation".tr();
-  public static businessName: () => string = () => "businessName".tr();
-  public static webSite: () => string = () => "webSite".tr();
-  public static businessPhone: () => string = () => "businessPhone".tr();
-  public static businessFax: () => string = () => "businessFax".tr();
-  public static businessAddress: () => string = () => "businessAddress".tr();
-  public static country: () => string = () => "country".tr();
-  public static streetAddress: () => string = () => "streetAddress".tr();
-  public static state: () => string = () => "state".tr();
-  public static city: () => string = () => "city".tr();
-  public static zipCode: () => string = () => "zipCode".tr();
-  public static continueBilling: () => string = () => "continueBilling".tr();
-  public static cardHolderName: () => string = () => "cardHolderName".tr();
-  public static cardNumber: () => string = () => "cardNumber".tr();
-  public static expireDate: () => string = () => "expireDate".tr();
-  public static cvc: () => string = () => "cvc".tr();
-  public static definePassword: () => string = () => "definePassword".tr();
-  public static back: () => string = () => "back".tr();
-  public static done: () => string = () => "done".tr();
-  public static continue: () => string = () => "continue".tr();
-  public static registerSuccessHeader: () => string = () =>
-    "registerSuccessHeader".tr();
-  public static firstName: () => string = () => "firstName".tr();
-  public static lastName: () => string = () => "lastName".tr();
-  public static phoneNumber: () => string = () => "phoneNumber".tr();
-  public static activateAccount: () => string = () => "activateAccount".tr();
-  public static successActivation: () => string = () =>
-    "successActivation".tr();
-  public static summary: () => string = () => "summary".tr();
-  public static jobs: () => string = () => "jobs".tr();
-  public static allJobs: () => string = () => "allJobs".tr();
-  public static fault: () => string = () => "fault".tr();
-  public static maintenances: () => string = () => "maintenances".tr();
-  public static forms: () => string = () => "forms".tr();
-  public static units: () => string = () => "units".tr();
-  public static unitsMap: () => string = () => "unitsMap".tr();
-  public static unitsList: () => string = () => "unitsList".tr();
-  public static add: () => string = () => "add".tr();
-  public static addJob: () => string = () => "addJob".tr();
-  public static addUnit: () => string = () => "addUnit".tr();
-  public static addTechnicianUser: () => string = () =>
-    "addTechnicianUser".tr();
-  public static addInternalUser: () => string = () => "addInternalUser".tr();
-  public static addCustomerUser: () => string = () => "addCustomerUser".tr();
-  public static addForm: () => string = () => "addForm".tr();
-  public static notifications: () => string = () => "notifications".tr();
-  public static users: () => string = () => "users".tr();
-  public static internalUsers: () => string = () => "internalUsers".tr();
-  public static customerUsers: () => string = () => "customerUsers".tr();
-  public static technicianUsers: () => string = () => "technicianUsers".tr();
-  public static profile: () => string = () => "profile".tr();
-  public static companySettings: () => string = () => "companySettings".tr();
-  public static logout: () => string = () => "logout".tr();
+  public static product(): string {
+    return "product".tr();
+  }
+  public static pricing(): string {
+    return "pricing".tr();
+  }
+  public static resources(): string {
+    return "resources".tr();
+  }
+  public static support(): string {
+    return "support".tr();
+  }
+  public static languages(): string {
+    return "languages".tr();
+  }
+  public static contact(): string {
+    return "contact".tr();
+  }
+  public static login(): string {
+    return "login".tr();
+  }
+  public static scheduleDemo(): string {
+    return "scheduleDemo".tr();
+  }
+  public static tryItNow(): string {
+    return "tryItNow".tr();
+  }
+  public static pricingHeader(): string {
+    return "pricingHeader".tr();
+  }
+  public static getStarted(): string {
+    return "getStarted".tr();
+  }
+  public static bestValue(): string {
+    return "bestValue".tr();
+  }
+  public static wellcomeHeader1(): string {
+    return "wellcomeHeader1".tr();
+  }
+  public static wellcomeHeader2(): string {
+    return "wellcomeHeader2".tr();
+  }
+  public static wellcomeHeader3(): string {
+    return "wellcomeHeader3".tr();
+  }
+  public static managementSolotionFor(): string {
+    return "managementSolotionFor".tr();
+  }
+  public static business(): string {
+    return "business".tr();
+  }
+  public static customer(): string {
+    return "customer".tr();
+  }
+  public static learnMore(): string {
+    return "learnMore".tr();
+  }
+  public static turnsOutHeader(): string {
+    return "turnsOutHeader".tr();
+  }
+  public static turnsOutHeader1(): string {
+    return "turnsOutHeader1".tr();
+  }
+  public static turnsOutDesc1(): string {
+    return "turnsOutDesc1".tr();
+  }
+  public static turnsOutHeader2(): string {
+    return "turnsOutHeader2".tr();
+  }
+  public static turnsOutDesc2(): string {
+    return "turnsOutDesc2".tr();
+  }
+  public static turnsOutHeader3(): string {
+    return "turnsOutHeader3".tr();
+  }
+  public static turnsOutDesc3(): string {
+    return "turnsOutDesc3".tr();
+  }
+  public static buildFor(): string {
+    return "buildFor".tr();
+  }
+  public static buildForDesc1(): string {
+    return "buildForDesc1".tr();
+  }
+  public static buildForDesc2(): string {
+    return "buildForDesc2".tr();
+  }
+  public static customerOptinion(): string {
+    return "customerOptinion".tr();
+  }
+  public static contactUs(): string {
+    return "contactUs".tr();
+  }
+  public static contactUsHeader1(): string {
+    return "contactUsHeader1".tr();
+  }
+  public static contactUsDesc1(): string {
+    return "contactUsDesc1".tr();
+  }
+  public static contactUsHeader2(): string {
+    return "contactUsHeader2".tr();
+  }
+  public static contactUsDesc2(): string {
+    return "contactUsDesc2".tr();
+  }
+  public static contactForm(): string {
+    return "contactForm".tr();
+  }
+  public static fullName(): string {
+    return "fullName".tr();
+  }
+  public static email(): string {
+    return "email".tr();
+  }
+  public static phone(): string {
+    return "phone".tr();
+  }
+  public static subject(): string {
+    return "subject".tr();
+  }
+  public static message(): string {
+    return "message".tr();
+  }
+  public static send(): string {
+    return "send".tr();
+  }
+  public static password(): string {
+    return "password".tr();
+  }
+  public static forgotYour(): string {
+    return "forgotYour".tr();
+  }
+  public static resetYourPassword(): string {
+    return "resetYourPassword".tr();
+  }
+  public static confirmCode(): string {
+    return "confirmCode".tr();
+  }
+  public static resetPassword(): string {
+    return "resetPassword".tr();
+  }
+  public static sendCode(): string {
+    return "sendCode".tr();
+  }
+  public static code(): string {
+    return "code".tr();
+  }
+  public static confirm(): string {
+    return "confirm".tr();
+  }
+  public static forgotPasswordHeader1(): string {
+    return "forgotPasswordHeader1".tr();
+  }
+  public static forgotPasswordHeader2(): string {
+    return "forgotPasswordHeader2".tr();
+  }
+  public static forgotPasswordHeader3(): string {
+    return "forgotPasswordHeader3".tr();
+  }
+  public static forgotPasswordHeader4(): string {
+    return "forgotPasswordHeader4".tr();
+  }
+  public static confirmPassword(): string {
+    return "confirmPassword".tr();
+  }
+  public static goLogin(): string {
+    return "goLogin".tr();
+  }
+  public static createExperviceAccount(): string {
+    return "createExperviceAccount".tr();
+  }
+  public static alreadyExistCustomer(): string {
+    return "alreadyExistCustomer".tr();
+  }
+  public static billing(): string {
+    return "billing".tr();
+  }
+  public static finished(): string {
+    return "finished".tr();
+  }
+  public static primaryContact(): string {
+    return "primaryContact".tr();
+  }
+  public static primaryContactFirstName(): string {
+    return "primaryContactFirstName".tr();
+  }
+  public static primaryContactLastName(): string {
+    return "primaryContactLastName".tr();
+  }
+  public static primaryContactEmail(): string {
+    return "primaryContactEmail".tr();
+  }
+  public static primaryContactPhone(): string {
+    return "primaryContactPhone".tr();
+  }
+  public static businessInformation(): string {
+    return "businessInformation".tr();
+  }
+  public static businessName(): string {
+    return "businessName".tr();
+  }
+  public static webSite(): string {
+    return "webSite".tr();
+  }
+  public static businessPhone(): string {
+    return "businessPhone".tr();
+  }
+  public static businessFax(): string {
+    return "businessFax".tr();
+  }
+  public static businessAddress(): string {
+    return "businessAddress".tr();
+  }
+  public static country(): string {
+    return "country".tr();
+  }
+  public static streetAddress(): string {
+    return "streetAddress".tr();
+  }
+  public static state(): string {
+    return "state".tr();
+  }
+  public static city(): string {
+    return "city".tr();
+  }
+  public static zipCode(): string {
+    return "zipCode".tr();
+  }
+  public static continueBilling(): string {
+    return "continueBilling".tr();
+  }
+  public static cardHolderName(): string {
+    return "cardHolderName".tr();
+  }
+  public static cardNumber(): string {
+    return "cardNumber".tr();
+  }
+  public static expireDate(): string {
+    return "expireDate".tr();
+  }
+  public static cvc(): string {
+    return "cvc".tr();
+  }
+  public static definePassword(): string {
+    return "definePassword".tr();
+  }
+  public static back(): string {
+    return "back".tr();
+  }
+  public static done(): string {
+    return "done".tr();
+  }
+  public static continue(): string {
+    return "continue".tr();
+  }
+  public static registerSuccessHeader(): string {
+    return "registerSuccessHeader".tr();
+  }
+  public static firstName(): string {
+    return "firstName".tr();
+  }
+  public static lastName(): string {
+    return "lastName".tr();
+  }
+  public static phoneNumber(): string {
+    return "phoneNumber".tr();
+  }
+  public static activateAccount(): string {
+    return "activateAccount".tr();
+  }
+  public static successActivation(): string {
+    return "successActivation".tr();
+  }
+  public static summary(): string {
+    return "summary".tr();
+  }
+  public static jobs(): string {
+    return "jobs".tr();
+  }
+  public static allJobs(): string {
+    return "allJobs".tr();
+  }
+  public static faults(): string {
+    return "faults".tr();
+  }
+  public static maintenances(): string {
+    return "maintenances".tr();
+  }
+  public static forms(): string {
+    return "forms".tr();
+  }
+  public static units(): string {
+    return "units".tr();
+  }
+  public static unitsMap(): string {
+    return "unitsMap".tr();
+  }
+  public static unitsList(): string {
+    return "unitsList".tr();
+  }
+  public static add(): string {
+    return "add".tr();
+  }
+  public static addJob(): string {
+    return "addJob".tr();
+  }
+  public static addUnit(): string {
+    return "addUnit".tr();
+  }
+  public static addTechnicianUser(): string {
+    return "addTechnicianUser".tr();
+  }
+  public static addInternalUser(): string {
+    return "addInternalUser".tr();
+  }
+  public static addCustomerUser(): string {
+    return "addCustomerUser".tr();
+  }
+  public static addForm(): string {
+    return "addForm".tr();
+  }
+  public static notifications(): string {
+    return "notifications".tr();
+  }
+  public static users(): string {
+    return "users".tr();
+  }
+  public static internalUsers(): string {
+    return "internalUsers".tr();
+  }
+  public static customerUsers(): string {
+    return "customerUsers".tr();
+  }
+  public static technicianUsers(): string {
+    return "technicianUsers".tr();
+  }
+  public static profile(): string {
+    return "profile".tr();
+  }
+  public static companySettings(): string {
+    return "companySettings".tr();
+  }
+  public static logout(): string {
+    return "logout".tr();
+  }
+  public static newRegion(): string {
+    return "newRegion".tr();
+  }
+  public static regions(): string {
+    return "regions".tr();
+  }
+  public static filterYourResults(): string {
+    return "filterYourResults".tr();
+  }
+  public static name(): string {
+    return "name".tr();
+  }
+  public static address(): string {
+    return "address".tr();
+  }
+  public static alphabetically(): string {
+    return "alphabetically".tr();
+  }
+  public static createdDate(): string {
+    return "createdDate".tr();
+  }
+  public static sortRegions(): string {
+    return "sortRegions".tr();
+  }
+  public static groups(): string {
+    return "groups".tr();
+  }
+  public static createRegionAndManagement(): string {
+    return "createRegionAndManagement".tr();
+  }
+  public static noFoundRegion(): string {
+    return "noFoundRegion".tr();
+  }
+  public static createRegion(): string {
+    return "createRegion".tr();
+  }
+  public static groupJobs(): string {
+    return "groupJobs".tr();
+  }
+  public static fault(): string {
+    return "fault".tr();
+  }
+  public static maintenance(): string {
+    return "maintenance".tr();
+  }
+  public static createGroupAndManagement(): string {
+    return "createGroupAndManagement".tr();
+  }
+  public static noFoundGroup(): string {
+    return "noFoundGroup".tr();
+  }
+  public static createGroup(): string {
+    return "createGroup".tr();
+  }
+  public static export(): string {
+    return "export".tr();
+  }
+  public static filter(): string {
+    return "filter".tr();
+  }
+  public static save(): string {
+    return "save".tr();
+  }
+  public static saveNew(): string {
+    return "saveNew".tr();
+  }
+  public static saveClose(): string {
+    return "saveClose".tr();
+  }
+  public static delete(): string {
+    return "delete".tr();
+  }
+  public static regionName(): string {
+    return "regionName".tr();
+  }
+  public static groupName(): string {
+    return "groupName".tr();
+  }
+  public static createdBy(props: { name: string }): string {
+    return "createdBy".tr(props);
+  }
+  public static invalidName(): string {
+    return "invalidName".tr();
+  }
+  public static required(): string {
+    return "required".tr();
+  }
+  public static invalid(): string {
+    return "invalid".tr();
+  }
+  public static deleteGroup(): string {
+    return "deleteGroup".tr();
+  }
+  public static sureDeleteGroup(): string {
+    return "sureDeleteGroup".tr();
+  }
+  public static deleteRegion(): string {
+    return "deleteRegion".tr();
+  }
+  public static sureDeleteRegion(): string {
+    return "sureDeleteRegion".tr();
+  }
+  public static regionEdit(): string {
+    return "regionEdit".tr();
+  }
+  public static regionCreate(): string {
+    return "regionCreate".tr();
+  }
+  public static groupEdit(): string {
+    return "groupEdit".tr();
+  }
+  public static groupCreate(): string {
+    return "groupCreate".tr();
+  }
+  public static unitName(): string {
+    return "unitName".tr();
+  }
+  public static priority(): string {
+    return "priority".tr();
+  }
+  public static subType(): string {
+    return "subType".tr();
+  }
+  public static jobStatus(): string {
+    return "jobStatus".tr();
+  }
+  public static technicians(): string {
+    return "technicians".tr();
+  }
+  public static jobCreate(): string {
+    return "jobCreate".tr();
+  }
+  public static jobEdit(): string {
+    return "jobEdit".tr();
+  }
+  public static deleteJob(): string {
+    return "deleteJob".tr();
+  }
+  public static sureDeleteJob(): string {
+    return "sureDeleteJob".tr();
+  }
+  public static jobInformation(): string {
+    return "jobInformation".tr();
+  }
+  public static jobSteps(): string {
+    return "jobSteps".tr();
+  }
+  public static unit(): string {
+    return "unit".tr();
+  }
+  public static jobSubType(): string {
+    return "jobSubType".tr();
+  }
+  public static jobPriority(): string {
+    return "jobPriority".tr();
+  }
+  public static notes(): string {
+    return "notes".tr();
+  }
+  public static sendToCustomer(): string {
+    return "sendToCustomer".tr();
+  }
+  public static confirmSignature(): string {
+    return "confirmSignature".tr();
+  }
+  public static resendToCustomer(): string {
+    return "resendToCustomer".tr();
+  }
+  public static forTheCustomerToSign(): string {
+    return "forTheCustomerToSign".tr();
+  }
+  public static formRejected(): string {
+    return "formRejected".tr();
+  }
+  public static pendingConfirmSignature(): string {
+    return "pendingConfirmSignature".tr();
+  }
+  public static pendingCustomerSignature(): string {
+    return "pendingCustomerSignature".tr();
+  }
+  public static formApproved(): string {
+    return "formApproved".tr();
+  }
+  public static form(): string {
+    return "form".tr();
+  }
+  public static rejectSignature(): string {
+    return "rejectSignature".tr();
+  }
+  public static technician(): string {
+    return "technician".tr();
+  }
+  public static jobRole(): string {
+    return "jobRole".tr();
+  }
+  public static addTechnician(): string {
+    return "addTechnician".tr();
+  }
+  public static selectUnit(): string {
+    return "selectUnit".tr();
+  }
+  public static cancelJob(): string {
+    return "cancelJob".tr();
+  }
+  public static sureCancelJob(): string {
+    return "sureCancelJob".tr();
+  }
+  public static activeStep(): string {
+    return "activeStep".tr();
+  }
+  public static formStatus(): string {
+    return "formStatus".tr();
+  }
+  public static formReadyToSendCustomerToSign(): string {
+    return "formReadyToSendCustomerToSign".tr();
+  }
+  public static approvedCustomerSignature(): string {
+    return "approvedCustomerSignature".tr();
+  }
+  public static rejectedCustomerSignature(): string {
+    return "rejectedCustomerSignature".tr();
+  }
+  public static customerForm(): string {
+    return "customerForm".tr();
+  }
+  public static attention(): string {
+    return "attention".tr();
+  }
+  public static attentionFormDesc1(): string {
+    return "attentionFormDesc1".tr();
+  }
+  public static attentionFormDesc2(): string {
+    return "attentionFormDesc2".tr();
+  }
+  public static formName(): string {
+    return "formName".tr();
+  }
+  public static unitSubType(): string {
+    return "unitSubType".tr();
+  }
+  public static currentJobStatus(): string {
+    return "currentJobStatus".tr();
+  }
+  public static nextJobStatus(): string {
+    return "nextJobStatus".tr();
+  }
+  public static deleteUnits(): string {
+    return "deleteUnits".tr();
+  }
+  public static sureDeleteUnits(): string {
+    return "sureDeleteUnits".tr();
+  }
+  public static deleteUnit(): string {
+    return "deleteUnit".tr();
+  }
+  public static sureDeleteUnit(): string {
+    return "sureDeleteUnit".tr();
+  }
+  public static cancel(): string {
+    return "cancel".tr();
+  }
+  public static assignCustomer(): string {
+    return "assignCustomer".tr();
+  }
+  public static unitsFilter(): string {
+    return "unitsFilter".tr();
+  }
+  public static keyword(): string {
+    return "keyword".tr();
+  }
+  public static filterType(): string {
+    return "filterType".tr();
+  }
+  public static clearFilter(): string {
+    return "clearFilter".tr();
+  }
+  public static applyFilter(): string {
+    return "applyFilter".tr();
+  }
+  public static identityNumber(): string {
+    return "identityNumber".tr();
+  }
+  public static qrCode(): string {
+    return "qrCode".tr();
+  }
+  public static status(): string {
+    return "status".tr();
+  }
+  public static active(): string {
+    return "active".tr();
+  }
+  public static notActive(): string {
+    return "notActive".tr();
+  }
+  public static imei(): string {
+    return "imei".tr();
+  }
+  public static unitLabel(): string {
+    return "unitLabel".tr();
+  }
+  public static unitType(): string {
+    return "unitType".tr();
+  }
+  public static group(): string {
+    return "group".tr();
+  }
+  public static closed(): string {
+    return "closed".tr();
+  }
+  public static opened(): string {
+    return "opened".tr();
+  }
+  public static noJob(): string {
+    return "noJob".tr();
+  }
+  public static noFoundUnit(): string {
+    return "noFoundUnit".tr();
+  }
+  public static closeUnit(): string {
+    return "closeUnit".tr();
+  }
+  public static openUnit(): string {
+    return "openUnit".tr();
+  }
+  public static unitWillOpenedOnSave(): string {
+    return "unitWillOpenedOnSave".tr();
+  }
+  public static unitWillClosedOnSave(): string {
+    return "unitWillClosedOnSave".tr();
+  }
+  public static customerInformation(): string {
+    return "customerInformation".tr();
+  }
+  public static unitInformation(): string {
+    return "unitInformation".tr();
+  }
+  public static createJob(): string {
+    return "createJob".tr();
+  }
+  public static copyAddress(): string {
+    return "copyAddress".tr();
+  }
+  public static contract(): string {
+    return "contract".tr();
+  }
+  public static startDate(): string {
+    return "startDate".tr();
+  }
+  public static endDate(): string {
+    return "endDate".tr();
+  }
+  public static latitude(): string {
+    return "latitude".tr();
+  }
+  public static longitude(): string {
+    return "longitude".tr();
+  }
+  public static job(): string {
+    return "job".tr();
+  }
+  public static unitEdit(): string {
+    return "unitEdit".tr();
+  }
+  public static unitCreate(): string {
+    return "unitCreate".tr();
+  }
 }

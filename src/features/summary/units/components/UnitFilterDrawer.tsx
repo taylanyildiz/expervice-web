@@ -19,6 +19,7 @@ import { useFormik } from "formik";
 import { useEffect } from "react";
 import SelectRegions from "@Components/SelectRegions";
 import CloseIcon from "@mui/icons-material/Close";
+import TranslateHelper from "@Local/index";
 
 function UnitsFilterDrawer() {
   /// Unit store
@@ -69,7 +70,7 @@ function UnitsFilterDrawer() {
               p={1}
               variant="h1"
               fontSize={17}
-              children="Units Filter"
+              children={TranslateHelper.unitsFilter()}
             />
             <IconButton onClick={handleClose}>
               <CloseIcon />
@@ -85,20 +86,20 @@ function UnitsFilterDrawer() {
               height={30}
               fullWidth
               name="keyword"
-              label="Keyword"
+              label={TranslateHelper.keyword()}
               value={formik.values.keyword}
               onChange={formik.handleChange}
             />
             <SelectUnitFilterType
               fullWidth
-              label="Filter Type"
+              label={TranslateHelper.filterType()}
               value={formik.values.filter_type}
               onChanged={(e) => {
                 formik.setFieldValue("filter_type", e);
               }}
             />
             <SelectRegions
-              label="Regions"
+              label={TranslateHelper.regions()}
               fullWidth
               values={formik.values.region_ids}
               onChanged={(regions) => {
@@ -113,7 +114,7 @@ function UnitsFilterDrawer() {
             <PrimaryButton
               variant="outlined"
               fontWeight="normal"
-              children="Clear Filter"
+              children={TranslateHelper.clearFilter()}
               onClick={() =>
                 formik.resetForm({
                   values: {
@@ -131,7 +132,7 @@ function UnitsFilterDrawer() {
               variant="contained"
               fontWeight="normal"
               color="white"
-              children="Apply Filter"
+              children={TranslateHelper.applyFilter()}
               onClick={() => formik.handleSubmit()}
             />
           </Stack>

@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import SelectRegionFilterType from "./SelectRegionFilterType";
 import PrimaryButton from "@Components/PrimaryButton";
 import { ERegionFilterType } from "../entities/enums";
+import TranslateHelper from "@Local/index";
 
 interface RegionFilterPopoverProps {
   filterType: ERegionFilterType | null;
@@ -64,7 +65,7 @@ function RegionFilterPopover(props: RegionFilterPopoverProps) {
         }}
       >
         <Stack width={300} divider={<Divider />}>
-          <Typography p={1} children="FILTER YOUR RESULTS" />
+          <Typography p={1} children={TranslateHelper.filterYourResults()} />
           <Stack spacing={1} p={1}>
             <SelectRegionFilterType
               label="Filter Type"

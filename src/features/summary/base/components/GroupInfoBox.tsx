@@ -6,6 +6,7 @@ import { useSelector } from "react-redux";
 import WorkIcon from "@mui/icons-material/Work";
 import AssignmentIndIcon from "@mui/icons-material/AssignmentInd";
 import LoadingComp from "@Components/LoadingComp";
+import TranslateHelper from "@Local/index";
 
 interface InfoProps {
   title: string;
@@ -81,16 +82,19 @@ function GroupInfoBox() {
               divider={<Divider orientation="vertical" flexItem />}
               spacing={2}
             >
-              <InfoBox title="Units" count={groupInfo?.unit_count} />
               <InfoBox
-                title="Jobs"
+                title={TranslateHelper.units()}
+                count={groupInfo?.unit_count}
+              />
+              <InfoBox
+                title={TranslateHelper.jobs()}
                 count={groupInfo?.job_count}
                 icon={
                   <WorkIcon sx={{ height: 20, width: 20, color: "grey" }} />
                 }
               />
               <InfoBox
-                title="Technicians"
+                title={TranslateHelper.technicianUsers()}
                 count={groupInfo?.technician_count}
                 icon={
                   <AssignmentIndIcon

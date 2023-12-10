@@ -1,3 +1,4 @@
+import { useUser } from "@Features/summary/company/helper/company_helper";
 import JobRole from "@Models/job/job_role";
 import ConstantRepository from "@Repo/constant_repository";
 import { RootState } from "@Store/index";
@@ -27,6 +28,10 @@ function SelectJobRole(props: SelectJobRoleProps) {
 
   /// Constants store
   const { jobRoles } = useSelector((state: RootState) => state.constant);
+
+  /// User store
+  const { language } = useUser();
+  const lng = language?.language_code ?? "en";
 
   /// Constant repository
   const constantRepo = new ConstantRepository();
@@ -66,7 +71,7 @@ function SelectJobRole(props: SelectJobRoleProps) {
       fullWidth={fullWidth}
       options={options}
       value={option}
-      getOptionLabel={(e) => e.name ?? ""}
+      getOptionLabel={(e) => e.translations?.name?.[lng] ?? ""}
       isOptionEqualToValue={(value, option) => value?.id === option?.id}
       onChange={(_, v) => onChangedHandle(v)}
       renderInput={(props) => {

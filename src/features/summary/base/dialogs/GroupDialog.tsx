@@ -3,6 +3,7 @@ import TextOutlineField from "@Components/TextOutlineField";
 import VisibilityComp from "@Components/VisibilityComp";
 import { DialogCustomActions, DialogCustomTitle } from "@Components/dialogs";
 import { EActionType } from "@Components/dialogs/DialogCustomActions";
+import TranslateHelper from "@Local/index";
 import CompanyRegionRepository from "@Repo/company_region_repository";
 import { setEditGroup } from "@Store/company_region_store";
 import { AppDispatch, RootState } from "@Store/index";
@@ -23,7 +24,9 @@ function GroupDialog() {
   const isEdit = Boolean(editGroup);
 
   /// Title of dialog
-  const title = isEdit ? "Group Edit" : "Group Create";
+  const title = isEdit
+    ? TranslateHelper.groupEdit()
+    : TranslateHelper.groupCreate();
 
   /// Dispatch
   const dispatch: AppDispatch = useDispatch<AppDispatch>();
@@ -70,7 +73,9 @@ function GroupDialog() {
   const formik = useFormik({
     initialValues,
     validationSchema: object({
-      name: string().required().min(2, "Invalid name"),
+      name: string()
+        .required(TranslateHelper.required())
+        .min(2, TranslateHelper.invalid()),
     }),
     onSubmit: onSubmitHandle,
   });
@@ -79,8 +84,8 @@ function GroupDialog() {
   const onChangedAction = async (action: EActionType) => {
     if (action === EActionType.Delete) {
       const confirm = await openConfirm(
-        "Delete Group",
-        "Are you sure to delete group ?"
+        TranslateHelper.deleteGroup(),
+        TranslateHelper.sureDeleteGroup()
       );
       if (confirm) {
         const result = await openLoading(async () => {
@@ -128,7 +133,7 @@ function GroupDialog() {
             <TextOutlineField
               fullWidth
               name="name"
-              label="Group Name"
+              label={TranslateHelper.groupName()}
               value={formik.values?.name}
               onChange={formik.handleChange}
               helperText={formik.touched.name && formik.errors.name}
@@ -146,7 +151,7 @@ function GroupDialog() {
                 height={30}
                 fontWeight="normal"
                 color="black"
-                children="Delete"
+                children={TranslateHelper.delete()}
                 variant="outlined"
                 onClick={() => onChangedAction(EActionType.Delete)}
               />
@@ -156,21 +161,21 @@ function GroupDialog() {
             height={30}
             fontWeight="normal"
             color="white"
-            children="Save"
+            children={TranslateHelper.save()}
             onClick={() => onChangedAction(EActionType.Save)}
           />,
           <PrimaryButton
             height={30}
             fontWeight="normal"
             color="white"
-            children="Save & New"
+            children={TranslateHelper.saveNew()}
             onClick={() => onChangedAction(EActionType.SaveNew)}
           />,
           <PrimaryButton
             height={30}
             fontWeight="normal"
             color="white"
-            children="Save & Close"
+            children={TranslateHelper.saveClose()}
             onClick={() => onChangedAction(EActionType.SaveClose)}
           />,
         ]}
@@ -183,7 +188,9 @@ function GroupDialog() {
                   variant="body1"
                   fontSize={12}
                   color="grey"
-                  children={`Created by ${creatorDisplayName}`}
+                  children={TranslateHelper.createdBy({
+                    name: creatorDisplayName,
+                  })}
                 />
               </Grid>
               <Grid item>

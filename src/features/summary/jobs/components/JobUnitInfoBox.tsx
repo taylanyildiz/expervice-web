@@ -1,6 +1,7 @@
 import RichText from "@Components/RichText";
 import VisibilityComp from "@Components/VisibilityComp";
 import UnitStatusBox from "@Features/summary/units/dialogs/UnitStatusBox";
+import TranslateHelper from "@Local/index";
 import Unit from "@Models/units/unit";
 import { caption } from "@Utils/functions";
 import { Avatar, Box, Stack, Typography } from "@mui/material";
@@ -29,7 +30,7 @@ function JobUnitInfoBox(props: JobUnitInfoBoxProps) {
           />
           <RichText
             color="black"
-            title="Customer:"
+            title={`${TranslateHelper.customer()} :`}
             content={
               <Stack direction="row" spacing={1}>
                 <Avatar
@@ -45,7 +46,7 @@ function JobUnitInfoBox(props: JobUnitInfoBoxProps) {
           />
           <RichText
             color="black"
-            title="Group Name:"
+            title={`${TranslateHelper.groupName()} :`}
             content={unit?.group?.name}
           />
         </Stack>

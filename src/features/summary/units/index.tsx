@@ -20,6 +20,7 @@ import { useDialog } from "@Utils/hooks/dialog_hook";
 import UnitRepository from "@Repo/unit_repository";
 import UnitsFilterDrawer from "./components/UnitFilterDrawer";
 import { useAccount } from "../company/helper/company_helper";
+import TranslateHelper from "@Local/index";
 
 function UnitsPage() {
   /// Account store
@@ -70,8 +71,8 @@ function UnitsPage() {
   /// Delete units handle
   const deleteUnitsHandle = async () => {
     const confirm = await openConfirm(
-      "Delete Units",
-      "Are you sure to delete units?"
+      TranslateHelper.deleteUnits(),
+      TranslateHelper.sureDeleteUnits()
     );
     if (!confirm) return;
     const result = await openLoading(async () => {
@@ -84,7 +85,7 @@ function UnitsPage() {
   return (
     <div className="units-layout">
       <GridTableHeader
-        title="Units"
+        title={TranslateHelper.unit()}
         visibilityAdd={isInternal || isOwner}
         onAdd={() => openUnitDialog()}
         filterCount={filterCount}
@@ -104,14 +105,14 @@ function UnitsPage() {
               }}
               fontWeight="normal"
               variant="outlined"
-              children="Cancel"
+              children={TranslateHelper.cancel()}
             />
           </VisibilityComp>,
           <VisibilityComp visibility={moreActions}>
             <PrimaryButton
               fontWeight="normal"
               variant="outlined"
-              children="Assign Customer"
+              children={TranslateHelper.assignCustomer()}
               onClick={() => {
                 openAssignCustomerDialog();
               }}
@@ -121,7 +122,7 @@ function UnitsPage() {
             <PrimaryButton
               fontWeight="normal"
               variant="outlined"
-              children="Delete"
+              children={TranslateHelper.delete()}
               onClick={deleteUnitsHandle}
             />
           </VisibilityComp>,

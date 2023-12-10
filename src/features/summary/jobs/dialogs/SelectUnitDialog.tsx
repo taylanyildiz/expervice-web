@@ -5,6 +5,7 @@ import { Box, DialogContent } from "@mui/material";
 import { useJobDialog } from "../helper/job_helper";
 import { useState } from "react";
 import Unit from "@Models/units/unit";
+import TranslateHelper from "@Local/index";
 
 function SelectUnitDialog() {
   /// Job dialog hook
@@ -15,12 +16,12 @@ function SelectUnitDialog() {
 
   return (
     <>
-      <DialogCustomTitle title="Select Unit" />
+      <DialogCustomTitle title={TranslateHelper.selectUnit()} />
       <DialogContent>
         <Box mt={1} p={1} sx={{ backgroundColor: "white" }}>
           <SelectUnit
             fullWidth
-            label="Unit"
+            label={TranslateHelper.unit()}
             value={unit}
             onChanged={(e) => {
               setUnit(e);
@@ -40,7 +41,7 @@ function SelectUnitDialog() {
             fontWeight="normal"
             fontSize={14}
             variant="outlined"
-            children="Continue"
+            children={TranslateHelper.continue()}
           />,
         ]}
       />

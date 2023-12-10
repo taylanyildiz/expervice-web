@@ -21,6 +21,7 @@ import { useJobDialog } from "@Features/summary/jobs/helper/job_helper";
 import { getOnlyDate, useLocationDialog } from "@Utils/functions";
 import { LatLng } from "@Components/SelectLocation";
 import { useAccount } from "@Features/summary/company/helper/company_helper";
+import TranslateHelper from "@Local/index";
 
 function Header(props: { unit: Unit }) {
   const unit = props.unit;
@@ -44,7 +45,7 @@ function Header(props: { unit: Unit }) {
               <Typography
                 variant="h1"
                 fontSize={14}
-                children="Unit Information"
+                children={TranslateHelper.unitInformation()}
               />
             </Grid>
             <Grid item>
@@ -60,7 +61,7 @@ function Header(props: { unit: Unit }) {
               fontSize={13}
               fontWeight="normal"
               variant="outlined"
-              children="Create Job"
+              children={TranslateHelper.createJob()}
               onClick={handleCreateJob}
             />
           </VisibilityComp>
@@ -104,7 +105,7 @@ function UnitInformation(props: {
                   <TextOutlineField
                     fullWidth
                     name="name"
-                    label="Unit Name"
+                    label={TranslateHelper.unitName()}
                     value={formik.values.name}
                     onChange={formik.handleChange}
                     error={Boolean(formik.errors.name && formik.touched.name)}
@@ -115,7 +116,7 @@ function UnitInformation(props: {
                   <SelectCustomer
                     fullWidth
                     disabled={!formik.values.availableCustomer}
-                    label="Customer"
+                    label={TranslateHelper.customer()}
                     onChanged={(customer) => {
                       formik.setFieldValue("customer", customer);
                     }}
@@ -132,7 +133,7 @@ function UnitInformation(props: {
                   <PrimaryButton
                     disabled={!Boolean(formik.values.customer)}
                     variant="text"
-                    children="Copy Address"
+                    children={TranslateHelper.copyAddress()}
                     fontSize={10}
                     onClick={onCopyAddress}
                   />
@@ -149,7 +150,7 @@ function UnitInformation(props: {
                 <Grid item xs={12}>
                   <SelectUnitSubType
                     fullWidth
-                    label="Unit Sub Type"
+                    label={TranslateHelper.unitSubType()}
                     onChanged={(subType) => {
                       formik.setFieldValue("unit_sub_type", subType);
                     }}
@@ -167,7 +168,7 @@ function UnitInformation(props: {
                 <Grid item xs={12}>
                   <SelectUnitLabel
                     fullWidth
-                    label="Unit Label"
+                    label={TranslateHelper.unitLabel()}
                     onChanged={(label) => {
                       formik.setFieldValue("unit_label", label);
                     }}
@@ -184,7 +185,7 @@ function UnitInformation(props: {
                   <TextOutlineField
                     fullWidth
                     name="identity_number"
-                    label="Identity Number"
+                    label={TranslateHelper.identityNumber()}
                     value={formik.values.identity_number}
                     onChange={formik.handleChange}
                     error={Boolean(
@@ -201,7 +202,7 @@ function UnitInformation(props: {
                   <TextOutlineField
                     fullWidth
                     name="imei"
-                    label="IMEI"
+                    label={TranslateHelper.imei()}
                     value={formik.values.imei}
                     onChange={formik.handleChange}
                     error={Boolean(formik.errors.imei && formik.touched.imei)}
@@ -212,7 +213,7 @@ function UnitInformation(props: {
                   <TextQRField
                     fullWidth
                     name="qr_code"
-                    label="QR Code"
+                    label={TranslateHelper.qrCode()}
                     value={formik.values.qr_code}
                     onChange={formik.handleChange}
                     error={Boolean(
@@ -236,7 +237,11 @@ function Contract(props: { formik: FormikProps<Unit> }) {
   return (
     <Grid container>
       <Grid item xs={12}>
-        <Typography variant="h1" fontSize={15} children="Contract" />
+        <Typography
+          variant="h1"
+          fontSize={15}
+          children={TranslateHelper.contract()}
+        />
       </Grid>
       <Grid item xs={12} mt={1}>
         <Grid container columnSpacing={1}>
@@ -244,7 +249,7 @@ function Contract(props: { formik: FormikProps<Unit> }) {
             <TextOutlineField
               fullWidth
               name="contract_start_date"
-              label="Start Date"
+              label={TranslateHelper.startDate()}
               type="date"
               onChange={formik.handleChange}
               value={getOnlyDate(formik.values.contract_start_date)}
@@ -256,7 +261,7 @@ function Contract(props: { formik: FormikProps<Unit> }) {
             <TextOutlineField
               fullWidth
               name="contract_end_date"
-              label="End Date"
+              label={TranslateHelper.endDate()}
               type="date"
               onChange={formik.handleChange}
               value={getOnlyDate(formik.values.contract_end_date)}
@@ -288,8 +293,8 @@ function Address(props: { formik: FormikProps<Unit> }) {
     }
     const result = await locationDialog(latLng);
     if (!result) return;
-    formik.setFieldValue("latitude", result.lat.toFixed(4));
-    formik.setFieldValue("longitude", result.lng.toFixed(4));
+    formik.setFieldValue(TranslateHelper.latitude(), result.lat.toFixed(4));
+    formik.setFieldValue(TranslateHelper.longitude(), result.lng.toFixed(4));
   };
 
   return (
@@ -300,7 +305,7 @@ function Address(props: { formik: FormikProps<Unit> }) {
       <Grid item mt={1} xs={12}>
         <CountrySelect
           fullWidth
-          label="Country"
+          label={TranslateHelper.country()}
           onChanged={(country) => {
             formik.setFieldValue("country", country);
           }}
@@ -313,7 +318,7 @@ function Address(props: { formik: FormikProps<Unit> }) {
         <TextOutlineField
           fullWidth
           name="street_address"
-          label="Street Address"
+          label={TranslateHelper.streetAddress()}
           onChange={formik.handleChange}
           value={formik.values.street_address}
           error={Boolean(
@@ -327,7 +332,7 @@ function Address(props: { formik: FormikProps<Unit> }) {
       <Grid item xs={6}>
         <StateSelect
           fullWidth
-          label="State"
+          label={TranslateHelper.state()}
           onChanged={(state) => {
             formik.setFieldValue("state", state);
           }}
@@ -340,7 +345,7 @@ function Address(props: { formik: FormikProps<Unit> }) {
       <Grid item xs={6}>
         <CitySelect
           fullWidth
-          label="City"
+          label={TranslateHelper.city()}
           onChanged={(city) => {
             formik.setFieldValue("city", city);
           }}
@@ -356,7 +361,7 @@ function Address(props: { formik: FormikProps<Unit> }) {
             <TextOutlineField
               fullWidth
               name="latitude"
-              label="Latitude"
+              label={TranslateHelper.latitude()}
               type="number"
               onChange={(e) => {
                 const inputValue = e.target.value;
@@ -375,7 +380,7 @@ function Address(props: { formik: FormikProps<Unit> }) {
             <TextOutlineField
               fullWidth
               name="longitude"
-              label="Longitude"
+              label={TranslateHelper.longitude()}
               type="number"
               onChange={(e) => {
                 const inputValue = e.target.value;

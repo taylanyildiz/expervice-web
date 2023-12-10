@@ -11,6 +11,7 @@ import { useDispatch } from "react-redux";
 import { setUnitJobsFilter } from "@Store/unit_store";
 import Job from "@Models/job/job";
 import { useJobDialog } from "@Features/summary/jobs/helper/job_helper";
+import TranslateHelper from "@Local/index";
 
 function UnitJobs() {
   /// Dispatch
@@ -65,7 +66,7 @@ function UnitJobs() {
     {
       field: "priority",
       align: "left",
-      headerName: "Priority",
+      headerName: TranslateHelper.jobPriority(),
       width: 150,
       valueGetter: (params) => {
         const job = params.row;
@@ -76,7 +77,7 @@ function UnitJobs() {
     {
       field: "sub_type",
       align: "left",
-      headerName: "Sub Type",
+      headerName: TranslateHelper.jobSubType(),
       width: 220,
       valueGetter: (params) => {
         const job = params.row;
@@ -88,7 +89,7 @@ function UnitJobs() {
       field: "status",
       headerAlign: "left",
       align: "left",
-      headerName: "Job Status",
+      headerName: TranslateHelper.jobStatus(),
       width: 200,
       valueGetter: (params) => {
         const job = params.row;
@@ -100,7 +101,7 @@ function UnitJobs() {
       field: "job_technicians",
       align: "center",
       headerAlign: "center",
-      headerName: "Technicians",
+      headerName: TranslateHelper.technicians(),
       minWidth: 100,
       sortable: false,
       valueGetter: (params) => {

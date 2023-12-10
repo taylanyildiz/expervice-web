@@ -22,6 +22,7 @@ import { setSelectedRegion } from "@Store/company_region_store";
 import RegionFilterPopover from "./RegionFilterPopover";
 import { ERegionFilterType, ERegionSortType } from "../entities/enums";
 import RegionSortPopover from "./RegionSortPopover";
+import TranslateHelper from "@Local/index";
 
 /// Animated arrow button
 function ArrowButton() {
@@ -156,7 +157,7 @@ function SummarySideBar() {
             <PrimaryButton
               height={30}
               fullWidth
-              children="New Region"
+              children={TranslateHelper.newRegion()}
               color="white"
               fontWeight="normal"
               fontSize={13}
@@ -168,7 +169,11 @@ function SummarySideBar() {
         <Grid item xs={12} mt={1}>
           <Grid container alignItems="center">
             <Grid item sx={{ flexGrow: 1 }}>
-              <Typography fontWeight="bold" children="Regions" fontSize={14} />
+              <Typography
+                fontWeight="bold"
+                children={TranslateHelper.regions()}
+                fontSize={14}
+              />
             </Grid>
             <Grid item>
               <RegionFilterPopover

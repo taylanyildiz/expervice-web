@@ -24,6 +24,8 @@ import { setJob } from "@Store/job_store";
 import InsertDriveFileIcon from "@mui/icons-material/InsertDriveFile";
 import RichText from "@Components/RichText";
 import { getJobFormStatusTitle } from "../helper/job_enum_helper";
+import TranslateHelper from "@Local/index";
+import { useUser } from "@Features/summary/company/helper/company_helper";
 
 interface JobStepperProps {
   job: Job | null;
@@ -39,6 +41,10 @@ function JobStepper(props: JobStepperProps) {
 
   /// Job Dialog hook
   const { openJobImagesDialog, openJobFormDialog } = useJobDialog();
+
+  /// User store
+  const { language } = useUser();
+  const lng = language?.language_code ?? "en";
 
   /// Dialog hook
   const { openLoading, openConfirm } = useDialog();
@@ -65,8 +71,8 @@ function JobStepper(props: JobStepperProps) {
     let status = EJobStatuses.FaultCanceled;
     if (!isFault) status = EJobStatuses.MaintenanceCanceled;
     const confirm = await openConfirm(
-      "Canceled Job",
-      "Are you sure to canceled job"
+      TranslateHelper.cancelJob(),
+      TranslateHelper.sureCancelJob()
     );
     if (!confirm) return;
     const result = await openLoading(async () => {
@@ -160,13 +166,17 @@ function JobStepper(props: JobStepperProps) {
                   variant="outlined"
                   fontWeight="normal"
                   fontSize={12}
-                  children="Cancel Job"
+                  children={TranslateHelper.cancelJob()}
                   onClick={handleCanceled}
                 />
               </VisibilityComp>
             </Grid>
             <Grid item>
-              <Typography variant="h1" fontSize={14} children="Active Step" />
+              <Typography
+                variant="h1"
+                fontSize={14}
+                children={TranslateHelper.activeStep()}
+              />
             </Grid>
             <Grid item>
               <Box width={300} boxShadow={4} p={1}>
@@ -176,7 +186,7 @@ function JobStepper(props: JobStepperProps) {
                       variant="body2"
                       fontWeight="bold"
                       fontSize={13}
-                      children={activeStep.status?.name}
+                      children={activeStep.status?.translations?.name?.[lng]}
                     />
                     <Typography
                       variant="body2"
@@ -202,7 +212,11 @@ function JobStepper(props: JobStepperProps) {
               <VisibilityComp visibility={formLogs.length !== 0}>
                 <Grid spacing={1} container direction="column">
                   <Grid item mt={2}>
-                    <Typography variant="h1" fontSize={13} children="Forms" />
+                    <Typography
+                      variant="h1"
+                      fontSize={13}
+                      children={TranslateHelper.forms()}
+                    />
                   </Grid>
                   <Grid item xs={12}>
                     {formLogs.map((jobStatus, index) => {
@@ -233,7 +247,7 @@ function JobStepper(props: JobStepperProps) {
                                 <RichText
                                   fontSize={11}
                                   color="black"
-                                  title="Name :"
+                                  title={`${TranslateHelper.name()} :`}
                                   content={form?.form_name}
                                 />
                               </Grid>
@@ -241,7 +255,7 @@ function JobStepper(props: JobStepperProps) {
                                 <RichText
                                   fontSize={11}
                                   color="black"
-                                  title="Job Status :"
+                                  title={`${TranslateHelper.jobStatus()} :`}
                                   content={jobStatus?.status?.name}
                                 />
                               </Grid>
@@ -249,7 +263,7 @@ function JobStepper(props: JobStepperProps) {
                                 <RichText
                                   fontSize={11}
                                   color="black"
-                                  title="Form Status :"
+                                  title={`${TranslateHelper.formStatus()} :`}
                                   content={getJobFormStatusTitle(form?.status)}
                                 />
                               </Grid>

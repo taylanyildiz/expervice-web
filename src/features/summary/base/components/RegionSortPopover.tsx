@@ -17,6 +17,7 @@ import {
   getRegionSortTitle,
 } from "../helper/summary_helper";
 import DoneIcon from "@mui/icons-material/Done";
+import TranslateHelper from "@Local/index";
 
 interface RegionSortPopoverProps {
   sortType: ERegionSortType | null;
@@ -76,7 +77,7 @@ function RegionSortPopover(props: RegionSortPopoverProps) {
         }}
       >
         <Stack width={300} divider={<Divider />}>
-          <Typography p={1} children="Sort Regions" />
+          <Typography p={1} children={TranslateHelper.sortRegions()} />
           <Stack spacing={1} p={1} divider={<Divider />}>
             {types.map((e) => (
               <ListItem

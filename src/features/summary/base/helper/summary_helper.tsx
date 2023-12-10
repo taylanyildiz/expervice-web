@@ -8,6 +8,7 @@ import { ERegionFilterType, ERegionSortType } from "../entities/enums";
 import SortByAlphaIcon from "@mui/icons-material/SortByAlpha";
 import CalendarTodayIcon from "@mui/icons-material/CalendarToday";
 import { ReactNode } from "react";
+import TranslateHelper from "@Local/index";
 
 /**
  * Summary dialogs hook
@@ -34,11 +35,11 @@ export function useSummaryDialog() {
 export function getRegionFilterTitle(type: ERegionFilterType): string {
   switch (type) {
     case ERegionFilterType.Name:
-      return "Name";
+      return TranslateHelper.name();
     case ERegionFilterType.Address:
-      return "Address";
+      return TranslateHelper.address();
     case ERegionFilterType.Zipcode:
-      return "Zipcode";
+      return TranslateHelper.zipCode();
     default:
       return "";
   }
@@ -52,9 +53,9 @@ export function getRegionFilterTitle(type: ERegionFilterType): string {
 export function getRegionSortTitle(type: ERegionSortType): string {
   switch (type) {
     case ERegionSortType.Alphabetically:
-      return "Alphabetically";
+      return TranslateHelper.filterYourResults();
     case ERegionSortType.CreatedDate:
-      return "Created Date";
+      return TranslateHelper.filterYourResults();
     default:
       return "";
   }

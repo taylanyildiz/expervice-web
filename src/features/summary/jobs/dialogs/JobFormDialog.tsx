@@ -10,6 +10,7 @@ import { useDialog } from "@Utils/hooks/dialog_hook";
 import LoadingComp from "@Components/LoadingComp";
 import { useAccount } from "@Features/summary/company/helper/company_helper";
 import { useJob } from "../helper/job_helper";
+import TranslateHelper from "@Local/index";
 
 interface JobFormDialogProps {
   form: JobForm;
@@ -32,18 +33,12 @@ function JobFormDialog(props: JobFormDialogProps) {
   /// Title of button
   const title: string = useMemo(() => {
     switch (form.status) {
-      case EFormStatuses.Ready:
-        return "Send to Customer";
-      case EFormStatuses.Rejected:
-        return "Send to Customer";
       case EFormStatuses.PendingConfirmed:
-        return "Confirm Signature";
+        return TranslateHelper.confirmSignature();
       case EFormStatuses.PendingSignature:
-        return "Re-send to Customer";
-      case EFormStatuses.Approved:
-        return "Send to Customer";
+        return TranslateHelper.resendToCustomer();
       default:
-        return "";
+        return TranslateHelper.sendToCustomer();
     }
   }, [form.status]);
 
@@ -51,15 +46,15 @@ function JobFormDialog(props: JobFormDialogProps) {
   const desc: string = useMemo(() => {
     switch (form.status) {
       case EFormStatuses.Ready:
-        return "For the customer to sign";
+        return TranslateHelper.forTheCustomerToSign();
       case EFormStatuses.Rejected:
-        return "Form rejected";
+        return TranslateHelper.formRejected();
       case EFormStatuses.PendingConfirmed:
-        return "Pending confirm signature";
+        return TranslateHelper.pendingConfirmSignature();
       case EFormStatuses.PendingSignature:
-        return "Pending customer signature";
+        return TranslateHelper.pendingCustomerSignature();
       case EFormStatuses.Approved:
-        return "Form approved";
+        return TranslateHelper.formApproved();
       default:
         return "";
     }
@@ -84,7 +79,6 @@ function JobFormDialog(props: JobFormDialogProps) {
       }
       setBase64(base64Form);
     };
-
     getForm();
   }, [form]);
 
@@ -97,6 +91,7 @@ function JobFormDialog(props: JobFormDialogProps) {
     };
   }, []);
 
+  /// Confirm signature
   const handleConfirm = () => {
     switch (form.status) {
       case EFormStatuses.PendingConfirmed:
@@ -108,10 +103,12 @@ function JobFormDialog(props: JobFormDialogProps) {
     }
   };
 
+  /// Reject signature
   const handleReject = () => {
     updateStatus(EFormStatuses.Rejected);
   };
 
+  /// Update status form
   const updateStatus = async (status: number) => {
     const result = await openLoading(async () => {
       const result = await jobRepo.updateFormStatus(form.id, status);
@@ -121,6 +118,7 @@ function JobFormDialog(props: JobFormDialogProps) {
     closeDialog();
   };
 
+  /// Send to customer form
   const sendCustomerForm = async () => {
     const result = await openLoading(async () => {
       if (form.status === EFormStatuses.Approved) {
@@ -144,7 +142,11 @@ function JobFormDialog(props: JobFormDialogProps) {
                 alignItems="center"
                 justifyContent="space-between"
               >
-                <Typography variant="h1" fontSize={15} children="FORM" />
+                <Typography
+                  variant="h1"
+                  fontSize={15}
+                  children={TranslateHelper.forms()}
+                />
                 <VisibilityComp visibility={isOwner || isInternal}>
                   <Stack direction="row" spacing={1} alignItems="center">
                     <Typography
@@ -165,7 +167,7 @@ function JobFormDialog(props: JobFormDialogProps) {
                           variant="contained"
                           backgroundColor="red"
                           color="white"
-                          children="Reject Signature"
+                          children={TranslateHelper.rejectSignature()}
                           onClick={handleReject}
                         />
                       </VisibilityComp>

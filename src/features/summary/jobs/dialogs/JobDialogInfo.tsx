@@ -7,6 +7,7 @@ import { Grid, Stack, Typography } from "@mui/material";
 import { FormikProps } from "formik";
 import JobUnitInfoBox from "../components/JobUnitInfoBox";
 import { isAvailableJobStatus } from "../helper/job_enum_helper";
+import TranslateHelper from "@Local/index";
 
 function JobDialogInfo(props: { formik: FormikProps<Job> }) {
   const formik = props.formik;
@@ -16,14 +17,18 @@ function JobDialogInfo(props: { formik: FormikProps<Job> }) {
   return (
     <Grid container columnSpacing={1}>
       <Grid item xs={12} pb={1}>
-        <Typography variant="h1" fontSize={15} children="Job Info" />
+        <Typography
+          variant="h1"
+          fontSize={15}
+          children={TranslateHelper.jobInformation()}
+        />
       </Grid>
       <Grid item xs={6}>
         <Stack>
           <SelectUnit
             disabled={isEdit}
             fullWidth
-            label="Unit"
+            label={TranslateHelper.unit()}
             clearIcon={false}
             value={formik.values.unit}
             helperText={formik.touched.unit && formik.errors.unit}
@@ -40,7 +45,7 @@ function JobDialogInfo(props: { formik: FormikProps<Job> }) {
           disabled={isEdit}
           fullWidth
           clearIcon={false}
-          label="Job Sub Type"
+          label={TranslateHelper.jobSubType()}
           value={formik.values.sub_type_id}
           onChanged={(subType) => {
             formik.setFieldValue("sub_type", subType);
@@ -54,7 +59,7 @@ function JobDialogInfo(props: { formik: FormikProps<Job> }) {
           disabled={!statusAvailable}
           fullWidth
           value={formik.values.priority_id}
-          label="Job Priority"
+          label={TranslateHelper.jobPriority()}
           onChanged={(priority) => {
             formik.setFieldValue("priority", priority);
             formik.setFieldValue("priority_id", priority?.id);
@@ -67,7 +72,7 @@ function JobDialogInfo(props: { formik: FormikProps<Job> }) {
           fullWidth
           multiline
           name="notes"
-          label="Notes"
+          label={TranslateHelper.notes()}
           value={formik.values.description}
           onChange={(e) => {
             const value = e.target.value;

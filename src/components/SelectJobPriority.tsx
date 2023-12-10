@@ -1,3 +1,4 @@
+import { useUser } from "@Features/summary/company/helper/company_helper";
 import JobPriority from "@Models/job/job_priority";
 import ConstantRepository from "@Repo/constant_repository";
 import { RootState } from "@Store/index";
@@ -27,6 +28,10 @@ function SelectJobPriority(props: SelectJobPriorityProps) {
 
   /// Constants store
   const { jobPriorities } = useSelector((state: RootState) => state.constant);
+
+  /// User store
+  const { language } = useUser();
+  const lng = language?.language_code ?? "en";
 
   /// Constant repository
   const constantRepo = new ConstantRepository();
@@ -67,7 +72,7 @@ function SelectJobPriority(props: SelectJobPriorityProps) {
       options={options}
       value={option}
       clearIcon={false}
-      getOptionLabel={(e) => e.name ?? ""}
+      getOptionLabel={(e) => e.translations?.name?.[lng] ?? ""}
       isOptionEqualToValue={(value, option) => value?.id === option?.id}
       onChange={(_, v) => {
         if (!v) return;

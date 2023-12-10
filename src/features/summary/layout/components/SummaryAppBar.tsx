@@ -108,7 +108,7 @@ function SummaryAppBar() {
                   },
                   {
                     prefix: <ReportIcon />,
-                    title: TranslateHelper.fault(),
+                    title: TranslateHelper.faults(),
                     to: { pathname: ERouter.Jobs, search: "type=1" },
                   },
                   {

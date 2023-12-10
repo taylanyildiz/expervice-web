@@ -21,6 +21,7 @@ import { EJobType } from "@Features/summary/jobs/entities/job_enums";
 import UnitJobs from "./UnitJobs";
 import Customer from "@Models/customer/customer";
 import { useCustomEffect } from "@Utils/functions";
+import TranslateHelper from "@Local/index";
 
 interface UnitDialogProps {
   customerUser?: Customer | null;
@@ -42,13 +43,17 @@ function UnitDialog(props: UnitDialogProps) {
   const { unit, unitId } = useUnit();
 
   const jobType =
-    unit?.job?.type_id === EJobType.Fault ? "Fault" : "Maintenance";
+    unit?.job?.type_id === EJobType.Fault
+      ? TranslateHelper.fault()
+      : TranslateHelper.maintenance();
   const jobId = unit?.job?.id;
   const hasjob = Boolean(jobId);
   const isEdit = Boolean(unit);
 
   /// Title of dialog
-  const title = isEdit ? "Unit Edit" : "Unit Create";
+  const title = isEdit
+    ? TranslateHelper.unitEdit()
+    : TranslateHelper.unitCreate();
 
   /// Action type state
   const [actionType, setActionType] = useState<EActionType | null>(null);
@@ -57,8 +62,8 @@ function UnitDialog(props: UnitDialogProps) {
   const onChangedAction = async (type: EActionType) => {
     if (type === EActionType.Delete) {
       const confirm = await openConfirm(
-        "Delete Unit",
-        "Are you sure to delete unit?"
+        TranslateHelper.deleteUnit(),
+        TranslateHelper.sureDeleteUnit()
       );
       if (confirm) {
         const result = await openLoading(async () => {
@@ -189,17 +194,17 @@ function UnitDialog(props: UnitDialogProps) {
           <TabBar
             tabs={[
               {
-                title: "Unit Information",
+                title: TranslateHelper.unitInformation(),
                 panel: <UnitInformation formik={formik} />,
               },
               {
                 visibility: hasjob,
-                title: `Job (${jobType})`,
+                title: `${TranslateHelper.job()} (${jobType})`,
                 panel: <UnitJob />,
               },
               {
                 visibility: isEdit,
-                title: `All Jobs (${unit?.job_count})`,
+                title: `${TranslateHelper.allJobs()} (${unit?.job_count})`,
                 panel: <UnitJobs />,
               },
             ]}
