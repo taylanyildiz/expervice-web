@@ -42,3 +42,4 @@ export { DialogCustomTitle, DialogCustomActions } from "./dialogs";
 export { default as ImageCropper } from "./ImageCropper";
 export { default as DisabledComp } from "./DisabledComp";
 export { default as SelectDate } from "./SelectDate";
+export { default as AnyUpdateBox } from "./AnyUpdateBox";

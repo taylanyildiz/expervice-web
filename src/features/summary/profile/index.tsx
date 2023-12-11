@@ -1,7 +1,7 @@
 import PrimaryButton from "@Components/PrimaryButton";
 import { DialogCustomActions, DialogCustomTitle } from "@Components/dialogs";
 import Colors from "@Themes/colors";
-import { Box, DialogContent, Typography } from "@mui/material";
+import { Box, DialogContent } from "@mui/material";
 import UserInformationBox from "./components/UserInformationBox";
 import { useProfile, useProfileProcess } from "./helper/profile_helper";
 import User from "@Models/user";
@@ -9,11 +9,11 @@ import { useFormik } from "formik";
 import { useEffect } from "react";
 import TabBar from "@Components/TabBar";
 import ProfileOverviewContent from "./components/ProfileOverviewContent";
-import VisibilityComp from "@Components/VisibilityComp";
 import UserRepository from "@Repo/user_repository";
 import { useDialog } from "@Utils/hooks/dialog_hook";
 import TranslateHelper from "@Local/index";
 import { profileValidator } from "./validator/profile_validator";
+import AnyUpdateBox from "@Components/AnyUpdateBox";
 
 function ProfileDialog() {
   /// Account store
@@ -65,15 +65,7 @@ function ProfileDialog() {
   return (
     <>
       <DialogCustomTitle title="Profile" />
-      <VisibilityComp visibility={anyUpdate}>
-        <Box pl={1} m={0} sx={{ backgroundColor: Colors.warning }}>
-          <Typography
-            fontSize={13}
-            color="white"
-            children="Please click save to save changes"
-          />
-        </Box>
-      </VisibilityComp>
+      <AnyUpdateBox anyUpdate={anyUpdate} />
       <DialogContent>
         <UserInformationBox />
         <Box mt={1}>

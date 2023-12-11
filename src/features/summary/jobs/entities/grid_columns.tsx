@@ -45,7 +45,8 @@ const columns: GridColDef<Job>[] = [
     width: 150,
     valueGetter: (params) => {
       const job = params.row;
-      const priority = job.priority?.name;
+      const lng = store.getState().user.language?.language_code ?? "en";
+      const priority = job.priority?.translations?.name?.[lng];
       return priority;
     },
   },
@@ -56,7 +57,8 @@ const columns: GridColDef<Job>[] = [
     width: 220,
     valueGetter: (params) => {
       const job = params.row;
-      const subType = job.sub_type?.name;
+      const lng = store.getState().user.language?.language_code ?? "en";
+      const subType = job.sub_type?.translations?.name?.[lng];
       return subType;
     },
   },
@@ -68,7 +70,8 @@ const columns: GridColDef<Job>[] = [
     width: 200,
     valueGetter: (params) => {
       const job = params.row;
-      const status = job.status?.name;
+      const lng = store.getState().user.language?.language_code ?? "en";
+      const status = job.status?.translations?.name?.[lng];
       return status;
     },
   },
@@ -100,6 +103,7 @@ const columns: GridColDef<Job>[] = [
     headerAlign: "center",
     headerName: TranslateHelper.technicians(),
     minWidth: 100,
+    flex: 1,
     sortable: false,
     valueGetter: (params) => {
       const job = params.row;

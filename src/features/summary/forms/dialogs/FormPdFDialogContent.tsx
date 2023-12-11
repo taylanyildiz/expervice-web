@@ -10,6 +10,7 @@ import LoadingComp from "@Components/LoadingComp";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import FormRepository from "@Repo/form_repository";
 import { LoadingButton } from "@mui/lab";
+import TranslateHelper from "@Local/index";
 
 interface FormPdFDialogContentProps {
   formik: FormikProps<Form>;
@@ -50,11 +51,15 @@ function FormPdFDialogContent(props: FormPdFDialogContentProps) {
     <Grid container flex={1}>
       <Grid item flex={1} pr={5}>
         <Stack spacing={1}>
-          <Typography variant="h1" fontSize={15} children="Form Content" />
+          <Typography
+            variant="h1"
+            fontSize={15}
+            children={TranslateHelper.formContent()}
+          />
           <TextOutlineField
             fullWidth
             name="name"
-            label="Name"
+            label={TranslateHelper.name()}
             helperText={formik.touched.name && formik.errors.name}
             error={Boolean(formik.touched.name && formik.errors.name)}
             value={formik.values.name}
@@ -66,11 +71,15 @@ function FormPdFDialogContent(props: FormPdFDialogContentProps) {
             justifyContent="space-between"
             alignItems="center"
           >
-            <Typography variant="h1" fontSize={15} children="Form Fields" />
+            <Typography
+              variant="h1"
+              fontSize={15}
+              children={TranslateHelper.formFields()}
+            />
             <PrimaryButton
               color="blue"
               prefix={<AddIcon />}
-              children="Add Field"
+              children={TranslateHelper.addField()}
               variant="text"
               onClick={() => onAddField()}
             />
@@ -86,7 +95,7 @@ function FormPdFDialogContent(props: FormPdFDialogContentProps) {
           startIcon={<ChevronRightIcon />}
           variant="outlined"
           onClick={onReviewHandle}
-          children="Review"
+          children={TranslateHelper.preview()}
         />
       </Grid>
       <Grid item xs={5}>

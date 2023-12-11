@@ -15,15 +15,14 @@ import { setTechnician } from "@Store/technician_store";
 import { AppDispatch } from "@Store/index";
 import { useDispatch } from "react-redux";
 import { useFormik } from "formik";
-import { Box, DialogContent, Typography } from "@mui/material";
+import { Box, DialogContent } from "@mui/material";
 import TabBar from "@Components/TabBar";
 import TechnicianContactInformation from "./TechnicianContactInformation";
 import TechnicianSecurity from "./TechnicianSecurity";
 import TechnicianRepository from "@Repo/technician_repository";
-import VisibilityComp from "@Components/VisibilityComp";
-import Colors from "@Themes/colors";
 import { technicianValidator } from "../validator/technician_validator";
 import TranslateHelper from "@Local/index";
+import AnyUpdateBox from "@Components/AnyUpdateBox";
 
 function TechnicianDialog() {
   /// Technician store
@@ -146,15 +145,7 @@ function TechnicianDialog() {
   return (
     <>
       <DialogCustomTitle title={title} />
-      <VisibilityComp visibility={anyUpdate}>
-        <Box pl={1} m={0} sx={{ backgroundColor: Colors.warning }}>
-          <Typography
-            fontSize={13}
-            color="white"
-            children="Please click save to save changes"
-          />
-        </Box>
-      </VisibilityComp>
+      <AnyUpdateBox anyUpdate={anyUpdate} />
       <DialogContent>
         <Box mt={1}>
           <TabBar

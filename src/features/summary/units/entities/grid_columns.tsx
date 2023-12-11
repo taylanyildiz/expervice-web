@@ -71,10 +71,11 @@ const columns: GridColDef<Unit>[] = [
     headerName: TranslateHelper.unitType(),
     width: 250,
     valueGetter: (params) => {
+      const lng = store.getState().user.language?.language_code ?? "en";
       const row = params.row;
       const subType = row.unit_sub_type;
       const type = subType?.unit_type;
-      return `${subType?.name} / ${type?.name}`;
+      return `${subType?.translations?.name?.[lng]} / ${type?.translations?.name?.[lng]}`;
     },
   },
   {

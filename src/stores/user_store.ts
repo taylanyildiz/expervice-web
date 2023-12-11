@@ -27,7 +27,7 @@ const user = createSlice({
         setLanguage: (state, { payload }) => {
             state.language = payload;
             if (!payload || !(payload.reload ?? true)) return;
-            // window.location.reload();
+            window.location.reload();
         },
         setUserGroups: (state, { payload }) => {
             state.groups = payload;

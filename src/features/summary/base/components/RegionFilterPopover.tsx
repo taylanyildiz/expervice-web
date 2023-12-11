@@ -68,7 +68,7 @@ function RegionFilterPopover(props: RegionFilterPopoverProps) {
           <Typography p={1} children={TranslateHelper.filterYourResults()} />
           <Stack spacing={1} p={1}>
             <SelectRegionFilterType
-              label="Filter Type"
+              label={TranslateHelper.filterType()}
               value={type}
               onChanged={(type) => {
                 setType(type);
@@ -79,13 +79,13 @@ function RegionFilterPopover(props: RegionFilterPopoverProps) {
                 variant="contained"
                 fontWeight="normal"
                 color="white"
-                children="Update Results"
+                children={TranslateHelper.updateResults()}
                 onClick={handleUpdate}
               />
               <PrimaryButton
                 variant="outlined"
                 fontWeight="normal"
-                children="Reset Filters"
+                children={TranslateHelper.resetFilters()}
                 onClick={handleReset}
               />
             </Stack>

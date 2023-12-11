@@ -26,8 +26,8 @@ import {
   useInternalUpdate,
 } from "../helper/internal_user_helper";
 import InternalUserInfo from "./InternalUserInfo";
-import Colors from "@Themes/colors";
 import TranslateHelper from "@Local/index";
+import AnyUpdateBox from "@Components/AnyUpdateBox";
 
 function InternalUserDialog() {
   /// Internal user store
@@ -170,15 +170,7 @@ function InternalUserDialog() {
   return (
     <>
       <DialogCustomTitle title={title} />
-      <VisibilityComp visibility={anyUpdate}>
-        <Box pl={1} m={0} sx={{ backgroundColor: Colors.warning }}>
-          <Typography
-            fontSize={13}
-            color="white"
-            children="Please click save to save changes"
-          />
-        </Box>
-      </VisibilityComp>
+      <AnyUpdateBox anyUpdate={anyUpdate} />
       <DialogContent>
         <InternalUserInfo />
         <Box mt={1} sx={{ backgroundColor: "transparent" }}>

@@ -8,11 +8,12 @@ import { useDialog } from "@Utils/hooks/dialog_hook";
 import { openBase64PDF } from "@Utils/functions";
 import { store } from "@Store/index";
 import { setFormId } from "@Store/form_store";
+import TranslateHelper from "@Local/index";
 
 const columns: GridColDef<Form>[] = [
   {
     field: "name",
-    headerName: "Form Name",
+    headerName: TranslateHelper.formName(),
     flex: 1,
     renderCell: (params) => {
       const form = params.row;
@@ -33,13 +34,13 @@ const columns: GridColDef<Form>[] = [
   {
     flex: 1,
     field: "customer_count",
-    headerName: "Customer Count",
+    headerName: TranslateHelper.customerCount(),
     sortable: false,
   },
   {
     flex: 1,
     field: "field_count",
-    headerName: "Field Count",
+    headerName: TranslateHelper.fieldCount(),
     sortable: false,
   },
   {
@@ -54,7 +55,7 @@ const columns: GridColDef<Form>[] = [
       const { openLoading } = useDialog();
       const formRepository = new FormRepository();
       return (
-        <Tooltip title={`Open ${name} PDF`}>
+        <Tooltip title={`${TranslateHelper.open()} ${name} PDF`}>
           <IconButton
             onClick={async () => {
               const result = await openLoading(async () => {

@@ -20,6 +20,7 @@ import {
   useState,
 } from "react";
 import PrimaryButton from "@Components/PrimaryButton";
+import TranslateHelper from "@Local/index";
 
 /// Empty function
 const empty = () => {};
@@ -130,7 +131,7 @@ function ConfirmDialog(props: {
           height={30}
           fontWeight="normal"
           color="black"
-          children="Close"
+          children={TranslateHelper.close()}
           variant="outlined"
           onClick={() => onClickHandle(false)}
         />
@@ -138,7 +139,7 @@ function ConfirmDialog(props: {
           height={30}
           fontWeight="normal"
           color="white"
-          children="Confirm"
+          children={TranslateHelper.confirm()}
           onClick={() => onClickHandle(true)}
         />
         ,

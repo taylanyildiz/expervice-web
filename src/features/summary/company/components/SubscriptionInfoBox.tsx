@@ -112,7 +112,7 @@ function SubscriptionInfoBox(props: { payment?: Order | null }) {
                       children={TranslateHelper.manageSubscription()}
                       onClick={openSubscriptionDialog}
                     />
-                    <Tooltip title="Payment">
+                    <Tooltip title={TranslateHelper.payment()}>
                       <IconButton
                         disableRipple
                         disableFocusRipple

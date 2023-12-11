@@ -13,10 +13,11 @@ function UnitEmptyBox() {
       height="100%"
       width="100%"
       display="flex"
+      textAlign="center"
       alignItems="center"
       justifyContent="center"
     >
-      <Stack>
+      <Stack textAlign="center" alignItems="center" spacing={1}>
         <ReceiptLongIcon sx={{ color: "black", height: 100, width: 100 }} />
         <Typography children={TranslateHelper.noFoundUnit()} />
         <PrimaryButton

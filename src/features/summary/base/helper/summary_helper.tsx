@@ -53,9 +53,9 @@ export function getRegionFilterTitle(type: ERegionFilterType): string {
 export function getRegionSortTitle(type: ERegionSortType): string {
   switch (type) {
     case ERegionSortType.Alphabetically:
-      return TranslateHelper.filterYourResults();
+      return TranslateHelper.alphabetically();
     case ERegionSortType.CreatedDate:
-      return TranslateHelper.filterYourResults();
+      return TranslateHelper.createdDate();
     default:
       return "";
   }

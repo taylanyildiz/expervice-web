@@ -346,6 +346,9 @@ export default class TranslateHelper {
   public static logout(): string {
     return "logout".tr();
   }
+  public static sureLogout(): string {
+    return "sureLogout".tr();
+  }
   public static newRegion(): string {
     return "newRegion".tr();
   }
@@ -909,5 +912,131 @@ export default class TranslateHelper {
   }
   public static sureDeleteCustomerUser(): string {
     return "sureDeleteCustomerUser".tr();
+  }
+  public static pleaseClickSave(): string {
+    return "pleaseClickSave".tr();
+  }
+  public static updateResults(): string {
+    return "updateResults".tr();
+  }
+  public static resetFilters(): string {
+    return "resetResults".tr();
+  }
+  public static past7Days(): string {
+    return "past7Days".tr();
+  }
+  public static past14Days(): string {
+    return "past7Days".tr();
+  }
+  public static past30Days(): string {
+    return "past30Days".tr();
+  }
+  public static past45Days(): string {
+    return "past45Days".tr();
+  }
+  public static past90Days(): string {
+    return "past90Days".tr();
+  }
+  public static past180Days(): string {
+    return "past180Days".tr();
+  }
+  public static past360Days(): string {
+    return "past360Days".tr();
+  }
+  public static today(): string {
+    return "today".tr();
+  }
+  public static allDates(): string {
+    return "allDates".tr();
+  }
+  public static customDates(): string {
+    return "customDates".tr();
+  }
+  public static noFoundNotifications(): string {
+    return "noFoundNotifications".tr();
+  }
+  public static markAllRead(): string {
+    return "markAllRead".tr();
+  }
+  public static customerCount(): string {
+    return "customerCount".tr();
+  }
+  public static fieldCount(): string {
+    return "fieldCount".tr();
+  }
+  public static open(): string {
+    return "open".tr();
+  }
+  public static formField(): string {
+    return "formField".tr();
+  }
+  public static fieldType(): string {
+    return "fieldType".tr();
+  }
+  public static fieldLabel(): string {
+    return "fieldLabel".tr();
+  }
+  public static fieldDescription(): string {
+    return "fieldDescription".tr();
+  }
+  public static isRequiredField(): string {
+    return "isRequiredField".tr();
+  }
+  public static close(): string {
+    return "close".tr();
+  }
+  public static deleteField(): string {
+    return "deleteField".tr();
+  }
+  public static sureDeleteField(): string {
+    return "sureDeleteField".tr();
+  }
+  public static label(): string {
+    return "label".tr();
+  }
+  public static options(): string {
+    return "options".tr();
+  }
+  public static defaultValue(): string {
+    return "defaultValue".tr();
+  }
+  public static values(): string {
+    return "values".tr();
+  }
+  public static addField(): string {
+    return "addField".tr();
+  }
+  public static preview(): string {
+    return "preview".tr();
+  }
+  public static formFields(): string {
+    return "formFields".tr();
+  }
+  public static content(): string {
+    return "content".tr();
+  }
+  public static customers(): string {
+    return "customers".tr();
+  }
+  public static deleteCustomerForm(): string {
+    return "deleteCustomerForm".tr();
+  }
+  public static sureDeleteCustomerForm(): string {
+    return "sureDeleteCustomerForm".tr();
+  }
+  public static jobType(): string {
+    return "jobType".tr();
+  }
+  public static formEdit(): string {
+    return "formEdit".tr();
+  }
+  public static formCreate(): string {
+    return "formCreate".tr();
+  }
+  public static formContent(): string {
+    return "formContent".tr();
+  }
+  public static payment(): string {
+    return "payment".tr();
   }
 }

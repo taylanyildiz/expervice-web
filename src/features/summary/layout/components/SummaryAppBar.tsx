@@ -57,7 +57,10 @@ function SummaryAppBar() {
 
   /// Logout handle
   const onLogoutHandle = async () => {
-    const confirm = await openConfirm("Logout", "Are you sure to logout");
+    const confirm = await openConfirm(
+      TranslateHelper.logout(),
+      TranslateHelper.sureLogout()
+    );
     if (!confirm) return;
     dispatch(logout());
     navigate(ERouter.Base);

@@ -11,6 +11,7 @@ import {
   DropResult,
   Droppable,
 } from "react-beautiful-dnd";
+import TranslateHelper from "@Local/index";
 
 export interface FormFieldProps {
   fieldType?: EFormFielType | null;
@@ -52,8 +53,8 @@ function FormFields(props: Props) {
   /// Edit field
   const onDelete = async (index: number) => {
     const confirm = await openConfirm(
-      "Delete Field",
-      "Are you sure to delete field?"
+      TranslateHelper.deleteField(),
+      TranslateHelper.sureDeleteField()
     );
     if (!confirm) return;
     formik.setFieldValue(

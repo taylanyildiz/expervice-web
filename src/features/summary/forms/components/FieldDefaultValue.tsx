@@ -7,7 +7,6 @@ import {
   Checkbox,
   FormControl,
   FormControlLabel,
-  FormHelperText,
   Grid,
   IconButton,
   TextField,
@@ -15,6 +14,7 @@ import {
 } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
+import TranslateHelper from "@Local/index";
 
 interface FieldDefaultValueProps {
   formik: FormikProps<Field>;
@@ -36,7 +36,7 @@ function FieldDefaultValue(props: FieldDefaultValueProps) {
       return (
         <TextOutlineField
           fullWidth
-          label="Default Value"
+          label={TranslateHelper.defaultValue()}
           name="default_value"
           helperText={
             formik.touched.default_value && formik.errors.default_value
@@ -52,7 +52,11 @@ function FieldDefaultValue(props: FieldDefaultValueProps) {
       return (
         <Grid container>
           <Grid item xs={12}>
-            <Typography variant="h1" fontSize={13} children="Default Value" />
+            <Typography
+              variant="h1"
+              fontSize={13}
+              children={TranslateHelper.defaultValue()}
+            />
           </Grid>
           <Grid item>
             <FormControlLabel
@@ -98,13 +102,6 @@ function FieldDefaultValue(props: FieldDefaultValueProps) {
                       error={false}
                       size="small"
                     />
-                    <FormHelperText
-                      error={false}
-                      sx={{ p: 0, m: 0 }}
-                      id="my-helper-text"
-                    >
-                      {" "}
-                    </FormHelperText>
                   </FormControl>
                 );
               }}
@@ -113,7 +110,11 @@ function FieldDefaultValue(props: FieldDefaultValueProps) {
           <Grid item xs={12}>
             <Grid container alignItems="center">
               <Grid item xs={11}>
-                <Typography variant="h1" fontSize={14} children="Values" />
+                <Typography
+                  variant="h1"
+                  fontSize={14}
+                  children={TranslateHelper.values()}
+                />
               </Grid>
               <Grid item xs={1}>
                 <IconButton
@@ -138,7 +139,7 @@ function FieldDefaultValue(props: FieldDefaultValueProps) {
                         <Grid item flex={1}>
                           <TextOutlineField
                             fullWidth
-                            label="Label"
+                            label={TranslateHelper.label()}
                             value={e.label}
                             helperText={
                               optionError &&

@@ -1,6 +1,6 @@
 import { DialogCustomTitle } from "@Components/dialogs";
 import { useUnit, useUnitCreate, useUnitUpdate } from "../helper/unit_helper";
-import { Box, DialogContent, Typography } from "@mui/material";
+import { Box, DialogContent } from "@mui/material";
 import UnitDialogAction from "./UnitDialogAction";
 import { EActionType } from "@Components/dialogs/DialogCustomActions";
 import { useEffect, useState } from "react";
@@ -14,14 +14,13 @@ import Unit, { defaultValue } from "@Models/units/unit";
 import UnitRepository from "@Repo/unit_repository";
 import { unitValidator } from "../validator/unit_validator";
 import { useDialog } from "@Utils/hooks/dialog_hook";
-import VisibilityComp from "@Components/VisibilityComp";
-import Colors from "@Themes/colors";
 import UnitJob from "./UnitJob";
 import { EJobType } from "@Features/summary/jobs/entities/job_enums";
 import UnitJobs from "./UnitJobs";
 import Customer from "@Models/customer/customer";
 import { useCustomEffect } from "@Utils/functions";
 import TranslateHelper from "@Local/index";
+import AnyUpdateBox from "@Components/AnyUpdateBox";
 
 interface UnitDialogProps {
   customerUser?: Customer | null;
@@ -180,15 +179,7 @@ function UnitDialog(props: UnitDialogProps) {
   return (
     <>
       <DialogCustomTitle title={title} />
-      <VisibilityComp visibility={anyUpdate}>
-        <Box pl={1} m={0} sx={{ backgroundColor: Colors.warning }}>
-          <Typography
-            fontSize={13}
-            color="white"
-            children="Please click save to save changes"
-          />
-        </Box>
-      </VisibilityComp>
+      <AnyUpdateBox anyUpdate={anyUpdate} />
       <DialogContent>
         <Box mt={1}>
           <TabBar

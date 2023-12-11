@@ -8,6 +8,7 @@ import Colors from "@Themes/colors";
 import SelectDate from "@Components/SelectDate";
 import { setGroupInfoFilter } from "@Store/company_region_store";
 import TranslateHelper from "@Local/index";
+import { useUser } from "@Features/summary/company/helper/company_helper";
 
 type DataSet = {
   fault: number;
@@ -22,6 +23,10 @@ function GroupJobsChart() {
     groupInfoLoading,
     groupInfoFilter: filter,
   } = useSelector((state: RootState) => state.companyRegion);
+
+  /// User store
+  const { language } = useUser();
+  const lng = language?.language_code ?? "en";
 
   /// Dispatch
   const dispatch = useDispatch();
@@ -103,6 +108,72 @@ function GroupJobsChart() {
             ]}
             options={{
               chart: {
+                defaultLocale: lng,
+                locales: [
+                  {
+                    name: "tr",
+                    options: {
+                      months: [
+                        "Ocak",
+                        "Şubat",
+                        "Mart",
+                        "Nisan",
+                        "Mayıs",
+                        "Haziran",
+                        "Temmuz",
+                        "Ağustos",
+                        "Ekim",
+                        "Eylül",
+                        "Kasım",
+                        "Aralık",
+                      ],
+                      shortMonths: [
+                        "Ock",
+                        "Şub",
+                        "Mar",
+                        "Nis",
+                        "May",
+                        "Haz",
+                        "Tem",
+                        "Ağus",
+                        "Ek",
+                        "Ey",
+                        "Kas",
+                        "Ar",
+                      ],
+                      days: [
+                        "Pazar",
+                        "Pazartesi",
+                        "Salı",
+                        "Çarşamba",
+                        "Perşembe",
+                        "Cuma",
+                        "Cumatesi",
+                      ],
+                      shortDays: [
+                        "Paz",
+                        "Pzt",
+                        "Sal",
+                        "Çar",
+                        "Per",
+                        "Cum",
+                        "Cmts",
+                      ],
+                      toolbar: {
+                        download: "SVG İndir",
+                        exportToCSV: "CSV İndir",
+                        exportToPNG: "PNG İndir",
+                        exportToSVG: "SVG İndir",
+                        selection: "Seçim",
+                        selectionZoom: "Zoom",
+                        zoomIn: "Yakşam",
+                        zoomOut: "Uzaklaş",
+                        pan: "Kaydırma",
+                        reset: "Sıfırla",
+                      },
+                    },
+                  },
+                ],
                 id: "area-datetime",
                 type: "bar",
                 height: 350,
