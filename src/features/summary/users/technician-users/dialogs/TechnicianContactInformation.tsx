@@ -7,6 +7,7 @@ import TechnicianStatusButton from "./TechnicianStatusButton";
 import TextOutlineField from "@Components/TextOutlineField";
 import SelectUserGroup from "@Components/SelectUserGroup";
 import SelectGroupRole from "@Components/SelectGroupRole";
+import TranslateHelper from "@Local/index";
 
 interface TechnicianContactProps {
   formik: FormikProps<TechnicianUser>;
@@ -26,7 +27,7 @@ function Header(props: { formik: FormikProps<TechnicianUser> }) {
               <Typography
                 variant="h1"
                 fontSize={14}
-                children="Contact Information"
+                children={TranslateHelper.contactInformation()}
               />
             </Grid>
             <Grid item>
@@ -52,7 +53,7 @@ function TechnicianContactInformation(props: TechnicianContactProps) {
           <TextOutlineField
             fullWidth
             name="first_name"
-            label="First Name"
+            label={TranslateHelper.firstName()}
             onChange={formik.handleChange}
             value={formik.values.first_name}
             helperText={formik.touched.first_name && formik.errors.first_name}
@@ -65,7 +66,7 @@ function TechnicianContactInformation(props: TechnicianContactProps) {
           <TextOutlineField
             fullWidth
             name="last_name"
-            label="Last Name"
+            label={TranslateHelper.lastName()}
             onChange={formik.handleChange}
             value={formik.values.last_name}
             helperText={formik.touched.last_name && formik.errors.last_name}
@@ -76,8 +77,8 @@ function TechnicianContactInformation(props: TechnicianContactProps) {
           <TextOutlineField
             fullWidth
             name="email"
-            label="Email"
             type="email"
+            label={TranslateHelper.email()}
             onChange={formik.handleChange}
             value={formik.values.email}
             helperText={formik.touched.email && formik.errors.email}
@@ -88,8 +89,8 @@ function TechnicianContactInformation(props: TechnicianContactProps) {
           <TextOutlineField
             fullWidth
             name="phone"
-            label="Phone"
             type="tel"
+            label={TranslateHelper.phoneNumber()}
             onChange={formik.handleChange}
             value={formik.values.phone}
             helperText={formik.touched.phone && formik.errors.phone}
@@ -99,7 +100,7 @@ function TechnicianContactInformation(props: TechnicianContactProps) {
         <Grid item xs={6}>
           <SelectUserGroup
             fullWidth
-            label="Group"
+            label={TranslateHelper.group()}
             onChanged={(group) => {
               formik.setFieldValue("group", group);
             }}
@@ -111,7 +112,7 @@ function TechnicianContactInformation(props: TechnicianContactProps) {
         <Grid item xs={6}>
           <SelectGroupRole
             fullWidth
-            label="Group Role"
+            label={TranslateHelper.groupRole()}
             onChanged={(role) => {
               formik.setFieldValue("group_role", role);
             }}

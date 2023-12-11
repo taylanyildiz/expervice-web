@@ -2,8 +2,9 @@ import StatusBox from "@Components/StatusBox";
 import TechnicianUser from "@Models/technician-user/technician_user";
 import { GridColDef } from "@mui/x-data-grid";
 import { useTechnicianDialog } from "../helper/technician_helper";
+import TranslateHelper from "@Local/index";
 
-const columns: GridColDef<TechnicianUser>[] = [
+const columns = (): GridColDef<TechnicianUser>[] => [
   {
     field: "name",
     headerName: "Name",
@@ -22,13 +23,13 @@ const columns: GridColDef<TechnicianUser>[] = [
   },
   {
     field: "email",
-    headerName: "Email",
+    headerName: TranslateHelper.email(),
     width: 200,
   },
   {
     field: "phone",
     width: 150,
-    headerName: "Phone",
+    headerName: TranslateHelper.phone(),
   },
   {
     field: "signing_authority",
@@ -39,12 +40,12 @@ const columns: GridColDef<TechnicianUser>[] = [
     valueGetter: (params) => {
       const row = params.row;
       const sign = row.signing_authority;
-      return sign ? "Yes" : "No";
+      return sign ? TranslateHelper.yes() : TranslateHelper.no();
     },
   },
   {
     field: "login",
-    headerName: "Login",
+    headerName: TranslateHelper.login(),
     minWidth: 140,
     renderCell: (params) => {
       const row = params.row;
@@ -55,7 +56,7 @@ const columns: GridColDef<TechnicianUser>[] = [
   },
   {
     field: "region",
-    headerName: "Region",
+    headerName: TranslateHelper.region(),
     width: 150,
     valueGetter: (params) => {
       const row = params.row;
@@ -65,7 +66,7 @@ const columns: GridColDef<TechnicianUser>[] = [
   },
   {
     field: "group",
-    headerName: "Group",
+    headerName: TranslateHelper.group(),
     width: 150,
     valueGetter: (params) => {
       const row = params.row;
@@ -75,7 +76,7 @@ const columns: GridColDef<TechnicianUser>[] = [
   },
   {
     field: "group_role",
-    headerName: "Group Role",
+    headerName: TranslateHelper.groupRole(),
     width: 150,
     valueGetter: (params) => {
       const row = params.row;

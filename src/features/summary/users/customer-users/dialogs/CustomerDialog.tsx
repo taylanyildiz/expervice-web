@@ -12,17 +12,17 @@ import Customer, { defaultCustomer } from "@Models/customer/customer";
 import { setCustomer } from "@Store/customer_user_store";
 import { AppDispatch } from "@Store/index";
 import { useDispatch } from "react-redux";
-import { Box, DialogContent, Typography } from "@mui/material";
+import { Box, DialogContent } from "@mui/material";
 import { useFormik } from "formik";
 import CustomerContactInformation from "./CustomerContactInformation";
 import TabBar from "@Components/TabBar";
 import CustomerSecurity from "./CustomerSecurity";
 import { customerValidator } from "../validator/customer_validator";
 import CustomerUserRepository from "@Repo/customer_user_repository";
-import VisibilityComp from "@Components/VisibilityComp";
-import Colors from "@Themes/colors";
 import CustomerForms from "./CustomerForms";
 import CustomerUnits from "./CustomerUnits";
+import TranslateHelper from "@Local/index";
+import AnyUpdateBox from "@Components/AnyUpdateBox";
 
 function CustomerDialog(props: { onDone?: (customer: Customer) => void }) {
   const { onDone } = props;
@@ -30,6 +30,11 @@ function CustomerDialog(props: { onDone?: (customer: Customer) => void }) {
   /// Customer hook
   const { customer } = useCustomer();
   const isEdit = Boolean(customer);
+
+  /// Dialog title
+  const title = isEdit
+    ? TranslateHelper.customerUserEdit()
+    : TranslateHelper.customerUserCreate();
 
   /// Customer repository
   const customerRepo = new CustomerUserRepository();
@@ -124,8 +129,8 @@ function CustomerDialog(props: { onDone?: (customer: Customer) => void }) {
   const onChangedAction = async (type: EActionType) => {
     if (type === EActionType.Delete) {
       const confirm = await openConfirm(
-        "Delete Customer",
-        "Are you sure to delete customer ?"
+        TranslateHelper.deleteCustomerUser(),
+        TranslateHelper.sureDeleteCustomerUser()
       );
       if (confirm) {
         const result = await openLoading(async () => {
@@ -141,36 +146,28 @@ function CustomerDialog(props: { onDone?: (customer: Customer) => void }) {
 
   return (
     <>
-      <DialogCustomTitle title="Customer Contact" />
-      <VisibilityComp visibility={anyUpdate}>
-        <Box pl={1} m={0} sx={{ backgroundColor: Colors.warning }}>
-          <Typography
-            fontSize={13}
-            color="white"
-            children="Please click save to save changes"
-          />
-        </Box>
-      </VisibilityComp>
+      <DialogCustomTitle title={title} />
+      <AnyUpdateBox anyUpdate={anyUpdate} />
       <DialogContent>
         <Box mt={2}>
           <TabBar
             tabs={[
               {
-                title: "Contact Information",
+                title: TranslateHelper.contactInformation(),
                 panel: <CustomerContactInformation formik={formik} />,
               },
               {
-                title: "Security & Login",
+                title: TranslateHelper.securityLogin(),
                 panel: <CustomerSecurity formik={formik} />,
               },
               {
                 visibility: isEdit,
-                title: "Forms",
+                title: TranslateHelper.forms(),
                 panel: <CustomerForms />,
               },
               {
                 visibility: isEdit,
-                title: "Units",
+                title: TranslateHelper.units(),
                 panel: <CustomerUnits />,
               },
             ]}

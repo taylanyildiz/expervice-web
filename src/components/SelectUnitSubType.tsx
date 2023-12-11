@@ -1,3 +1,4 @@
+import { useUser } from "@Features/summary/company/helper/company_helper";
 import UnitSubType from "@Models/units/unit_sub_type";
 import ConstantRepository from "@Repo/constant_repository";
 import { RootState } from "@Store/index";
@@ -38,6 +39,10 @@ interface SelectUnitSubTypeProps {
 function SelectUnitSubType(props: SelectUnitSubTypeProps) {
   const { label, fullWidth, helperText, error, value, onChanged } = props;
 
+  /// User store
+  const { language } = useUser();
+  const lng = language?.language_code ?? "en";
+
   /// Constant store
   const { unitSubTypes } = useSelector((state: RootState) => state.constant);
 
@@ -69,8 +74,8 @@ function SelectUnitSubType(props: SelectUnitSubTypeProps) {
       fullWidth={fullWidth}
       options={options}
       value={option}
-      groupBy={(option) => option?.unit_type?.name ?? ""}
-      getOptionLabel={(option) => option.name ?? ""}
+      groupBy={(option) => option?.unit_type?.translations?.name?.[lng] ?? ""}
+      getOptionLabel={(option) => option.translations?.name?.[lng] ?? ""}
       renderGroup={(params) => (
         <li key={params.key}>
           <GroupHeader>{params.group}</GroupHeader>

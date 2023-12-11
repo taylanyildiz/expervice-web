@@ -12,6 +12,8 @@ import { Box, DialogContent, Stack, Typography } from "@mui/material";
 import { useFormik } from "formik";
 import { useEffect, useState } from "react";
 import { object, string } from "yup";
+import { useUser } from "../helper/company_helper";
+import TranslateHelper from "@Local/index";
 
 function CancelSubscriptionBox(props: {
   reason: UnsubscriptionReason;
@@ -19,6 +21,10 @@ function CancelSubscriptionBox(props: {
   onClick: () => void;
 }) {
   const { selected, reason, onClick } = props;
+
+  /// User store
+  const { language } = useUser();
+  const lng = language?.language_code ?? "en";
 
   const boxProps = {
     p: 1,
@@ -52,7 +58,7 @@ function CancelSubscriptionBox(props: {
             color="white"
             fontWeight="bold"
             fontSize={8}
-            children={reason.type}
+            children={reason.translations.name?.[lng]}
           />
         </Box>
         <Typography children={reason.name} />
@@ -93,8 +99,8 @@ function CancelSubscriptionDialog(props: { onDone: (value: boolean) => void }) {
   /// Submit handle
   const onSubmitHandle = async (value: { description: string }) => {
     const confirm = await openConfirm(
-      "Cancel Subscription",
-      "Are you sure to cancel subscription"
+      TranslateHelper.cancelSubscription(),
+      TranslateHelper.sureCancelSubscription()
     );
     if (!confirm) return;
     const result = await openLoading(async () => {
@@ -111,7 +117,7 @@ function CancelSubscriptionDialog(props: { onDone: (value: boolean) => void }) {
   const formik = useFormik({
     initialValues,
     validationSchema: object({
-      description: string().required().min(2, "Invalid reson"),
+      description: string().required().min(2, TranslateHelper.invalid()),
     }),
     onSubmit: onSubmitHandle,
   });
@@ -131,13 +137,13 @@ function CancelSubscriptionDialog(props: { onDone: (value: boolean) => void }) {
         <Typography
           variant="h1"
           fontSize={25}
-          children="We're sorry you're thinking about making a change."
+          children={TranslateHelper.cancelSubscriptionHeader()}
         />
         <Typography
           color="grey"
           fontSize={18}
           fontWeight={"bold"}
-          children="Can you help us understand why?"
+          children={TranslateHelper.cancelSubscriptionDesc()}
         />
         <Stack mt={4} spacing={1}>
           {reasons.map((reason, index) => (
@@ -159,7 +165,7 @@ function CancelSubscriptionDialog(props: { onDone: (value: boolean) => void }) {
               minRows={4}
               maxRows={4}
               name="description"
-              label="Description"
+              label={TranslateHelper.description()}
               value={formik.values.description}
               helperText={
                 formik.touched.description && formik.errors.description
@@ -182,7 +188,7 @@ function CancelSubscriptionDialog(props: { onDone: (value: boolean) => void }) {
             <PrimaryButton
               fontWeight="normal"
               variant="outlined"
-              children="Close"
+              children={TranslateHelper.cancel()}
               onClick={closeDialog}
             />
           ),
@@ -191,7 +197,7 @@ function CancelSubscriptionDialog(props: { onDone: (value: boolean) => void }) {
           <PrimaryButton
             fontWeight="normal"
             variant="outlined"
-            children="Done"
+            children={TranslateHelper.done()}
             disabled={formik.values.description.length <= 1}
             onClick={() => formik.handleSubmit()}
           />,

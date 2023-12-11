@@ -5,6 +5,8 @@ import { LatLng } from "@Components/SelectLocation";
 import SelectLocationDialog from "@Components/dialogs/SelectLocationDialog";
 import { Crop } from "react-image-crop";
 import { ECustomDate } from "@Models/enums";
+import TranslateHelper from "@Local/index";
+import { store } from "@Store/index";
 
 /**
  * Url regex
@@ -105,6 +107,9 @@ export function dateToFormat(
   onlyDate?: boolean
 ): string | null {
   if (date == null) return null;
+  const language = store.getState().user.language;
+  const lng = language?.language_code ?? "en";
+  const ctry = language?.country_code;
   let options: Intl.DateTimeFormatOptions = {
     weekday: "short",
     month: "short",
@@ -120,7 +125,7 @@ export function dateToFormat(
   if (typeof date === "string") {
     date = new Date(date);
   }
-  return date.toLocaleString("en-US", options);
+  return date.toLocaleString(`${lng}-${ctry}`, options);
 }
 
 /**
@@ -260,7 +265,8 @@ export function useLocationDialog() {
 export function timeAgo(input?: Date | string) {
   if (!input) return null;
   const date = input instanceof Date ? input : new Date(input);
-  const formatter = new Intl.RelativeTimeFormat("en");
+  const lng = store.getState().user.language?.language_code ?? "en";
+  const formatter = new Intl.RelativeTimeFormat(lng);
   const ranges = {
     years: 3600 * 24 * 365,
     months: 3600 * 24 * 30,
@@ -360,6 +366,12 @@ export const getCroppedImg = (
   });
 };
 
+/**
+ * Diff 2 date with days
+ * @param date1
+ * @param date2
+ * @returns
+ */
 export function calculateDiffDay(date1?: Date, date2?: Date) {
   if (!date1 || !date2) return 0;
   const diff = date1.getTime() - date2.getTime();
@@ -368,30 +380,38 @@ export function calculateDiffDay(date1?: Date, date2?: Date) {
 }
 
 /**
+ * Compare check with 2 string
+ * @returns
+ */
+export function compareString(key1: string, key2: string): boolean {
+  return key1.toLowerCase().search(key2.toLowerCase()) === 0;
+}
+
+/**
  * Get String of Custom Date
  */
 export function getCustomDateTile(type: ECustomDate): string {
   switch (type) {
     case ECustomDate.All:
-      return "All Dates";
+      return TranslateHelper.allDates();
     case ECustomDate.Custom:
-      return "Custom Dates";
+      return TranslateHelper.customDates();
     case ECustomDate.Past7:
-      return "Past 7 Days";
+      return TranslateHelper.past7Days();
     case ECustomDate.Past14:
-      return "Past 14 Days";
+      return TranslateHelper.past14Days();
     case ECustomDate.Past30:
-      return "Past 30 Days";
+      return TranslateHelper.past30Days();
     case ECustomDate.Past45:
-      return "Past 45 Days";
+      return TranslateHelper.past45Days();
     case ECustomDate.Past90:
-      return "Past 90 Days";
-    case ECustomDate.Today:
-      return "Today";
+      return TranslateHelper.past90Days();
     case ECustomDate.Past180:
-      return "Past 180 Days";
+      return TranslateHelper.past180Days();
     case ECustomDate.Past360:
-      return "Past 360 Days";
+      return TranslateHelper.past360Days();
+    case ECustomDate.Today:
+      return TranslateHelper.today();
     default:
       return "";
   }

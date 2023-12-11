@@ -12,6 +12,7 @@ import VisibilityComp from "@Components/VisibilityComp";
 import ProductionPlan from "@Models/products/production_plan";
 import { useDialog } from "@Utils/hooks/dialog_hook";
 import SubscriptionRepository from "@Repo/subscription_repository";
+import TranslateHelper from "@Local/index";
 
 const defaultBox = {
   borderRadius: 1,
@@ -39,6 +40,10 @@ function SubscriptionPlanDialog() {
   const { production } = useSelector((state: RootState) => state.production);
   const plans = production?.plans ?? [];
 
+  /// User store
+  const { language } = useUser();
+  const lng = language?.language_code ?? "en";
+
   /// Production respository
   const productionRepo = new ProductionRepository();
 
@@ -62,7 +67,7 @@ function SubscriptionPlanDialog() {
 
   const handleSave = async () => {
     const confirm = await openConfirm(
-      "Upgrade Plan",
+      TranslateHelper.upgradePlan(),
       <section>
         Are you sure to upgrade <b>{plan?.name}</b> plan
       </section>
@@ -77,7 +82,7 @@ function SubscriptionPlanDialog() {
 
   return (
     <>
-      <DialogCustomTitle title="Manage Subscription" />
+      <DialogCustomTitle title={TranslateHelper.manageSubscription()} />
       <DialogContent>
         <Box mt={1} p={1} sx={{ backgroundColor: "white" }}>
           <LoadingComp height={300} loading={loading}>
@@ -85,10 +90,13 @@ function SubscriptionPlanDialog() {
               <Typography
                 variant="h1"
                 fontSize={15}
-                children="Edit Subscriptions"
+                children={TranslateHelper.editSubscription()}
               />
               <Stack spacing={1} direction="column">
-                <Typography fontSize={13} children="Available Plans" />
+                <Typography
+                  fontSize={13}
+                  children={TranslateHelper.availablePlans()}
+                />
                 {plans.map((plan, index) => {
                   const isSelected = plan.id === currentPlanId;
                   const bgColor = isSelected ? Colors.selected : null;
@@ -104,7 +112,7 @@ function SubscriptionPlanDialog() {
                       }}
                     >
                       <Stack direction="row" justifyContent="space-between">
-                        <Typography children={plan.name} />
+                        <Typography children={plan.translations?.name?.[lng]} />
                         <Typography children={`₺${plan.price}`} />
                       </Stack>
                       <VisibilityComp visibility={plan.id !== currentPlanId}>
@@ -113,7 +121,7 @@ function SubscriptionPlanDialog() {
                           variant="contained"
                           backgroundColor={Colors.primaryLight}
                           color="white"
-                          children="Select Plan"
+                          children={TranslateHelper.selectPlan()}
                           onClick={() => setPlan(plan)}
                         />
                       </VisibilityComp>

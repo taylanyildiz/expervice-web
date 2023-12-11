@@ -46,7 +46,7 @@ function FormsTable() {
         loading={loading}
         sortingMode="server"
         paginationMode="server"
-        columns={columns}
+        columns={columns()}
         rows={rows}
         rowCount={count}
         pagination

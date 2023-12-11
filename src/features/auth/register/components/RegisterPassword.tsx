@@ -21,6 +21,7 @@ import {
   phoneMaskParse,
 } from "@Utils/functions";
 import { useDialog } from "@Utils/hooks/dialog_hook";
+import TranslateHelper from "@Local/index";
 
 function RegisterPassword() {
   /// Rgister hook
@@ -105,7 +106,7 @@ function RegisterPassword() {
         <Typography
           variant="h1"
           fontSize={20}
-          children="Define Your Password"
+          children={TranslateHelper.definePassword()}
         />
       </Grid>
       <Grid item xs={7} mt={2}>
@@ -114,7 +115,7 @@ function RegisterPassword() {
           secret
           type="password"
           name="password"
-          label="Password"
+          label={TranslateHelper.password()}
           onChange={formik.handleChange}
           value={formik.values.password}
           helperText={formik.touched.password && formik.errors.password}
@@ -126,7 +127,7 @@ function RegisterPassword() {
           fullWidth
           secret
           name="confirm_password"
-          label="Confirm Password"
+          label={TranslateHelper.confirmPassword()}
           type="password"
           onChange={formik.handleChange}
           value={formik.values.confirm_password}
@@ -144,7 +145,7 @@ function RegisterPassword() {
             <PrimaryButton
               prefix={<ArrowBackIosIcon />}
               onClick={onBack}
-              children="Back"
+              children={TranslateHelper.back()}
               variant="outlined"
               color="black"
               backgroundColor="white"
@@ -157,7 +158,7 @@ function RegisterPassword() {
           <Grid item xs={6} display="flex" justifyContent="end">
             <PrimaryButton
               onClick={onNextHandle}
-              children="Done"
+              children={TranslateHelper.done()}
               backgroundColor={Colors.primaryLight}
               color="white"
               fontWeight="normal"

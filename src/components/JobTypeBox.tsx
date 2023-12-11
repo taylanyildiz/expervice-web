@@ -1,4 +1,5 @@
 import { EJobType } from "@Features/summary/jobs/entities/job_enums";
+import TranslateHelper from "@Local/index";
 import { Box, Typography } from "@mui/material";
 
 interface JobTypeBoxProps {
@@ -10,7 +11,11 @@ function JobTypeBox(props: JobTypeBoxProps) {
   const noJob = Boolean(!type);
   const isFault = type === EJobType.Fault;
 
-  const title = noJob ? "No Job" : isFault ? "Fault" : "Maintenance";
+  const title = noJob
+    ? TranslateHelper.noJob()
+    : isFault
+    ? TranslateHelper.fault()
+    : TranslateHelper.maintenance();
   const backgroundColor = noJob ? "green" : isFault ? "red" : "blue";
 
   const sx = { backgroundColor, borderRadius: 1, p: 1, py: 0.1 };

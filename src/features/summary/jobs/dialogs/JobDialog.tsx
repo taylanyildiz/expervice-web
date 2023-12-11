@@ -8,7 +8,7 @@ import { setJob, setJobDialogStatus, setJobId } from "@Store/job_store";
 import { useFormik } from "formik";
 import JobRepository from "@Repo/job_repository";
 import { useDialog } from "@Utils/hooks/dialog_hook";
-import { Box, DialogContent, Typography } from "@mui/material";
+import { Box, DialogContent } from "@mui/material";
 import Job from "@Models/job/job";
 import JobTechnicians from "./JobTechnicians";
 import Unit from "@Models/units/unit";
@@ -17,9 +17,9 @@ import JobDialogInfo from "./JobDialogInfo";
 import TabBar from "@Components/TabBar";
 import { EJobPriorites } from "../entities/job_enums";
 import { jobValidaotr } from "../validator/job_validator";
-import VisibilityComp from "@Components/VisibilityComp";
-import Colors from "@Themes/colors";
 import { useCustomEffect } from "@Utils/functions";
+import TranslateHelper from "@Local/index";
+import AnyUpdateBox from "@Components/AnyUpdateBox";
 
 function JobDialog(props?: { unit?: Unit | null }) {
   const { unit } = props ?? {};
@@ -28,7 +28,9 @@ function JobDialog(props?: { unit?: Unit | null }) {
   const isEdit = Boolean(job);
 
   /// Title of dialog
-  const title = isEdit ? "Job Edit" : "Job Create";
+  const title = isEdit
+    ? TranslateHelper.jobCreate()
+    : TranslateHelper.jobEdit();
 
   /// Dispacth
   const dispatch = useDispatch();
@@ -46,8 +48,8 @@ function JobDialog(props?: { unit?: Unit | null }) {
   const onChangedActionHandle = async (type: EActionType) => {
     if (type === EActionType.Delete) {
       const result = await openConfirm(
-        "Delete Job",
-        "Are you sure to delete job ?"
+        TranslateHelper.deleteJob(),
+        TranslateHelper.sureDeleteJob()
       );
       if (result) {
         const result = await openLoading(async () => {
@@ -182,21 +184,13 @@ function JobDialog(props?: { unit?: Unit | null }) {
   return (
     <>
       <DialogCustomTitle title={title} />
-      <VisibilityComp visibility={anyUpdate && isEdit}>
-        <Box pl={1} m={0} sx={{ backgroundColor: Colors.warning }}>
-          <Typography
-            fontSize={13}
-            color="white"
-            children="Please click save to save changes"
-          />
-        </Box>
-      </VisibilityComp>
+      <AnyUpdateBox anyUpdate={anyUpdate} />
       <DialogContent>
         <Box mt={1}>
           <TabBar
             tabs={[
               {
-                title: "Job Information",
+                title: TranslateHelper.jobInformation(),
                 panel: (
                   <>
                     <JobDialogInfo formik={formik} />
@@ -206,7 +200,7 @@ function JobDialog(props?: { unit?: Unit | null }) {
               },
               {
                 visibility: isEdit,
-                title: "Job Steps",
+                title: TranslateHelper.jobSteps(),
                 panel: <JobStepper job={job} />,
               },
             ]}

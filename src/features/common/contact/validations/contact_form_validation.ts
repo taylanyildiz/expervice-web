@@ -1,10 +1,11 @@
+import TranslateHelper from "@Local/index";
 import { object, string } from "yup";
 
 /// Contact form schema
 export const contactFormSchema = object({
-    full_name: string().required("required").min(2, "Invalid name"),
-    email: string().email().required("required"),
-    phone: string().required("required").min(2, "Invalid phone"),
-    subject: string().required("required").min(2, "Invalid subject"),
-    messages: string().required("required").min(2, "Invalid message"),
+    full_name: string().required(TranslateHelper.required()).min(2, TranslateHelper.invalid()),
+    email: string().email(TranslateHelper.invalid()).required("required"),
+    phone: string().required(TranslateHelper.required()).min(2, TranslateHelper.invalid()),
+    subject: string().required(TranslateHelper.required()).min(2, TranslateHelper.invalid()),
+    messages: string().required(TranslateHelper.required()).min(2, TranslateHelper.invalid()),
 });

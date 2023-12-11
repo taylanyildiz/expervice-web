@@ -3,10 +3,11 @@ import TextOutlineField from "@Components/TextOutlineField";
 import { DialogCustomActions, DialogCustomTitle } from "@Components/dialogs";
 import { Box, DialogContent, Grid } from "@mui/material";
 import { useFormik } from "formik";
-import { object, ref, string } from "yup";
 import UserPassword from "../entities/user_password";
 import { useDialog } from "@Utils/hooks/dialog_hook";
 import UserRepository from "@Repo/user_repository";
+import { resetPasswordValidator } from "../validator/profile_validator";
+import TranslateHelper from "@Local/index";
 
 type ResetPassword = {
   old_password?: string;
@@ -42,20 +43,13 @@ function ResetPasswordDialog() {
   };
   const formik = useFormik({
     initialValues,
-    validationSchema: object().shape({
-      old_password: string().nullable().required().min(6, "Invalid password"),
-      password: string().nullable().required().min(6, "Invalid password"),
-      confirm_password: string()
-        .oneOf([ref("password")], "Passowrd dont't match")
-        .nullable()
-        .required(),
-    }),
+    validationSchema: resetPasswordValidator,
     onSubmit: onSubmitHandle,
   });
 
   return (
     <>
-      <DialogCustomTitle title="Reset Password" />
+      <DialogCustomTitle title={TranslateHelper.resetPassword()} />
       <DialogContent>
         <Box mt={1} p={1} sx={{ backgroundColor: "white" }}>
           <Grid container columnSpacing={1}>
@@ -65,7 +59,7 @@ function ResetPasswordDialog() {
                 secret
                 type="password"
                 name="old_password"
-                label="Old Password"
+                label={TranslateHelper.oldPassword()}
                 onChange={formik.handleChange}
                 value={formik.values.old_password}
                 error={Boolean(
@@ -82,7 +76,7 @@ function ResetPasswordDialog() {
                 secret
                 type="password"
                 name="password"
-                label="Password"
+                label={TranslateHelper.password()}
                 onChange={formik.handleChange}
                 value={formik.values.password}
                 error={Boolean(
@@ -97,7 +91,7 @@ function ResetPasswordDialog() {
                 secret
                 type="password"
                 name="confirm_password"
-                label="Confirm Password"
+                label={TranslateHelper.confirmPassword()}
                 onChange={formik.handleChange}
                 value={formik.values.confirm_password}
                 error={Boolean(
@@ -118,7 +112,7 @@ function ResetPasswordDialog() {
           <PrimaryButton
             variant="contained"
             fontWeight="normal"
-            children="Save"
+            children={TranslateHelper.save()}
             color="white"
             onClick={() => {
               formik.handleSubmit();

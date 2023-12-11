@@ -26,6 +26,8 @@ import CustomerUserRepository from "@Repo/customer_user_repository";
 import { openBase64PDF } from "@Utils/functions";
 import AddIcon from "@mui/icons-material/Add";
 import PrimaryButton from "@Components/PrimaryButton";
+import TranslateHelper from "@Local/index";
+import { useUser } from "@Features/summary/company/helper/company_helper";
 
 function FormCustomersContent() {
   /// Form store
@@ -41,6 +43,10 @@ function FormCustomersContent() {
   const [customers, setCustomers] = useState<
     (Customer & { display?: boolean })[]
   >([]);
+
+  /// User store
+  const { language } = useUser();
+  const lng = language?.language_code ?? "en";
 
   /// Form repository
   const formRepo = new FormRepository();
@@ -101,8 +107,8 @@ function FormCustomersContent() {
   /// Delete handle
   const handleDelete = async (id: number, index: number) => {
     const confirm = await openConfirm(
-      "Delete Customer Form",
-      "Are you sure to delete customer form ?"
+      TranslateHelper.deleteCustomerForm(),
+      TranslateHelper.sureDeleteCustomerForm()
     );
     if (!confirm) return;
     const result = await openLoading(async () => {
@@ -144,13 +150,17 @@ function FormCustomersContent() {
     <>
       <Grid container>
         <Grid item flex={1}>
-          <Typography variant="h1" fontSize={15} children="Customers" />
+          <Typography
+            variant="h1"
+            fontSize={15}
+            children={TranslateHelper.customers()}
+          />
         </Grid>
         <Grid item>
           <PrimaryButton
             prefix={<AddIcon />}
             variant="contained"
-            children="Add Customer"
+            children={TranslateHelper.addCustomerUser()}
             color="white"
             fontWeight="normal"
             onClick={handleAddCustomer}
@@ -172,10 +182,10 @@ function FormCustomersContent() {
             <Table>
               <TableHead>
                 <TableRow>
-                  <TableCell />
-                  <TableCell children="Display Name" />
-                  <TableCell children="Email" />
-                  <TableCell children="Forms" />
+                  <TableCell width={10} />
+                  <TableCell children={TranslateHelper.displayName()} />
+                  <TableCell children={TranslateHelper.email()} />
+                  <TableCell children={TranslateHelper.forms()} />
                 </TableRow>
               </TableHead>
               <TableBody>
@@ -190,7 +200,9 @@ function FormCustomersContent() {
                         );
                         setCustomers(values);
                       }}
-                      sx={{ cursor: "pointer" }}
+                      sx={{
+                        "& > *": { borderBottom: "unset" },
+                      }}
                     >
                       <TableCell>
                         {customer.display ? (
@@ -203,58 +215,83 @@ function FormCustomersContent() {
                       <TableCell children={customer.email} />
                       <TableCell children={customer.customer_forms?.length} />
                     </TableRow>
-                    <TableCell
-                      key={index + customers.length}
-                      style={{ paddingBottom: 0, paddingTop: 0 }}
-                      colSpan={4}
-                    >
-                      <Collapse in={customer.display}>
-                        <Table size="small">
-                          <TableHead>
-                            <TableRow>
-                              <TableCell>Name</TableCell>
-                              <TableCell>Job Type</TableCell>
-                              <TableCell>Unit Type</TableCell>
-                              <TableCell>Current Job Status</TableCell>
-                              <TableCell>Next Job Status</TableCell>
-                              <TableCell />
-                            </TableRow>
-                          </TableHead>
-                          <TableBody>
-                            {customer.customer_forms?.map((form, index) => (
-                              <TableRow key={index + 2 * customers.length}>
-                                <TableCell children={form.name} />
-                                <TableCell children={form.job_sub_type?.name} />
-                                <TableCell
-                                  children={form.unit_sub_type?.name}
-                                />
-                                <TableCell
-                                  children={form.current_job_status?.name}
-                                />
-                                <TableCell
-                                  children={form.next_job_status?.name}
-                                />
-
+                    <TableRow>
+                      <TableCell
+                        style={{ paddingBottom: 0, paddingTop: 0 }}
+                        colSpan={4}
+                      >
+                        <Collapse unmountOnExit in={customer.display}>
+                          <Table size="small">
+                            <TableHead>
+                              <TableRow>
+                                <TableCell>{TranslateHelper.name()}</TableCell>
                                 <TableCell>
-                                  <IconButton
-                                    onClick={() => handlePdfView(form.id!)}
-                                  >
-                                    <VisibilityIcon />
-                                  </IconButton>
-                                  <IconButton
-                                    onClick={() =>
-                                      handleDelete(form.id!, index)
-                                    }
-                                  >
-                                    <DeleteOutlinedIcon />
-                                  </IconButton>
+                                  {TranslateHelper.jobType()}
                                 </TableCell>
+                                <TableCell>
+                                  {TranslateHelper.unitType()}
+                                </TableCell>
+                                <TableCell>
+                                  {TranslateHelper.currentJobStatus()}
+                                </TableCell>
+                                <TableCell>
+                                  {TranslateHelper.nextJobStatus()}
+                                </TableCell>
+                                <TableCell />
                               </TableRow>
-                            ))}
-                          </TableBody>
-                        </Table>
-                      </Collapse>
-                    </TableCell>
+                            </TableHead>
+                            <TableBody>
+                              {customer.customer_forms?.map((form, index) => (
+                                <TableRow key={index + 2 * customers.length}>
+                                  <TableCell children={form.name} />
+                                  <TableCell
+                                    children={
+                                      form.job_sub_type?.translations?.name?.[
+                                        lng
+                                      ]
+                                    }
+                                  />
+                                  <TableCell
+                                    children={
+                                      form.unit_sub_type?.translations?.name?.[
+                                        lng
+                                      ]
+                                    }
+                                  />
+                                  <TableCell
+                                    children={
+                                      form.current_job_status?.translations
+                                        ?.name?.[lng]
+                                    }
+                                  />
+                                  <TableCell
+                                    children={
+                                      form.next_job_status?.translations
+                                        ?.name?.[lng]
+                                    }
+                                  />
+
+                                  <TableCell>
+                                    <IconButton
+                                      onClick={() => handlePdfView(form.id!)}
+                                    >
+                                      <VisibilityIcon />
+                                    </IconButton>
+                                    <IconButton
+                                      onClick={() =>
+                                        handleDelete(form.id!, index)
+                                      }
+                                    >
+                                      <DeleteOutlinedIcon />
+                                    </IconButton>
+                                  </TableCell>
+                                </TableRow>
+                              ))}
+                            </TableBody>
+                          </Table>
+                        </Collapse>
+                      </TableCell>
+                    </TableRow>
                   </>
                 ))}
               </TableBody>

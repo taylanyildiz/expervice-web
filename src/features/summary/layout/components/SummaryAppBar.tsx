@@ -13,6 +13,7 @@ import LogoutIcon from "@mui/icons-material/Logout";
 import AccountBoxIcon from "@mui/icons-material/AccountBox";
 import GroupOutlinedIcon from "@mui/icons-material/GroupOutlined";
 import EngineeringOutlinedIcon from "@mui/icons-material/EngineeringOutlined";
+import LanguageIcon from "@mui/icons-material/Language";
 import ERouter from "@Routes/router_enum";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
@@ -34,11 +35,14 @@ import MenuIcon from "@mui/icons-material/Menu";
 import {
   useAccount,
   useCompanyDialog,
+  useUser,
 } from "@Features/summary/company/helper/company_helper";
 import { useDialog } from "@Utils/hooks/dialog_hook";
 import VisibilityComp from "@Components/VisibilityComp";
 import theme from "@Themes/index";
 import { setSummarySideBar } from "@Store/summary_store";
+import TranslateHelper from "@Local/index";
+import { useSummaryDialog } from "../helper/summary_layout_helper";
 
 function SummaryAppBar() {
   /// Navigate
@@ -48,6 +52,11 @@ function SummaryAppBar() {
   const { user, isInternal, isOwner } = useAccount();
   const displayName = `${user?.first_name} ${user?.last_name}`;
 
+  /// User store
+  const { language } = useUser();
+  const lng = language?.language_code ?? "en";
+  const lngName = language?.translations?.name?.[lng];
+
   /// Dialog hook
   const { openConfirm } = useDialog();
 
@@ -56,7 +65,10 @@ function SummaryAppBar() {
 
   /// Logout handle
   const onLogoutHandle = async () => {
-    const confirm = await openConfirm("Logout", "Are you sure to logout");
+    const confirm = await openConfirm(
+      TranslateHelper.logout(),
+      TranslateHelper.sureLogout()
+    );
     if (!confirm) return;
     dispatch(logout());
     navigate(ERouter.Base);
@@ -71,6 +83,7 @@ function SummaryAppBar() {
   const { openFormDialog } = useFormDialog();
   const { openProfileDialog } = useProfileDialog();
   const { openCompanyDialog } = useCompanyDialog();
+  const { openLanguageDialog } = useSummaryDialog();
 
   return (
     <AppBar
@@ -93,26 +106,26 @@ function SummaryAppBar() {
             <Grid item>
               <MenuCustomLink
                 color="white"
-                title="Jobs"
+                title={TranslateHelper.jobs()}
                 children={[
                   {
                     prefix: <SummarizeIcon />,
-                    title: "Summary",
+                    title: TranslateHelper.summary(),
                     to: ERouter.Summary,
                   },
                   {
                     prefix: <WorkIcon />,
-                    title: "All Jobs",
+                    title: TranslateHelper.allJobs(),
                     to: ERouter.Jobs,
                   },
                   {
                     prefix: <ReportIcon />,
-                    title: "Faults",
+                    title: TranslateHelper.faults(),
                     to: { pathname: ERouter.Jobs, search: "type=1" },
                   },
                   {
                     prefix: <SettingsIcon />,
-                    title: "Maintenaces",
+                    title: TranslateHelper.maintenances(),
                     to: { pathname: ERouter.Jobs, search: "type=2" },
                   },
                 ]}
@@ -123,7 +136,7 @@ function SummaryAppBar() {
               <Grid item>
                 <MenuCustomLink
                   color="white"
-                  title="Forms"
+                  title={TranslateHelper.forms()}
                   to={ERouter.Forms}
                 />
               </Grid>
@@ -132,16 +145,16 @@ function SummaryAppBar() {
             <Grid item>
               <MenuCustomLink
                 color="white"
-                title="Units"
+                title={TranslateHelper.units()}
                 children={[
                   {
                     prefix: <DevicesIcon />,
-                    title: "Units List",
+                    title: TranslateHelper.unitsList(),
                     to: ERouter.Units,
                   },
                   {
                     prefix: <FmdGoodIcon />,
-                    title: "Units Map",
+                    title: TranslateHelper.unitsMap(),
                     to: ERouter.UnitsMap,
                   },
                 ]}
@@ -172,7 +185,7 @@ function SummaryAppBar() {
               <MenuCustomLink
                 withIcon={false}
                 title={
-                  <Tooltip title="Add">
+                  <Tooltip title={TranslateHelper.add()}>
                     <IconButton size="small">
                       <AddOutlinedIcon sx={{ color: "white" }} />
                     </IconButton>
@@ -181,44 +194,44 @@ function SummaryAppBar() {
                 children={[
                   {
                     prefix: <WorkIcon />,
-                    title: "Add Job",
+                    title: TranslateHelper.addJob(),
                     onClick: openJobDialog,
                   },
                   {
                     visibility: isInternal || isOwner,
                     prefix: <DevicesIcon />,
-                    title: "Add Unit",
+                    title: TranslateHelper.addUnit(),
                     onClick: openUnitDialog,
                   },
                   {
                     visibility: isInternal || isOwner,
                     prefix: <GroupOutlinedIcon />,
-                    title: "Add Technician User",
+                    title: TranslateHelper.addTechnicianUser(),
                     onClick: openTechnicianDialog,
                   },
                   {
                     visibility: isInternal || isOwner,
                     prefix: <GroupOutlinedIcon />,
-                    title: "Add Internal User",
+                    title: TranslateHelper.addInternalUser(),
                     onClick: openInternalDialog,
                   },
                   {
                     visibility: isInternal || isOwner,
                     prefix: <GroupOutlinedIcon />,
-                    title: "Add Customer User",
+                    title: TranslateHelper.addCustomerUser(),
                     onClick: openCustomerDialog,
                   },
                   {
                     visibility: isInternal || isOwner,
                     prefix: <UploadFileIcon />,
-                    title: "Add Form",
+                    title: TranslateHelper.addForm(),
                     onClick: openFormDialog,
                   },
                 ]}
               />
             </Grid>
             <Grid item>
-              <Tooltip title="Notifications">
+              <Tooltip title={TranslateHelper.notifications()}>
                 <NotificationIcon />
               </Tooltip>
             </Grid>
@@ -229,7 +242,7 @@ function SummaryAppBar() {
                   color="white"
                   withIcon={false}
                   title={
-                    <Tooltip title="Users">
+                    <Tooltip title={TranslateHelper.users()}>
                       <IconButton size="small">
                         <GroupsOutlinedIcon sx={{ color: "white" }} />
                       </IconButton>
@@ -239,17 +252,17 @@ function SummaryAppBar() {
                     {
                       to: ERouter.InternalUsers,
                       prefix: <GroupOutlinedIcon />,
-                      title: "Internal Users",
+                      title: TranslateHelper.internalUsers(),
                     },
                     {
                       to: ERouter.CustomerUsers,
                       prefix: <ContactsIcon />,
-                      title: "Customer Users",
+                      title: TranslateHelper.customerUsers(),
                     },
                     {
                       to: ERouter.TechnicianUsers,
                       prefix: <EngineeringOutlinedIcon />,
-                      title: "Technician Users",
+                      title: TranslateHelper.technicianUsers(),
                     },
                   ]}
                 />
@@ -259,7 +272,7 @@ function SummaryAppBar() {
               <MenuCustomLink
                 withIcon={false}
                 title={
-                  <Tooltip title="Profile">
+                  <Tooltip title={TranslateHelper.profile()}>
                     <IconButton size="small">
                       <Avatar
                         children={caption(displayName)}
@@ -282,12 +295,18 @@ function SummaryAppBar() {
                   {
                     visibility: isOwner || isInternal,
                     prefix: <ApartmentIcon />,
-                    title: "Company Settings",
+                    title: TranslateHelper.companySettings(),
                     onClick: openCompanyDialog,
                   },
                   {
+                    prefix: <LanguageIcon />,
+                    title: TranslateHelper.language(),
+                    subTitle: lngName,
+                    onClick: openLanguageDialog,
+                  },
+                  {
                     prefix: <LogoutIcon />,
-                    title: "Logout",
+                    title: TranslateHelper.logout(),
                     onClick: onLogoutHandle,
                   },
                 ]}

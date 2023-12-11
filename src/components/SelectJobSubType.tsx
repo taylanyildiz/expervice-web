@@ -1,3 +1,4 @@
+import { useUser } from "@Features/summary/company/helper/company_helper";
 import JobSubType from "@Models/job/job_sub_type";
 import ConstantRepository from "@Repo/constant_repository";
 import { RootState } from "@Store/index";
@@ -52,6 +53,10 @@ function SelectJobSubType(props: SelectJobSubTypeProps) {
   /// Constant store
   const { jobSubTypes } = useSelector((state: RootState) => state.constant);
 
+  /// User store
+  const { language } = useUser();
+  const lng = language?.language_code ?? "en";
+
   /// Constant repository
   const constantRepo = new ConstantRepository();
 
@@ -88,8 +93,8 @@ function SelectJobSubType(props: SelectJobSubTypeProps) {
       options={options}
       value={option}
       clearIcon={clearIcon}
-      groupBy={(option) => option?.type?.name ?? ""}
-      getOptionLabel={(option) => option.name ?? ""}
+      groupBy={(option) => option?.type?.translations?.name?.[lng] ?? ""}
+      getOptionLabel={(option) => option.translations?.name?.[lng] ?? ""}
       isOptionEqualToValue={(value, option) => value?.id === option?.id}
       renderGroup={(params) => (
         <li key={params.key}>

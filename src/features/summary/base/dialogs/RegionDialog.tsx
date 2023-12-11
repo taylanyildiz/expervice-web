@@ -21,6 +21,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "@Store/index";
 import { setEditRegion } from "@Store/company_region_store";
 import { caption, dateToFormat } from "@Utils/functions";
+import TranslateHelper from "@Local/index";
 
 function RegionContent(props: { formik: FormikProps<CompanyRegion> }) {
   const { formik } = props;
@@ -46,7 +47,7 @@ function RegionContent(props: { formik: FormikProps<CompanyRegion> }) {
         <TextOutlineField
           fullWidth
           name="name"
-          label="Region Name"
+          label={TranslateHelper.regionName()}
           value={formik.values?.name}
           onChange={formik.handleChange}
           helperText={formik.touched.name && formik.errors.name}
@@ -55,8 +56,8 @@ function RegionContent(props: { formik: FormikProps<CompanyRegion> }) {
       </Grid>
       <Grid item xs={12}>
         <CountrySelect
-          label="Country"
           fullWidth
+          label={TranslateHelper.country()}
           value={formik.values?.country}
           onChanged={onChangedCountryHandle}
           helperText={formik.touched.country && formik.errors.country}
@@ -67,7 +68,7 @@ function RegionContent(props: { formik: FormikProps<CompanyRegion> }) {
         <TextOutlineField
           fullWidth
           name="street_address"
-          label="Street Address"
+          label={TranslateHelper.streetAddress()}
           value={formik.values?.street_address}
           onChange={formik.handleChange}
           helperText={
@@ -83,7 +84,7 @@ function RegionContent(props: { formik: FormikProps<CompanyRegion> }) {
           <Grid item xs={5}>
             <StateSelect
               fullWidth
-              label="State"
+              label={TranslateHelper.state()}
               countryId={formik.values.country?.id}
               value={formik.values?.state}
               onChanged={onChangedStateHandle}
@@ -94,7 +95,7 @@ function RegionContent(props: { formik: FormikProps<CompanyRegion> }) {
           <Grid item xs={4}>
             <CitySelect
               fullWidth
-              label="City"
+              label={TranslateHelper.city()}
               stateId={formik.values.state?.id}
               value={formik.values?.city}
               onChanged={onChangedCityHandle}
@@ -106,7 +107,7 @@ function RegionContent(props: { formik: FormikProps<CompanyRegion> }) {
             <TextOutlineField
               fullWidth
               name="zip_code"
-              label="Zip Code"
+              label={TranslateHelper.zipCode()}
               value={formik.values?.zip_code}
               onChange={formik.handleChange}
               helperText={formik.touched.zip_code && formik.errors.zip_code}
@@ -136,7 +137,9 @@ function RegionActions(props: { onChanged: (type: EActionType) => void }) {
                 variant="body1"
                 fontSize={12}
                 color="grey"
-                children={`Created by ${creatorDisplayName}`}
+                children={TranslateHelper.createdBy({
+                  name: creatorDisplayName,
+                })}
               />
             </Grid>
             <Grid item>
@@ -170,7 +173,7 @@ function RegionActions(props: { onChanged: (type: EActionType) => void }) {
               height={30}
               fontWeight="normal"
               color="black"
-              children="Delete"
+              children={TranslateHelper.delete()}
               variant="outlined"
               onClick={() => onChanged(EActionType.Delete)}
             />
@@ -180,21 +183,21 @@ function RegionActions(props: { onChanged: (type: EActionType) => void }) {
           height={30}
           fontWeight="normal"
           color="white"
-          children="Save"
+          children={TranslateHelper.save()}
           onClick={() => onChanged(EActionType.Save)}
         />,
         <PrimaryButton
           height={30}
           fontWeight="normal"
           color="white"
-          children="Save & New"
+          children={TranslateHelper.saveNew()}
           onClick={() => onChanged(EActionType.SaveNew)}
         />,
         <PrimaryButton
           height={30}
           fontWeight="normal"
           color="white"
-          children="Save & Close"
+          children={TranslateHelper.saveClose()}
           onClick={() => onChanged(EActionType.SaveClose)}
         />,
       ]}
@@ -210,7 +213,9 @@ function RegionDialog() {
   const isEdit = Boolean(editRegion);
 
   /// Dialog title depends on [isEdit]
-  const title = isEdit ? "Region Edit" : "Region Create";
+  const title = isEdit
+    ? TranslateHelper.regionEdit()
+    : TranslateHelper.regionCreate();
 
   /// Dispatch
   const dispatch: AppDispatch = useDispatch<AppDispatch>();
@@ -300,8 +305,8 @@ function RegionDialog() {
   const onChangedAction = async (type: EActionType) => {
     if (type === EActionType.Delete) {
       const confirm = await openConfirm(
-        "Delete Region",
-        "Are you sure to delete reigon ?"
+        TranslateHelper.deleteRegion(),
+        TranslateHelper.sureDeleteRegion()
       );
       if (confirm) {
         const result = await openLoading(async () => {

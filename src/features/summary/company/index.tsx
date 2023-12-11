@@ -3,7 +3,7 @@ import PrimaryButton from "@Components/PrimaryButton";
 import TabBar from "@Components/TabBar";
 import { DialogCustomActions, DialogCustomTitle } from "@Components/dialogs";
 import UserRepository from "@Repo/user_repository";
-import { Box, DialogContent, Typography } from "@mui/material";
+import { Box, DialogContent } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "@Store/index";
@@ -14,11 +14,10 @@ import CompanyInfo from "@Models/company/company_info";
 import CompanyBilling from "./dialogs/CompanyBilling";
 import { useCompanyUpdate } from "./helper/company_helper";
 import { useDialog } from "@Utils/hooks/dialog_hook";
-import VisibilityComp from "@Components/VisibilityComp";
-import Colors from "@Themes/colors";
 import CompanyRepository from "@Repo/company_repository";
-import { object, string } from "yup";
-import { urlRegex } from "@Utils/functions";
+import { companyValidator } from "./validator/company_validator";
+import TranslateHelper from "@Local/index";
+import AnyUpdateBox from "@Components/AnyUpdateBox";
 import "../../../assets/css/company.css";
 
 function CompanyDialog() {
@@ -78,19 +77,7 @@ function CompanyDialog() {
   const initialValues: CompanyInfo = {};
   const formik = useFormik({
     initialValues,
-    validationSchema: object({
-      name: string().required().min(2, "Invalid name"),
-      web_site: string().matches(urlRegex, "Invalid web site"),
-      phone_number: string().nullable().min(2, "Invalid phone"),
-      fax_number: string().nullable().min(2, "Invalid fax"),
-      company_address: object({
-        country: object().nullable().required(),
-        state: object().required(),
-        city: object().required(),
-        street_address: string().required().min(2, "Invalid address"),
-        zip_code: string().required().min(2, "Invalid zip"),
-      }),
-    }),
+    validationSchema: companyValidator,
     onSubmit: onSubmitHandle,
   });
 
@@ -99,16 +86,8 @@ function CompanyDialog() {
 
   return (
     <>
-      <DialogCustomTitle title="Company" />
-      <VisibilityComp visibility={anyUpdate}>
-        <Box pl={1} m={0} sx={{ backgroundColor: Colors.warning }}>
-          <Typography
-            fontSize={13}
-            color="white"
-            children="Please click save to save changes"
-          />
-        </Box>
-      </VisibilityComp>
+      <DialogCustomTitle title={TranslateHelper.business()} />
+      <AnyUpdateBox anyUpdate={anyUpdate} />
       <DialogContent>
         <LoadingComp height={200} loading={loading}>
           <CompanyInfoBox />
@@ -116,11 +95,11 @@ function CompanyDialog() {
             <TabBar
               tabs={[
                 {
-                  title: "Overview",
+                  title: TranslateHelper.overView(),
                   panel: <CompanyOverview formik={formik} />,
                 },
                 {
-                  title: "Billing",
+                  title: TranslateHelper.billing(),
                   panel: <CompanyBilling />,
                 },
               ]}
@@ -134,7 +113,7 @@ function CompanyDialog() {
             fontWeight="normal"
             color="white"
             variant="contained"
-            children="Save"
+            children={TranslateHelper.save()}
             onClick={handleSave}
           />,
         ]}

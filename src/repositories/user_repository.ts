@@ -1,21 +1,19 @@
 import { store } from "@Store/index";
 import BaseRepository from "./base_repository";
-import { setCompany, setSubscription, setUserGroups } from "@Store/user_store";
+import { setCompany, setLanguage, setSubscription, setUserGroups } from "@Store/user_store";
 import User from "./end-points/user";
 import UserPassword from "@Features/summary/profile/entities/user_password";
 import SnackCustomBar from "@Utils/snack_custom_bar";
 import { logout, setAccessToken, setUser } from "@Store/account_store";
 import UserProfile from "@Features/summary/profile/entities/user_profile";
 import { deleteDeviceToken } from "@Utils/firebase";
+import Language from "@Models/languages";
 
 class UserRepository extends BaseRepository {
     constructor() {
         super({ tag: User.users });
     }
 
-    /**
-     * Get user groups
-     */
     public async getGroups(): Promise<boolean> {
         const path = User.groups;
         const response = await this.get(path);
@@ -25,7 +23,6 @@ class UserRepository extends BaseRepository {
         }
         return response.success;
     }
-
 
     public async resetPassword(props: UserPassword): Promise<boolean> {
         const path = User.password;
@@ -102,6 +99,27 @@ class UserRepository extends BaseRepository {
         }
         const data = response.data['data']['access_token'];
         store.dispatch(setAccessToken(data));
+    }
+
+    public async getUserLanguage(): Promise<boolean> {
+        const path = User.languages;
+        const response = await this.get(path);
+        const success = response.success;
+        if (success) {
+            const data = response.data['data']['user_language']['language'];
+            store.dispatch(setLanguage({ ...data, reload: false }));
+        }
+        return success;
+    }
+
+    public async updateUserLanguage(lang: Language) {
+        const path = User.languages;
+        const response = await this.put(path, { lang_id: lang.id });
+        const success = response.success;
+        if (success) {
+            store.dispatch(setLanguage(lang));
+        }
+        return success;
     }
 
 }

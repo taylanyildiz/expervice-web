@@ -12,6 +12,7 @@ import PrimaryButton from "@Components/PrimaryButton";
 import AddIcon from "@mui/icons-material/Add";
 import { useDialog } from "@Utils/hooks/dialog_hook";
 import { openBase64PDF } from "@Utils/functions";
+import TranslateHelper from "@Local/index";
 
 function CustomerForms() {
   /// Customer store
@@ -94,13 +95,17 @@ function CustomerForms() {
     <>
       <Grid container alignItems="center">
         <Grid item flex={1}>
-          <Typography variant="h1" fontSize={16} children="Forms" />
+          <Typography
+            variant="h1"
+            fontSize={16}
+            children={TranslateHelper.forms()}
+          />
         </Grid>
         <Grid item>
           <PrimaryButton
             prefix={<AddIcon />}
             variant="contained"
-            children="Add Form"
+            children={TranslateHelper.addForm()}
             color="white"
             fontWeight="normal"
             onClick={handleAddForm}

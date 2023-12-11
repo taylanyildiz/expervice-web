@@ -4,12 +4,13 @@ import UnitLabelBox from "@Components/UnitLabelBox";
 import JobTypeBox from "@Components/JobTypeBox";
 import { useUnitDialog } from "@Features/summary/units/helper/unit_helper";
 import { useCustomer } from "../helpers/customer_user_helper";
+import TranslateHelper from "@Local/index";
 
 /// Columns
-const customerUnitColumns: GridColDef<Unit>[] = [
+const customerUnitColumns = (): GridColDef<Unit>[] => [
   {
     field: "name",
-    headerName: "Name",
+    headerName: TranslateHelper.name(),
     width: 160,
     renderCell: (params) => {
       const row = params.row;
@@ -29,7 +30,7 @@ const customerUnitColumns: GridColDef<Unit>[] = [
   },
   {
     field: "job",
-    headerName: "Job Status",
+    headerName: TranslateHelper.jobStatus(),
     width: 150,
     renderCell: (params) => {
       const job = params.row.job;
@@ -39,7 +40,7 @@ const customerUnitColumns: GridColDef<Unit>[] = [
 
   {
     field: "status",
-    headerName: "Status",
+    headerName: TranslateHelper.status(),
     valueGetter: (params) => {
       const status = params.row.status;
       return status ? "Active" : "Not Active";
@@ -47,22 +48,22 @@ const customerUnitColumns: GridColDef<Unit>[] = [
   },
   {
     field: "qr_code",
+    headerName: TranslateHelper.qrCode(),
     width: 150,
-    headerName: "QR Code",
   },
   {
     field: "identity_number",
-    headerName: "Identity Number",
+    headerName: TranslateHelper.identityNumber(),
     width: 200,
   },
   {
     field: "imei",
-    headerName: "IMEI",
+    headerName: TranslateHelper.imei(),
     width: 150,
   },
   {
     field: "unit_label",
-    headerName: "Label",
+    headerName: TranslateHelper.unitLabel(),
     renderCell: (params) => {
       const row = params.row;
       const label = row.unit_label;
@@ -71,7 +72,7 @@ const customerUnitColumns: GridColDef<Unit>[] = [
   },
   {
     field: "unit_sub_type",
-    headerName: "Type",
+    headerName: TranslateHelper.unitType(),
     width: 250,
     valueGetter: (params) => {
       const row = params.row;
@@ -82,7 +83,7 @@ const customerUnitColumns: GridColDef<Unit>[] = [
   },
   {
     field: "customer",
-    headerName: "Customer",
+    headerName: TranslateHelper.customer(),
     width: 200,
     valueGetter: (params) => {
       const row = params.row;
@@ -92,7 +93,7 @@ const customerUnitColumns: GridColDef<Unit>[] = [
   },
   {
     field: "group",
-    headerName: "Group",
+    headerName: TranslateHelper.group(),
     width: 150,
     valueGetter: (params) => {
       const row = params.row;
@@ -102,12 +103,12 @@ const customerUnitColumns: GridColDef<Unit>[] = [
   },
   {
     field: "street_address",
-    headerName: "Street Address",
+    headerName: TranslateHelper.streetAddress(),
     width: 200,
   },
   {
     field: "state",
-    headerName: "State",
+    headerName: TranslateHelper.state(),
     valueGetter: (params) => {
       const row = params.row;
       const state = row.state;
@@ -116,7 +117,7 @@ const customerUnitColumns: GridColDef<Unit>[] = [
   },
   {
     field: "city",
-    headerName: "City",
+    headerName: TranslateHelper.city(),
     valueGetter: (params) => {
       const row = params.row;
       const city = row.city;
@@ -125,7 +126,7 @@ const customerUnitColumns: GridColDef<Unit>[] = [
   },
   {
     field: "country",
-    headerName: "Country",
+    headerName: TranslateHelper.country(),
     valueGetter: (params) => {
       const row = params.row;
       const country = row.country;

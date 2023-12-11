@@ -1,12 +1,14 @@
 import LoadingComp from "@Components/LoadingComp";
 import { RootState } from "@Store/index";
-import { Box, Stack } from "@mui/material";
+import { Box, Stack, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import ReactApexChart from "react-apexcharts";
 import Colors from "@Themes/colors";
 import SelectDate from "@Components/SelectDate";
 import { setGroupInfoFilter } from "@Store/company_region_store";
+import TranslateHelper from "@Local/index";
+import { useUser } from "@Features/summary/company/helper/company_helper";
 
 type DataSet = {
   fault: number;
@@ -21,6 +23,10 @@ function GroupJobsChart() {
     groupInfoLoading,
     groupInfoFilter: filter,
   } = useSelector((state: RootState) => state.companyRegion);
+
+  /// User store
+  const { language } = useUser();
+  const lng = language?.language_code ?? "en";
 
   /// Dispatch
   const dispatch = useDispatch();
@@ -57,39 +63,177 @@ function GroupJobsChart() {
   return (
     <Box sx={{ backgroundColor: "white" }}>
       <Stack direction="column">
-        <Box m={1} width={200} justifyContent="end" alignSelf="end">
-          <SelectDate
-            label="Date"
-            value={filter?.dateType}
-            onChanged={(dateType, start, end) => {
-              dispatch(
-                setGroupInfoFilter({
-                  dateType,
-                  start_date: start,
-                  end_date: end,
-                })
-              );
-            }}
+        <Stack
+          direction="row"
+          m={1}
+          justifyContent="space-between"
+          alignItems="center"
+          display="flex"
+        >
+          <Typography
+            variant="h1"
+            fontSize={15}
+            children={TranslateHelper.groupJobs()}
           />
-        </Box>
+          <Box width={200}>
+            <SelectDate
+              value={filter?.dateType}
+              onChanged={(dateType, start, end) => {
+                dispatch(
+                  setGroupInfoFilter({
+                    dateType,
+                    start_date: start,
+                    end_date: end,
+                  })
+                );
+              }}
+            />
+          </Box>
+        </Stack>
         <LoadingComp height={300} loading={groupInfoLoading}>
           <ReactApexChart
             type="bar"
             height={300}
             series={[
               {
-                name: "Fault",
+                name: TranslateHelper.fault(),
                 data: dataset.map((e) => [e.date, e.fault]),
                 color: Colors.error,
               },
               {
-                name: "Maintenance",
+                name: TranslateHelper.maintenance(),
                 data: dataset.map((e) => [e.date, e.maintenance]),
                 color: Colors.info,
               },
             ]}
             options={{
               chart: {
+                defaultLocale: lng,
+                locales: [
+                  {
+                    name: "tr",
+                    options: {
+                      months: [
+                        "Ocak",
+                        "Şubat",
+                        "Mart",
+                        "Nisan",
+                        "Mayıs",
+                        "Haziran",
+                        "Temmuz",
+                        "Ağustos",
+                        "Ekim",
+                        "Eylül",
+                        "Kasım",
+                        "Aralık",
+                      ],
+                      shortMonths: [
+                        "Ock",
+                        "Şub",
+                        "Mar",
+                        "Nis",
+                        "May",
+                        "Haz",
+                        "Tem",
+                        "Ağus",
+                        "Ek",
+                        "Ey",
+                        "Kas",
+                        "Ar",
+                      ],
+                      days: [
+                        "Pazar",
+                        "Pazartesi",
+                        "Salı",
+                        "Çarşamba",
+                        "Perşembe",
+                        "Cuma",
+                        "Cumatesi",
+                      ],
+                      shortDays: [
+                        "Paz",
+                        "Pzt",
+                        "Sal",
+                        "Çar",
+                        "Per",
+                        "Cum",
+                        "Cmts",
+                      ],
+                      toolbar: {
+                        download: "SVG İndir",
+                        exportToCSV: "CSV İndir",
+                        exportToPNG: "PNG İndir",
+                        exportToSVG: "SVG İndir",
+                        selection: "Seçim",
+                        selectionZoom: "Zoom",
+                        zoomIn: "Yakşam",
+                        zoomOut: "Uzaklaş",
+                        pan: "Kaydırma",
+                        reset: "Sıfırla",
+                      },
+                    },
+                  },
+                  {
+                    name: "en",
+                    options: {
+                      months: [
+                        "January",
+                        "February",
+                        "March",
+                        "April",
+                        "May",
+                        "June",
+                        "July",
+                        "August",
+                        "September",
+                        "October",
+                        "November",
+                        "December",
+                      ],
+                      shortMonths: [
+                        "Jan",
+                        "Feb",
+                        "Mar",
+                        "Apr",
+                        "May",
+                        "Jun",
+                        "Jul",
+                        "Aug",
+                        "Sep",
+                        "Oct",
+                        "Nov",
+                        "Dec",
+                      ],
+                      days: [
+                        "Sunday",
+                        "Monday",
+                        "Tuesday",
+                        "Wednesday",
+                        "Thursday",
+                        "Friday",
+                        "Saturday",
+                      ],
+                      shortDays: [
+                        "Sun",
+                        "Mon",
+                        "Tue",
+                        "Wed",
+                        "Thu",
+                        "Fri",
+                        "Sat",
+                      ],
+                      toolbar: {
+                        download: "Download SVG",
+                        selection: "Selection",
+                        selectionZoom: "Selection Zoom",
+                        zoomIn: "Zoom In",
+                        zoomOut: "Zoom Out",
+                        pan: "Panning",
+                        reset: "Reset Zoom",
+                      },
+                    },
+                  },
+                ],
                 id: "area-datetime",
                 type: "bar",
                 height: 350,
@@ -102,8 +246,9 @@ function GroupJobsChart() {
               },
               xaxis: {
                 type: "datetime",
-                max: filter?.end_date && filter?.end_date?.getTime(),
-                min: filter?.start_date && filter?.start_date?.getTime(),
+                max: filter?.end_date && new Date(filter.end_date).getTime(),
+                min:
+                  filter?.start_date && new Date(filter.start_date).getTime(),
                 tickAmount: 1,
               },
               tooltip: {

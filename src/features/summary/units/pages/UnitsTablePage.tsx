@@ -75,7 +75,7 @@ function UnitsTablePage() {
         disableColumnMenu
         sortingMode="server"
         paginationMode="server"
-        columns={columns}
+        columns={columns()}
         rowCount={count}
         rows={rows}
         pageSizeOptions={[10, 50, 100]}

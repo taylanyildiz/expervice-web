@@ -1,18 +1,19 @@
+import TranslateHelper from "@Local/index";
 import { EFormStatuses, EJobStatuses } from "../entities/job_enums";
 
 export function getJobFormStatusTitle(value?: number | null) {
     if (!value) return "";
     switch (value) {
         case EFormStatuses.Ready:
-            return "Form Ready To Send Customer To Sign";
+            return TranslateHelper.formReadyToSendCustomerToSign();
         case EFormStatuses.PendingSignature:
-            return "Pending Customer Signature";
+            return TranslateHelper.pendingCustomerSignature();
         case EFormStatuses.PendingConfirmed:
-            return "Pending Confirm Customer Signature";
+            return TranslateHelper.pendingConfirmSignature();
         case EFormStatuses.Approved:
-            return "Approved Customer Signature";
+            return TranslateHelper.approvedCustomerSignature();
         case EFormStatuses.Rejected:
-            return "Rejected Customer Signature";
+            return TranslateHelper.rejectedCustomerSignature();
     }
 }
 

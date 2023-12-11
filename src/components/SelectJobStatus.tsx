@@ -1,3 +1,4 @@
+import { useUser } from "@Features/summary/company/helper/company_helper";
 import JobStatus from "@Models/job/job_status";
 import ConstantRepository from "@Repo/constant_repository";
 import Colors from "@Themes/colors";
@@ -49,6 +50,10 @@ function SelectJobStatus(props: SelectJobStatusProps) {
     forForm,
   } = props;
 
+  /// User store
+  const { language } = useUser();
+  const lng = language?.language_code ?? "en";
+
   /// Job statuses & loading state
   const [statuses, setStatuses] = useState<JobStatus[]>([]);
   const loading = Boolean(statuses.length === 0);
@@ -84,8 +89,8 @@ function SelectJobStatus(props: SelectJobStatusProps) {
       fullWidth={fullWidth}
       options={statuses}
       value={option}
-      getOptionLabel={(option) => option.name ?? ""}
-      groupBy={(option) => option?.job_type?.name ?? ""}
+      getOptionLabel={(option) => option.translations?.name?.[lng] ?? ""}
+      groupBy={(option) => option?.job_type?.translations?.name?.[lng] ?? ""}
       onChange={(_, v) => onChanged(v)}
       isOptionEqualToValue={(value, option) => value?.id === option?.id}
       renderGroup={(params) => (

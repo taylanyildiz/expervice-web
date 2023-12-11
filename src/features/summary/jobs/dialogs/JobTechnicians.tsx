@@ -12,6 +12,7 @@ import { EJobRoles } from "../entities/job_enums";
 import JobTechnician from "@Models/job/job_technician";
 import { isAvailableJobStatus } from "../helper/job_enum_helper";
 import VisibilityComp from "@Components/VisibilityComp";
+import TranslateHelper from "@Local/index";
 
 function JobTechnicians(props: { formik: FormikProps<Job> }) {
   const { formik } = props;
@@ -63,7 +64,11 @@ function JobTechnicians(props: { formik: FormikProps<Job> }) {
   return (
     <Grid container>
       <Grid item xs={12} pb={1}>
-        <Typography variant="h1" fontSize={15} children="Technicians" />
+        <Typography
+          variant="h1"
+          fontSize={15}
+          children={TranslateHelper.technicianUsers()}
+        />
       </Grid>
       {technicians?.map((technician, index) => (
         <Grid key={index} item xs={12}>
@@ -74,7 +79,7 @@ function JobTechnicians(props: { formik: FormikProps<Job> }) {
                   <SelectAvailableTechnicians
                     disabled={Boolean(technician.id) || !statusAvailable}
                     fullWidth
-                    label="Technician"
+                    label={TranslateHelper.technician()}
                     unitId={formik.values.unit?.id}
                     jobSubTypeId={formik.values?.sub_type_id}
                     value={technician.technician_user}
@@ -102,7 +107,7 @@ function JobTechnicians(props: { formik: FormikProps<Job> }) {
                   <SelectJobRole
                     disabled={!statusAvailable}
                     fullWidth
-                    label="Job Role"
+                    label={TranslateHelper.jobRole()}
                     value={technician.role_id}
                     onChanged={(v) => {
                       onChangedJobrole(v, index);
@@ -142,7 +147,7 @@ function JobTechnicians(props: { formik: FormikProps<Job> }) {
             fontSize={13}
             color="blue"
             prefix={<AddIcon />}
-            children="Add Technician"
+            children={TranslateHelper.addTechnician()}
           />
         </VisibilityComp>
       </Grid>

@@ -20,6 +20,7 @@ import { useFormik } from "formik";
 import { ECustomerFilterType } from "@Models/customer/customer_enums";
 import TextOutlineField from "@Components/TextOutlineField";
 import SelectCustomerFilterType from "./SelectCustomerFilterType";
+import TranslateHelper from "@Local/index";
 
 function CustomerFilterDrawer() {
   /// Customer store
@@ -73,7 +74,11 @@ function CustomerFilterDrawer() {
             justifyContent="space-between"
             alignItems="center"
           >
-            <Typography variant="h1" fontSize={17} children="Customer Filter" />
+            <Typography
+              variant="h1"
+              fontSize={17}
+              children={TranslateHelper.customerUsersFilter()}
+            />
             <IconButton onClick={handleClose}>
               <CloseIcon />
             </IconButton>
@@ -86,13 +91,13 @@ function CustomerFilterDrawer() {
             sx={{ borderBottom: 1, borderColor: "divider" }}
           >
             <TextOutlineField
-              label="Keyword"
               name="keyword"
+              label={TranslateHelper.keyword()}
               value={formik.values.keyword}
               onChange={formik.handleChange}
             />
             <SelectCustomerFilterType
-              label="Filter Type"
+              label={TranslateHelper.filterType()}
               onChanged={(v) => formik.setFieldValue("filter_type", v)}
               value={formik.values.filter_type}
             />
@@ -100,7 +105,7 @@ function CustomerFilterDrawer() {
           <Stack p={1} spacing={1} direction="row" justifyContent="end">
             <PrimaryButton
               variant="outlined"
-              children="Clear Filter"
+              children={TranslateHelper.clearFilter()}
               fontWeight="normal"
               onClick={() => {
                 formik.resetForm({
@@ -113,7 +118,7 @@ function CustomerFilterDrawer() {
             />
             <PrimaryButton
               variant="contained"
-              children="Apply Filter"
+              children={TranslateHelper.clearFilter()}
               color="white"
               fontWeight="normal"
               onClick={handleApply}

@@ -12,6 +12,8 @@ import {
   Typography,
 } from "@mui/material";
 import Colors from "@Themes/colors";
+import TranslateHelper from "@Local/index";
+import { useUser } from "@Features/summary/company/helper/company_helper";
 
 interface FormFieldItemProps {
   field: Field;
@@ -22,6 +24,10 @@ interface FormFieldItemProps {
 function FormFieldItem(props: FormFieldItemProps) {
   const { field, onDelete, onEdit } = props;
   const isTitle = field.field_type?.id === 4;
+
+  /// User store
+  const { language } = useUser();
+  const lng = language?.language_code ?? "en";
 
   return (
     <ListItem
@@ -40,7 +46,7 @@ function FormFieldItem(props: FormFieldItemProps) {
             maxWidth={200}
             overflow="clip"
             textOverflow="ellipsis"
-            children={field.field_type?.name}
+            children={field.field_type?.translations?.name?.[lng]}
           />
         }
         secondary={
@@ -54,7 +60,7 @@ function FormFieldItem(props: FormFieldItemProps) {
                 textOverflow="ellipsis"
                 children={
                   <>
-                    Label :{" "}
+                    {TranslateHelper.label()} :{" "}
                     <b style={{ fontWeight: "normal" }}>{field.label}</b>
                   </>
                 }
@@ -68,7 +74,7 @@ function FormFieldItem(props: FormFieldItemProps) {
                   textOverflow="ellipsis"
                   children={
                     <>
-                      Description :{" "}
+                      {TranslateHelper.description()} :{" "}
                       <b style={{ fontWeight: "normal" }}>
                         {field.description}
                       </b>
@@ -90,7 +96,7 @@ function FormFieldItem(props: FormFieldItemProps) {
                   textOverflow="ellipsis"
                   children={
                     <>
-                      Options :{" "}
+                      {TranslateHelper.options()} :{" "}
                       <b style={{ fontWeight: "normal" }}>
                         {field.options?.map((e) => `${e.label}, `)}
                       </b>
@@ -107,7 +113,7 @@ function FormFieldItem(props: FormFieldItemProps) {
                   textOverflow="ellipsis"
                   children={
                     <>
-                      Default Value :{" "}
+                      {TranslateHelper.defaultValue()} :{" "}
                       <b style={{ fontWeight: "normal" }}>
                         {field.default_value}
                       </b>

@@ -1,3 +1,4 @@
+import { useUser } from "@Features/summary/company/helper/company_helper";
 import FieldType from "@Models/form/field_type";
 import ConstantRepository from "@Repo/constant_repository";
 import { RootState } from "@Store/index";
@@ -33,6 +34,11 @@ function SelectFormFieldType(props: SelectFormFieldTypeProps) {
   /// Constant repository
   const constantRepo = new ConstantRepository();
 
+  /// User store
+  const { language } = useUser();
+  const lng = language?.language_code ?? "en";
+
+  /// Option-Options state
   const [options, setOptions] = useState<FieldType[]>([]);
   const [option, setOption] = useState<FieldType | null>(null);
 
@@ -54,7 +60,7 @@ function SelectFormFieldType(props: SelectFormFieldTypeProps) {
       value={option}
       options={options}
       isOptionEqualToValue={(option, value) => option?.id === value?.id}
-      getOptionLabel={(option) => option.name ?? ""}
+      getOptionLabel={(option) => option.translations?.name?.[lng] ?? ""}
       onChange={(_, value) => onChanged(value)}
       renderInput={(props) => {
         return (

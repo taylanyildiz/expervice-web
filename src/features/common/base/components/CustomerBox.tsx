@@ -1,6 +1,7 @@
 import Colors from "@Themes/colors";
 import { Box, Stack, Typography } from "@mui/material";
 import MarkChatUnreadIcon from "@mui/icons-material/MarkChatUnread";
+import TranslateHelper from "@Local/index";
 
 function CustomerBox() {
   return (
@@ -9,12 +10,11 @@ function CustomerBox() {
         <Typography
           variant="h3"
           color="white"
-          children="Built for construction pros like you"
+          children={TranslateHelper.buildFor()}
         />
         <Typography variant="subtitle2" color="white" fontWeight={100}>
-          At Buildertrend, we’re always working to redefine construction for the
-          modern builder.
-          <p>It’s how we started – and we’re not stopping.</p>
+          {TranslateHelper.buildForDesc1()}
+          <p>{TranslateHelper.buildForDesc2()}</p>
         </Typography>
         <Box
           maxWidth={450}
@@ -32,7 +32,7 @@ function CustomerBox() {
                 textAlign="start"
                 variant="subtitle2"
                 fontWeight={400}
-                children="Buildertrend helped us with scalability and transparency. It’s extremely important for us to keep our clients in the loop, and Buildertrend really helps us to effectively communicate throughout the project."
+                children={TranslateHelper.customerOptinion()}
               />
               {/* Customer Name */}
               <Stack mt={1} direction="row" spacing={1}>

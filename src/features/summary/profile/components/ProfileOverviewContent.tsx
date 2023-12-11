@@ -7,6 +7,7 @@ import { phoneMaskParse } from "@Utils/functions";
 import LockPersonOutlinedIcon from "@mui/icons-material/LockPersonOutlined";
 import PrimaryButton from "@Components/PrimaryButton";
 import { useProfileDialog } from "../helper/profile_helper";
+import TranslateHelper from "@Local/index";
 
 interface ProfileOverviewContentProps {
   formik: FormikProps<User>;
@@ -24,11 +25,15 @@ function ProfileOverviewContent(props: ProfileOverviewContentProps) {
     <Grid container columnSpacing={1}>
       <Grid item xs={12}>
         <Stack direction="row" justifyContent="space-between">
-          <Typography variant="h1" fontSize={15} children="Overview" />
+          <Typography
+            variant="h1"
+            fontSize={15}
+            children={TranslateHelper.overView()}
+          />
           <PrimaryButton
             variant="outlined"
             fontWeight="normal"
-            children="Reset Password"
+            children={TranslateHelper.resetPassword()}
             prefix={<LockPersonOutlinedIcon />}
             onClick={() => {
               openResetPasswordDailog();
@@ -40,7 +45,7 @@ function ProfileOverviewContent(props: ProfileOverviewContentProps) {
         <TextOutlineField
           fullWidth
           name="first_name"
-          label="First Name"
+          label={TranslateHelper.firstName()}
           value={formik.values.first_name}
           onChange={formik.handleChange}
           helperText={formik.touched.first_name && formik.errors.first_name}
@@ -51,7 +56,7 @@ function ProfileOverviewContent(props: ProfileOverviewContentProps) {
         <TextOutlineField
           fullWidth
           name="last_name"
-          label="Last Name"
+          label={TranslateHelper.lastName()}
           onChange={formik.handleChange}
           value={formik.values.last_name}
           helperText={formik.touched.last_name && formik.errors.last_name}
@@ -64,7 +69,7 @@ function ProfileOverviewContent(props: ProfileOverviewContentProps) {
             <TextOutlineField
               fullWidth
               name="email"
-              label="Email"
+              label={TranslateHelper.email()}
               onChange={formik.handleChange}
               value={formik.values.email}
               helperText={formik.touched.email && formik.errors.email}
@@ -75,7 +80,7 @@ function ProfileOverviewContent(props: ProfileOverviewContentProps) {
             <TextOutlineField
               fullWidth
               name="user_phone"
-              label="Phone"
+              label={TranslateHelper.phone()}
               type="tel"
               onChange={(e) => {
                 const value = e.target.value ?? "";

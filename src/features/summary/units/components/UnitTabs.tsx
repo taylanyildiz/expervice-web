@@ -1,3 +1,4 @@
+import TranslateHelper from "@Local/index";
 import { TabContext, TabList } from "@mui/lab";
 import { Divider, Tab } from "@mui/material";
 import { useEffect, useState } from "react";
@@ -42,8 +43,8 @@ function UnitTabs() {
             navigate(path);
           }}
         >
-          <Tab sx={tabSx} value="0" label="Units List" />
-          <Tab sx={tabSx} value="1" label="Units Map" />
+          <Tab sx={tabSx} value="0" label={TranslateHelper.unitsList()} />
+          <Tab sx={tabSx} value="1" label={TranslateHelper.unitsMap()} />
         </TabList>
       </TabContext>
       <Divider />

@@ -4,12 +4,13 @@ import UnitLabelBox from "@Components/UnitLabelBox";
 import JobTypeBox from "@Components/JobTypeBox";
 import { setUnitId } from "@Store/unit_store";
 import { store } from "@Store/index";
+import TranslateHelper from "@Local/index";
 
 /// Columns
-const columns: GridColDef<Unit>[] = [
+const columns = (): GridColDef<Unit>[] => [
   {
     field: "name",
-    headerName: "Name",
+    headerName: TranslateHelper.name(),
     width: 160,
     renderCell: (params) => {
       const row = params.row;
@@ -25,7 +26,7 @@ const columns: GridColDef<Unit>[] = [
   },
   {
     field: "job",
-    headerName: "Job Status",
+    headerName: TranslateHelper.jobStatus(),
     width: 150,
     renderCell: (params) => {
       const job = params.row.job;
@@ -35,30 +36,30 @@ const columns: GridColDef<Unit>[] = [
 
   {
     field: "status",
-    headerName: "Status",
+    headerName: TranslateHelper.status(),
     valueGetter: (params) => {
       const status = params.row.status;
-      return status ? "Active" : "Not Active";
+      return status ? TranslateHelper.active() : TranslateHelper.notActive();
     },
   },
   {
     field: "qr_code",
     width: 150,
-    headerName: "QR Code",
+    headerName: TranslateHelper.qrCode(),
   },
   {
     field: "identity_number",
-    headerName: "Identity Number",
+    headerName: TranslateHelper.identityNumber(),
     width: 200,
   },
   {
     field: "imei",
-    headerName: "IMEI",
+    headerName: TranslateHelper.imei(),
     width: 150,
   },
   {
     field: "unit_label",
-    headerName: "Label",
+    headerName: TranslateHelper.unitLabel(),
     renderCell: (params) => {
       const row = params.row;
       const label = row.unit_label;
@@ -67,18 +68,19 @@ const columns: GridColDef<Unit>[] = [
   },
   {
     field: "unit_sub_type",
-    headerName: "Type",
+    headerName: TranslateHelper.unitType(),
     width: 250,
     valueGetter: (params) => {
+      const lng = store.getState().user.language?.language_code ?? "en";
       const row = params.row;
       const subType = row.unit_sub_type;
       const type = subType?.unit_type;
-      return `${subType?.name} / ${type?.name}`;
+      return `${subType?.translations?.name?.[lng]} / ${type?.translations?.name?.[lng]}`;
     },
   },
   {
     field: "customer",
-    headerName: "Customer",
+    headerName: TranslateHelper.customer(),
     width: 200,
     valueGetter: (params) => {
       const row = params.row;
@@ -88,7 +90,7 @@ const columns: GridColDef<Unit>[] = [
   },
   {
     field: "group",
-    headerName: "Group",
+    headerName: TranslateHelper.group(),
     width: 150,
     valueGetter: (params) => {
       const row = params.row;
@@ -98,12 +100,12 @@ const columns: GridColDef<Unit>[] = [
   },
   {
     field: "street_address",
-    headerName: "Street Address",
+    headerName: TranslateHelper.streetAddress(),
     width: 200,
   },
   {
     field: "state",
-    headerName: "State",
+    headerName: TranslateHelper.state(),
     valueGetter: (params) => {
       const row = params.row;
       const state = row.state;
@@ -112,7 +114,7 @@ const columns: GridColDef<Unit>[] = [
   },
   {
     field: "city",
-    headerName: "City",
+    headerName: TranslateHelper.city(),
     valueGetter: (params) => {
       const row = params.row;
       const city = row.city;
@@ -121,7 +123,7 @@ const columns: GridColDef<Unit>[] = [
   },
   {
     field: "country",
-    headerName: "Country",
+    headerName: TranslateHelper.country(),
     valueGetter: (params) => {
       const row = params.row;
       const country = row.country;

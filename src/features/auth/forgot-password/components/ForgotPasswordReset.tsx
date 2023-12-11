@@ -5,6 +5,7 @@ import PrimaryButton from "@Components/PrimaryButton";
 import { useFormik } from "formik";
 import AuthRepository from "@Repo/auth_repository";
 import { useDialog } from "@Utils/hooks/dialog_hook";
+import TranslateHelper from "@Local/index";
 
 function ForgotPasswordReset() {
   /// Forgot password hooks
@@ -53,7 +54,7 @@ function ForgotPasswordReset() {
         <TextOutlineField
           fullWidth
           secret
-          label="Password"
+          label={TranslateHelper.password()}
           name="password"
           onChange={formik.handleChange}
           value={formik.values.password}
@@ -65,7 +66,7 @@ function ForgotPasswordReset() {
         <TextOutlineField
           fullWidth
           secret
-          label="Confirm Password"
+          label={TranslateHelper.confirmPassword()}
           name="confirm_password"
           onChange={formik.handleChange}
           value={formik.values.confirm_password}
@@ -82,7 +83,7 @@ function ForgotPasswordReset() {
           fullWidth
           height={30}
           fontSize={13}
-          children="Reset Password"
+          children={TranslateHelper.resetPassword()}
           color="white"
           fontWeight="normal"
           onClick={onNextHandle}
