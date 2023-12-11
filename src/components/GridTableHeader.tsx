@@ -4,6 +4,7 @@ import FilterAltIcon from "@mui/icons-material/FilterAlt";
 import AddIcon from "@mui/icons-material/Add";
 import Colors from "@Themes/colors";
 import { ReactNode } from "react";
+import TranslateHelper from "@Local/index";
 
 interface GridTableHeaderProps {
   title: string;
@@ -35,7 +36,7 @@ function GridTableHeader(props: GridTableHeaderProps) {
           fontSize={13}
           variant="outlined"
           border="1px solid grey"
-          children="Export"
+          children={TranslateHelper.export()}
           onClick={onExport}
         />
       </Grid>
@@ -48,8 +49,8 @@ function GridTableHeader(props: GridTableHeaderProps) {
           variant="outlined"
           children={
             filterCount && filterCount != 0
-              ? `Filter (${filterCount})`
-              : "Filter"
+              ? `${TranslateHelper.filter()} (${filterCount})`
+              : TranslateHelper.filter()
           }
           border="1px solid grey"
           suffix={<FilterAltIcon />}
@@ -64,7 +65,7 @@ function GridTableHeader(props: GridTableHeaderProps) {
             fontWeight="normal"
             fontSize={13}
             variant="contained"
-            children="Add"
+            children={TranslateHelper.add()}
             backgroundColor={Colors.primaryLight}
             suffix={<AddIcon />}
             onClick={onAdd}

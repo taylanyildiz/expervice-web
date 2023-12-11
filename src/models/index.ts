@@ -11,7 +11,6 @@ export type { default as Country } from './regions/country';
 export type { default as State } from './regions/state';
 export type { default as City } from './regions/city';
 export type { default as CompanyRegion } from './company-region/company_region';
-export type { default as CompanyRegionFilter, ERegionFilterType, ERegionSortType } from './company-region/company_region_filter';
 export type { default as CompanyGroup } from './company-region/company_group';
 export type { default as CompanyRegionWeather } from './company-region/company_region_weather';
 export type { default as CompanyGroupInfo } from './company-region/company_group_info';

@@ -2,6 +2,7 @@ import { Grid, Link, Typography } from "@mui/material";
 import LocalPhoneIcon from "@mui/icons-material/LocalPhone";
 import EmailIcon from "@mui/icons-material/Email";
 import Colors from "@Themes/colors";
+import TranslateHelper from "@Local/index";
 
 function ContactInfo() {
   return (
@@ -13,7 +14,7 @@ function ContactInfo() {
             variant="h3"
             fontSize={27}
             fontWeight="bold"
-            children="Contact our Customer Success team"
+            children={TranslateHelper.contactUsHeader2()}
           />
         }
       />
@@ -23,7 +24,7 @@ function ContactInfo() {
           <Typography
             fontWeight={100}
             fontSize={17}
-            children="Have questions or need help with your account? We’re here for you!"
+            children={TranslateHelper.contactUsDesc2()}
           />
         }
       />
@@ -33,7 +34,7 @@ function ContactInfo() {
           <Typography
             fontWeight={100}
             fontSize={17}
-            children="Monday – Friday | 7:00am – 5:00pm | USA (CT)"
+            children="Monday – Friday | 7:00am – 5:00pm | TR"
           />
         }
       />

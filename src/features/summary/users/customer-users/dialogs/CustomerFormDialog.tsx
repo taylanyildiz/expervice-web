@@ -5,6 +5,7 @@ import SelectJobSubType from "@Components/SelectJobSubType";
 import SelectUnitSubType from "@Components/SelectUnitSubType";
 import TextOutlineField from "@Components/TextOutlineField";
 import { DialogCustomActions, DialogCustomTitle } from "@Components/dialogs";
+import TranslateHelper from "@Local/index";
 import FormCustomer from "@Models/form/form_customer";
 import Colors from "@Themes/colors";
 import { useDialog } from "@Utils/hooks/dialog_hook";
@@ -77,27 +78,17 @@ function CustomerFormDialog(props: CustomerFormDialogProps) {
           color="white"
           variant="h1"
           fontSize={14}
-          children="Attention"
+          children={TranslateHelper.attention()}
         />
         <Typography
           fontSize={11}
           color="white"
-          children={
-            <>
-              *If you want to assign forms for all <b>UNITS</b> of the customer,
-              do not select the unit type.
-            </>
-          }
+          children={TranslateHelper.attentionFormDesc1()}
         />
         <Typography
           fontSize={11}
           color="white"
-          children={
-            <>
-              *If you want to assign forms for all <b>JOB TYPES</b> of the
-              customer, do not select the job type.
-            </>
-          }
+          children={TranslateHelper.attentionFormDesc2()}
         />
       </Box>
       <DialogContent>
@@ -106,7 +97,7 @@ function CustomerFormDialog(props: CustomerFormDialogProps) {
             <Grid item xs={12}>
               <SelectForm
                 fullWidth
-                label="Form"
+                label={TranslateHelper.form()}
                 value={formik.values.form}
                 onChanged={(form) => {
                   formik.setFieldValue("form", form);
@@ -119,7 +110,7 @@ function CustomerFormDialog(props: CustomerFormDialogProps) {
               <TextOutlineField
                 fullWidth
                 name="name"
-                label="Form Name"
+                label={TranslateHelper.formName()}
                 value={formik.values.name}
                 onChange={formik.handleChange}
                 helperText={formik.touched.name && formik.errors.name}
@@ -129,7 +120,7 @@ function CustomerFormDialog(props: CustomerFormDialogProps) {
             <Grid item xs={12}>
               <SelectUnitSubType
                 fullWidth
-                label="Unit Sub Type"
+                label={TranslateHelper.unitSubType()}
                 value={formik.values.unit_sub_type}
                 helperText={
                   formik.touched.unit_sub_type && formik.errors.unit_sub_type
@@ -145,7 +136,7 @@ function CustomerFormDialog(props: CustomerFormDialogProps) {
             <Grid item xs={12}>
               <SelectJobSubType
                 fullWidth
-                label="Job Sub Type"
+                label={TranslateHelper.jobSubType()}
                 value={formik.values.job_sub_type}
                 helperText={
                   formik.touched.job_sub_type && formik.errors.job_sub_type
@@ -166,7 +157,7 @@ function CustomerFormDialog(props: CustomerFormDialogProps) {
                   <SelectJobStatus
                     fullWidth
                     forForm
-                    label="Current Job Status"
+                    label={TranslateHelper.currentJobStatus()}
                     jobType={formik.values.job_sub_type?.type_id}
                     value={formik.values.current_job_status}
                     helperText={
@@ -186,7 +177,7 @@ function CustomerFormDialog(props: CustomerFormDialogProps) {
                 <Grid item xs={6}>
                   <SelectJobStatus
                     fullWidth
-                    label="Next Job Status"
+                    label={TranslateHelper.nextJobStatus()}
                     jobType={formik.values.current_job_status?.type_id}
                     jobStatus={formik.values.current_job_status?.id}
                     value={formik.values.next_job_status}
@@ -211,7 +202,7 @@ function CustomerFormDialog(props: CustomerFormDialogProps) {
       <DialogCustomActions
         actions={[
           <PrimaryButton
-            children="Save"
+            children={TranslateHelper.save()}
             fontWeight="normal"
             color="white"
             variant="contained"

@@ -11,6 +11,7 @@ import { Box, Grid, Typography } from "@mui/material";
 import { FormikProps } from "formik";
 import { useCustomer } from "../helpers/customer_user_helper";
 import CustomerStatusButton from "./CustomerStatusButton";
+import TranslateHelper from "@Local/index";
 
 interface Props {
   formik: FormikProps<Customer>;
@@ -30,7 +31,7 @@ function Header(props: { formik: FormikProps<Customer> }) {
               <Typography
                 variant="h1"
                 fontSize={14}
-                children="Contact Information"
+                children={TranslateHelper.contactInformation()}
               />
             </Grid>
             <Grid item>
@@ -59,7 +60,7 @@ function CustomerContactInformation(props: Props) {
               <TextOutlineField
                 fullWidth
                 name="first_name"
-                label="First Name"
+                label={TranslateHelper.firstName()}
                 onChange={formik.handleChange}
                 value={formik.values.first_name}
                 helperText={
@@ -74,7 +75,7 @@ function CustomerContactInformation(props: Props) {
               <TextOutlineField
                 fullWidth
                 name="last_name"
-                label="Last Name"
+                label={TranslateHelper.lastName()}
                 onChange={formik.handleChange}
                 value={formik.values.last_name}
                 helperText={formik.touched.last_name && formik.errors.last_name}
@@ -87,7 +88,7 @@ function CustomerContactInformation(props: Props) {
               <TextOutlineField
                 fullWidth
                 name="display_name"
-                label="Display Name"
+                label={TranslateHelper.displayName()}
                 onChange={formik.handleChange}
                 value={formik.values.display_name}
                 helperText={
@@ -101,7 +102,7 @@ function CustomerContactInformation(props: Props) {
             <Grid item xs={6}>
               <SelectUserGroup
                 fullWidth
-                label="Group"
+                label={TranslateHelper.group()}
                 value={formik.values.group}
                 onChanged={(value) => {
                   formik.setFieldValue("group", value);
@@ -114,8 +115,8 @@ function CustomerContactInformation(props: Props) {
               <TextOutlineField
                 fullWidth
                 name="email"
-                label="Email"
                 type="email"
+                label={TranslateHelper.email()}
                 onChange={formik.handleChange}
                 value={formik.values.email}
                 helperText={formik.touched.email && formik.errors.email}
@@ -126,8 +127,8 @@ function CustomerContactInformation(props: Props) {
               <TextOutlineField
                 fullWidth
                 name="phone"
-                label="Phone"
                 type="tel"
+                label={TranslateHelper.phoneNumber()}
                 onChange={formik.handleChange}
                 value={formik.values.phone}
                 helperText={formik.touched.phone && formik.errors.phone}
@@ -138,8 +139,8 @@ function CustomerContactInformation(props: Props) {
               <TextOutlineField
                 fullWidth
                 name="cell_phone"
-                label="Cell Phone"
                 type="tel"
+                label={TranslateHelper.cellPhone()}
                 onChange={formik.handleChange}
                 value={formik.values.cell_phone}
                 helperText={
@@ -157,7 +158,7 @@ function CustomerContactInformation(props: Props) {
               <TextOutlineField
                 fullWidth
                 name="street_address"
-                label="Street Address"
+                label={TranslateHelper.streetAddress()}
                 onChange={formik.handleChange}
                 value={formik.values.street_address}
                 helperText={
@@ -171,7 +172,7 @@ function CustomerContactInformation(props: Props) {
             <Grid item xs={12}>
               <CountrySelect
                 fullWidth
-                label="Country"
+                label={TranslateHelper.country()}
                 onChanged={(country) => {
                   formik.setFieldValue("country", country);
                 }}
@@ -183,7 +184,7 @@ function CustomerContactInformation(props: Props) {
             <Grid item xs={5}>
               <StateSelect
                 fullWidth
-                label="State"
+                label={TranslateHelper.state()}
                 countryId={formik.values.country?.id}
                 onChanged={(state) => {
                   formik.setFieldValue("state", state);
@@ -196,7 +197,7 @@ function CustomerContactInformation(props: Props) {
             <Grid item xs={4}>
               <CitySelect
                 fullWidth
-                label="City"
+                label={TranslateHelper.city()}
                 stateId={formik.values.state?.id}
                 onChanged={(city) => {
                   formik.setFieldValue("city", city);
@@ -210,7 +211,7 @@ function CustomerContactInformation(props: Props) {
               <TextOutlineField
                 fullWidth
                 name="zip_code"
-                label="Zip Code"
+                label={TranslateHelper.zipCode()}
                 onChange={formik.handleChange}
                 value={formik.values.zip_code}
                 helperText={formik.touched.zip_code && formik.errors.zip_code}

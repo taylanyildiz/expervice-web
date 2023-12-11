@@ -27,6 +27,7 @@ import PhoneAndroidOutlinedIcon from "@mui/icons-material/PhoneAndroidOutlined";
 import { caption } from "@Utils/functions";
 import UnitRepository from "@Repo/unit_repository";
 import { useEffect } from "react";
+import TranslateHelper from "@Local/index";
 
 function CustomerInfo(props: { customer?: Customer }) {
   const { customer } = props;
@@ -38,7 +39,7 @@ function CustomerInfo(props: { customer?: Customer }) {
             p={1}
             variant="h1"
             fontSize={15}
-            children="Customer Info"
+            children={TranslateHelper.customerInformation()}
           />
           <Grid container spacing={1} p={1}>
             <Grid item>
@@ -89,7 +90,7 @@ function CustomerInfo(props: { customer?: Customer }) {
             <Grid item xs={12}>
               <RichText
                 color="black"
-                title="Group:"
+                title={`${TranslateHelper.group()} :`}
                 content={customer?.group?.name}
               />
             </Grid>

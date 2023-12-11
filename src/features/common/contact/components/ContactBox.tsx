@@ -1,4 +1,5 @@
 import Images from "@Assets/images";
+import TranslateHelper from "@Local/index";
 import { Box, Stack, Typography } from "@mui/material";
 
 function ContactBox() {
@@ -21,18 +22,18 @@ function ContactBox() {
             variant="h3"
             fontSize={20}
             color="white"
-            children="Contact Us"
+            children={TranslateHelper.contactUs()}
           />
           <Typography
             variant="h1"
             color="white"
-            children="We’re always here for you"
+            children={TranslateHelper.contactUsHeader1()}
           />
           <Typography
             variant="h3"
             fontSize={16}
             color="white"
-            children="Our team has your back with unlimited support whenever you need it."
+            children={TranslateHelper.contactUsDesc1()}
           />
         </Stack>
       </Box>

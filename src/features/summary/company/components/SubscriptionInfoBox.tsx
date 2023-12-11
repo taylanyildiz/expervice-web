@@ -16,6 +16,7 @@ import { dateToFormat, iyziParser } from "@Utils/functions";
 import { useDialog } from "@Utils/hooks/dialog_hook";
 import SubscriptionRepository from "@Repo/subscription_repository";
 import VisibilityComp from "@Components/VisibilityComp";
+import TranslateHelper from "@Local/index";
 
 function SubscriptionInfoBox(props: { payment?: Order | null }) {
   const { payment } = props;
@@ -23,6 +24,10 @@ function SubscriptionInfoBox(props: { payment?: Order | null }) {
   /// User store
   const { subscription } = useUser();
   const isCanceled: boolean = Boolean(subscription?.cancellation_date);
+
+  /// User store
+  const { language } = useUser();
+  const lng = language?.language_code ?? "en";
 
   /// Subscription repository
   const subRepo = new SubscriptionRepository();
@@ -61,7 +66,7 @@ function SubscriptionInfoBox(props: { payment?: Order | null }) {
         <Typography
           variant="h1"
           fontSize={16}
-          children="Subscription Information"
+          children={TranslateHelper.subscriptionInformation()}
         />
         <Box>
           <Box p={1} borderRadius={1} border={1} borderColor="divider">
@@ -80,7 +85,7 @@ function SubscriptionInfoBox(props: { payment?: Order | null }) {
                   <Typography
                     variant="h1"
                     fontSize={20}
-                    children="Expervice Offerings"
+                    children={TranslateHelper.experviceOfferings()}
                   />
                 </Stack>
                 <VisibilityComp visibility={!isCanceled}>
@@ -95,7 +100,7 @@ function SubscriptionInfoBox(props: { payment?: Order | null }) {
                       height={30}
                       variant="outlined"
                       fontWeight="normal"
-                      children="Cancel Subscription"
+                      children={TranslateHelper.cancelSubscription()}
                       onClick={handleCancelSubscription}
                     />
                     <PrimaryButton
@@ -104,10 +109,10 @@ function SubscriptionInfoBox(props: { payment?: Order | null }) {
                       fontWeight="normal"
                       backgroundColor={Colors.primaryLight}
                       color="white"
-                      children="Manage Subscription"
+                      children={TranslateHelper.manageSubscription()}
                       onClick={openSubscriptionDialog}
                     />
-                    <Tooltip title="Payment">
+                    <Tooltip title={TranslateHelper.payment()}>
                       <IconButton
                         disableRipple
                         disableFocusRipple
@@ -126,16 +131,16 @@ function SubscriptionInfoBox(props: { payment?: Order | null }) {
                   <Typography
                     pb={1}
                     fontWeight="bold"
-                    children="Billgin Info"
+                    children={TranslateHelper.billingInformation()}
                   />
                   <RichText
                     color="black"
-                    title="Next Payment Date:"
+                    title={TranslateHelper.nextPaymentDate()}
                     content={dateToFormat(new Date(payment?.startPeriod ?? 0))}
                   />
                   <RichText
                     color="black"
-                    title="Next Payment:"
+                    title={TranslateHelper.nextPayment()}
                     content={`₺ ${payment?.price}`}
                   />
                 </Stack>
@@ -143,7 +148,7 @@ function SubscriptionInfoBox(props: { payment?: Order | null }) {
                   <Typography
                     pb={1}
                     fontWeight="bold"
-                    children="Current Plan"
+                    children={TranslateHelper.currentPlan()}
                   />
                   <Box
                     borderRadius={1}
@@ -155,7 +160,7 @@ function SubscriptionInfoBox(props: { payment?: Order | null }) {
                     <Typography
                       fontWeight="bold"
                       fontSize={12}
-                      children={subscription?.plan?.name}
+                      children={subscription?.plan?.translations?.name?.[lng]}
                     />
                   </Box>
                 </Stack>

@@ -10,6 +10,7 @@ import { useFormik } from "formik";
 import { registerBillingValidation } from "../validator/register_validator";
 import { CardNumberMask, CardYearMask } from "@Components/TextInputMask";
 import { RegisterBilling as RegisterBillingModel } from "../entities";
+import TranslateHelper from "@Local/index";
 
 function RegisterBilling() {
   /// Register hook
@@ -79,7 +80,7 @@ function RegisterBilling() {
             <TextOutlineField
               fullWidth
               name="card_holder_name"
-              label="Card Holder Name"
+              label={TranslateHelper.cardHolderName()}
               onChange={formik.handleChange}
               value={formik.values.card_holder_name}
               helperText={
@@ -97,7 +98,7 @@ function RegisterBilling() {
             <TextOutlineField
               fullWidth
               name="card_number"
-              label="Card Number"
+              label={TranslateHelper.cardNumber()}
               onChange={formik.handleChange}
               helperText={
                 formik.touched.card_number && formik.errors.card_number
@@ -116,7 +117,7 @@ function RegisterBilling() {
                 <TextOutlineField
                   fullWidth
                   name="expire"
-                  label="Expire Date"
+                  label={TranslateHelper.expireDate()}
                   helperText={formik.touched.expire && formik.errors.expire}
                   error={Boolean(formik.touched.expire && formik.errors.expire)}
                   inputComponent={CardYearMask}
@@ -129,7 +130,7 @@ function RegisterBilling() {
                 <TextOutlineField
                   fullWidth
                   name="cvc"
-                  label="CVC"
+                  label={TranslateHelper.cvc()}
                   type="tel"
                   maxLength={3}
                   onFocus={() => onFocusHandle("cvc")}
@@ -150,7 +151,7 @@ function RegisterBilling() {
               prefix={<ArrowBackIosIcon />}
               height={30}
               onClick={onBack}
-              children="Back"
+              children={TranslateHelper.back()}
               variant="outlined"
               color="black"
               backgroundColor="white"
@@ -163,7 +164,7 @@ function RegisterBilling() {
             <PrimaryButton
               onClick={onNextHandle}
               height={30}
-              children="Continue"
+              children={TranslateHelper.continue()}
               backgroundColor={Colors.primaryLight}
               color="white"
               fontWeight="normal"

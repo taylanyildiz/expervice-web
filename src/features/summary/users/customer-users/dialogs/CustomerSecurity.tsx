@@ -1,3 +1,4 @@
+import TranslateHelper from "@Local/index";
 import Customer from "@Models/customer/customer";
 import {
   Box,
@@ -19,21 +20,25 @@ function CustomerSecurity(props: { formik: FormikProps<Customer> }) {
               <Typography
                 variant="h1"
                 fontSize={15}
-                children="Security & Login"
+                children={TranslateHelper.securityLogin()}
               />
             </Grid>
           </Grid>
         </Box>
       </Grid>
       <Grid item xs={12} mt={2}>
-        <Typography variant="h1" fontSize={13} children="User Status" />
+        <Typography
+          variant="h1"
+          fontSize={13}
+          children={TranslateHelper.userStatus()}
+        />
       </Grid>
       <Grid item>
         <FormControlLabel
           checked={formik.values.is_active}
           onChange={() => formik.setFieldValue("is_active", true)}
           control={<Checkbox size="small" />}
-          label={"Active"}
+          label={TranslateHelper.active()}
         />
       </Grid>
       <Grid item>
@@ -41,7 +46,7 @@ function CustomerSecurity(props: { formik: FormikProps<Customer> }) {
           checked={!formik.values.is_active}
           onChange={() => formik.setFieldValue("is_active", false)}
           control={<Checkbox size="small" />}
-          label={"Inactive"}
+          label={TranslateHelper.inactive()}
         />
       </Grid>
     </Grid>

@@ -15,14 +15,14 @@ import { setTechnician } from "@Store/technician_store";
 import { AppDispatch } from "@Store/index";
 import { useDispatch } from "react-redux";
 import { useFormik } from "formik";
-import { Box, DialogContent, Typography } from "@mui/material";
+import { Box, DialogContent } from "@mui/material";
 import TabBar from "@Components/TabBar";
 import TechnicianContactInformation from "./TechnicianContactInformation";
 import TechnicianSecurity from "./TechnicianSecurity";
 import TechnicianRepository from "@Repo/technician_repository";
-import VisibilityComp from "@Components/VisibilityComp";
-import Colors from "@Themes/colors";
 import { technicianValidator } from "../validator/technician_validator";
+import TranslateHelper from "@Local/index";
+import AnyUpdateBox from "@Components/AnyUpdateBox";
 
 function TechnicianDialog() {
   /// Technician store
@@ -39,7 +39,9 @@ function TechnicianDialog() {
   const { closeDialog, openConfirm, openLoading } = useDialog();
 
   /// Title of dialog
-  const title: string = isEdit ? "Technician Edit" : "Technician Create";
+  const title: string = isEdit
+    ? TranslateHelper.technicianUserEdit()
+    : TranslateHelper.technicianUserCreate();
 
   /// Action type state
   const [actionType, setActionType] = useState<EActionType | null>(null);
@@ -48,8 +50,8 @@ function TechnicianDialog() {
   const onChangedAction = async (type: EActionType) => {
     if (type === EActionType.Delete) {
       const confirm = await openConfirm(
-        "Delete Technician",
-        "Are you sure to delete technician"
+        TranslateHelper.deleteTechnician(),
+        TranslateHelper.sureDeleteTechnician()
       );
       if (confirm) {
         const result = await openLoading(async () => {
@@ -143,25 +145,17 @@ function TechnicianDialog() {
   return (
     <>
       <DialogCustomTitle title={title} />
-      <VisibilityComp visibility={anyUpdate}>
-        <Box pl={1} m={0} sx={{ backgroundColor: Colors.warning }}>
-          <Typography
-            fontSize={13}
-            color="white"
-            children="Please click save to save changes"
-          />
-        </Box>
-      </VisibilityComp>
+      <AnyUpdateBox anyUpdate={anyUpdate} />
       <DialogContent>
         <Box mt={1}>
           <TabBar
             tabs={[
               {
-                title: "Contact Information",
+                title: TranslateHelper.contactInformation(),
                 panel: <TechnicianContactInformation formik={formik} />,
               },
               {
-                title: "Security & Login",
+                title: TranslateHelper.securityLogin(),
                 panel: <TechnicianSecurity formik={formik} />,
               },
             ]}

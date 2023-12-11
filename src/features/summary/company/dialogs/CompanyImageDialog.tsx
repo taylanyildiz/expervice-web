@@ -12,6 +12,7 @@ import InsertPhotoIcon from "@mui/icons-material/InsertPhoto";
 import { useUser } from "../helper/company_helper";
 import CompanyRepository from "@Repo/company_repository";
 import { useDialog } from "@Utils/hooks/dialog_hook";
+import TranslateHelper from "@Local/index";
 
 function CompanyImageDialog() {
   /// User store
@@ -47,8 +48,8 @@ function CompanyImageDialog() {
   const onDelete = async () => {
     if (companyImage) {
       const confirm = await openConfirm(
-        "Delete Image",
-        "Are you sure to delete image?"
+        TranslateHelper.deleteImage(),
+        TranslateHelper.sureDeleteImage()
       );
       if (!confirm) return;
       return await openLoading(async () => {
@@ -82,7 +83,11 @@ function CompanyImageDialog() {
             src={(newSrc as string | null) ?? companyImage}
             children={<InsertPhotoIcon />}
           />
-          <Typography variant="h1" fontSize={20} children="Company Image" />
+          <Typography
+            variant="h1"
+            fontSize={20}
+            children={TranslateHelper.companyImage()}
+          />
         </Stack>
 
         {/* Image Crop */}
@@ -105,14 +110,14 @@ function CompanyImageDialog() {
               variant="outlined"
               fontWeight="normal"
               color="black"
-              children="Delete"
+              children={TranslateHelper.delete()}
               onClick={onDelete}
             />
             <PrimaryButton
               variant="contained"
               fontWeight="normal"
               color="white"
-              children="Save"
+              children={TranslateHelper.save()}
               onClick={onSave}
             />
           </Stack>

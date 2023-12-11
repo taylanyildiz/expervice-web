@@ -4,6 +4,7 @@ import SuccessBox from "@Components/SuccessBox";
 import { PhoneMask } from "@Components/TextInputMask";
 import TextOutlineField from "@Components/TextOutlineField";
 import VisibilityComp from "@Components/VisibilityComp";
+import TranslateHelper from "@Local/index";
 import UserRepository from "@Repo/user_repository";
 import ERouter from "@Routes/router_enum";
 import { phoneMaskParse, useQuery } from "@Utils/functions";
@@ -154,7 +155,7 @@ function UserActivation() {
                       <TextOutlineField
                         fullWidth
                         name="first_name"
-                        label="First Name"
+                        label={TranslateHelper.firstName()}
                         value={formik.values.first_name}
                         helperText={
                           formik.touched.first_name && formik.errors.first_name
@@ -169,7 +170,7 @@ function UserActivation() {
                       <TextOutlineField
                         fullWidth
                         name="last_name"
-                        label="Last Name"
+                        label={TranslateHelper.lastName()}
                         value={formik.values.last_name}
                         helperText={
                           formik.touched.last_name && formik.errors.last_name
@@ -188,7 +189,7 @@ function UserActivation() {
                   fullWidth
                   type="tel"
                   name="phone"
-                  label="Phone Number"
+                  label={TranslateHelper.phoneNumber()}
                   value={formik.values.phone}
                   helperText={formik.touched.phone && formik.errors.phone}
                   error={Boolean(formik.errors.phone && formik.touched.phone)}
@@ -202,7 +203,7 @@ function UserActivation() {
                   secret
                   type="password"
                   name="password"
-                  label="Password"
+                  label={TranslateHelper.password()}
                   value={formik.values.password}
                   helperText={formik.touched.password && formik.errors.password}
                   error={Boolean(
@@ -216,7 +217,7 @@ function UserActivation() {
                   fullWidth
                   fontWeight="normal"
                   color="white"
-                  children="Activate Account"
+                  children={TranslateHelper.activateAccount()}
                   onClick={() => formik.handleSubmit()}
                 />
               </Grid>
@@ -229,7 +230,7 @@ function UserActivation() {
           <SuccessBox color="white" />
           <Typography
             color="white"
-            children="Your activation has been completed successfully"
+            children={TranslateHelper.successActivation()}
           />
         </Stack>
       </VisibilityComp>

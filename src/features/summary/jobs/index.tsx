@@ -8,6 +8,7 @@ import { useDispatch } from "react-redux";
 import { useQuery } from "@Utils/functions";
 import { setJobDialogStatus, setJobId } from "@Store/job_store";
 import { useAccount } from "../company/helper/company_helper";
+import TranslateHelper from "@Local/index";
 
 function JobsPage() {
   /// Account store
@@ -47,7 +48,7 @@ function JobsPage() {
     <div className="jobs-layout">
       <GridTableHeader
         visibilityAdd={isInternal || isOwner}
-        title="Jobs"
+        title={TranslateHelper.jobs()}
         onAdd={() => {
           openUnitDialog();
         }}

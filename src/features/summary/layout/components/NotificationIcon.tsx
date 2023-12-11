@@ -33,6 +33,8 @@ import { useMatch } from "react-router-dom";
 import ERouter from "@Routes/router_enum";
 import { setUnitId } from "@Store/unit_store";
 import { setJobId } from "@Store/job_store";
+import { useUser } from "@Features/summary/company/helper/company_helper";
+import TranslateHelper from "@Local/index";
 
 /// Badge styled
 const StyledBadge = styled(Badge)<BadgeProps>(() => ({
@@ -45,6 +47,10 @@ const StyledBadge = styled(Badge)<BadgeProps>(() => ({
 
 function NotificationItem(props: { item: Notification; onClick: () => void }) {
   const { item, onClick } = props;
+
+  /// User store
+  const { language } = useUser();
+  const lng = language?.language_code ?? "en";
 
   return (
     <Grid container direction="row">
@@ -74,11 +80,11 @@ function NotificationItem(props: { item: Notification; onClick: () => void }) {
           }}
           primary={
             <Stack direction="row" justifyContent="space-between">
-              {item.detail?.title}
+              {item.detail?.translations?.title?.[lng]}
               <Typography fontSize={11} children={timeAgo(item.created_at)} />
             </Stack>
           }
-          secondary={item.detail?.body}
+          secondary={item.detail?.translations?.body?.[lng]}
         />
       </Grid>
     </Grid>
@@ -109,14 +115,18 @@ function NotificationMenu(props: {
       <div style={{ width: 500, overflow: "hidden" }}>
         <Stack width="100%" direction="column" divider={<Divider />}>
           <Stack p={1} direction="row" justifyContent="space-between">
-            <Typography variant="h1" fontSize={20} children="Notifications" />
+            <Typography
+              variant="h1"
+              fontSize={20}
+              children={TranslateHelper.notifications()}
+            />
             <PrimaryButton
               disabled={disabledMark}
               onClick={onMarkAll}
               fontWeight="normal"
               variant="text"
               color="blue"
-              children="Mark All Read"
+              children={TranslateHelper.markAllRead()}
             />
           </Stack>
           {children}
@@ -274,7 +284,7 @@ function NotificationIcon() {
               alignItems="center"
               justifyContent="center"
             >
-              <Typography children="No Found Notifications" />
+              <Typography children={TranslateHelper.noFoundNotifications()} />
             </Box>
           </VisibilityComp>
         </List>

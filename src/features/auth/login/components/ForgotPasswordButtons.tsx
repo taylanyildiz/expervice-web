@@ -1,3 +1,4 @@
+import TranslateHelper from "@Local/index";
 import ERouter from "@Routes/router_enum";
 import { Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
@@ -13,9 +14,9 @@ function ForgotPasswordButton() {
 
   return (
     <Typography>
-      Forgot your{" "}
+      {TranslateHelper.forgotYour()}{" "}
       <b className="bold-text" onClick={onForgotPasswordHandle}>
-        password
+        {TranslateHelper.password()}
       </b>
       ?
     </Typography>

@@ -1,3 +1,4 @@
+import TranslateHelper from "@Local/index";
 import { ECustomerFilterType } from "@Models/customer/customer_enums";
 
 /**
@@ -8,19 +9,19 @@ import { ECustomerFilterType } from "@Models/customer/customer_enums";
 export function getCustomerFilterTitle(type: ECustomerFilterType): string {
     switch (type) {
         case ECustomerFilterType.DisplayName:
-            return "Display Name";
+            return TranslateHelper.displayName();
         case ECustomerFilterType.FirstName:
-            return "First Name";
+            return TranslateHelper.firstName();
         case ECustomerFilterType.LastName:
-            return "Last Name";
+            return TranslateHelper.lastName();
         case ECustomerFilterType.CellPhone:
-            return "Cell Phone";
+            return TranslateHelper.cellPhone();
         case ECustomerFilterType.CompanyName:
-            return "Company Name";
+            return TranslateHelper.businessName();
         case ECustomerFilterType.Email:
-            return "Email";
+            return TranslateHelper.email();
         case ECustomerFilterType.Phone:
-            return "Phone";
+            return TranslateHelper.phone();
         default:
             return "";
     }

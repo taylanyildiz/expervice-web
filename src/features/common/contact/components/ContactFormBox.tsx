@@ -8,6 +8,7 @@ import ContactForm from "@Models/contact_form";
 import { useFormik } from "formik";
 import { contactFormSchema } from "../validations/contact_form_validation";
 import { useDialog } from "@Utils/hooks/dialog_hook";
+import TranslateHelper from "@Local/index";
 
 function ContactFormBox() {
   /// Contact repository
@@ -51,13 +52,17 @@ function ContactFormBox() {
           item
           xs={12}
           children={
-            <Typography variant="h1" fontSize={20} children="Contact Form" />
+            <Typography
+              variant="h1"
+              fontSize={20}
+              children={TranslateHelper.contactForm()}
+            />
           }
         />
         <Grid item xs={12} mt={2}>
           <TextOutlineField
             fullWidth
-            label="Full Name"
+            label={TranslateHelper.fullName()}
             name="full_name"
             value={formik.values?.full_name}
             onChange={formik.handleChange}
@@ -68,7 +73,7 @@ function ContactFormBox() {
         <Grid item xs={12}>
           <TextOutlineField
             fullWidth
-            label="Email"
+            label={TranslateHelper.email()}
             name="email"
             value={formik.values?.email}
             onChange={formik.handleChange}
@@ -79,7 +84,7 @@ function ContactFormBox() {
         <Grid item xs={12}>
           <TextOutlineField
             fullWidth
-            label="Phone"
+            label={TranslateHelper.phone()}
             name="phone"
             value={formik.values?.phone}
             onChange={formik.handleChange}
@@ -90,7 +95,7 @@ function ContactFormBox() {
         <Grid item xs={12}>
           <TextOutlineField
             fullWidth
-            label="Subject"
+            label={TranslateHelper.subject()}
             name="subject"
             value={formik.values?.subject}
             onChange={formik.handleChange}
@@ -104,7 +109,7 @@ function ContactFormBox() {
             multiline
             minRows={4}
             maxRows={4}
-            label="Message"
+            label={TranslateHelper.message()}
             name="messages"
             value={formik.values?.messages}
             onChange={formik.handleChange}
@@ -114,7 +119,7 @@ function ContactFormBox() {
         </Grid>
         <Grid item xs={12} justifyContent="end" display="flex">
           <PrimaryButton
-            children="Send"
+            children={TranslateHelper.send()}
             suffix={<SendIcon sx={{ width: 20, height: 20 }} />}
             color={Colors.primary}
             backgroundColor={Colors.secodary}

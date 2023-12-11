@@ -3,6 +3,7 @@ import { useProfile } from "../helper/profile_helper";
 import { caption } from "@Utils/functions";
 import EmailOutlinedIcon from "@mui/icons-material/EmailOutlined";
 import LocalPhoneOutlinedIcon from "@mui/icons-material/LocalPhoneOutlined";
+import TranslateHelper from "@Local/index";
 
 function UserInformationBox() {
   /// Account store
@@ -20,7 +21,7 @@ function UserInformationBox() {
           p={1}
           variant="h1"
           fontSize={16}
-          children="User Information"
+          children={TranslateHelper.userInformation()}
         />
         <Grid container p={1} columnSpacing={2}>
           <Grid

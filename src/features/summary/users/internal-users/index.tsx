@@ -1,7 +1,8 @@
 import InternalUsersTable from "./components/InternalUsersTable";
-import "../../../../assets/css/internal_users.css";
 import GridTableHeader from "@Components/GridTableHeader";
 import { useInternalDialog } from "./helper/internal_user_helper";
+import TranslateHelper from "@Local/index";
+import "../../../../assets/css/internal_users.css";
 
 function InternalUsersPage() {
   /// Dialog hook
@@ -21,7 +22,7 @@ function InternalUsersPage() {
   return (
     <div className="internal-users-layout">
       <GridTableHeader
-        title="Internal Users"
+        title={TranslateHelper.internalUsers()}
         onAdd={onAddHandle}
         onFilter={onFilterHandle}
         onExport={onExportHandle}

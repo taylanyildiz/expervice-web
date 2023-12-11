@@ -5,6 +5,7 @@ import VideoBox from "./components/VideoBox";
 import CustomerBox from "./components/CustomerBox";
 import WelcomeBox from "./components/WelcomeBox";
 import theme from "@Themes/index";
+import TranslateHelper from "@Local/index";
 
 function CommonPage() {
   return (
@@ -34,23 +35,23 @@ function CommonPage() {
             <Typography
               variant="h2"
               fontSize={40}
-              children="Turns out, you can do it all"
+              children={TranslateHelper.turnsOutHeader()}
             />
             <InfoImageBox
               image="https://buildertrend.com/wp-content/uploads/2022/11/Value-Prop_Stay-on-top_Photo.webp"
-              title="Stay on top of everything in one place"
-              subTitle="Put an end to questions like … “Where’s that receipt? Who made the last sales call? Which projects are framing today?” Buildertrend frees your team from admin work, so they can do more of their best work – impressing clients."
+              title={TranslateHelper.turnsOutHeader1()}
+              subTitle={TranslateHelper.turnsOutDesc1()}
             />
             <InfoImageBox
               position="right"
               image="https://buildertrend.com/wp-content/uploads/2022/11/Value-Prop_Update-clients_Photo.webp"
-              title="Update clients without lifting a finger"
-              subTitle="Clients crave information about the status of their build – Buildertrend gives it to them. Instead of constant emails or texts, they can see what’s happening without any extra effort from your team. Ready to put late-night phone calls in the past?"
+              title={TranslateHelper.turnsOutHeader2()}
+              subTitle={TranslateHelper.turnsOutDesc2()}
             />
             <InfoImageBox
               image="https://buildertrend.com/wp-content/uploads/2022/11/Value-Prop_Avoid-delays-and-errors_Photo.webp"
-              title="Avoid surprise delays and costly errors"
-              subTitle="When details slip through the cracks, it’s inevitable: mistakes happen. But when every change order, selection and invoice is tracked, success happens. With Buildertrend, you’ll keep a close eye on everything along the way."
+              title={TranslateHelper.turnsOutHeader3()}
+              subTitle={TranslateHelper.turnsOutDesc3()}
             />
           </Stack>
         </Grid>

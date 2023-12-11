@@ -51,7 +51,7 @@ function TechnicianUsersTable() {
         disableColumnMenu
         sortingMode="server"
         paginationMode="server"
-        columns={columns}
+        columns={columns()}
         rows={rows}
         rowCount={count}
         pageSizeOptions={[10, 50, 100]}

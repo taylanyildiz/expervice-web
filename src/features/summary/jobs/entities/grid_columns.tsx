@@ -1,9 +1,10 @@
+import TranslateHelper from "@Local/index";
 import Job from "@Models/job/job";
 import { store } from "@Store/index";
 import { setJobId } from "@Store/job_store";
 import { GridColDef } from "@mui/x-data-grid";
 
-const columns: GridColDef<Job>[] = [
+const columns = (): GridColDef<Job>[] => [
   {
     field: "id",
     align: "right",
@@ -29,7 +30,7 @@ const columns: GridColDef<Job>[] = [
     field: "unit_name",
     align: "center",
     headerAlign: "center",
-    headerName: "Unit Name",
+    headerName: TranslateHelper.unitName(),
     width: 200,
     valueGetter: (params) => {
       const job = params.row;
@@ -40,22 +41,24 @@ const columns: GridColDef<Job>[] = [
   {
     field: "priority",
     align: "left",
-    headerName: "Priority",
+    headerName: TranslateHelper.priority(),
     width: 150,
     valueGetter: (params) => {
       const job = params.row;
-      const priority = job.priority?.name;
+      const lng = store.getState().user.language?.language_code ?? "en";
+      const priority = job.priority?.translations?.name?.[lng];
       return priority;
     },
   },
   {
     field: "sub_type",
     align: "left",
-    headerName: "Sub Type",
+    headerName: TranslateHelper.subType(),
     width: 220,
     valueGetter: (params) => {
       const job = params.row;
-      const subType = job.sub_type?.name;
+      const lng = store.getState().user.language?.language_code ?? "en";
+      const subType = job.sub_type?.translations?.name?.[lng];
       return subType;
     },
   },
@@ -63,18 +66,19 @@ const columns: GridColDef<Job>[] = [
     field: "status",
     headerAlign: "left",
     align: "left",
-    headerName: "Job Status",
+    headerName: TranslateHelper.jobStatus(),
     width: 200,
     valueGetter: (params) => {
       const job = params.row;
-      const status = job.status?.name;
+      const lng = store.getState().user.language?.language_code ?? "en";
+      const status = job.status?.translations?.name?.[lng];
       return status;
     },
   },
   {
     field: "group",
     align: "center",
-    headerName: "Group Name",
+    headerName: TranslateHelper.groupName(),
     width: 150,
     valueGetter: (params) => {
       const job = params.row;
@@ -85,7 +89,7 @@ const columns: GridColDef<Job>[] = [
   {
     field: "region",
     align: "center",
-    headerName: "Region Name",
+    headerName: TranslateHelper.regionName(),
     minWidth: 150,
     valueGetter: (params) => {
       const job = params.row;
@@ -97,8 +101,9 @@ const columns: GridColDef<Job>[] = [
     field: "job_technicians",
     align: "center",
     headerAlign: "center",
-    headerName: "Technicians",
+    headerName: TranslateHelper.technicians(),
     minWidth: 100,
+    flex: 1,
     sortable: false,
     valueGetter: (params) => {
       const job = params.row;

@@ -14,6 +14,7 @@ import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 interface LinkChildren {
   visibility?: boolean;
   title?: string;
+  subTitle?: string;
   to?: To;
   prefix?: ReactNode;
   suffix?: ReactNode;
@@ -133,7 +134,7 @@ function MenuCustomLink(props: LinkProps) {
                   }}
                 >
                   {e.prefix && <ListItemIcon children={e.prefix} />}
-                  <ListItemText children={e.title} />
+                  <ListItemText primary={e.title} secondary={e.subTitle} />
                   <Typography
                     variant="body2"
                     color="text.secondary"

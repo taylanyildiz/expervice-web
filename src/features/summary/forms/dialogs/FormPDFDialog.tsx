@@ -5,7 +5,7 @@ import { EActionType } from "@Components/dialogs/DialogCustomActions";
 import { useEffect, useState } from "react";
 import { useFormik } from "formik";
 import Form from "@Models/form/form";
-import { Box, DialogContent, Typography } from "@mui/material";
+import { Box, DialogContent } from "@mui/material";
 import TabBar from "@Components/TabBar";
 import FormPdFDialogContent from "./FormPdFDialogContent";
 import FormRepository from "@Repo/form_repository";
@@ -20,9 +20,9 @@ import {
 } from "@Store/form_store";
 import FormCustomersContent from "./FormCustomersContent";
 import { object, string } from "yup";
-import VisibilityComp from "@Components/VisibilityComp";
-import Colors from "@Themes/colors";
 import { useCustomEffect } from "@Utils/functions";
+import AnyUpdateBox from "@Components/AnyUpdateBox";
+import TranslateHelper from "@Local/index";
 
 function FormPDFDialog() {
   const { form, formId } = useForm();
@@ -38,7 +38,9 @@ function FormPDFDialog() {
   const formRepo = new FormRepository();
 
   /// Title of dialog
-  const title = isEdit ? "Form Edit" : "Form Create";
+  const title = isEdit
+    ? TranslateHelper.formEdit()
+    : TranslateHelper.formCreate();
 
   /// Action type state
   const [actionType, setActionType] = useState<EActionType | null>(null);
@@ -105,7 +107,10 @@ function FormPDFDialog() {
   const formik = useFormik({
     initialValues,
     validationSchema: object({
-      name: string().nullable().required().min(2, "Invalid name"),
+      name: string()
+        .nullable()
+        .required(TranslateHelper.required())
+        .min(2, TranslateHelper.invalid()),
     }),
     onSubmit: onSubmitHandle,
   });
@@ -168,26 +173,18 @@ function FormPDFDialog() {
   return (
     <>
       <DialogCustomTitle title={title} />
-      <VisibilityComp visibility={anyUpdate}>
-        <Box pl={1} m={0} sx={{ backgroundColor: Colors.warning }}>
-          <Typography
-            fontSize={13}
-            color="white"
-            children="Please click save to save changes"
-          />
-        </Box>
-      </VisibilityComp>
+      <AnyUpdateBox anyUpdate={anyUpdate} />
       <DialogContent>
         <Box mt={1}>
           <TabBar
             tabs={[
               {
-                title: "Content",
+                title: TranslateHelper.content(),
                 panel: <FormPdFDialogContent formik={formik} />,
               },
               {
                 visibility: isEdit,
-                title: "Customers",
+                title: TranslateHelper.customers(),
                 panel: <FormCustomersContent />,
               },
             ]}

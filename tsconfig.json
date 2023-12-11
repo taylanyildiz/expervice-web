@@ -32,7 +32,8 @@
       "@Themes/*": ["./themes/*"],
       "@Repo/*": ["./repositories/*"],
       "@Log/*": ["./logs/*"],
-      "@Store/*": ["./stores/*"]
+      "@Store/*": ["./stores/*"],
+      "@Local/*": ["./localization/*"]
     }
   },
   "include": ["src", "src/assets"],

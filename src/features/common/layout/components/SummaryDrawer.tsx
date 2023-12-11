@@ -1,5 +1,6 @@
 import MenuCustomLink from "@Components/MenuCustomLink";
 import ScalableButton from "@Components/ScalableButton";
+import TranslateHelper from "@Local/index";
 import ERouter from "@Routes/router_enum";
 import { RootState } from "@Store/index";
 import { setCommonSideBar } from "@Store/summary_store";
@@ -11,23 +12,23 @@ import { useDispatch, useSelector } from "react-redux";
 /// Links
 const links: { to: string; title: string }[] = [
   {
-    title: "Product",
+    title: TranslateHelper.product(),
     to: ERouter.Product,
   },
   {
-    title: "Pricing",
+    title: TranslateHelper.pricing(),
     to: ERouter.Pricing,
   },
   {
-    title: "Resources",
+    title: TranslateHelper.resources(),
     to: ERouter.Resources,
   },
   {
-    title: "Support",
+    title: TranslateHelper.support(),
     to: ERouter.Support,
   },
   {
-    title: "Login",
+    title: TranslateHelper.login(),
     to: ERouter.Login,
   },
 ];
@@ -64,9 +65,12 @@ function SummaryDrawer() {
             onClick={() => {}}
             color={Colors.primary}
             backgroundColor={Colors.secodary}
-            children="Schedule a demo"
+            children={TranslateHelper.scheduleDemo()}
           />
-          <ScalableButton link={ERouter.Pricing} children="Try it now" />
+          <ScalableButton
+            link={ERouter.Pricing}
+            children={TranslateHelper.tryItNow()}
+          />
         </Stack>
       </Stack>
       <Stack px={3} mt={4} spacing={3}>

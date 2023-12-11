@@ -15,6 +15,7 @@ import AuthRepository from "@Repo/auth_repository";
 import { useDialog } from "@Utils/hooks/dialog_hook";
 import { useSelector } from "react-redux";
 import { RootState } from "@Store/index";
+import TranslateHelper from "@Local/index";
 
 function LoginPage() {
   /// Navigate
@@ -72,7 +73,7 @@ function LoginPage() {
               <Grid item xs={12}>
                 <TextOutlineField
                   fullWidth
-                  label="Email"
+                  label={TranslateHelper.email()}
                   name="email"
                   type="email"
                   onChange={formik.handleChange}
@@ -85,7 +86,7 @@ function LoginPage() {
                 <TextOutlineField
                   fullWidth
                   secret
-                  label="Password"
+                  label={TranslateHelper.password()}
                   name="password"
                   type="password"
                   onChange={formik.handleChange}
@@ -100,7 +101,7 @@ function LoginPage() {
                 <PrimaryButton
                   fullWidth
                   fontWeight="normal"
-                  children="Login"
+                  children={TranslateHelper.login()}
                   backgroundColor={Colors.primaryDark}
                   color="white"
                   onClick={onClickLoginHandle}

@@ -1,4 +1,4 @@
-import { CompanyGroup, CompanyRegion, CompanyRegionFilter } from "@Models/index";
+import { CompanyGroup, CompanyRegion } from "@Models/index";
 import BaseRepository from "./base_repository";
 import CompanyRegionConst from "./end-points/company_region";
 import { store } from "@Store/index";
@@ -14,9 +14,9 @@ class CompanyRegionRepository extends BaseRepository {
     /**
      * Get Company Regions
      */
-    public async getRegions(filter?: CompanyRegionFilter): Promise<void> {
+    public async getRegions(): Promise<void> {
         store.dispatch(setRegionsLoading(true));
-        const response = await this.get("/", { params: filter });
+        const response = await this.get("/");
         const status = response.status;
         if (status !== 200) return;
         const data = response.data['data']['regions'];

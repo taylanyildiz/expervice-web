@@ -25,6 +25,7 @@ import {
 import ERouter from "./router_enum";
 import UserActivation from "@Features/activations/user-activation";
 import { useAccount } from "@Features/summary/company/helper/company_helper";
+import UserRepository from "@Repo/user_repository";
 
 /// Router Options
 const options = {
@@ -81,6 +82,9 @@ const routes: RouteObject[] = [
       {
         path: "summary",
         element: <SummaryPage />,
+        loader: async () => {
+          return await new UserRepository().getUserLanguage();
+        },
       },
       {
         path: "units",

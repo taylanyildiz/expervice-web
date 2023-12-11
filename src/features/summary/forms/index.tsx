@@ -8,6 +8,7 @@ import { useQuery } from "@Utils/functions";
 import { AppDispatch } from "@Store/index";
 import { useDispatch } from "react-redux";
 import { setFormDialogStatus, setFormId } from "@Store/form_store";
+import TranslateHelper from "@Local/index";
 
 function FormsPage() {
   /// Form store
@@ -45,7 +46,7 @@ function FormsPage() {
   return (
     <div className="forms-layout">
       <GridTableHeader
-        title="Forms"
+        title={TranslateHelper.forms()}
         onAdd={() => {
           openFormDialog();
         }}

@@ -5,6 +5,7 @@ import { Typography } from "@mui/material";
 import { dateToFormat } from "@Utils/functions";
 import { EActionType } from "@Components/dialogs/DialogCustomActions";
 import { useForm } from "../helper/form_helper";
+import TranslateHelper from "@Local/index";
 
 interface FormPDFDialogActionProps {
   onChanged: (type: EActionType) => void;
@@ -31,7 +32,7 @@ function FormPDFDialogAction(props: FormPDFDialogActionProps) {
               height={30}
               fontWeight="normal"
               color="black"
-              children="Delete"
+              children={TranslateHelper.delete()}
               variant="outlined"
               onClick={() => onChangedAction(EActionType.Delete)}
             />
@@ -41,21 +42,21 @@ function FormPDFDialogAction(props: FormPDFDialogActionProps) {
           height={30}
           fontWeight="normal"
           color="white"
-          children="Save"
+          children={TranslateHelper.save()}
           onClick={() => onChangedAction(EActionType.Save)}
         />,
         <PrimaryButton
           height={30}
           fontWeight="normal"
           color="white"
-          children="Save & New"
+          children={TranslateHelper.saveNew()}
           onClick={() => onChangedAction(EActionType.SaveNew)}
         />,
         <PrimaryButton
           height={30}
           fontWeight="normal"
           color="white"
-          children="Save & Close"
+          children={TranslateHelper.saveClose()}
           onClick={() => onChangedAction(EActionType.SaveClose)}
         />,
       ]}

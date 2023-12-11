@@ -8,6 +8,7 @@ import { RootState } from "@Store/index";
 import { useDispatch, useSelector } from "react-redux";
 import { setAuthPlan } from "@Store/auth_store";
 import theme from "@Themes/index";
+import TranslateHelper from "@Local/index";
 
 function AppBarActions() {
   /// Production store
@@ -36,7 +37,12 @@ function AppBarActions() {
         <Grid container justifyContent="end" alignItems="center">
           <Grid
             item
-            children={<MenuCustomLink title="Contact" to={ERouter.Contact} />}
+            children={
+              <MenuCustomLink
+                title={TranslateHelper.contact()}
+                to={ERouter.Contact}
+              />
+            }
           />
           <Grid
             item
@@ -45,7 +51,7 @@ function AppBarActions() {
                 link={ERouter.Login}
                 color="black"
                 backgroundColor="transparent"
-                children="Login"
+                children={TranslateHelper.login()}
                 prefix={<AccountCircleOutlinedIcon />}
               />
             }
@@ -65,14 +71,17 @@ function AppBarActions() {
                 onClick={onClickDemoHandle}
                 color={Colors.primary}
                 backgroundColor={Colors.secodary}
-                children="Schedule a demo"
+                children={TranslateHelper.scheduleDemo()}
               />
             }
           />
           <Grid
             item
             children={
-              <ScalableButton link={ERouter.Pricing} children="Try it now" />
+              <ScalableButton
+                link={ERouter.Pricing}
+                children={TranslateHelper.tryItNow()}
+              />
             }
           />
         </Grid>

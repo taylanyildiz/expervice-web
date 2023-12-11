@@ -1,6 +1,6 @@
 import { DialogCustomTitle } from "@Components/dialogs";
 import { useUnit, useUnitCreate, useUnitUpdate } from "../helper/unit_helper";
-import { Box, DialogContent, Typography } from "@mui/material";
+import { Box, DialogContent } from "@mui/material";
 import UnitDialogAction from "./UnitDialogAction";
 import { EActionType } from "@Components/dialogs/DialogCustomActions";
 import { useEffect, useState } from "react";
@@ -14,13 +14,13 @@ import Unit, { defaultValue } from "@Models/units/unit";
 import UnitRepository from "@Repo/unit_repository";
 import { unitValidator } from "../validator/unit_validator";
 import { useDialog } from "@Utils/hooks/dialog_hook";
-import VisibilityComp from "@Components/VisibilityComp";
-import Colors from "@Themes/colors";
 import UnitJob from "./UnitJob";
 import { EJobType } from "@Features/summary/jobs/entities/job_enums";
 import UnitJobs from "./UnitJobs";
 import Customer from "@Models/customer/customer";
 import { useCustomEffect } from "@Utils/functions";
+import TranslateHelper from "@Local/index";
+import AnyUpdateBox from "@Components/AnyUpdateBox";
 
 interface UnitDialogProps {
   customerUser?: Customer | null;
@@ -42,13 +42,17 @@ function UnitDialog(props: UnitDialogProps) {
   const { unit, unitId } = useUnit();
 
   const jobType =
-    unit?.job?.type_id === EJobType.Fault ? "Fault" : "Maintenance";
+    unit?.job?.type_id === EJobType.Fault
+      ? TranslateHelper.fault()
+      : TranslateHelper.maintenance();
   const jobId = unit?.job?.id;
   const hasjob = Boolean(jobId);
   const isEdit = Boolean(unit);
 
   /// Title of dialog
-  const title = isEdit ? "Unit Edit" : "Unit Create";
+  const title = isEdit
+    ? TranslateHelper.unitEdit()
+    : TranslateHelper.unitCreate();
 
   /// Action type state
   const [actionType, setActionType] = useState<EActionType | null>(null);
@@ -57,8 +61,8 @@ function UnitDialog(props: UnitDialogProps) {
   const onChangedAction = async (type: EActionType) => {
     if (type === EActionType.Delete) {
       const confirm = await openConfirm(
-        "Delete Unit",
-        "Are you sure to delete unit?"
+        TranslateHelper.deleteUnit(),
+        TranslateHelper.sureDeleteUnit()
       );
       if (confirm) {
         const result = await openLoading(async () => {
@@ -175,31 +179,23 @@ function UnitDialog(props: UnitDialogProps) {
   return (
     <>
       <DialogCustomTitle title={title} />
-      <VisibilityComp visibility={anyUpdate}>
-        <Box pl={1} m={0} sx={{ backgroundColor: Colors.warning }}>
-          <Typography
-            fontSize={13}
-            color="white"
-            children="Please click save to save changes"
-          />
-        </Box>
-      </VisibilityComp>
+      <AnyUpdateBox anyUpdate={anyUpdate} />
       <DialogContent>
         <Box mt={1}>
           <TabBar
             tabs={[
               {
-                title: "Unit Information",
+                title: TranslateHelper.unitInformation(),
                 panel: <UnitInformation formik={formik} />,
               },
               {
                 visibility: hasjob,
-                title: `Job (${jobType})`,
+                title: `${TranslateHelper.job()} (${jobType})`,
                 panel: <UnitJob />,
               },
               {
                 visibility: isEdit,
-                title: `All Jobs (${unit?.job_count})`,
+                title: `${TranslateHelper.allJobs()} (${unit?.job_count})`,
                 panel: <UnitJobs />,
               },
             ]}

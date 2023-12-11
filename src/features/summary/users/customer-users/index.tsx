@@ -8,6 +8,7 @@ import {
 import { useDispatch } from "react-redux";
 import { setCustomerFilterDrawer } from "@Store/customer_user_store";
 import CustomerFilterDrawer from "./components/CustomerFilterDrawer";
+import TranslateHelper from "@Local/index";
 
 function CustomerUsersPage() {
   /// Customer dialog hook
@@ -27,7 +28,7 @@ function CustomerUsersPage() {
   return (
     <div className="customer-users-layout">
       <GridTableHeader
-        title="Customer Users"
+        title={TranslateHelper.customerUsers()}
         onAdd={onAddHandle}
         onFilter={() => {
           dispatch(setCustomerFilterDrawer(true));

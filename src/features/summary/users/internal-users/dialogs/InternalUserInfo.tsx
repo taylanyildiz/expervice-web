@@ -2,6 +2,7 @@ import { Box, Divider, Grid, Stack, Typography } from "@mui/material";
 import { useInternal } from "../helper/internal_user_helper";
 import RichText from "@Components/RichText";
 import StatusBox from "@Components/StatusBox";
+import TranslateHelper from "@Local/index";
 
 function InternalUserInfo() {
   // Internal hooks
@@ -25,7 +26,11 @@ function InternalUserInfo() {
         <Box m={1}>
           <Grid container columnSpacing={1}>
             <Grid item>
-              <Typography variant="h1" fontSize={14} children="User Info" />
+              <Typography
+                variant="h1"
+                fontSize={14}
+                children={TranslateHelper.userInformation()}
+              />
             </Grid>
             <Grid item>
               <StatusBox email={email} status={status!} />
@@ -33,18 +38,22 @@ function InternalUserInfo() {
           </Grid>
         </Box>
         <Stack direction="column" p={1}>
-          <RichText color="black" title="Name :" content={displayName} />
+          <RichText
+            color="black"
+            title={`${TranslateHelper.name()} :`}
+            content={displayName}
+          />
           <RichText
             color="black"
             visibility={hasEmail}
-            title="Email :"
+            title={`${TranslateHelper.email()} :`}
             content={email}
             fontSize={11}
           />
           <RichText
             color="black"
             visibility={hasPhone}
-            title="Phone :"
+            title={`${TranslateHelper.phone()} :`}
             content={phone}
             fontSize={11}
           />

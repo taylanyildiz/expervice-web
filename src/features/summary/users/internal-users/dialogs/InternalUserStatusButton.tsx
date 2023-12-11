@@ -6,6 +6,7 @@ import { EInternalStatus } from "../entities/internal_user_enums";
 import { useEffect, useState } from "react";
 import { dateToFormat } from "@Utils/functions";
 import VisibilityComp from "@Components/VisibilityComp";
+import TranslateHelper from "@Local/index";
 
 interface InternalUserStatusButtonProps {
   formik: FormikProps<InternalUser>;
@@ -18,17 +19,18 @@ function InternalUserStatusButton(props: InternalUserStatusButtonProps) {
   const values = formik.values;
   const userStatus = values.is_active;
   const visibilityButton = status !== EInternalStatus.Active && userStatus;
-  const isInvited = Boolean(formik.values.invited_at);
+  const inviteDate = formik.values.invited_at;
+  const isInvited = Boolean(inviteDate);
 
   useEffect(() => {
     initTitles();
   }, [formik.values]);
 
   /// Invite title
-  const [title, setTitle] = useState("User has not been invited");
+  const [title, setTitle] = useState(TranslateHelper.userNotInvited());
 
   /// Button title
-  const [button, setButton] = useState("Invite User");
+  const [button, setButton] = useState(TranslateHelper.inviteUser());
 
   /// Old status
   const [oldStatus, setOldStatus] = useState<number | undefined>(
@@ -41,30 +43,34 @@ function InternalUserStatusButton(props: InternalUserStatusButtonProps) {
     let button = "";
     switch (status) {
       case EInternalStatus.Active:
-        title = `Invite Accepted ${dateToFormat(formik.values.accepted_at)}`;
+        title = `${TranslateHelper.inviteAccepted()} ${dateToFormat(
+          formik.values.accepted_at
+        )}`;
         break;
       case EInternalStatus.Inactive:
-        title = "User Inactive";
+        title = TranslateHelper.userInactive();
         if (userStatus) {
-          title = "User has not been invited";
-          button = "Invite User";
+          title = TranslateHelper.userNotInvited();
+          button = TranslateHelper.inviteUser();
         }
         break;
       case EInternalStatus.NotInvited:
-        title = "User has not been invited";
-        button = "Invite User";
+        title = TranslateHelper.userNotInvited();
+        button = TranslateHelper.inviteUser();
         break;
       case EInternalStatus.Invited:
-        title = "Invite Pending Mon, Jul 17, 5:13 PM";
-        button = "Re-Send Invite";
+        title = `${TranslateHelper.invitePending()} ${dateToFormat(
+          inviteDate
+        )}`;
+        button = TranslateHelper.resendInvite();
         if (!isInvited) {
-          title = "Invite will be sent on save";
-          button = "Cancel Invite";
+          title = TranslateHelper.inviteWillSent();
+          button = TranslateHelper.cancelInvite();
         }
         break;
       case EInternalStatus.ReSend:
-        title = "Invite will be sent on save";
-        button = "Cancel Invite";
+        title = TranslateHelper.inviteWillSent();
+        button = TranslateHelper.cancelInvite();
         break;
     }
     setTitle(title);

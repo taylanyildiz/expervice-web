@@ -28,6 +28,7 @@ abstract class BaseRepository extends Axios {
                 'Content-Type': 'application/json; charset=UTF-8',
                 "Access-Control-Allow-Origin": "*",
                 "x-access-token": store.getState().account?.accessToken,
+                "x-accept-lang": store.getState().user?.language?.language_code ?? "en",
             },
             transformResponse: (e) => {
                 try {

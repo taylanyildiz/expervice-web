@@ -1,5 +1,6 @@
 import TextOutlineField from "@Components/TextOutlineField";
 import { CitySelect, CountrySelect, StateSelect } from "@Components/index";
+import TranslateHelper from "@Local/index";
 import CompanyAddress from "@Models/company/company_address";
 import CompanyInfo from "@Models/company/company_info";
 import { Grid, Typography } from "@mui/material";
@@ -18,13 +19,17 @@ function CompanyOverview(props: { formik: FormikProps<CompanyInfo> }) {
   return (
     <Grid container spacing={1}>
       <Grid item xs={12}>
-        <Typography variant="h1" fontSize={14} children="Company Information" />
+        <Typography
+          variant="h1"
+          fontSize={14}
+          children={TranslateHelper.businessInformation()}
+        />
       </Grid>
       <Grid item xs={6}>
         <TextOutlineField
           fullWidth
           name="name"
-          label="Company Name"
+          label={TranslateHelper.businessName()}
           value={formik.values.name}
           onChange={formik.handleChange}
           helperText={formik.touched.name && formik.errors.name}
@@ -35,7 +40,7 @@ function CompanyOverview(props: { formik: FormikProps<CompanyInfo> }) {
         <TextOutlineField
           fullWidth
           name="web_site"
-          label="Web site"
+          label={TranslateHelper.webSite()}
           value={formik.values.web_site}
           onChange={formik.handleChange}
           helperText={formik.touched.web_site && formik.errors.web_site}
@@ -46,7 +51,7 @@ function CompanyOverview(props: { formik: FormikProps<CompanyInfo> }) {
         <TextOutlineField
           fullWidth
           name="phone_number"
-          label="Phone Number"
+          label={TranslateHelper.phoneNumber()}
           type="tel"
           value={formik.values.phone_number}
           onChange={formik.handleChange}
@@ -60,7 +65,7 @@ function CompanyOverview(props: { formik: FormikProps<CompanyInfo> }) {
         <TextOutlineField
           fullWidth
           name="fax_number"
-          label="Fax Number"
+          label={TranslateHelper.faxNumber()}
           type="tel"
           value={formik.values.fax_number}
           onChange={formik.handleChange}
@@ -69,12 +74,16 @@ function CompanyOverview(props: { formik: FormikProps<CompanyInfo> }) {
         />
       </Grid>
       <Grid item xs={12}>
-        <Typography variant="h1" fontSize={14} children="Company Address" />
+        <Typography
+          variant="h1"
+          fontSize={14}
+          children={TranslateHelper.businessAddress()}
+        />
       </Grid>
       <Grid item xs={4}>
         <CountrySelect
           fullWidth
-          label="Country"
+          label={TranslateHelper.country()}
           value={formik.values.company_address?.country}
           onChanged={(country) => {
             formik.setFieldValue("company_address.country", country);
@@ -86,7 +95,7 @@ function CompanyOverview(props: { formik: FormikProps<CompanyInfo> }) {
       <Grid item xs={4}>
         <StateSelect
           fullWidth
-          label="State"
+          label={TranslateHelper.state()}
           value={formik.values.company_address?.state}
           countryId={formik.values.company_address?.country?.id}
           onChanged={(state) => {
@@ -99,7 +108,7 @@ function CompanyOverview(props: { formik: FormikProps<CompanyInfo> }) {
       <Grid item xs={4}>
         <CitySelect
           fullWidth
-          label="City"
+          label={TranslateHelper.city()}
           value={formik.values.company_address?.city}
           stateId={formik.values.company_address?.state?.id}
           onChanged={(city) => {
@@ -113,7 +122,7 @@ function CompanyOverview(props: { formik: FormikProps<CompanyInfo> }) {
         <TextOutlineField
           fullWidth
           name="company_address.street_address"
-          label="Street Address"
+          label={TranslateHelper.streetAddress()}
           value={formik.values.company_address?.street_address}
           onChange={formik.handleChange}
         />
@@ -122,7 +131,7 @@ function CompanyOverview(props: { formik: FormikProps<CompanyInfo> }) {
         <TextOutlineField
           fullWidth
           name="company_address.zip_code"
-          label="Zip Code"
+          label={TranslateHelper.zipCode()}
           value={formik.values.company_address?.zip_code}
           onChange={formik.handleChange}
         />

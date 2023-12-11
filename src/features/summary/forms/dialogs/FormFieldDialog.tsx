@@ -16,6 +16,7 @@ import FieldDefaultValue from "../components/FieldDefaultValue";
 import TextOutlineField from "@Components/TextOutlineField";
 import { formFieldValidator } from "../validator/form_validator";
 import VisibilityComp from "@Components/VisibilityComp";
+import TranslateHelper from "@Local/index";
 
 interface FormFieldDialogProps {
   field?: Field;
@@ -61,14 +62,14 @@ function FormFieldDialog(props: FormFieldDialogProps) {
 
   return (
     <>
-      <DialogCustomTitle title="Form Field" />
+      <DialogCustomTitle title={TranslateHelper.formField()} />
       <DialogContent>
         <Box mt={1} p={1} sx={{ backgroundColor: "white" }}>
           <Grid container columnSpacing={1}>
             <Grid item xs={12}>
               <SelectFormFieldType
                 fullWidth
-                label="Field Type"
+                label={TranslateHelper.fieldType()}
                 value={formik.values.field_type}
                 helperText={
                   formik.touched.field_type && formik.errors.field_type
@@ -85,7 +86,7 @@ function FormFieldDialog(props: FormFieldDialogProps) {
             <Grid item xs={12}>
               <TextOutlineField
                 fullWidth
-                label="Field Label"
+                label={TranslateHelper.fieldLabel()}
                 name="label"
                 helperText={formik.touched.label && formik.errors.label}
                 error={Boolean(formik.touched.label && formik.errors.label)}
@@ -98,7 +99,7 @@ function FormFieldDialog(props: FormFieldDialogProps) {
               <Grid item xs={12}>
                 <TextOutlineField
                   fullWidth
-                  label="Field Description"
+                  label={TranslateHelper.fieldDescription()}
                   name="description"
                   helperText={
                     formik.touched.description && formik.errors.description
@@ -124,7 +125,7 @@ function FormFieldDialog(props: FormFieldDialogProps) {
                     formik.setFieldValue("mandantory", checked)
                   }
                   control={<Checkbox size="small" />}
-                  label={"Is Required field"}
+                  label={TranslateHelper.isRequiredField()}
                 />
               </Grid>
             </VisibilityComp>
@@ -137,7 +138,7 @@ function FormFieldDialog(props: FormFieldDialogProps) {
             height={30}
             fontWeight="normal"
             color="black"
-            children="Close"
+            children={TranslateHelper.close()}
             variant="outlined"
             onClick={() => {
               closeDialog();
@@ -147,7 +148,7 @@ function FormFieldDialog(props: FormFieldDialogProps) {
             height={30}
             fontWeight="normal"
             color="white"
-            children="Save"
+            children={TranslateHelper.save()}
             onClick={() => formik.handleSubmit()}
           />,
         ]}

@@ -10,6 +10,7 @@ import { ReactNode, useEffect, useState } from "react";
 import RegionRepository from "@Repo/region_repository";
 import { useSelector } from "react-redux";
 import { RootState } from "@Store/index";
+import { useUser } from "@Features/summary/company/helper/company_helper";
 
 /// Country select props
 interface CountrySelectProps {
@@ -27,6 +28,10 @@ function CountrySelect(props: CountrySelectProps) {
 
   /// Region store
   const { countries } = useSelector((state: RootState) => state.region);
+
+  /// User store
+  const { language } = useUser();
+  const lng = language?.language_code ?? "en";
 
   /// Region repository
   const regionRepo = new RegionRepository();
@@ -67,7 +72,7 @@ function CountrySelect(props: CountrySelectProps) {
       options={options}
       loading
       onChange={onChangeHandle}
-      getOptionLabel={(option) => option.name ?? ""}
+      getOptionLabel={(option) => option.translations?.[lng] ?? ""}
       isOptionEqualToValue={(option, value) => option?.id === value?.id}
       renderInput={(props) => {
         return (

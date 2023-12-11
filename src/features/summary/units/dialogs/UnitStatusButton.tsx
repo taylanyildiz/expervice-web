@@ -1,4 +1,5 @@
 import PrimaryButton from "@Components/PrimaryButton";
+import TranslateHelper from "@Local/index";
 import Unit from "@Models/units/unit";
 import { Grid, Typography } from "@mui/material";
 import { FormikProps } from "formik";
@@ -11,7 +12,7 @@ function UnitStatusButton(props: { formik: FormikProps<Unit> }) {
   const [status, setStatus] = useState<boolean>(formik.values.status);
 
   /// Title & Desc state
-  const [title, setTitle] = useState<string>("Close Unit");
+  const [title, setTitle] = useState<string>(TranslateHelper.closeUnit());
   const [desc, setDesc] = useState<string | null>(null);
 
   /// Initialize component
@@ -28,14 +29,14 @@ function UnitStatusButton(props: { formik: FormikProps<Unit> }) {
   const initTitles = () => {
     if (status === formik.values.status) {
       setDesc(null);
-      if (status) return setTitle("Close Unit");
-      return setTitle("Open Unit");
+      if (status) return setTitle(TranslateHelper.closeUnit());
+      return setTitle(TranslateHelper.openUnit());
     }
-    setTitle("Cancel");
+    setTitle(TranslateHelper.cancel());
     if (status && !formik.values.status) {
-      return setDesc("Unit will opened on save");
+      return setDesc(TranslateHelper.unitWillOpenedOnSave());
     }
-    setDesc("Unit will closed on save");
+    setDesc(TranslateHelper.unitWillClosedOnSave());
   };
 
   /// Click handle

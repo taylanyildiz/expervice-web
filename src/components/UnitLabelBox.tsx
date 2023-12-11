@@ -1,3 +1,4 @@
+import { useUser } from "@Features/summary/company/helper/company_helper";
 import UnitLabel from "@Models/units/unit_label";
 import { Box, Typography } from "@mui/material";
 
@@ -8,8 +9,12 @@ interface UnitLabelBoxProps {
 function UnitLabelBox(props: UnitLabelBoxProps) {
   const { label } = props;
 
+  /// user store
+  const { language } = useUser();
+  const lng = language?.language_code ?? "en";
+
   const color = label.hex_code;
-  const name = label.name;
+  const name = label.translations?.name?.[lng];
 
   return (
     <Box

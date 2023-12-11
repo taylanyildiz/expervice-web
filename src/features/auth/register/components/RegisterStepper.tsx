@@ -7,6 +7,7 @@ import RegisterContact from "./RegisterContact";
 import RegisterBilling from "./RegisterBilling";
 import RegisterPassword from "./RegisterPassword";
 import { useRegister } from "@Utils/hooks/register_hook";
+import TranslateHelper from "@Local/index";
 
 function RegisterStepper() {
   /// Register hook
@@ -36,9 +37,9 @@ function RegisterStepper() {
       </Grid>
       <Grid item xs={12}>
         <Typography>
-          Already an existing customer?{" "}
+          {TranslateHelper.alreadyExistCustomer()}{" "}
           <b onClick={onClickLoginHandle} className="bold-text">
-            Log in
+            {TranslateHelper.login()}
           </b>
         </Typography>
       </Grid>
