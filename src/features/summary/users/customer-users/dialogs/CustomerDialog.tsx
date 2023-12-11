@@ -23,6 +23,7 @@ import VisibilityComp from "@Components/VisibilityComp";
 import Colors from "@Themes/colors";
 import CustomerForms from "./CustomerForms";
 import CustomerUnits from "./CustomerUnits";
+import TranslateHelper from "@Local/index";
 
 function CustomerDialog(props: { onDone?: (customer: Customer) => void }) {
   const { onDone } = props;
@@ -30,6 +31,11 @@ function CustomerDialog(props: { onDone?: (customer: Customer) => void }) {
   /// Customer hook
   const { customer } = useCustomer();
   const isEdit = Boolean(customer);
+
+  /// Dialog title
+  const title = isEdit
+    ? TranslateHelper.customerUserEdit()
+    : TranslateHelper.customerUserCreate();
 
   /// Customer repository
   const customerRepo = new CustomerUserRepository();
@@ -124,8 +130,8 @@ function CustomerDialog(props: { onDone?: (customer: Customer) => void }) {
   const onChangedAction = async (type: EActionType) => {
     if (type === EActionType.Delete) {
       const confirm = await openConfirm(
-        "Delete Customer",
-        "Are you sure to delete customer ?"
+        TranslateHelper.deleteCustomerUser(),
+        TranslateHelper.sureDeleteCustomerUser()
       );
       if (confirm) {
         const result = await openLoading(async () => {
@@ -141,7 +147,7 @@ function CustomerDialog(props: { onDone?: (customer: Customer) => void }) {
 
   return (
     <>
-      <DialogCustomTitle title="Customer Contact" />
+      <DialogCustomTitle title={title} />
       <VisibilityComp visibility={anyUpdate}>
         <Box pl={1} m={0} sx={{ backgroundColor: Colors.warning }}>
           <Typography
@@ -156,21 +162,21 @@ function CustomerDialog(props: { onDone?: (customer: Customer) => void }) {
           <TabBar
             tabs={[
               {
-                title: "Contact Information",
+                title: TranslateHelper.contactInformation(),
                 panel: <CustomerContactInformation formik={formik} />,
               },
               {
-                title: "Security & Login",
+                title: TranslateHelper.securityLogin(),
                 panel: <CustomerSecurity formik={formik} />,
               },
               {
                 visibility: isEdit,
-                title: "Forms",
+                title: TranslateHelper.forms(),
                 panel: <CustomerForms />,
               },
               {
                 visibility: isEdit,
-                title: "Units",
+                title: TranslateHelper.units(),
                 panel: <CustomerUnits />,
               },
             ]}

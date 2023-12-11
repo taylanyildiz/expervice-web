@@ -1,3 +1,4 @@
+import { useUser } from "@Features/summary/company/helper/company_helper";
 import UserRole from "@Models/user_role";
 import ConstantRepository from "@Repo/constant_repository";
 import { RootState } from "@Store/index";
@@ -41,6 +42,10 @@ function SelectUserRole(props: SelectUserRoleProps) {
     props;
   /// Constant store
   const { userRoles } = useSelector((state: RootState) => state.constant);
+
+  /// User store
+  const { language } = useUser();
+  const lng = language?.language_code ?? "en";
 
   /// Constant repo
   const constantRepo = new ConstantRepository();
@@ -102,8 +107,10 @@ function SelectUserRole(props: SelectUserRoleProps) {
           </FormControl>
         );
       }}
-      groupBy={(option) => option.role_type?.role_type ?? ""}
-      getOptionLabel={(option) => option.role ?? ""}
+      groupBy={(option) =>
+        option.role_type?.translations?.role_type?.[lng] ?? ""
+      }
+      getOptionLabel={(option) => option.translations?.role?.[lng] ?? ""}
       isOptionEqualToValue={(option, value) => option?.id === value?.id}
       onChange={(_, value) => onChanged(value)}
       renderGroup={(params) => (

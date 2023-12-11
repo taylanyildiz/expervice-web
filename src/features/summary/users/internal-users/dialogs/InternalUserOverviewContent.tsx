@@ -4,6 +4,7 @@ import InternalUser from "@Models/internal-user/internal_user";
 import { Box, Grid, Typography } from "@mui/material";
 import { FormikProps } from "formik";
 import InternalUserStatusButton from "./InternalUserStatusButton";
+import TranslateHelper from "@Local/index";
 
 function Header(props: { formik: FormikProps<InternalUser> }) {
   const { formik } = props;
@@ -32,7 +33,7 @@ function OverViewContent(props: { formik: FormikProps<InternalUser> }) {
               <TextOutlineField
                 fullWidth
                 name="first_name"
-                label="First Name"
+                label={TranslateHelper.firstName()}
                 value={formik.values.first_name}
                 helperText={
                   formik.touched.first_name && formik.errors.first_name
@@ -47,7 +48,7 @@ function OverViewContent(props: { formik: FormikProps<InternalUser> }) {
               <TextOutlineField
                 fullWidth
                 name="last_name"
-                label="Last Name"
+                label={TranslateHelper.lastName()}
                 value={formik.values.last_name}
                 helperText={formik.touched.last_name && formik.errors.last_name}
                 error={Boolean(
@@ -61,7 +62,7 @@ function OverViewContent(props: { formik: FormikProps<InternalUser> }) {
                 fullWidth
                 name="email"
                 type="email"
-                label="Email"
+                label={TranslateHelper.email()}
                 value={formik.values.email}
                 helperText={formik.touched.email && formik.errors.email}
                 error={Boolean(formik.touched.email && formik.errors.email)}
@@ -73,7 +74,7 @@ function OverViewContent(props: { formik: FormikProps<InternalUser> }) {
                 fullWidth
                 name="phone"
                 type="tel"
-                label="Phone"
+                label={TranslateHelper.phoneNumber()}
                 value={formik.values.phone}
                 helperText={formik.touched.phone && formik.errors.phone}
                 error={Boolean(formik.touched.phone && formik.errors.phone)}
@@ -83,7 +84,7 @@ function OverViewContent(props: { formik: FormikProps<InternalUser> }) {
             <Grid item xs={5}>
               <SelectUserRole
                 fullWidth
-                label="Role"
+                label={TranslateHelper.role()}
                 roleType={3}
                 value={formik.values.role_id}
                 helperText={formik.touched.role_id && formik.errors.role_id}

@@ -862,4 +862,52 @@ export default class TranslateHelper {
   public static contactInformation(): string {
     return "contactInformation".tr();
   }
+  public static subscriptionWillExpireOn(props: { date: any }): string {
+    return "subscriptionWillExpireOn".tr(props);
+  }
+  public static role(): string {
+    return "role".tr();
+  }
+  public static internalUserEdit(): string {
+    return "internalUserEdit".tr();
+  }
+  public static internalUserCreate(): string {
+    return "internalUserCreate".tr();
+  }
+  public static deleteInternalUser(): string {
+    return "deleteInternalUser".tr();
+  }
+  public static sureDeleteInternalUser(): string {
+    return "sureDeleteInternalUser".tr();
+  }
+  public static permissions(): string {
+    return "permissions".tr();
+  }
+  public static technicianUserEdit(): string {
+    return "technicianUserEdit".tr();
+  }
+  public static technicianUserCreate(): string {
+    return "technicianUserCreate".tr();
+  }
+  public static displayName(): string {
+    return "displayName".tr();
+  }
+  public static cellPhone(): string {
+    return "cellPhone".tr();
+  }
+  public static customerUsersFilter(): string {
+    return "customerUsersFilter".tr();
+  }
+  public static customerUserCreate(): string {
+    return "customerUserCreate".tr();
+  }
+  public static customerUserEdit(): string {
+    return "customerUserEdit".tr();
+  }
+  public static deleteCustomerUser(): string {
+    return "deleteCustomerUser".tr();
+  }
+  public static sureDeleteCustomerUser(): string {
+    return "sureDeleteCustomerUser".tr();
+  }
 }

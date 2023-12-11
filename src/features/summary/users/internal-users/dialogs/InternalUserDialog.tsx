@@ -27,6 +27,7 @@ import {
 } from "../helper/internal_user_helper";
 import InternalUserInfo from "./InternalUserInfo";
 import Colors from "@Themes/colors";
+import TranslateHelper from "@Local/index";
 
 function InternalUserDialog() {
   /// Internal user store
@@ -47,7 +48,9 @@ function InternalUserDialog() {
   const dispatch: AppDispatch = useDispatch<AppDispatch>();
 
   /// Dialog title depends on [isEdit]
-  const title = isEdit ? "Internal User Edit" : "Internal User Create";
+  const title = isEdit
+    ? TranslateHelper.internalUserEdit()
+    : TranslateHelper.internalUserCreate();
 
   /// Action type state
   const [actionType, setActionType] = useState<number | null>(null);
@@ -56,8 +59,8 @@ function InternalUserDialog() {
   const onChangedAction = async (type: EActionType) => {
     if (type === EActionType.Delete) {
       const confirm = await openConfirm(
-        "Delete Internal User",
-        "Are you sure to delete user?"
+        TranslateHelper.deleteInternalUser(),
+        TranslateHelper.sureDeleteInternalUser()
       );
       if (confirm) {
         const result = await openLoading(async () => {
@@ -182,15 +185,15 @@ function InternalUserDialog() {
           <TabBar
             tabs={[
               {
-                title: "Overview",
+                title: TranslateHelper.overView(),
                 panel: <OverViewContent formik={formik} />,
               },
               {
-                title: "Permissions",
+                title: TranslateHelper.permissions(),
                 panel: <InternalUserPermissionsContent formik={formik} />,
               },
               {
-                title: "Security & Login",
+                title: TranslateHelper.securityLogin(),
                 panel: <InternalUserSecurityContent formik={formik} />,
               },
             ]}

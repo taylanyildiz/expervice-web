@@ -12,6 +12,7 @@ import PrimaryButton from "@Components/PrimaryButton";
 import AddIcon from "@mui/icons-material/Add";
 import { useUnitDialog } from "@Features/summary/units/helper/unit_helper";
 import RefreshIcon from "@mui/icons-material/Refresh";
+import TranslateHelper from "@Local/index";
 
 function CustomerUnits() {
   /// Customer store
@@ -68,7 +69,12 @@ function CustomerUnits() {
   return (
     <>
       <Stack direction="row" alignItems="center">
-        <Typography flex={1} variant="h1" fontSize={16} children="Units" />
+        <Typography
+          flex={1}
+          variant="h1"
+          fontSize={16}
+          children={TranslateHelper.units()}
+        />
         <IconButton
           onClick={() => setPaginationMode({ page: 0, pageSize: 10 })}
         >
@@ -77,7 +83,7 @@ function CustomerUnits() {
         <PrimaryButton
           prefix={<AddIcon />}
           variant="contained"
-          children="Add Unit"
+          children={TranslateHelper.addUnit()}
           color="white"
           fontWeight="normal"
           onClick={handleCreateUnit}

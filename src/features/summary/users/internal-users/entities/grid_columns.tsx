@@ -2,12 +2,13 @@ import StatusBox from "@Components/StatusBox";
 import InternalUser from "@Models/internal-user/internal_user";
 import { GridColDef } from "@mui/x-data-grid";
 import { useInternalDialog } from "../helper/internal_user_helper";
+import TranslateHelper from "@Local/index";
 
 /// Grid columns
 const columns: GridColDef<InternalUser>[] = [
   {
     field: "name",
-    headerName: "Name",
+    headerName: TranslateHelper.name(),
     width: 300,
     headerAlign: "left",
     renderCell: (params) => {
@@ -24,7 +25,7 @@ const columns: GridColDef<InternalUser>[] = [
   },
   {
     field: "role",
-    headerName: "Role",
+    headerName: TranslateHelper.role(),
     width: 200,
     valueGetter: (params) => {
       const row = params.row;
@@ -34,7 +35,7 @@ const columns: GridColDef<InternalUser>[] = [
   },
   {
     field: "login",
-    headerName: "Login",
+    headerName: TranslateHelper.login(),
     minWidth: 140,
     renderCell: (params) => {
       const row = params.row;
@@ -45,12 +46,12 @@ const columns: GridColDef<InternalUser>[] = [
   },
   {
     field: "email",
-    headerName: "Email",
+    headerName: TranslateHelper.email(),
     width: 300,
   },
   {
     field: "phone",
-    headerName: "Phone",
+    headerName: TranslateHelper.phone(),
     width: 300,
   },
 ];

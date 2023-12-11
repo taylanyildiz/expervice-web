@@ -3,6 +3,7 @@ import InternalUserPermission from "./InternalUserPermission";
 import SelectUserRole from "@Components/SelectUserRole";
 import { FormikProps } from "formik";
 import InternalUser from "@Models/internal-user/internal_user";
+import TranslateHelper from "@Local/index";
 
 function InternalUserPermissionsContent(props: {
   formik: FormikProps<InternalUser>;
@@ -15,7 +16,7 @@ function InternalUserPermissionsContent(props: {
       <Grid item xs={4} mt={2}>
         <SelectUserRole
           fullWidth
-          label="Role"
+          label={TranslateHelper.role()}
           roleType={3}
           value={formik.values.role_id}
           helperText={formik.touched.role_id && formik.errors.role_id}
@@ -37,7 +38,11 @@ function Header() {
     <Box>
       <Grid container>
         <Grid item flexGrow={1}>
-          <Typography variant="h1" fontSize={15} children="Permissions" />
+          <Typography
+            variant="h1"
+            fontSize={15}
+            children={TranslateHelper.permissions()}
+          />
         </Grid>
       </Grid>
     </Box>

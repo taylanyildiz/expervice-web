@@ -3,6 +3,7 @@ import FormCustomer from "@Models/form/form_customer";
 import { IconButton, Stack } from "@mui/material";
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 import VisibilityIcon from "@mui/icons-material/Visibility";
+import TranslateHelper from "@Local/index";
 
 const customerFormColumns = (props: {
   onPDF: (id: number) => void;
@@ -15,31 +16,31 @@ const customerFormColumns = (props: {
   },
   {
     field: "job_sub_type",
-    headerName: "Job Sub Type",
+    headerName: TranslateHelper.jobSubType(),
     valueGetter: (params) => params.row.job_sub_type?.name,
     flex: 1,
   },
   {
     field: "unit_sub_type",
-    headerName: "Unit Sub Type",
+    headerName: TranslateHelper.unitSubType(),
     valueGetter: (params) => params.row.unit_sub_type?.name,
     flex: 1,
   },
   {
     field: "current_job_status",
-    headerName: "Current Job Status",
+    headerName: TranslateHelper.currentJobStatus(),
     valueGetter: (params) => params.row.current_job_status?.name,
     flex: 1,
   },
   {
     field: "next_job_status",
-    headerName: "Next Job Status",
+    headerName: TranslateHelper.nextJobStatus(),
     valueGetter: (params) => params.row.next_job_status?.name,
     flex: 1,
   },
   {
     field: "",
-    headerName: "Actions",
+    headerName: "",
     sortable: false,
     renderCell: (params) => {
       return (

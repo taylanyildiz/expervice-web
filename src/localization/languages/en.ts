@@ -288,6 +288,22 @@ const en: ObjectString = {
     deleteTechnician: "Delete Technician",
     sureDeleteTechnician: "Are you sure to delete technician?",
     contactInformation: "Contact Information",
+    subscriptionWillExpireOn: "Your subscription will expire on {date}",
+    role: "Role",
+    internalUserEdit: "Internal User Edit",
+    internalUserCreate: "Internal User Create",
+    deleteInternalUser: "Delete Internal User",
+    sureDeleteInternalUser: "Are you sure to delete internal user?",
+    permissions: "Permissions",
+    technicianUserEdit: "Technician User Edit",
+    technicianUserCreate: "Technician User Create",
+    displayName: "Display Name",
+    cellPhone: "Cell Phone",
+    customerUsersFilter: "Customer Users Filter",
+    customerUserCreate: "Customer User Create",
+    customerUserEdit: "Customer User Edit",
+    deleteCustomerUser: "Delete Customer User",
+    sureDeleteCustomerUser: "Are you sure to delete customer?"
 }
 
 export default en;

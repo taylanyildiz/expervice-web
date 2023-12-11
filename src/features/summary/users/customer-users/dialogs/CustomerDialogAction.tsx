@@ -5,6 +5,7 @@ import PrimaryButton from "@Components/PrimaryButton";
 import { Avatar, Grid, Typography } from "@mui/material";
 import { caption, dateToFormat } from "@Utils/functions";
 import { EActionType } from "@Components/dialogs/DialogCustomActions";
+import TranslateHelper from "@Local/index";
 
 interface CustomerDialogActionProps {
   onChanged: (type: EActionType) => void;
@@ -32,7 +33,7 @@ function CustomerDialogAction(props: CustomerDialogActionProps) {
               height={30}
               fontWeight="normal"
               color="black"
-              children="Delete"
+              children={TranslateHelper.delete()}
               variant="outlined"
               onClick={() => onChangedAction(EActionType.Delete)}
             />
@@ -42,21 +43,21 @@ function CustomerDialogAction(props: CustomerDialogActionProps) {
           height={30}
           fontWeight="normal"
           color="white"
-          children="Save"
+          children={TranslateHelper.save()}
           onClick={() => onChangedAction(EActionType.Save)}
         />,
         <PrimaryButton
           height={30}
           fontWeight="normal"
           color="white"
-          children="Save & New"
+          children={TranslateHelper.saveNew()}
           onClick={() => onChangedAction(EActionType.SaveNew)}
         />,
         <PrimaryButton
           height={30}
           fontWeight="normal"
           color="white"
-          children="Save & Close"
+          children={TranslateHelper.saveClose()}
           onClick={() => onChangedAction(EActionType.SaveClose)}
         />,
       ]}
@@ -69,7 +70,9 @@ function CustomerDialogAction(props: CustomerDialogActionProps) {
                 variant="body1"
                 fontSize={12}
                 color="grey"
-                children={`Created by ${creatorDisplayName}`}
+                children={TranslateHelper.createdBy({
+                  name: creatorDisplayName,
+                })}
               />
             </Grid>
             <Grid item>

@@ -38,10 +38,9 @@ function SubscriptionCancelBox() {
     <Stack direction="row" justifyContent="space-between" alignItems="center">
       <Stack>
         <Typography
-          children={`Your subscription will expire on ${dateToFormat(
-            cancelDate,
-            true
-          )}`}
+          children={TranslateHelper.subscriptionWillExpireOn({
+            date: dateToFormat(cancelDate, true),
+          })}
         />
         <Typography
           children={TranslateHelper.daysLeftSubscription({ day: difDay })}

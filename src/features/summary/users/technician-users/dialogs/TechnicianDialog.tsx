@@ -40,7 +40,9 @@ function TechnicianDialog() {
   const { closeDialog, openConfirm, openLoading } = useDialog();
 
   /// Title of dialog
-  const title: string = isEdit ? "Technician Edit" : "Technician Create";
+  const title: string = isEdit
+    ? TranslateHelper.technicianUserEdit()
+    : TranslateHelper.technicianUserCreate();
 
   /// Action type state
   const [actionType, setActionType] = useState<EActionType | null>(null);

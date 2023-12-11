@@ -1,5 +1,7 @@
 import SelectRegions from "@Components/SelectRegions";
 import VisibilityComp from "@Components/VisibilityComp";
+import { useUser } from "@Features/summary/company/helper/company_helper";
+import TranslateHelper from "@Local/index";
 import InternalUser from "@Models/internal-user/internal_user";
 import PermissionSubResource from "@Models/permission/permission_sub_resource";
 import RolePermission from "@Models/permission/role_permission";
@@ -19,6 +21,10 @@ function InternalUserPermission(props: InternalUserPermissionProps) {
 
   /// Constat store
   const { permissions } = useSelector((state: RootState) => state.constant);
+
+  /// User store
+  const { language } = useUser();
+  const lng = language?.language_code ?? "en";
 
   /// Selecteds sub-resource [sub-permission]
   const selecteds = formik.values.permission_sub_resources ?? [];
@@ -106,7 +112,7 @@ function InternalUserPermission(props: InternalUserPermissionProps) {
                               size="small"
                             />
                           }
-                          label={e.name}
+                          label={e.translations?.name?.[lng]}
                         />
                       </Grid>
                       <VisibilityComp visibility={checkRegionVisibility(e)}>
@@ -114,7 +120,7 @@ function InternalUserPermission(props: InternalUserPermissionProps) {
                           <SelectRegions
                             key={index}
                             fullWidth
-                            label="Regions"
+                            label={TranslateHelper.regions()}
                             values={formik.values.regions}
                             helperText={
                               formik.touched.regions && formik.errors.regions
