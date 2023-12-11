@@ -13,6 +13,7 @@ import LogoutIcon from "@mui/icons-material/Logout";
 import AccountBoxIcon from "@mui/icons-material/AccountBox";
 import GroupOutlinedIcon from "@mui/icons-material/GroupOutlined";
 import EngineeringOutlinedIcon from "@mui/icons-material/EngineeringOutlined";
+import LanguageIcon from "@mui/icons-material/Language";
 import ERouter from "@Routes/router_enum";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
@@ -34,12 +35,14 @@ import MenuIcon from "@mui/icons-material/Menu";
 import {
   useAccount,
   useCompanyDialog,
+  useUser,
 } from "@Features/summary/company/helper/company_helper";
 import { useDialog } from "@Utils/hooks/dialog_hook";
 import VisibilityComp from "@Components/VisibilityComp";
 import theme from "@Themes/index";
 import { setSummarySideBar } from "@Store/summary_store";
 import TranslateHelper from "@Local/index";
+import { useSummaryDialog } from "../helper/summary_layout_helper";
 
 function SummaryAppBar() {
   /// Navigate
@@ -48,6 +51,11 @@ function SummaryAppBar() {
   /// Account store
   const { user, isInternal, isOwner } = useAccount();
   const displayName = `${user?.first_name} ${user?.last_name}`;
+
+  /// User store
+  const { language } = useUser();
+  const lng = language?.language_code ?? "en";
+  const lngName = language?.translations?.name?.[lng];
 
   /// Dialog hook
   const { openConfirm } = useDialog();
@@ -75,6 +83,7 @@ function SummaryAppBar() {
   const { openFormDialog } = useFormDialog();
   const { openProfileDialog } = useProfileDialog();
   const { openCompanyDialog } = useCompanyDialog();
+  const { openLanguageDialog } = useSummaryDialog();
 
   return (
     <AppBar
@@ -288,6 +297,12 @@ function SummaryAppBar() {
                     prefix: <ApartmentIcon />,
                     title: TranslateHelper.companySettings(),
                     onClick: openCompanyDialog,
+                  },
+                  {
+                    prefix: <LanguageIcon />,
+                    title: TranslateHelper.language(),
+                    subTitle: lngName,
+                    onClick: openLanguageDialog,
                   },
                   {
                     prefix: <LogoutIcon />,

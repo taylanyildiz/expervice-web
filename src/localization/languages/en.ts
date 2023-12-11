@@ -347,6 +347,7 @@ const en: ObjectString = {
     formCreate: "Form Create",
     formContent: "Form Content",
     payment: "Payment",
+    language: "Language",
 }
 
 export default en;

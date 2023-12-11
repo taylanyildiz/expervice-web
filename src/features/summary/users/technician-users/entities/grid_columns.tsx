@@ -4,7 +4,7 @@ import { GridColDef } from "@mui/x-data-grid";
 import { useTechnicianDialog } from "../helper/technician_helper";
 import TranslateHelper from "@Local/index";
 
-const columns: GridColDef<TechnicianUser>[] = [
+const columns = (): GridColDef<TechnicianUser>[] => [
   {
     field: "name",
     headerName: "Name",

@@ -7,7 +7,7 @@ import { useCustomer } from "../helpers/customer_user_helper";
 import TranslateHelper from "@Local/index";
 
 /// Columns
-const customerUnitColumns: GridColDef<Unit>[] = [
+const customerUnitColumns = (): GridColDef<Unit>[] => [
   {
     field: "name",
     headerName: TranslateHelper.name(),

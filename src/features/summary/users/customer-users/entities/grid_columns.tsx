@@ -4,7 +4,7 @@ import { useCustomerDialog } from "../helpers/customer_user_helper";
 import StatusBox from "@Components/StatusBox";
 import TranslateHelper from "@Local/index";
 
-const columns: GridColDef<Customer>[] = [
+const columns = (): GridColDef<Customer>[] => [
   {
     field: "display_name",
     headerName: TranslateHelper.displayName(),

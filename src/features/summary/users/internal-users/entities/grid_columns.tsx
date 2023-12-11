@@ -5,7 +5,7 @@ import { useInternalDialog } from "../helper/internal_user_helper";
 import TranslateHelper from "@Local/index";
 
 /// Grid columns
-const columns: GridColDef<InternalUser>[] = [
+const columns = (): GridColDef<InternalUser>[] => [
   {
     field: "name",
     headerName: TranslateHelper.name(),

@@ -4,7 +4,7 @@ import { store } from "@Store/index";
 import { setJobId } from "@Store/job_store";
 import { GridColDef } from "@mui/x-data-grid";
 
-const columns: GridColDef<Job>[] = [
+const columns = (): GridColDef<Job>[] => [
   {
     field: "id",
     align: "right",

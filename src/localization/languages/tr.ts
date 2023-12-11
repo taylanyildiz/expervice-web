@@ -347,6 +347,7 @@ const tr: ObjectString = {
     formCreate: "Form Oluştur",
     formContent: "Form İçeriği",
     payment: "Ödeme",
+    language: "Dil",
 }
 
 export default tr;

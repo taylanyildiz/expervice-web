@@ -10,7 +10,7 @@ import { store } from "@Store/index";
 import { setFormId } from "@Store/form_store";
 import TranslateHelper from "@Local/index";
 
-const columns: GridColDef<Form>[] = [
+const columns = (): GridColDef<Form>[] => [
   {
     field: "name",
     headerName: TranslateHelper.formName(),

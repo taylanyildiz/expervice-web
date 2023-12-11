@@ -114,7 +114,7 @@ class UserRepository extends BaseRepository {
 
     public async updateUserLanguage(lang: Language) {
         const path = User.languages;
-        const response = await this.post(path, { lang_id: lang.id });
+        const response = await this.put(path, { lang_id: lang.id });
         const success = response.success;
         if (success) {
             store.dispatch(setLanguage(lang));

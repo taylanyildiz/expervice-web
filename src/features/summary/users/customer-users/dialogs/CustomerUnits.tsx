@@ -94,7 +94,7 @@ function CustomerUnits() {
           disableColumnMenu
           sortingMode="server"
           paginationMode="server"
-          columns={customerUnitColumns}
+          columns={customerUnitColumns()}
           rows={rows}
           rowCount={count}
           pageSizeOptions={[10, 50, 100]}

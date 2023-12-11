@@ -1039,4 +1039,7 @@ export default class TranslateHelper {
   public static payment(): string {
     return "payment".tr();
   }
+  public static language(): string {
+    return "language".tr();
+  }
 }
