@@ -1042,4 +1042,44 @@ export default class TranslateHelper {
   public static language(): string {
     return "language".tr();
   }
+  public static signAuthority(): string {
+    return "signAuthority".tr();
+  }
+  public static signAuthorityForm(): string {
+    return "signAuthorityForm".tr();
+  }
+  public static signForm(): string {
+    return "signForm".tr();
+  }
+  public static sureSignForm(): string {
+    return "sureSignForm".tr();
+  }
+  public static clear(): string {
+    return "clear".tr();
+  }
+  public static signatureEmpty(): string {
+    return "signatureEmpty".tr();
+  }
+  public static signatureSuccessMessage(): string {
+    return "signatureSuccessMessage".tr();
+  }
+  public static signature(): string {
+    return "signature".tr();
+  }
+
+  public static approveCustomerSignature(): string {
+    return "approveCustomerSignature".tr();
+  }
+  public static sureApproveCustomerSignature(): string {
+    return "sureApproveCustomerSignature".tr();
+  }
+  public static rejectCustomerSignature(): string {
+    return "rejectCustomerSignature".tr();
+  }
+  public static sureRejectCustomerSignature(): string {
+    return "sureRejectCustomerSignature".tr();
+  }
+  public static customerSignatureWillDelete(): string {
+    return "customerSignatureWillDelete".tr();
+  }
 }

@@ -118,7 +118,7 @@ function CustomerFilterDrawer() {
             />
             <PrimaryButton
               variant="contained"
-              children={TranslateHelper.clearFilter()}
+              children={TranslateHelper.applyFilter()}
               color="white"
               fontWeight="normal"
               onClick={handleApply}

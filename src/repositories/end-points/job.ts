@@ -8,6 +8,7 @@ const Job = {
     customerForm: (id: number) => `/forms/${id}/customer`,
     customerFormSignature: (id: number) => `/forms/${id}/customer-signature`,
     formStatus: (id: number) => `/forms/${id}/status`,
+    signFormAsCustomer: (id: number) => `/forms/${id}/customer-signature`,
 }
 
 export default Job;

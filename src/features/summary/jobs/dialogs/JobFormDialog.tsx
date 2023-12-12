@@ -64,7 +64,7 @@ function JobFormDialog(props: JobFormDialogProps) {
   const jobRepo = new JobRepository();
 
   /// Dialog hook
-  const { openLoading, closeDialog } = useDialog();
+  const { openLoading, closeDialog, openConfirm } = useDialog();
 
   /// Form base64
   const [base64, setBase64] = useState<string | null>(null);
@@ -95,7 +95,7 @@ function JobFormDialog(props: JobFormDialogProps) {
   const handleConfirm = () => {
     switch (form.status) {
       case EFormStatuses.PendingConfirmed:
-        updateStatus(EFormStatuses.Approved);
+        handleApproved();
         break;
       default:
         sendCustomerForm();
@@ -103,8 +103,28 @@ function JobFormDialog(props: JobFormDialogProps) {
     }
   };
 
+  /// Approved signature
+  const handleApproved = async () => {
+    const confirm = await openConfirm(
+      TranslateHelper.approveCustomerSignature(),
+      TranslateHelper.sureApproveCustomerSignature()
+    );
+    if (!confirm) return;
+    updateStatus(EFormStatuses.Approved);
+  };
+
   /// Reject signature
-  const handleReject = () => {
+  const handleReject = async () => {
+    const confirm = await openConfirm(
+      TranslateHelper.rejectCustomerSignature(),
+      <>
+        {TranslateHelper.sureRejectCustomerSignature()}
+        <p style={{ marginTop: "1px" }}>
+          {TranslateHelper.customerSignatureWillDelete()}
+        </p>
+      </>
+    );
+    if (!confirm) return;
     updateStatus(EFormStatuses.Rejected);
   };
 
