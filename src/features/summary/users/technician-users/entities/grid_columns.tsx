@@ -33,7 +33,7 @@ const columns = (): GridColDef<TechnicianUser>[] => [
   },
   {
     field: "signing_authority",
-    headerName: "Sign Authority",
+    headerName: TranslateHelper.signAuthority(),
     width: 150,
     align: "center",
     headerAlign: "center",

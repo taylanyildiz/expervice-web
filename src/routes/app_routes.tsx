@@ -26,6 +26,7 @@ import ERouter from "./router_enum";
 import UserActivation from "@Features/activations/user-activation";
 import { useAccount } from "@Features/summary/company/helper/company_helper";
 import UserRepository from "@Repo/user_repository";
+import FormCustomerSign from "@Features/summary/form-customer-sign";
 
 /// Router Options
 const options = {
@@ -74,6 +75,10 @@ const routes: RouteObject[] = [
   {
     path: "/user/activation",
     element: <UserActivation />,
+  },
+  {
+    path: "/form/customer-signature",
+    element: <FormCustomerSign />,
   },
   {
     path: "/",

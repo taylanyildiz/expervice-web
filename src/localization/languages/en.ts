@@ -348,6 +348,20 @@ const en: ObjectString = {
     formContent: "Form Content",
     payment: "Payment",
     language: "Language",
+    signAuthority: "Sign Authority",
+    signAuthorityForm: "Can the technician sign the forms?",
+    signatureEmpty: "Signature Empty",
+    signForm: "Sign Form",
+    sureSignForm: "Are you sure to sign form?",
+    clear: "Clear",
+    signatureSuccessMessage: "You have successfully signed the form",
+    signature: "Signature",
+    approveCustomerSignature: "Approve Customer Signature",
+    sureApproveCustomerSignature: "Are you sure approve customer signature?",
+    rejectCustomerSignature: "Reject Customer Signature",
+    sureRejectCustomerSignature: "Are you sure reject customer signature?",
+    customerSignatureWillDelete: "Customer Signature will be delete",
+
 }
 
 export default en;

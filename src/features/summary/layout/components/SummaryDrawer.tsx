@@ -4,7 +4,7 @@ import ERouter from "@Routes/router_enum";
 import { RootState } from "@Store/index";
 import { setSummarySideBar } from "@Store/summary_store";
 import theme from "@Themes/index";
-import { Box, Drawer, Stack } from "@mui/material";
+import { Box, Drawer, Stack, useMediaQuery } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import SummarizeIcon from "@mui/icons-material/Summarize";
 import FmdGoodIcon from "@mui/icons-material/FmdGood";
@@ -29,18 +29,16 @@ function SummaryDrawer() {
     dispatch(setSummarySideBar(false));
   };
 
+  /// Is up md
+  const md = useMediaQuery(theme.breakpoints.up("md"));
+
   return (
     <Drawer
       onClose={handleClose}
-      open={summarySidebar}
+      open={!md && summarySidebar}
       anchor="right"
       PaperProps={{
         sx: { width: 150 },
-      }}
-      sx={{
-        [theme.breakpoints.up("md")]: {
-          display: "none",
-        },
       }}
     >
       <Box p={4} display="flex">

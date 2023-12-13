@@ -348,6 +348,19 @@ const tr: ObjectString = {
     formContent: "Form İçeriği",
     payment: "Ödeme",
     language: "Dil",
+    signAuthority: "İmza Yetkisi",
+    signAuthorityForm: "Teknisyen formlara imza atabilsin mi?",
+    signatureEmpty: "İmza Boş",
+    signForm: "Form İmzala",
+    sureSignForm: "Formu imzalamak istediğinize emin misiniz?",
+    clear: "Temizle",
+    signatureSuccessMessage: "Formu başarıyla imzaladınız",
+    signature: "İmza",
+    approveCustomerSignature: "Müşteri İmzasını Onayla",
+    sureApproveCustomerSignature: "Müşteri İmzasını onaylamak istediğinize emin misiniz?",
+    rejectCustomerSignature: "Müşteri İmzasını Reddet",
+    sureRejectCustomerSignature: "Müşteri İmzasını redetmek istediğinize emin misiniz?",
+    customerSignatureWillDelete: "Müşteri İmzası silenecek.",
 }
 
 export default tr;

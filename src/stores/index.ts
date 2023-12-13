@@ -1,4 +1,4 @@
-import { combineReducers, configureStore } from '@reduxjs/toolkit'
+import { Action, combineReducers, configureStore } from '@reduxjs/toolkit'
 import { persistStore, persistReducer, FLUSH, REGISTER, PURGE, PERSIST, PAUSE, REHYDRATE } from 'redux-persist'
 import storage from 'redux-persist/lib/storage'
 import constant from './constant_store';
@@ -44,7 +44,12 @@ const rootPersistConfig = {
 }
 
 /// Persisted Reducer
-const persistedReducer = persistReducer(rootPersistConfig, appReducer);
+const persistedReducer = persistReducer(rootPersistConfig, (state: any, action: Action) => {
+    if (action.type === "account/logout") {
+        state = undefined;
+    }
+    return appReducer(state, action);
+});
 
 /// Redux Store
 export const store = configureStore({

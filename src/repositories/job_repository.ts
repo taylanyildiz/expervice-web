@@ -9,6 +9,7 @@ import JobUpdate from "@Features/summary/jobs/entities/job_update";
 import { EJobStatuses } from "@Features/summary/jobs/entities/job_enums";
 import { setUnit } from "@Store/unit_store";
 import { isAvailableJobStatus } from "@Features/summary/jobs/helper/job_enum_helper";
+import FormCustomerSign from "@Features/summary/form-customer-sign/entities/form_customer_sign";
 
 class JobRepository extends BaseRepository {
     constructor() {
@@ -177,6 +178,20 @@ class JobRepository extends BaseRepository {
             }
         }
         return data;
+    }
+
+    /**
+     * Sign form as customer user
+     * @param id 
+     * @param data first_name | last_name | signature
+     * @returns 
+     */
+    public async signFormAsCusomer(id: number, data: FormCustomerSign): Promise<boolean> {
+        const path = JobConsts.signFormAsCustomer(id);
+        data = { ...data, signature: data.signature?.replace(/^data:image\/png;base64,/, '') }
+        const response = await this.put(path, data);
+        SnackCustomBar.status(response);
+        return response.success;
     }
 }
 

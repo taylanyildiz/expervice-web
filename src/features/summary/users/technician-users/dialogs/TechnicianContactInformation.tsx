@@ -1,6 +1,12 @@
 import StatusBox from "@Components/StatusBox";
 import TechnicianUser from "@Models/technician-user/technician_user";
-import { Box, Grid, Typography } from "@mui/material";
+import {
+  Box,
+  Checkbox,
+  FormControlLabel,
+  Grid,
+  Typography,
+} from "@mui/material";
 import { FormikProps } from "formik";
 import { useTechnician } from "../helper/technician_helper";
 import TechnicianStatusButton from "./TechnicianStatusButton";
@@ -121,6 +127,20 @@ function TechnicianContactInformation(props: TechnicianContactProps) {
             error={Boolean(
               formik.touched.group_role && formik.errors.group_role
             )}
+          />
+        </Grid>
+        <Grid item xs={12}>
+          <Typography
+            variant="h1"
+            fontSize={14}
+            children={TranslateHelper.signAuthority()}
+          />
+          <FormControlLabel
+            onChange={(_, value) => {
+              formik.setFieldValue("signing_authority", value);
+            }}
+            label={TranslateHelper.signAuthorityForm()}
+            control={<Checkbox checked={formik.values.signing_authority} />}
           />
         </Grid>
       </Grid>

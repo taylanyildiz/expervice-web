@@ -266,8 +266,6 @@ const theme = createTheme({
             }
         },
 
-        MuiCheckbox: {},
-
         MuiFormControlLabel: {
             styleOverrides: {
                 label: {
@@ -283,6 +281,8 @@ const theme = createTheme({
                 },
             },
         },
+
+
         // MuiAutocomplete: {
         //     styleOverrides: {
         //         input: {
