@@ -4,38 +4,25 @@ import TranslateHelper from "@Local/index";
 import ERouter from "@Routes/router_enum";
 import { RootState } from "@Store/index";
 import { setCommonSideBar } from "@Store/summary_store";
+import { setLanguage } from "@Store/user_store";
 import Colors from "@Themes/colors";
 import theme from "@Themes/index";
-import { Drawer, Stack } from "@mui/material";
+import { Drawer, Stack, useMediaQuery } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 
-/// Links
-const links: { to: string; title: string }[] = [
-  {
-    title: TranslateHelper.product(),
-    to: ERouter.Product,
-  },
-  {
-    title: TranslateHelper.pricing(),
-    to: ERouter.Pricing,
-  },
-  {
-    title: TranslateHelper.resources(),
-    to: ERouter.Resources,
-  },
-  {
-    title: TranslateHelper.support(),
-    to: ERouter.Support,
-  },
-  {
-    title: TranslateHelper.login(),
-    to: ERouter.Login,
-  },
-];
+type LinkType = {
+  to?: string;
+  title: string;
+  children?: any[];
+  onClick?: () => void;
+};
 
 function SummaryDrawer() {
   /// Summary store
   const { commonSideBar } = useSelector((state: RootState) => state.summary);
+
+  /// Langauges from Constant Store
+  const { languages } = useSelector((state: RootState) => state.constant);
 
   /// Dispatch
   const dispatch = useDispatch();
@@ -45,17 +32,54 @@ function SummaryDrawer() {
     dispatch(setCommonSideBar(false));
   };
 
+  /// Links
+  const links: LinkType[] = [
+    {
+      title: TranslateHelper.product(),
+      to: ERouter.Product,
+      onClick: handleClose,
+    },
+    {
+      title: TranslateHelper.pricing(),
+      to: ERouter.Pricing,
+      onClick: handleClose,
+    },
+    {
+      title: TranslateHelper.resources(),
+      to: ERouter.Resources,
+      onClick: handleClose,
+    },
+    {
+      title: TranslateHelper.support(),
+      to: ERouter.Support,
+      onClick: handleClose,
+    },
+    {
+      title: TranslateHelper.languages(),
+      children: languages.map((e) => ({
+        onClick: () => {
+          dispatch(setLanguage(e));
+        },
+        title: e.native,
+        suffix: e.emoji,
+      })),
+    },
+    {
+      title: TranslateHelper.login(),
+      to: ERouter.Login,
+      onClick: handleClose,
+    },
+  ];
+
+  /// Is up md
+  const md = useMediaQuery(theme.breakpoints.up("md"));
+
   return (
     <Drawer
       anchor="right"
-      open={commonSideBar}
+      open={!md && commonSideBar}
       PaperProps={{
         sx: { width: "100%" },
-      }}
-      sx={{
-        [theme.breakpoints.up("md")]: {
-          display: "none",
-        },
       }}
     >
       <Stack mt={14} direction="column">
@@ -76,11 +100,9 @@ function SummaryDrawer() {
       <Stack px={3} mt={4} spacing={3}>
         {links.map((item, index) => (
           <MenuCustomLink
-            onClick={handleClose}
+            {...item}
             color={Colors.primary}
             key={`menu-item-${index}`}
-            title={item.title}
-            to={item.to}
             fontWeight="bold"
           />
         ))}

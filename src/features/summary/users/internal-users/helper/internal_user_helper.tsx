@@ -91,12 +91,12 @@ export function useInternalUpdate(
 
     const newPermission: InternalUserPermission = {
       role_id: value.role_id!,
-      access_regions: value.regions?.map((e) => e.id!),
+      access_regions: value?.regions?.map((e) => e.id!) ?? [],
       permissions: value.permission_sub_resources?.map((e) => e.id!),
     };
     const oldPermission = {
       role_id: user?.role_id!,
-      access_regions: user?.regions?.map((e) => e.id!),
+      access_regions: user?.regions?.map((e) => e.id!) ?? [],
       permissions: user?.permission_sub_resources?.map((e) => e.id!),
     };
 
