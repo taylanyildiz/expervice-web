@@ -77,7 +77,7 @@ const routes: RouteObject[] = [
     element: <UserActivation />,
   },
   {
-    path: "sign",
+    path: "/form/customer-signature",
     element: <FormCustomerSign />,
   },
   {
