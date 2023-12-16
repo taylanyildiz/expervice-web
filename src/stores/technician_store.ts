@@ -1,4 +1,4 @@
-import { ETechnicianFilterType, ETechnicianUserStatus } from "@Features/summary/users/technician-users/entities/technician_enums";
+import { ETechnicianFilterType } from "@Features/summary/users/technician-users/entities/technician_enums";
 import TechnicianJobsFilter from "@Features/summary/users/technician-users/entities/technician_jobs_filter";
 import JobTechnician from "@Models/job/job_technician";
 import TechnicianFilter from "@Models/technician-user/technician_filter";
@@ -27,12 +27,7 @@ const initialState: Props = {
         limit: 10,
         offset: 0,
         filter_type: ETechnicianFilterType.FirstName,
-        statuses: [
-            ETechnicianUserStatus.Active,
-            ETechnicianUserStatus.Inactive,
-            ETechnicianUserStatus.Invited,
-            ETechnicianUserStatus.NotInvited,
-        ],
+        statuses: [],
         group_roles: [1, 2, 3]
     },
     technicians: { rows: [], count: 0 },
