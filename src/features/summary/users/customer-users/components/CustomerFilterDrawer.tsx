@@ -74,6 +74,7 @@ function CustomerFilterDrawer() {
     <Drawer anchor="right" open={customerFilterDrawer} onClose={handleClose}>
       <Box width={300} height="100%">
         <Stack spacing={1} height={"100%"}>
+          {/* Header */}
           <Stack
             px={1}
             direction="row"
@@ -90,6 +91,7 @@ function CustomerFilterDrawer() {
             </IconButton>
           </Stack>
           <Divider />
+          {/* Content */}
           <Stack
             px={1}
             spacing={1}
@@ -137,6 +139,7 @@ function CustomerFilterDrawer() {
               }}
             />
           </Stack>
+          {/* Actions */}
           <Stack p={1} spacing={1} direction="row" justifyContent="end">
             <PrimaryButton
               variant="outlined"
