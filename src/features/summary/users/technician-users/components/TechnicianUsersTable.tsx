@@ -13,6 +13,7 @@ function TechnicianUsersTable() {
   /// Technician store
   const {
     layzLoading,
+    filter: technicianFilter,
     technicians: { rows, count },
   } = useTechnician();
 
@@ -41,8 +42,12 @@ function TechnicianUsersTable() {
   /// depends on [filter]
   useEffect(() => {
     dispatch(setFilter(filter));
-    technicianRepo.getTechnicians();
   }, [filter]);
+
+  /// Initialize component
+  useEffect(() => {
+    technicianRepo.getTechnicians();
+  }, [technicianFilter]);
 
   return (
     <div className="technicians-grid">

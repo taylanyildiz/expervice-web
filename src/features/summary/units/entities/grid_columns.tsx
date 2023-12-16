@@ -126,8 +126,9 @@ const columns = (): GridColDef<Unit>[] => [
     headerName: TranslateHelper.country(),
     valueGetter: (params) => {
       const row = params.row;
+      const lng = store.getState().user.language?.language_code ?? "en";
       const country = row.country;
-      return country?.name;
+      return country?.translations?.[lng];
     },
   },
 ];

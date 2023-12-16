@@ -288,6 +288,18 @@ const theme = createTheme({
                 },
             },
         },
+
+        MuiAutocomplete: {
+            styleOverrides: {
+                tag: {
+                    fontSize: 13,
+                    borderRadius: 3,
+                    padding: 0,
+                    margin: 1,
+                    height: "auto"
+                },
+            }
+        }
     }
 });
 
