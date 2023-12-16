@@ -11,6 +11,7 @@ import { registerBillingValidation } from "../validator/register_validator";
 import { CardNumberMask, CardYearMask } from "@Components/TextInputMask";
 import { RegisterBilling as RegisterBillingModel } from "../entities";
 import TranslateHelper from "@Local/index";
+import theme from "@Themes/index";
 
 function RegisterBilling() {
   /// Register hook
@@ -63,8 +64,17 @@ function RegisterBilling() {
   }, []);
 
   return (
-    <Grid container mt={10}>
-      <Grid item xs={6}>
+    <Grid
+      container
+      mt={10}
+      spacing={1}
+      sx={{
+        [theme.breakpoints.down("lg")]: {
+          flexDirection: "column",
+        },
+      }}
+    >
+      <Grid item xs>
         <CrediCard
           placeholders={{ name: "Your Name" }}
           number={formik.values.card_number ?? ""}
@@ -74,7 +84,7 @@ function RegisterBilling() {
           focused={focus}
         />
       </Grid>
-      <Grid item xs={6}>
+      <Grid item xs>
         <Grid container>
           <Grid item xs={12}>
             <TextOutlineField

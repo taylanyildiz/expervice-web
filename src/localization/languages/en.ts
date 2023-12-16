@@ -57,7 +57,7 @@ const en: ObjectString = {
     forgotPasswordHeader4: "Your password has been updated successfully",
     confirmPassword: "Confirm Password",
     goLogin: "Go Login",
-    createExperviceAccount: "Create a Expervice account",
+    createExperviceAccount: "Create an Expervice account",
     alreadyExistCustomer: "Already an existing customer?",
     billing: "Billing",
     finished: "Finished",
