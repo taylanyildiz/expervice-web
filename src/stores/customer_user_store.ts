@@ -1,5 +1,5 @@
+import { ECustomerFilterType, ECustomerSortTypes } from "@Features/summary/users/customer-users/entities/customer_enums";
 import Customer from "@Models/customer/customer";
-import { ECustomerFilterType, ECustomerSortType } from "@Models/customer/customer_enums";
 import CustomerFilter from "@Models/customer/customer_filter";
 import { ESortDirection } from "@Models/enums";
 import FormCustomer from "@Models/form/form_customer";
@@ -25,8 +25,13 @@ const initialState: Props = {
         offset: 0,
         keyword: "",
         filter_type: ECustomerFilterType.DisplayName,
-        sort_type: ECustomerSortType.CreatedAt,
-        sort_direction: ESortDirection.Ascending
+        sort_type: ECustomerSortTypes.CreatedAt,
+        sort_direction: ESortDirection.Ascending,
+        statuses: [],
+        groups: [],
+        region_ids: [],
+        end_date: "",
+        start_date: ""
     },
     customers: { rows: [], count: 0 },
     customer: null,

@@ -17,10 +17,13 @@ import PrimaryButton from "@Components/PrimaryButton";
 import { useEffect } from "react";
 import CustomerFilter from "@Models/customer/customer_filter";
 import { useFormik } from "formik";
-import { ECustomerFilterType } from "@Models/customer/customer_enums";
 import TextOutlineField from "@Components/TextOutlineField";
 import SelectCustomerFilterType from "./SelectCustomerFilterType";
 import TranslateHelper from "@Local/index";
+import { ECustomerFilterType } from "../entities/customer_enums";
+import SelectCustomerStatuses from "./SelectCustomerStatuses";
+import { SelectRegions } from "@Components/index";
+import SelectUserGroups from "@Features/summary/components/SelectUserGroups";
 
 function CustomerFilterDrawer() {
   /// Customer store
@@ -54,10 +57,13 @@ function CustomerFilterDrawer() {
 
   /// Formik
   const initialValues: CustomerFilter = {
-    limit: 10,
-    offset: 0,
     filter_type: ECustomerFilterType.DisplayName,
     keyword: "",
+    groups: [],
+    region_ids: [],
+    statuses: [],
+    end_date: "",
+    start_date: "",
   };
   const formik = useFormik({
     initialValues,
@@ -92,6 +98,7 @@ function CustomerFilterDrawer() {
           >
             <TextOutlineField
               name="keyword"
+              height={30}
               label={TranslateHelper.keyword()}
               value={formik.values.keyword}
               onChange={formik.handleChange}
@@ -100,6 +107,34 @@ function CustomerFilterDrawer() {
               label={TranslateHelper.filterType()}
               onChanged={(v) => formik.setFieldValue("filter_type", v)}
               value={formik.values.filter_type}
+            />
+            <SelectCustomerStatuses
+              fullWidth
+              label="Customer Statuses" // TODO: Translations
+              values={formik.values.statuses}
+              onChanged={(values) => {
+                formik.setFieldValue("statuses", values);
+              }}
+            />
+            <SelectRegions
+              fullWidth
+              label="Regions" // TODO: Translations
+              values={formik.values.region_ids}
+              onChanged={(values) => {
+                formik.setFieldValue(
+                  "region_ids",
+                  values?.map((e) => e.id!)
+                );
+              }}
+            />
+            <SelectUserGroups
+              fullWidth
+              label="Groups" // TODO: Translations
+              values={formik.values.groups}
+              regions={formik.values.region_ids}
+              onChanged={(values) => {
+                formik.setFieldValue("groups", values);
+              }}
             />
           </Stack>
           <Stack p={1} spacing={1} direction="row" justifyContent="end">
@@ -110,8 +145,9 @@ function CustomerFilterDrawer() {
               onClick={() => {
                 formik.resetForm({
                   values: {
-                    keyword: "",
-                    filter_type: ECustomerFilterType.DisplayName,
+                    ...initialValues,
+                    limit: customerFilter?.limit,
+                    offset: customerFilter?.offset,
                   },
                 });
               }}

@@ -1,5 +1,7 @@
+import { ReactNode, useEffect, useState } from "react";
 import {
   Autocomplete,
+  Chip,
   FormControl,
   FormHelperText,
   TextField,
@@ -7,28 +9,19 @@ import {
   Typography,
   createTheme,
 } from "@mui/material";
-import { ReactNode, useEffect, useState } from "react";
-import { getCustomerFilterTitle } from "../helpers/customer_enum_helper";
-import { ECustomerFilterType } from "../entities/customer_enums";
-
-interface SelectCustomerFilterTypeProps {
-  label?: string;
-  helperText?: ReactNode;
-  error?: boolean;
-  value?: ECustomerFilterType | null;
-  onChanged: (type: ECustomerFilterType | null) => void;
-}
+import { ECustomerUserStatus } from "../entities/customer_enums";
+import { getCustomerStatusTitle } from "../helpers/customer_enum_helper";
 
 const theme = createTheme({
   components: {
     MuiAutocomplete: {
       styleOverrides: {
         tag: {
+          height: "auto",
           fontSize: 13,
           borderRadius: 3,
           padding: 0,
           margin: 1,
-          height: "auto",
         },
         listbox: {
           fontSize: 14,
@@ -42,15 +35,32 @@ const theme = createTheme({
   },
 });
 
-function SelectCustomerFilterType(props: SelectCustomerFilterTypeProps) {
-  const { label, helperText, error, value, onChanged } = props;
+interface SelectCustomerStatusesProps {
+  disabled?: boolean;
+  label?: string;
+  fullWidth?: boolean;
+  helperText?: ReactNode;
+  error?: boolean;
+  values?: ECustomerUserStatus[];
+  onChanged?: (values?: ECustomerUserStatus[] | null) => void;
+}
 
-  const [options, setOptions] = useState<ECustomerFilterType[]>([]);
-  const [option, setOption] = useState<ECustomerFilterType | null>(null);
+function SelectCustomerStatuses(props: SelectCustomerStatusesProps) {
+  const { disabled, fullWidth, error, helperText, label, values, onChanged } =
+    props;
+
+  /// Option-Options state
+  const [options, setOptions] = useState<ECustomerUserStatus[]>([]);
+  const [option, setOption] = useState<ECustomerUserStatus[]>([]);
+
+  /// Changed handle
+  const onChangedHandle = (v: ECustomerUserStatus[] | null) => {
+    onChanged?.(v);
+  };
 
   /// Initialize component
   useEffect(() => {
-    const value = Object.values(ECustomerFilterType).filter(
+    const value = Object.values(ECustomerUserStatus).filter(
       (e) => typeof e === "number"
     ) as number[];
     setOptions(value);
@@ -58,26 +68,32 @@ function SelectCustomerFilterType(props: SelectCustomerFilterTypeProps) {
 
   /// Listen [value]
   useEffect(() => {
-    setOption(value ?? null);
-  }, [value]);
-
-  const onChangedHandle = (value: ECustomerFilterType | null) => {
-    onChanged(value);
-  };
+    setOption(values ?? []);
+  }, [values]);
 
   return (
     <ThemeProvider theme={theme}>
       <Autocomplete
-        fullWidth
+        multiple
+        disabled={disabled}
+        fullWidth={fullWidth}
         options={options}
         value={option}
-        clearIcon={null}
-        getOptionLabel={(e) => getCustomerFilterTitle(e)}
+        getOptionLabel={(e) => getCustomerStatusTitle(e)}
         isOptionEqualToValue={(value, option) => value === option}
         onChange={(_, v) => onChangedHandle(v)}
+        renderTags={(value: readonly ECustomerUserStatus[], getTagProps) =>
+          value.map((option: ECustomerUserStatus, index: number) => (
+            <Chip
+              variant="outlined"
+              label={getCustomerStatusTitle(option)}
+              {...getTagProps({ index })}
+            />
+          ))
+        }
         renderInput={(props) => {
           return (
-            <FormControl fullWidth>
+            <FormControl fullWidth={fullWidth}>
               <Typography
                 display="flex"
                 justifyContent="start"
@@ -106,4 +122,4 @@ function SelectCustomerFilterType(props: SelectCustomerFilterTypeProps) {
   );
 }
 
-export default SelectCustomerFilterType;
+export default SelectCustomerStatuses;

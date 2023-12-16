@@ -1,5 +1,5 @@
 import TranslateHelper from "@Local/index";
-import { ECustomerFilterType } from "@Models/customer/customer_enums";
+import { ECustomerFilterType, ECustomerUserStatus } from "../entities/customer_enums";
 
 /**
  * Get string of filter type
@@ -22,6 +22,23 @@ export function getCustomerFilterTitle(type: ECustomerFilterType): string {
             return TranslateHelper.email();
         case ECustomerFilterType.Phone:
             return TranslateHelper.phone();
+        default:
+            return "";
+    }
+}
+
+export function getCustomerStatusTitle(
+    value?: ECustomerUserStatus
+): string {
+    switch (value) {
+        case ECustomerUserStatus.Active:
+            return "Active"; // Translations
+        case ECustomerUserStatus.Inactive:
+            return "Inactive"; // Translations
+        case ECustomerUserStatus.Invited:
+            return "Invited"; // Translations
+        case ECustomerUserStatus.NotInvited:
+            return "Not Invited"; // Translations
         default:
             return "";
     }

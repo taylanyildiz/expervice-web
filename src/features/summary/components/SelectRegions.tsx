@@ -23,7 +23,7 @@ const theme = createTheme({
           fontSize: 13,
           borderRadius: 3,
           padding: 0,
-          margin: 0,
+          margin: 1,
         },
         listbox: {
           fontSize: 14,
