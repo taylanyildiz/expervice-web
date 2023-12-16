@@ -85,13 +85,6 @@ function SummaryDrawer() {
       <Stack mt={14} direction="column">
         <Stack direction="row" spacing={1} justifyContent="center">
           <ScalableButton
-            link={ERouter.Regiter}
-            onClick={() => {}}
-            color={Colors.primary}
-            backgroundColor={Colors.secodary}
-            children={TranslateHelper.scheduleDemo()}
-          />
-          <ScalableButton
             link={ERouter.Pricing}
             children={TranslateHelper.tryItNow()}
           />

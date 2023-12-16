@@ -23,6 +23,8 @@ import TechnicianRepository from "@Repo/technician_repository";
 import { technicianValidator } from "../validator/technician_validator";
 import TranslateHelper from "@Local/index";
 import AnyUpdateBox from "@Components/AnyUpdateBox";
+import TechnicianJobs from "./TechnicianJobs";
+import TechnicianUserInfo from "../components/TechnicianUserInfo";
 
 function TechnicianDialog() {
   /// Technician store
@@ -147,6 +149,7 @@ function TechnicianDialog() {
       <DialogCustomTitle title={title} />
       <AnyUpdateBox anyUpdate={anyUpdate} />
       <DialogContent>
+        <TechnicianUserInfo />
         <Box mt={1}>
           <TabBar
             tabs={[
@@ -157,6 +160,11 @@ function TechnicianDialog() {
               {
                 title: TranslateHelper.securityLogin(),
                 panel: <TechnicianSecurity formik={formik} />,
+              },
+              {
+                visibility: isEdit,
+                title: "Technician Jobs",
+                panel: <TechnicianJobs />,
               },
             ]}
           />

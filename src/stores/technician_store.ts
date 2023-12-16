@@ -1,4 +1,8 @@
+import TechnicianJobsFilter from "@Features/summary/users/technician-users/entities/technician_jobs_filter";
+import JobTechnician from "@Models/job/job_technician";
 import TechnicianFilter from "@Models/technician-user/technician_filter";
+import TechnicianJobRole from "@Models/technician-user/technician_job_role";
+import TechnicianJobStatus from "@Models/technician-user/technician_job_status";
 import TechnicianUser from "@Models/technician-user/technician_user";
 import { createSlice } from "@reduxjs/toolkit";
 
@@ -8,6 +12,10 @@ interface Props {
     filter: TechnicianFilter;
     technicians: { rows: TechnicianUser[], count: number };
     technician: TechnicianUser | null;
+    technicianJobs: { rows: JobTechnician[], count: number };
+    technicianJobsFilter: TechnicianJobsFilter,
+    technicianJobRoles: TechnicianJobRole[] | null,
+    technicianJobStatuses: TechnicianJobStatus[] | null,
 };
 
 /// Initial states
@@ -16,6 +24,10 @@ const initialState: Props = {
     filter: { limit: 10, offset: 0 },
     technicians: { rows: [], count: 0 },
     technician: null,
+    technicianJobs: { rows: [], count: 0 },
+    technicianJobsFilter: { limit: 10, offset: 0 },
+    technicianJobRoles: null,
+    technicianJobStatuses: null,
 }
 
 /// Technician slice
@@ -34,10 +46,31 @@ const technician = createSlice({
         },
         setTechnician: (state, { payload }) => {
             state.technician = payload;
+        },
+        setTechnicianJobs: (state, { payload }) => {
+            state.technicianJobs = payload;
+        },
+        setTechnicianJobsFilter: (state, { payload }) => {
+            state.technicianJobsFilter = payload;
+        },
+        setTechnicianJobRoles: (state, { payload }) => {
+            state.technicianJobRoles = payload;
+        },
+        setTechnicianJobStatuses: (state, { payload }) => {
+            state.technicianJobStatuses = payload;
         }
     }
 });
 
 
 export default technician.reducer;
-export const { setTechnicianLayz, setFilter, setTechnicians, setTechnician } = technician.actions;
+export const {
+    setTechnicianLayz,
+    setFilter,
+    setTechnicians,
+    setTechnician,
+    setTechnicianJobs,
+    setTechnicianJobsFilter,
+    setTechnicianJobRoles,
+    setTechnicianJobStatuses,
+} = technician.actions;

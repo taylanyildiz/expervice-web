@@ -58,10 +58,10 @@ function CancelSubscriptionBox(props: {
             color="white"
             fontWeight="bold"
             fontSize={8}
-            children={reason.translations.name?.[lng]}
+            children={reason.type}
           />
         </Box>
-        <Typography children={reason.name} />
+        <Typography children={reason.translations.name?.[lng]} />
       </Stack>
     </Box>
   );

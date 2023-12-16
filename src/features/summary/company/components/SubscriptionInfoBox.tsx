@@ -136,7 +136,10 @@ function SubscriptionInfoBox(props: { payment?: Order | null }) {
                   <RichText
                     color="black"
                     title={TranslateHelper.nextPaymentDate()}
-                    content={dateToFormat(new Date(payment?.startPeriod ?? 0))}
+                    content={dateToFormat(
+                      new Date(payment?.startPeriod ?? 0),
+                      true
+                    )}
                   />
                   <RichText
                     color="black"

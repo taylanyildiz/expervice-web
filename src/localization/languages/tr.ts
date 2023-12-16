@@ -59,7 +59,7 @@ const tr: ObjectString = {
     goLogin: "Giriş Yap",
     createExperviceAccount: "Expervice Hesabı Oluştur",
     alreadyExistCustomer: "Zaten Var Olan Bir Müşteri Misiniz?",
-    billing: "Fatura",
+    billing: "Ödeme",
     finished: "Tamamlandı",
     primaryContact: "Birincil İletişim",
     primaryContactFirstName: "Birincil İletişim Adı",
@@ -77,7 +77,7 @@ const tr: ObjectString = {
     state: "Şehir",
     city: "İlçe",
     zipCode: "Posta Kodu",
-    continueBilling: "Faturaya Devam Et",
+    continueBilling: "Ödemeye Devam Et",
     cardHolderName: "Kart Sahibi Adı",
     cardNumber: "Kart Numarası",
     expireDate: "Son Kullanma Tarihi",
@@ -361,6 +361,17 @@ const tr: ObjectString = {
     rejectCustomerSignature: "Müşteri İmzasını Reddet",
     sureRejectCustomerSignature: "Müşteri İmzasını redetmek istediğinize emin misiniz?",
     customerSignatureWillDelete: "Müşteri İmzası silenecek.",
+    selected: "İşaretlendi",
+    sureAssignCustomer: "Müşteri atamak istedğinize emin misiniz?",
+    createCustomer: "Müşteri Oluştur",
+    jobStatuses: "İş Durumları",
+    canceledJobs: "İptal Ettiği İşler",
+    doneJobs: "Bitirdiği İşler",
+    continueJobs: "Devam Ettitği İşler",
+    assigner: "Atananan",
+    supervisor: "Şef",
+    participant: "Katılınan",
+    jobRoles: "İş Rolleri"
 }
 
 export default tr;

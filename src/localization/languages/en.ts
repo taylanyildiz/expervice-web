@@ -361,7 +361,17 @@ const en: ObjectString = {
     rejectCustomerSignature: "Reject Customer Signature",
     sureRejectCustomerSignature: "Are you sure reject customer signature?",
     customerSignatureWillDelete: "Customer Signature will be delete",
-
+    selected: "Selected",
+    sureAssignCustomer: "Are you sure assign customer?",
+    createCustomer: "Create Customer",
+    jobStatuses: "Job Statuses",
+    canceledJobs: "Canceled Jobs",
+    doneJobs: "Done Jobs",
+    continueJobs: "Continue Jobs",
+    assigner: "Assigner",
+    supervisor: "Supervisor",
+    participant: "Participant",
+    jobRoles: "Job Roles",
 }
 
 export default en;

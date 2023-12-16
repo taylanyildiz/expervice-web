@@ -87,11 +87,6 @@ function FormCustomersContent() {
     formRepo.formCustomers(form!.id!, filter);
   }, [form, filter]);
 
-  useEffect(() => {
-    console.log(page);
-    console.log(rowsPerPage);
-  }, [page, rowsPerPage]);
-
   /// Initialize customers
   useEffect(() => {
     setCustomers(rows);

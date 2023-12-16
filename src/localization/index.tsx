@@ -1066,7 +1066,6 @@ export default class TranslateHelper {
   public static signature(): string {
     return "signature".tr();
   }
-
   public static approveCustomerSignature(): string {
     return "approveCustomerSignature".tr();
   }
@@ -1081,5 +1080,38 @@ export default class TranslateHelper {
   }
   public static customerSignatureWillDelete(): string {
     return "customerSignatureWillDelete".tr();
+  }
+  public static selected(): string {
+    return "selected".tr();
+  }
+  public static sureAssignCustomer(): string {
+    return "sureAssignCustomer".tr();
+  }
+  public static createCustomer(): string {
+    return "createCustomer".tr();
+  }
+  public static jobStatuses(): string {
+    return "jobStatuses".tr();
+  }
+  public static canceledJobs(): string {
+    return "canceledJobs".tr();
+  }
+  public static doneJobs(): string {
+    return "doneJobs".tr();
+  }
+  public static continueJobs(): string {
+    return "continueJobs".tr();
+  }
+  public static assigner(): string {
+    return "assigner".tr();
+  }
+  public static supervisor(): string {
+    return "supervisor".tr();
+  }
+  public static participant(): string {
+    return "participant".tr();
+  }
+  public static jobRoles(): string {
+    return "jobRoles".tr();
   }
 }
