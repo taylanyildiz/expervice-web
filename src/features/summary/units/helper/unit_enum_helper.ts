@@ -22,11 +22,11 @@ export function getUnitStatusTitle(value?: EUnitStatuses): string {
     if (!value) return "";
     switch (value) {
         case EUnitStatuses.All:
-            return "All Statuses"; // TODO: Translations
+            return TranslateHelper.allStatuses();
         case EUnitStatuses.Active:
-            return "Active"; // TODO: Translations
+            return TranslateHelper.active();
         case EUnitStatuses.Passive:
-            return "Passive"; // TODO: Translations
+            return TranslateHelper.notActive();
     }
 }
 
@@ -56,11 +56,11 @@ export function getUnitJobStatusTitle(value?: EUnitJobStatuses): string {
     if (!value) return "";
     switch (value) {
         case EUnitJobStatuses.All:
-            return "All Statuses"; // TODO: Translations
+            return TranslateHelper.allStatuses();
         case EUnitJobStatuses.HasJob:
-            return "Faulty Units"; // TODO: Translations
+            return TranslateHelper.faultyUnits();
         case EUnitJobStatuses.NoJob:
-            return "Non-Faulty Units"; // TODO: Translations
+            return TranslateHelper.nonFaultUnits();
     }
 }
 

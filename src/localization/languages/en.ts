@@ -372,6 +372,27 @@ const en: ObjectString = {
     supervisor: "Supervisor",
     participant: "Participant",
     jobRoles: "Job Roles",
+    formsFilter: "Forms Filter",
+    jobsFilter: "Jobs Filter",
+    jobTypes: "Job Types",
+    jobSubTypes: "Job Sub Types",
+    jobPriorities: "Job Priorities",
+    unitTypes: "Unit Types",
+    unitSubTypes: "Unit Sub Types",
+    unitLabels: "Unit Labels",
+    unitStatus: "Unit Status",
+    unitJobStatus: "Unit Job Status",
+    allStatuses: "All Statuses",
+    faultyUnits: "Faulty Units",
+    nonFaultUnits: "Non-Faulty Units",
+    customerStatuses: "Customer Statuses",
+    internalUsersFilter: "Internal Users Filter",
+    internalUserStatuses: "Internal Users Statuses",
+    userRoles: "User Roles",
+    techniciansFilter: "Technicians Filter",
+    technicianStatuses: "Technician Statuses",
+    groupRoles: "Group Roles",
+
 }
 
 export default en;

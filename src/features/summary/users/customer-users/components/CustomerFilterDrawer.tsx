@@ -112,7 +112,7 @@ function CustomerFilterDrawer() {
             />
             <SelectCustomerStatuses
               fullWidth
-              label="Customer Statuses" // TODO: Translations
+              label={TranslateHelper.customerStatuses()}
               values={formik.values.statuses}
               onChanged={(values) => {
                 formik.setFieldValue("statuses", values);
@@ -120,7 +120,7 @@ function CustomerFilterDrawer() {
             />
             <SelectRegions
               fullWidth
-              label="Regions" // TODO: Translations
+              label={TranslateHelper.regions()}
               values={formik.values.region_ids}
               onChanged={(values) => {
                 formik.setFieldValue(
@@ -131,7 +131,7 @@ function CustomerFilterDrawer() {
             />
             <SelectUserGroups
               fullWidth
-              label="Groups" // TODO: Translations
+              label={TranslateHelper.groups()}
               values={formik.values.groups}
               regions={formik.values.region_ids}
               onChanged={(values) => {

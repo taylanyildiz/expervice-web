@@ -371,7 +371,27 @@ const tr: ObjectString = {
     assigner: "Atananan",
     supervisor: "Şef",
     participant: "Katılınan",
-    jobRoles: "İş Rolleri"
+    jobRoles: "İş Rolleri",
+    formsFilter: "Formlar Filtre",
+    jobsFilter: "İşer Filtre",
+    jobTypes: "İş Tipler",
+    jobSubTypes: "İş Alt Tipleri",
+    jobPriorities: "İş Öncelikleri",
+    unitTypes: "Ünite Tipleri",
+    unitSubTypes: "Ünite Alt Tipleri",
+    unitLabels: "Ünite Etiketleri",
+    unitStatus: "Ünite Durumu",
+    unitJobStatus: "Ünite İş Durumu",
+    allStatuses: "Bütün Durumlar",
+    faultyUnits: "Arızalı Üniteler",
+    nonFaultUnits: "Arızasız Üniteler",
+    customerStatuses: "Müşteri Durumları",
+    internalUsersFilter: "İç Kullanıcılar Filtre",
+    internalUserStatuses: "İç Kullanıcı Durumları",
+    userRoles: "Kullancı Rolleri",
+    techniciansFilter: "Teknisyenler Filtre",
+    technicianStatuses: "Teknisyen Durumları",
+    groupRoles: "Grup Rolleri",
 }
 
 export default tr;

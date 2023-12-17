@@ -141,7 +141,7 @@ function UnitsFilterDrawer() {
             />
             <SelectUnitTypes
               fullWidth
-              label="Unit Types" // TODO: Translate
+              label={TranslateHelper.unitTypes()}
               onChanged={(value) => {
                 formik.setFieldValue("unit_types", value);
               }}
@@ -153,7 +153,7 @@ function UnitsFilterDrawer() {
             />
             <SelectUnitSubTypes
               fullWidth
-              label="Unit Sub Types" // TODO: Translate
+              label={TranslateHelper.unitSubTypes()}
               onChanged={(value) => {
                 formik.setFieldValue("unit_sub_types", value);
               }}
@@ -168,7 +168,7 @@ function UnitsFilterDrawer() {
             />
             <SelectUnitLabels
               fullWidth
-              label="Unit Labels" // TODO: Translate
+              label={TranslateHelper.unitLabels()}
               onChanged={(value) => {
                 formik.setFieldValue("unit_labels", value);
               }}
@@ -182,7 +182,7 @@ function UnitsFilterDrawer() {
             />
             <SelectUnitStatus
               fullWidth
-              label="Unit Status" // TODO: Translations
+              label={TranslateHelper.unitStatus()}
               value={unitStatus}
               onChanged={(value) => {
                 setUnitStatus(value ?? undefined);
@@ -194,7 +194,7 @@ function UnitsFilterDrawer() {
             />
             <SelectUnitJobStatus
               fullWidth
-              label="Unit Job Status" // TODO: Translations
+              label={TranslateHelper.unitJobStatus()}
               value={unitJobStatus}
               onChanged={(value) => {
                 setUnitJobStatus(value ?? undefined);
@@ -217,7 +217,7 @@ function UnitsFilterDrawer() {
             />
             <SelectUserGroups
               fullWidth
-              label="Groups" // TODO: Translations
+              label={TranslateHelper.groups()}
               values={formik.values.groups}
               regions={formik.values.region_ids}
               onChanged={(values) => {

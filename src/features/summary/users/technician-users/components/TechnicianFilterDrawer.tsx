@@ -84,7 +84,7 @@ function TechnicianFilterDrawer() {
               p={1}
               variant="h1"
               fontSize={17}
-              children="Technicians Filter" // TODO: Translations
+              children={TranslateHelper.techniciansFilter()}
             />
             <IconButton onClick={handleClose}>
               <CloseIcon />
@@ -115,7 +115,7 @@ function TechnicianFilterDrawer() {
             />
             <SelectTechnicianStatuses
               fullWidth
-              label="Technician Status" // TODO: Translations
+              label={TranslateHelper.technicianStatuses()}
               values={formik.values.statuses}
               onChanged={(values) => {
                 formik.setFieldValue("statuses", values);
@@ -124,7 +124,7 @@ function TechnicianFilterDrawer() {
             <SelectGroupRoles
               fullWidth
               values={formik.values.group_roles}
-              label="Group Roles" // TODO: Translations
+              label={TranslateHelper.groupRoles()}
               onChanged={(values) => {
                 formik.setFieldValue(
                   "group_roles",
@@ -134,7 +134,7 @@ function TechnicianFilterDrawer() {
             />
             <SelectRegions
               fullWidth
-              label="Regions" // TODO: Translations
+              label={TranslateHelper.regions()}
               values={formik.values.region_ids}
               onChanged={(values) => {
                 formik.setFieldValue(
@@ -145,7 +145,7 @@ function TechnicianFilterDrawer() {
             />
             <SelectUserGroups
               fullWidth
-              label="Groups" // TODO: Translations
+              label={TranslateHelper.groups()}
               regions={formik.values.region_ids}
               values={formik.values.groups}
               onChanged={(values) => {

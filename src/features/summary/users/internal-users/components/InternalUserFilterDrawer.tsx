@@ -68,7 +68,7 @@ function InternalUserFilterDrawer() {
               p={1}
               variant="h1"
               fontSize={17}
-              children="Internal Users Filter" // TODO: Translations
+              children={TranslateHelper.internalUsersFilter()}
             />
             <IconButton onClick={handleClose}>
               <CloseIcon />
@@ -99,14 +99,14 @@ function InternalUserFilterDrawer() {
             />
             <SelectInternalStatuses
               fullWidth
-              label="Internal User Status" // TODO: Translations
+              label={TranslateHelper.internalUserStatuses()}
               values={formik.values.statuses}
               onChanged={(values) => {
                 formik.setFieldValue("statuses", values);
               }}
             />
             <SelectUserRoles
-              label="User Roles" // TODO: Translations
+              label={TranslateHelper.userRoles()}
               fullWidth
               values={formik.values.role_ids}
               roleType={3}

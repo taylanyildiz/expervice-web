@@ -107,7 +107,7 @@ function JobsFilterDrawer() {
               p={1}
               variant="h1"
               fontSize={17}
-              children="Jobs Filter" // TODO: Translations
+              children={TranslateHelper.jobsFilter()}
             />
             <IconButton onClick={handleClose}>
               <CloseIcon />
@@ -138,7 +138,7 @@ function JobsFilterDrawer() {
             />
             <SelectJobTypes
               fullWidth
-              label="Job Types" // TODO: Translations
+              label={TranslateHelper.jobTypes()}
               values={formik.values.type_ids}
               onChanged={(values) => {
                 formik.setFieldValue(
@@ -149,7 +149,7 @@ function JobsFilterDrawer() {
             />
             <SelectJobSubTypes
               fullWidth
-              label="Job Sub Types" // TODO: Translations
+              label={TranslateHelper.jobSubTypes()}
               values={formik.values.sub_type_ids}
               types={formik.values.type_ids}
               onChanged={(values) => {
@@ -174,7 +174,7 @@ function JobsFilterDrawer() {
 
             <SelectJobPriorities
               fullWidth
-              label="Job Priorities" // TODO: Translations
+              label={TranslateHelper.jobPriorities()}
               values={formik.values.priorities}
               onChanged={(values) => {
                 formik.setFieldValue(

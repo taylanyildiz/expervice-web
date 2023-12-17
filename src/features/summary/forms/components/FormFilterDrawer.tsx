@@ -58,7 +58,7 @@ function FormFilterDrawer() {
             <Typography
               variant="h1"
               fontSize={17}
-              children="Forms Filter" // TODO: Translations
+              children={TranslateHelper.formsFilter()}
             />
             <IconButton onClick={handleClose}>
               <CloseIcon />
