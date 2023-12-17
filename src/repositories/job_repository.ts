@@ -52,6 +52,7 @@ class JobRepository extends BaseRepository {
         const path = JobConsts.job(job.id);
         const response = await this.put(path, job);
         const success = response.success;
+        SnackCustomBar.status(response, { display: !success });
         if (!success) return null;
         const data = response.data['data']['job'];
         return data;
@@ -64,6 +65,7 @@ class JobRepository extends BaseRepository {
         const path = JobConsts.technician(jobId, technician);
         const response = await this.delete(path);
         const success = response.success;
+        SnackCustomBar.status(response, { display: !success })
         if (!success) return null;
         const data = response.data['data']['job'];
         return data;
@@ -76,6 +78,7 @@ class JobRepository extends BaseRepository {
         const path = JobConsts.technicianRole(jobId, technician);
         const response = await this.put(path, { role_id: roleId });
         const success = response.success;
+        SnackCustomBar.status(response, { display: !success })
         if (!success) return null;
         const data = response.data['data']['job'];
         return data;
