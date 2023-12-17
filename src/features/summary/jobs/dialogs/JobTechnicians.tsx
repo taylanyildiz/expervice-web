@@ -61,6 +61,8 @@ function JobTechnicians(props: { formik: FormikProps<Job> }) {
   const jobTechnicianTouched = formik.touched
     .job_technicians as FormikTouched<JobTechnician>[];
 
+  if (!statusAvailable && technicians.length === 0) return <></>;
+
   return (
     <Grid container>
       <Grid item xs={12} pb={1}>

@@ -3,6 +3,7 @@ import TechnicianUser from "@Models/technician-user/technician_user";
 import { GridColDef } from "@mui/x-data-grid";
 import { useTechnicianDialog } from "../helper/technician_helper";
 import TranslateHelper from "@Local/index";
+import { store } from "@Store/index";
 
 const columns = (): GridColDef<TechnicianUser>[] => [
   {
@@ -80,8 +81,9 @@ const columns = (): GridColDef<TechnicianUser>[] => [
     width: 150,
     valueGetter: (params) => {
       const row = params.row;
+      const lng = store.getState().user.language?.language_code ?? "en";
       const groupRole = row?.technician_group?.group_role;
-      return groupRole?.name;
+      return groupRole?.translations?.name?.[lng];
     },
   },
 ];

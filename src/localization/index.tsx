@@ -1066,7 +1066,6 @@ export default class TranslateHelper {
   public static signature(): string {
     return "signature".tr();
   }
-
   public static approveCustomerSignature(): string {
     return "approveCustomerSignature".tr();
   }
@@ -1081,5 +1080,98 @@ export default class TranslateHelper {
   }
   public static customerSignatureWillDelete(): string {
     return "customerSignatureWillDelete".tr();
+  }
+  public static selected(): string {
+    return "selected".tr();
+  }
+  public static sureAssignCustomer(): string {
+    return "sureAssignCustomer".tr();
+  }
+  public static createCustomer(): string {
+    return "createCustomer".tr();
+  }
+  public static jobStatuses(): string {
+    return "jobStatuses".tr();
+  }
+  public static canceledJobs(): string {
+    return "canceledJobs".tr();
+  }
+  public static doneJobs(): string {
+    return "doneJobs".tr();
+  }
+  public static continueJobs(): string {
+    return "continueJobs".tr();
+  }
+  public static assigner(): string {
+    return "assigner".tr();
+  }
+  public static supervisor(): string {
+    return "supervisor".tr();
+  }
+  public static participant(): string {
+    return "participant".tr();
+  }
+  public static jobRoles(): string {
+    return "jobRoles".tr();
+  }
+  public static formsFilter(): string {
+    return "formsFilter".tr();
+  }
+  public static jobsFilter(): string {
+    return "jobsFilter".tr();
+  }
+  public static jobTypes(): string {
+    return "jobTypes".tr();
+  }
+  public static jobSubTypes(): string {
+    return "jobSubTypes".tr();
+  }
+  public static jobPriorities(): string {
+    return "jobPriorities".tr();
+  }
+  public static unitTypes(): string {
+    return "unitTypes".tr();
+  }
+  public static unitSubTypes(): string {
+    return "unitSubTypes".tr();
+  }
+  public static unitLabels(): string {
+    return "unitLabels".tr();
+  }
+  public static unitStatus(): string {
+    return "unitStatus".tr();
+  }
+  public static unitJobStatus(): string {
+    return "unitJobStatus".tr();
+  }
+  public static allStatuses(): string {
+    return "allStatuses".tr();
+  }
+  public static faultyUnits(): string {
+    return "faultyUnits".tr();
+  }
+  public static nonFaultUnits(): string {
+    return "nonFaultUnits".tr();
+  }
+  public static customerStatuses(): string {
+    return "customerStatuses".tr();
+  }
+  public static internalUsersFilter(): string {
+    return "internalUsersFilter".tr();
+  }
+  public static internalUserStatuses(): string {
+    return "internalUserStatuses".tr();
+  }
+  public static techniciansFilter(): string {
+    return "techniciansFilter".tr();
+  }
+  public static technicianStatuses(): string {
+    return "technicianStatuses".tr();
+  }
+  public static groupRoles(): string {
+    return "groupRoles".tr();
+  }
+  public static userRoles(): string {
+    return "userRoles".tr();
   }
 }

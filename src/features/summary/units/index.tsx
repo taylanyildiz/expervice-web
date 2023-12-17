@@ -95,7 +95,8 @@ function UnitsPage() {
           <VisibilityComp visibility={moreActions}>
             <Typography
               fontSize={13}
-              children={`${selectedUnits.length} Selected`}
+              variant="h1"
+              children={`${selectedUnits.length} ${TranslateHelper.selected()}`}
             />
           </VisibilityComp>,
           <VisibilityComp visibility={moreActions}>

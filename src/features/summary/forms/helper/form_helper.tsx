@@ -15,7 +15,15 @@ import { equalInterface } from "@Utils/functions";
 import { setFormId } from "@Store/form_store";
 
 export function useForm() {
-  return useSelector((state: RootState) => state.form);
+  const store = useSelector((state: RootState) => state.form);
+  const filter = store.formFilter;
+  const [filterCount, setFilterCount] = useState<number>(0);
+  useEffect(() => {
+    let count = 0;
+    if (filter.name && filter.name.length !== 0) ++count;
+    setFilterCount(count);
+  }, [filter]);
+  return { ...store, filterCount };
 }
 
 export function useFormDialog() {

@@ -12,6 +12,7 @@ function FormsTable() {
   const {
     formLayzLoading: loading,
     forms: { rows, count },
+    formFilter,
   } = useSelector((state: RootState) => state.form);
 
   /// Dispatch
@@ -37,8 +38,12 @@ function FormsTable() {
   /// Initialize component
   useEffect(() => {
     dispatch(setFormFilter(filter));
-    formRepo.getForms();
   }, [filter]);
+
+  /// Initialize component
+  useEffect(() => {
+    formRepo.getForms();
+  }, [formFilter]);
 
   return (
     <div className="forms-grid">

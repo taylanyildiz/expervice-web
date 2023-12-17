@@ -1,3 +1,4 @@
+import { useUser } from "@Features/summary/company/helper/company_helper";
 import UnitLabel from "@Models/units/unit_label";
 import ConstantRepository from "@Repo/constant_repository";
 import { RootState } from "@Store/index";
@@ -27,6 +28,10 @@ function SelectUnitLabel(props: SelectUnitLabelProps) {
 
   /// Constant store
   const { unitLabels } = useSelector((state: RootState) => state.constant);
+
+  /// User store
+  const { language } = useUser();
+  const lng = language?.language_code ?? "en";
 
   /// Constant repository
   const constantRepo = new ConstantRepository();
@@ -65,7 +70,7 @@ function SelectUnitLabel(props: SelectUnitLabelProps) {
       options={options}
       clearIcon={false}
       isOptionEqualToValue={(option, value) => option?.id === value?.id}
-      getOptionLabel={(option) => option.name ?? ""}
+      getOptionLabel={(option) => option.translations?.name?.[lng] ?? ""}
       onChange={(_, value) => onChanged(value)}
       renderInput={(props) => {
         return (

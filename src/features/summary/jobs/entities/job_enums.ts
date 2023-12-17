@@ -9,6 +9,7 @@ export enum EJobSubType {
     Maintenance6Month = 3,
 }
 
+
 export enum EJobStatuses {
     // Faults
     FaultCreated = 1,
@@ -69,4 +70,20 @@ export enum EFormStatuses {
     PendingConfirmed = 3, // Company confirmed
     Approved = 4,
     Rejected = 5,
+};
+
+export enum EJobFilterType {
+    UnitName = 1,
+    QRCode = 2,
+    IdentityNumber = 3,
+}
+
+export enum EJobSortTypes {
+    UnitName = 1,
+    QRCode = 2,
+    IdentityNumber = 3,
+    GroupName = 4,
+    Priority = 5,
+    Status = 6,
+    CreatedAt = 7,
 };

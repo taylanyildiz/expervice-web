@@ -14,7 +14,7 @@ export { default as EmptyGrid } from "./EmptyGrid";
 export { default as StatusBox } from "./StatusBox";
 export { default as TabBar } from "./TabBar";
 export { default as SelectUserRole } from "./SelectUserRole";
-export { default as SelectRegions } from "./SelectRegions";
+export { default as SelectRegions } from "../features/summary/components/SelectRegions";
 export { default as SelectRegion } from "./SelectRegion";
 export { default as RichText } from "./RichText";
 export { default as SelectUserGroup } from "./SelectUserGroup";

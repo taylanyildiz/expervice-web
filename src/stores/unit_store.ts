@@ -1,3 +1,4 @@
+import { EUnitFilterType } from "@Features/summary/units/entities/unit_enums";
 import Job from "@Models/job/job";
 import TechnicianUser from "@Models/technician-user/technician_user";
 import Unit from "@Models/units/unit";
@@ -24,7 +25,7 @@ interface Props {
 const initialState: Props = {
     layzLoading: true,
     unitsFilterDrawerStatus: false,
-    filter: { limit: 10, offset: 0, filter_type: 1 },
+    filter: { limit: 10, offset: 0, filter_type: EUnitFilterType.Name },
     units: { rows: [], count: 0 },
     unit: null,
     unitDialogStatus: false,

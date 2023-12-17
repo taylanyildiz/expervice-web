@@ -36,6 +36,7 @@ interface SelectJobSubTypeProps {
   clearIcon?: boolean;
   onChanged: (values: JobSubType | null | undefined) => void;
   disabled?: boolean;
+  disableClearable?: boolean;
 }
 
 function SelectJobSubType(props: SelectJobSubTypeProps) {
@@ -48,6 +49,7 @@ function SelectJobSubType(props: SelectJobSubTypeProps) {
     clearIcon,
     onChanged,
     disabled,
+    disableClearable,
   } = props;
 
   /// Constant store
@@ -93,6 +95,7 @@ function SelectJobSubType(props: SelectJobSubTypeProps) {
       options={options}
       value={option}
       clearIcon={clearIcon}
+      disableClearable={disableClearable}
       groupBy={(option) => option?.type?.translations?.name?.[lng] ?? ""}
       getOptionLabel={(option) => option.translations?.name?.[lng] ?? ""}
       isOptionEqualToValue={(value, option) => value?.id === option?.id}
@@ -103,7 +106,6 @@ function SelectJobSubType(props: SelectJobSubTypeProps) {
         </li>
       )}
       onChange={(_, v) => {
-        if (!v) return;
         onChanged(v);
       }}
       renderInput={(props) => {

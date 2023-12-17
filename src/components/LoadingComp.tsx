@@ -5,10 +5,11 @@ interface LoadingCompProps {
   children?: ReactNode;
   loading: boolean;
   height?: number | string;
+  size?: number | string;
 }
 
 function LoadingComp(props: LoadingCompProps) {
-  const { children, loading, height } = props;
+  const { children, loading, height, size } = props;
 
   if (loading)
     return (
@@ -20,7 +21,7 @@ function LoadingComp(props: LoadingCompProps) {
         overflow="hidden"
         position="inherit"
       >
-        <CircularProgress />
+        <CircularProgress size={size} />
       </Box>
     );
 

@@ -1,4 +1,5 @@
 import { RegisterStep } from "@Features/auth/register/entities";
+import TranslateHelper from "@Local/index";
 import { ReactNode, createContext, useContext, useState } from "react";
 
 interface RegisterContextType {
@@ -35,15 +36,15 @@ function RegisterProvider(props: RegisterProps) {
   /// Register steps
   const [steps, setSteps] = useState<RegisterStep[]>([
     {
-      title: "Contact",
+      title: TranslateHelper.contact(),
       completed: false,
     },
     {
-      title: "Billing",
+      title: TranslateHelper.billing(),
       completed: false,
     },
     {
-      title: "Finished",
+      title: TranslateHelper.finished(),
       completed: false,
     },
   ]);

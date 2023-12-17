@@ -8,9 +8,11 @@ import { useEffect, useState } from "react";
 import { FormikProps } from "formik";
 import CustomerUpdate from "../entities/customer_update";
 import { equalInterface } from "@Utils/functions";
-import { ECustomerStatus } from "../entities/customer_enums";
+import {
+  ECustomerFilterType,
+  ECustomerStatus,
+} from "../entities/customer_enums";
 import CustomerFormDialog from "../dialogs/CustomerFormDialog";
-import { ECustomerFilterType } from "@Models/customer/customer_enums";
 
 /**
  * Customer user store hook
@@ -174,10 +176,7 @@ export function useCutomerFilterCount() {
   useEffect(() => {
     let filterCount = 0;
     if (customerFilter?.keyword) ++filterCount;
-    if (
-      customerFilter?.filter_type &&
-      customerFilter?.filter_type !== ECustomerFilterType.DisplayName
-    ) {
+    if (customerFilter?.filter_type !== ECustomerFilterType.DisplayName) {
       ++filterCount;
     }
     setCount(filterCount);

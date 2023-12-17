@@ -42,6 +42,15 @@ const theme = createTheme({
             fontSize: 16,
             fontWeight: "normal",
         },
+        h5: {
+            color: "grey",
+            fontSize: 13,
+            fontWeight: "bold",
+        },
+        h6: {
+            fontSize: 13,
+            color: "black",
+        },
         button: {
             color: "white",
             fontWeight: "bold",
@@ -166,21 +175,18 @@ const theme = createTheme({
                     color: "black",
                     border: "none",
                 },
-                columnHeader: {
-
-                },
-                columnHeaderTitleContainer: {
-                    // justifyContent: "center",
-                },
                 columnHeaders: {
                     width: "100%",
                     paddingLeft: 10,
                     paddingRight: 10,
-                    backgroundColor: "#F2F4F9"
+                    fontWeight: "bold",
+                    fontSize: 14,
+                    backgroundColor: "#F2F4F9",
                 },
                 row: {
                     paddingLeft: 10,
                     paddingRight: 10,
+                    fontWeight: "normal"
                 }
 
             },
@@ -203,7 +209,8 @@ const theme = createTheme({
                     padding: 0,
                     paddingLeft: 10,
                     paddingRight: 1,
-                    backgroundColor: "white"
+                    backgroundColor: "white",
+                    boxShadow: "1px 1px 5px 1px #000023",
                 }
             }
         },
@@ -282,14 +289,17 @@ const theme = createTheme({
             },
         },
 
-
-        // MuiAutocomplete: {
-        //     styleOverrides: {
-        //         input: {
-        //             height: 10
-        //         }
-        //     }
-        // }
+        MuiAutocomplete: {
+            styleOverrides: {
+                tag: {
+                    fontSize: 13,
+                    borderRadius: 3,
+                    padding: 0,
+                    margin: 1,
+                    height: "auto"
+                },
+            }
+        }
     }
 });
 

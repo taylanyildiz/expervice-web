@@ -31,9 +31,12 @@ function RegisterStepper() {
   return (
     <Grid container justifyContent="center">
       <Grid item xs={12}>
-        <Typography variant="h1" fontSize={25} color={Colors.primaryLight}>
-          Create a Expervice account
-        </Typography>
+        <Typography
+          variant="h1"
+          fontSize={25}
+          color={Colors.primaryLight}
+          children={TranslateHelper.createExperviceAccount()}
+        />
       </Grid>
       <Grid item xs={12}>
         <Typography>

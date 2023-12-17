@@ -1,6 +1,4 @@
-import { CompanyRegion } from "@Models/index";
-import CompanyRegionRepository from "@Repo/company_region_repository";
-import { RootState } from "@Store/index";
+import { ReactNode, useEffect, useState } from "react";
 import {
   Autocomplete,
   Chip,
@@ -11,18 +9,19 @@ import {
   Typography,
   createTheme,
 } from "@mui/material";
-import { ReactNode, useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { ECustomerUserStatus } from "../entities/customer_enums";
+import { getCustomerStatusTitle } from "../helpers/customer_enum_helper";
 
 const theme = createTheme({
   components: {
     MuiAutocomplete: {
       styleOverrides: {
         tag: {
+          height: "auto",
           fontSize: 13,
           borderRadius: 3,
           padding: 0,
-          margin: 0,
+          margin: 1,
         },
         listbox: {
           fontSize: 14,
@@ -36,65 +35,58 @@ const theme = createTheme({
   },
 });
 
-interface SelectRegionProps {
-  values?: CompanyRegion[] | number[] | null;
+interface SelectCustomerStatusesProps {
+  disabled?: boolean;
   label?: string;
   fullWidth?: boolean;
   helperText?: ReactNode;
   error?: boolean;
-  onChanged: (values: CompanyRegion[] | null | undefined) => void;
+  values?: ECustomerUserStatus[];
+  onChanged?: (values?: ECustomerUserStatus[] | null) => void;
 }
 
-function SelectRegions(props: SelectRegionProps) {
-  const { values, label, fullWidth, helperText, error, onChanged } = props;
+function SelectCustomerStatuses(props: SelectCustomerStatusesProps) {
+  const { disabled, fullWidth, error, helperText, label, values, onChanged } =
+    props;
 
-  /// Region Resitory
-  const regionRepository = new CompanyRegionRepository();
+  /// Option-Options state
+  const [options, setOptions] = useState<ECustomerUserStatus[]>([]);
+  const [option, setOption] = useState<ECustomerUserStatus[]>([]);
 
-  /// Region Store
-  const {
-    regions: { rows },
-  } = useSelector((state: RootState) => state.companyRegion);
-
-  ///
-  const [options, setOptions] = useState<CompanyRegion[]>([]);
-  const [option, setOption] = useState<CompanyRegion[]>([]);
+  /// Changed handle
+  const onChangedHandle = (v: ECustomerUserStatus[] | null) => {
+    onChanged?.(v);
+  };
 
   /// Initialize component
   useEffect(() => {
-    regionRepository.getRegions();
+    const value = Object.values(ECustomerUserStatus).filter(
+      (e) => typeof e === "number"
+    ) as number[];
+    setOptions(value);
   }, []);
 
-  /// Initialize options
+  /// Listen [value]
   useEffect(() => {
-    setOptions(rows);
-  }, [rows]);
-
-  /// Initialize value
-  useEffect(() => {
-    const isNumber = values?.some((e) => typeof e === "number");
-    if (isNumber) {
-      const finder = rows.filter((e1) => values?.some((e2) => e1.id === e2));
-      setOption(finder);
-      return;
-    }
-    setOption((values ?? []) as CompanyRegion[]);
+    setOption(values ?? []);
   }, [values]);
 
   return (
     <ThemeProvider theme={theme}>
       <Autocomplete
         multiple
-        value={option}
+        disabled={disabled}
+        fullWidth={fullWidth}
         options={options}
-        isOptionEqualToValue={(option, value) => option?.id === value?.id}
-        getOptionLabel={(option) => option.name ?? ""}
-        onChange={(_, value) => onChanged(value)}
-        renderTags={(value: readonly CompanyRegion[], getTagProps) =>
-          value.map((option: CompanyRegion, index: number) => (
+        value={option}
+        getOptionLabel={(e) => getCustomerStatusTitle(e)}
+        isOptionEqualToValue={(value, option) => value === option}
+        onChange={(_, v) => onChangedHandle(v)}
+        renderTags={(value: readonly ECustomerUserStatus[], getTagProps) =>
+          value.map((option: ECustomerUserStatus, index: number) => (
             <Chip
               variant="outlined"
-              label={option.name}
+              label={getCustomerStatusTitle(option)}
               {...getTagProps({ index })}
             />
           ))
@@ -130,4 +122,4 @@ function SelectRegions(props: SelectRegionProps) {
   );
 }
 
-export default SelectRegions;
+export default SelectCustomerStatuses;

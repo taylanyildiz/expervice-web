@@ -7,7 +7,10 @@ import TechnicianDialog from "../dialogs/TechnicianDialog";
 import { FormikProps } from "formik";
 import { useEffect, useState } from "react";
 import TechnicianProcess from "../entities/technician_process";
-import { ETechnicianStatus } from "../entities/technician_enums";
+import {
+  ETechnicianFilterType,
+  ETechnicianStatus,
+} from "../entities/technician_enums";
 import TechnicianUpdate from "../entities/technician_update";
 import TechnicianGroup from "@Models/technician-user/technician_group";
 import { equalInterface } from "@Utils/functions";
@@ -18,7 +21,20 @@ import TechnicianGroupUpdate from "../entities/technician_group_update";
  * @returns
  */
 export function useTechnician() {
-  return useSelector((state: RootState) => state.technician);
+  const store = useSelector((state: RootState) => state.technician);
+  const filter = store.filter;
+  const [filterCount, setCount] = useState<number>(0);
+  useEffect(() => {
+    let count = 0;
+    if (filter?.filter_type !== ETechnicianFilterType.FirstName) ++count;
+    if (filter?.keyword && filter?.keyword?.length !== 0) ++count;
+    if (filter?.region_ids && filter?.region_ids?.length !== 0) ++count;
+    if (filter?.group_roles && filter?.group_roles?.length !== 0) ++count;
+    if (filter?.groups && filter?.groups?.length !== 0) ++count;
+    if (filter?.statuses && filter?.statuses?.length !== 0) ++count;
+    setCount(count);
+  }, [filter]);
+  return { ...store, filterCount };
 }
 
 /**

@@ -51,6 +51,9 @@ function GMap(props: GMapProps) {
 
   return (
     <GoogleMap
+      options={{
+        disableDefaultUI: true,
+      }}
       mapContainerStyle={{ height, width }}
       center={center}
       zoom={zoom}

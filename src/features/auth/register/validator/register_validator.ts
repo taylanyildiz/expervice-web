@@ -12,7 +12,7 @@ export const registerPrimaryContactValidation = object({
         const length = val?.replace(pattern, "").length;
         return length === 12;
     }),
-    company_name: string().required(TranslateHelper.invalid()).min(2, TranslateHelper.invalid()),
+    company_name: string().required(TranslateHelper.required()).min(2, TranslateHelper.invalid()),
     company_web_site: string().matches(urlRegex, TranslateHelper.invalid()),
     company_phone: string().min(2, TranslateHelper.invalid()),
     company_fax: string().min(2, TranslateHelper.invalid()),
@@ -26,13 +26,13 @@ export const registerPrimaryContactValidation = object({
 /// Billing validation
 export const registerBillingValidation = object({
     card_holder_name: string().required(TranslateHelper.required()),
-    card_number: mixed().test("len", TranslateHelper.invalid(), function (val: any) {
+    card_number: mixed().required(TranslateHelper.required()).test("len", TranslateHelper.invalid(), function (val: any) {
         const newValue = val?.replace(/\ |_/g, "");
         const length = newValue?.length;
         return length === 16;
     }),
-    cvc: string().required().min(3, TranslateHelper.invalid()),
-    expire: mixed().test("valid", TranslateHelper.invalid(), function (val: any) {
+    cvc: string().required(TranslateHelper.required()).min(3, TranslateHelper.invalid()),
+    expire: mixed().required(TranslateHelper.required()).test("valid", TranslateHelper.invalid(), function (val: any) {
         const newValue = val?.replace(/\//g, "");
         const length = newValue?.length;
         return length === 4;

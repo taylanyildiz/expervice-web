@@ -25,6 +25,9 @@ export function useUnit() {
     if (filter?.filter_type !== EUnitFilterType.Name) ++count;
     if (filter?.keyword && filter?.keyword?.length !== 0) ++count;
     if (filter?.region_ids && filter?.region_ids?.length !== 0) ++count;
+    if (filter?.unit_labels && filter?.unit_labels?.length !== 0) ++count;
+    if (filter?.unit_sub_types && filter?.unit_sub_types?.length !== 0) ++count;
+    if (filter?.unit_types && filter?.unit_types?.length !== 0) ++count;
     setCount(count);
   }, [filter]);
 
