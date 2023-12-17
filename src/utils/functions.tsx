@@ -247,7 +247,7 @@ export function useLocationDialog() {
             value={value}
             onDone={(value) => {
               resolve(value);
-              closeDialog();
+              if (value) closeDialog();
             }}
           />,
           "md"

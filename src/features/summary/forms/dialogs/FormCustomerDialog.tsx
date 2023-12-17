@@ -11,7 +11,7 @@ import Colors from "@Themes/colors";
 import { useDialog } from "@Utils/hooks/dialog_hook";
 import { Box, DialogContent, Grid, Typography } from "@mui/material";
 import { useFormik } from "formik";
-import { object, string } from "yup";
+import { formCustomerValidator } from "../validator/form_validator";
 
 interface FormCustomerDialogProps {
   onDone: (form: any) => Promise<boolean>;
@@ -51,14 +51,7 @@ function FormCustomerDialog(props: FormCustomerDialogProps) {
   };
   const formik = useFormik({
     initialValues,
-    validationSchema: object({
-      customer_user: object().nullable().required(),
-      name: string().required().min(2, "Invalid name"),
-      current_job_status: object().nullable().required(),
-      next_job_status: object().nullable().required(),
-      unit_sub_type: object().nullable().notRequired(),
-      job_sub_type: object().nullable().notRequired(),
-    }),
+    validationSchema: formCustomerValidator,
     onSubmit: onSubmitHandle,
   });
 
