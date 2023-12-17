@@ -2,7 +2,9 @@ import FieldType from "@Models/form/field_type";
 import { Language, UserRole } from "@Models/index";
 import JobPriority from "@Models/job/job_priority";
 import JobRole from "@Models/job/job_role";
+import JobStatus from "@Models/job/job_status";
 import JobSubType from "@Models/job/job_sub_type";
+import JobType from "@Models/job/job_type";
 import PermissionResource from "@Models/permission/permission_resource";
 import RolePermission from "@Models/permission/role_permission";
 import GroupRole from "@Models/technician-user/group_role";
@@ -23,6 +25,8 @@ interface Props {
     unitTypes: UnitType[],
     unitSubTypes: UnitSubType[],
     unitLabels: UnitLabel[],
+    jobStatuses: JobStatus[],
+    jobTypes: JobType[],
     jobSubTypes: JobSubType[],
     jobRoles: JobRole[],
     jobPriorities: JobPriority[],
@@ -40,6 +44,8 @@ const initialStates: Props = {
     unitTypes: [],
     unitSubTypes: [],
     unitLabels: [],
+    jobStatuses: [],
+    jobTypes: [],
     jobSubTypes: [],
     jobRoles: [],
     jobPriorities: [],
@@ -78,6 +84,12 @@ const constants = createSlice({
         setUnitLabels: (state, { payload }) => {
             state.unitLabels = payload;
         },
+        setJobStatuses: (state, { payload }) => {
+            state.jobStatuses = payload;
+        },
+        setJobTypes: (state, { payload }) => {
+            state.jobTypes = payload;
+        },
         setJobSubTypes: (state, { payload }) => {
             state.jobSubTypes = payload;
         },
@@ -105,6 +117,8 @@ export const {
     setUnitTypes,
     setUnitSubTypes,
     setUnitLabels,
+    setJobStatuses,
+    setJobTypes,
     setJobSubTypes,
     setJobRoles,
     setJobPriorities,

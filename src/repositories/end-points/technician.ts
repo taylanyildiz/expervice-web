@@ -4,6 +4,9 @@ const Technician = {
     group: (id: number) => `/${id}/group`,
     status: (id: number) => `/${id}/status`,
     invite: (id: number) => `/${id}/invite`,
+    jobs: (id: number) => `/${id}/jobs`,
+    jobRoles: (id: number) => `/${id}/job-roles`,
+    jobStatuses: (id: number) => `/${id}/job-statuses`,
 }
 
 export default Technician;

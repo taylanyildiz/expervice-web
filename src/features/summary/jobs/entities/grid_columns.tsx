@@ -2,6 +2,7 @@ import TranslateHelper from "@Local/index";
 import Job from "@Models/job/job";
 import { store } from "@Store/index";
 import { setJobId } from "@Store/job_store";
+import { dateToFormat } from "@Utils/functions";
 import { GridColDef } from "@mui/x-data-grid";
 
 const columns = (): GridColDef<Job>[] => [
@@ -109,6 +110,15 @@ const columns = (): GridColDef<Job>[] => [
       const job = params.row;
       const technicians = job.job_technicians?.length;
       return technicians;
+    },
+  },
+  {
+    field: "creted_at",
+    minWidth: 200,
+    headerName: TranslateHelper.createdDate(),
+    valueGetter: (params) => {
+      const date = new Date(params.row.created_at!);
+      return dateToFormat(date);
     },
   },
 ];

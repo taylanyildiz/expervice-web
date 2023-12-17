@@ -7,7 +7,10 @@ import InternalUserProcess from "../entities/internal_user_process";
 import InternalUserUpdate from "../entities/internal_user_update";
 import InternalUserPermission from "../entities/internal_user_permission";
 import { equalInterface } from "@Utils/functions";
-import { EInternalStatus } from "../entities/internal_user_enums";
+import {
+  EInternalFilterType,
+  EInternalStatus,
+} from "../entities/internal_user_enums";
 import { useDialog } from "@Utils/hooks/dialog_hook";
 import { setInternalUser } from "@Store/internal_user_store";
 import InternalUserDialog from "../dialogs/InternalUserDialog";
@@ -17,7 +20,19 @@ import InternalUserDialog from "../dialogs/InternalUserDialog";
  * @returns
  */
 export function useInternal() {
-  return useSelector((state: RootState) => state.internalUser);
+  const store = useSelector((state: RootState) => state.internalUser);
+  const filter = store.filter;
+  const [filterCount, setFilterCount] = useState<number>(0);
+  useEffect(() => {
+    let count = 0;
+    if (filter.role_ids && filter.role_ids?.length !== 0) ++count;
+    if (filter.keyword && filter.keyword?.length !== 0) ++count;
+    if (filter.statuses && filter.statuses?.length !== 0) ++count;
+    if (filter.filter_type && filter.filter_type !== EInternalFilterType.Email)
+      ++count;
+    setFilterCount(count);
+  }, [filter]);
+  return { ...store, filterCount };
 }
 
 /**

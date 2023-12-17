@@ -140,7 +140,7 @@ function SubscriptionPlanDialog() {
             variant="contained"
             color="white"
             fontWeight="normal"
-            children="Save"
+            children={TranslateHelper.save()}
             onClick={handleSave}
           />,
         ]}

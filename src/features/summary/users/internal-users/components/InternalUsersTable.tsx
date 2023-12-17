@@ -34,6 +34,7 @@ function InternalUsersTable() {
   const {
     internalUsers: { rows, count },
     layzLoading,
+    filter: internalFilter,
   } = useSelector((state: RootState) => state.internalUser);
 
   /// Get internal users
@@ -44,8 +45,12 @@ function InternalUsersTable() {
   /// Initialize component
   useEffect(() => {
     dispatch(setFilter(filter));
-    getInternalUsers();
   }, [filter]);
+
+  /// Initialize component
+  useEffect(() => {
+    getInternalUsers();
+  }, [internalFilter]);
 
   return (
     <div className="internal-users-grid">

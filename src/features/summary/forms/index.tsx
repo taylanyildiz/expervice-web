@@ -1,18 +1,22 @@
 import GridTableHeader from "@Components/GridTableHeader";
 import FormsTable from "./components/FormsTable";
-import "../../../assets/css/forms.css";
-import { Outlet } from "react-router-dom";
 import { useForm, useFormDialog } from "./helper/form_helper";
 import { useEffect } from "react";
 import { useQuery } from "@Utils/functions";
 import { AppDispatch } from "@Store/index";
 import { useDispatch } from "react-redux";
-import { setFormDialogStatus, setFormId } from "@Store/form_store";
+import {
+  setFormDialogStatus,
+  setFormFilterDrawerStatus,
+  setFormId,
+} from "@Store/form_store";
 import TranslateHelper from "@Local/index";
+import "../../../assets/css/forms.css";
+import FormFilterDrawer from "./components/FormFilterDrawer";
 
 function FormsPage() {
   /// Form store
-  const { formId } = useForm();
+  const { formId, filterCount } = useForm();
 
   /// Form dialog hook
   const { openFormDialog, closeDialog } = useFormDialog();
@@ -50,11 +54,14 @@ function FormsPage() {
         onAdd={() => {
           openFormDialog();
         }}
-        onFilter={() => {}}
+        onFilter={() => {
+          dispatch(setFormFilterDrawerStatus(true));
+        }}
         onExport={() => {}}
+        filterCount={filterCount}
       />
       <FormsTable />
-      <Outlet />
+      <FormFilterDrawer />
     </div>
   );
 }

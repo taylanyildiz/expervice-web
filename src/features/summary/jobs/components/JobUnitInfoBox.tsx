@@ -32,9 +32,9 @@ function JobUnitInfoBox(props: JobUnitInfoBoxProps) {
             color="black"
             title={`${TranslateHelper.customer()} :`}
             content={
-              <Stack direction="row" spacing={1}>
+              <Stack direction="row" spacing={1} alignItems="center">
                 <Avatar
-                  sx={{ width: 20, height: 20, fontSize: 13, color: "white" }}
+                  sx={{ width: 24, height: 24, fontSize: 10, color: "white" }}
                   children={caption(unit?.customer?.display_name)}
                 />
                 <Typography

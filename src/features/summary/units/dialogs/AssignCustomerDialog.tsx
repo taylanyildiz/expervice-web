@@ -60,7 +60,7 @@ function CustomerInfo(props: { customer?: Customer }) {
                     customer?.first_name || customer?.last_name
                   )}
                   color="black"
-                  title={"Name:"}
+                  title={`${TranslateHelper.name()} :`}
                   content={`${customer?.first_name} ${customer?.last_name}`}
                 />
                 <RichText
@@ -139,8 +139,8 @@ function AssignCustomerDialog() {
   /// Submit handle
   const onSubmitHandle = async () => {
     const confirm = await openConfirm(
-      "Assign Customer",
-      "Are you sure to assign customer?"
+      TranslateHelper.assignCustomer(),
+      TranslateHelper.sureAssignCustomer()
     );
     if (!confirm) return;
     const result = await openLoading(async () => {
@@ -168,7 +168,7 @@ function AssignCustomerDialog() {
 
   return (
     <>
-      <DialogCustomTitle title="Assign Customer" />
+      <DialogCustomTitle title={TranslateHelper.assignCustomer()} />
       <DialogContent>
         <CustomerInfo customer={customer} />
         <Box p={1} mt={1} sx={{ backgroundColor: "white" }}>
@@ -176,7 +176,7 @@ function AssignCustomerDialog() {
             <Grid item flex={1}>
               <SelectCustomer
                 fullWidth
-                label="Customer"
+                label={TranslateHelper.customer()}
                 value={formik.values.customer}
                 onChanged={(customer) => {
                   formik.setFieldValue("customer", customer);
@@ -192,7 +192,7 @@ function AssignCustomerDialog() {
                 variant="text"
                 fontWeight="normal"
                 color="blue"
-                children="Create Customer"
+                children={TranslateHelper.createCustomer()}
                 onClick={handleCreateCustomer}
               />
             </Grid>
@@ -206,7 +206,7 @@ function AssignCustomerDialog() {
             variant="contained"
             fontWeight="normal"
             color="white"
-            children="Save"
+            children={TranslateHelper.save()}
           />,
         ]}
       />

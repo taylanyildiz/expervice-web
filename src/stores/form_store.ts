@@ -1,12 +1,14 @@
 import Customer from "@Models/customer/customer";
 import Form from "@Models/form/form";
+import FormFilter from "@Models/form/form_filter";
 import { createSlice } from "@reduxjs/toolkit";
 
 interface Props {
     formLayzLoading: boolean;
     formTemplateLoading: boolean;
     forms: { rows: Form[], count: number };
-    formFilter: { limit: number, offset: number } | null,
+    formFilterDrawerStatus: boolean;
+    formFilter: FormFilter,
     formDialogStatus: boolean;
     form: Form | null;
     formId: number | null;
@@ -17,6 +19,7 @@ interface Props {
 const initialState: Props = {
     formLayzLoading: true,
     formTemplateLoading: true,
+    formFilterDrawerStatus: false,
     formFilter: { limit: 10, offset: 0 },
     forms: { rows: [], count: 0 },
     formDialogStatus: false,
@@ -32,6 +35,9 @@ const form = createSlice({
     reducers: {
         setFormLayzLoading: (state, { payload }) => {
             state.formLayzLoading = payload;
+        },
+        setFormFilterDrawerStatus: (state, { payload }) => {
+            state.formFilterDrawerStatus = payload;
         },
         setFormFilter: (state, { payload }) => {
             state.formFilter = payload;
@@ -64,6 +70,7 @@ const form = createSlice({
 export default form.reducer;
 export const {
     setFormCustomers,
+    setFormFilterDrawerStatus,
     setFormFilter,
     setFormLayzLoading,
     setForms,

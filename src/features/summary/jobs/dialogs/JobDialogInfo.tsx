@@ -42,6 +42,7 @@ function JobDialogInfo(props: { formik: FormikProps<Job> }) {
       </Grid>
       <Grid item xs={6}>
         <SelectJobSubType
+          disableClearable
           disabled={isEdit}
           fullWidth
           clearIcon={false}

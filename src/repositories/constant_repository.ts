@@ -1,7 +1,7 @@
 import { store } from "@Store/index";
 import BaseRepository from "./base_repository";
 import Constant from "./end-points/constant";
-import { setFieldTypes, setGroupRoles, setJobPriorities, setJobRoles, setJobSubTypes, setLanguages, setPermissions, setRolePermissions, setUnitLabels, setUnitSubTypes, setUnitTypes, setUserRoleTypes, setUserRoles } from "@Store/constant_store";
+import { setFieldTypes, setGroupRoles, setJobPriorities, setJobRoles, setJobStatuses, setJobSubTypes, setJobTypes, setLanguages, setPermissions, setRolePermissions, setUnitLabels, setUnitSubTypes, setUnitTypes, setUserRoleTypes, setUserRoles } from "@Store/constant_store";
 import JobStatus from "@Models/job/job_status";
 import UnsubscriptionReason from "@Models/unsubscription_reason";
 
@@ -125,6 +125,17 @@ class ConstantRepository extends BaseRepository {
     }
 
     /**
+     * Get Job Types
+     */
+    public async getJobTypes(): Promise<void> {
+        const path = Constant.jobTypes;
+        const response = await this.get(path);
+        if (!response.success) return;
+        const data = response.data['data']['job_types'];
+        store.dispatch(setJobTypes(data));
+    }
+
+    /**
      * Get Job Roles
      */
     public async getJobRoles(): Promise<void> {
@@ -165,7 +176,7 @@ class ConstantRepository extends BaseRepository {
         const response = await this.get(path, { params: props });
         if (!response.success) return null;
         const data = response.data['data']['job_statuses'];
-        store.dispatch(setFieldTypes(data));
+        store.dispatch(setJobStatuses(data));
         return data;
     }
 

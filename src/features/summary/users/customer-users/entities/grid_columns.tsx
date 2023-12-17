@@ -3,6 +3,7 @@ import { GridColDef } from "@mui/x-data-grid";
 import { useCustomerDialog } from "../helpers/customer_user_helper";
 import StatusBox from "@Components/StatusBox";
 import TranslateHelper from "@Local/index";
+import { store } from "@Store/index";
 
 const columns = (): GridColDef<Customer>[] => [
   {
@@ -87,7 +88,9 @@ const columns = (): GridColDef<Customer>[] => [
     headerName: TranslateHelper.country(),
     valueGetter: (params) => {
       const row = params.row;
-      return row.country?.name;
+      const lng = store.getState().user.language?.language_code ?? "en";
+      const country = row.country;
+      return country?.translations?.[lng];
     },
   },
 ];

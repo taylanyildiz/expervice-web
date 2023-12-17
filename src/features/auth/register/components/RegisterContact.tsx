@@ -96,7 +96,11 @@ function PrimaryContact(props: {
   return (
     <Grid container justifyContent="start">
       <Grid item>
-        <Typography variant="h1" fontSize={20} children="Primary Contact" />
+        <Typography
+          variant="h1"
+          fontSize={20}
+          children={TranslateHelper.primaryContact()}
+        />
       </Grid>
       <Grid item xs={12} mt={2}>
         <Grid container columnSpacing={2}>
@@ -264,7 +268,11 @@ function BusinessAddress(props: {
   return (
     <Grid container justifyContent="start">
       <Grid item>
-        <Typography variant="h1" fontSize={20} children="Business Address" />
+        <Typography
+          variant="h1"
+          fontSize={20}
+          children={TranslateHelper.businessAddress()}
+        />
       </Grid>
       <Grid item xs={12} mt={2}>
         <CountrySelect

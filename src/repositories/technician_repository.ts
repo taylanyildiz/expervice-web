@@ -1,7 +1,7 @@
 import { store } from "@Store/index";
 import BaseRepository from "./base_repository";
 import Technician from "./end-points/technician";
-import { setTechnicianLayz, setTechnicians } from "@Store/technician_store";
+import { setTechnicianJobRoles, setTechnicianJobStatuses, setTechnicianJobs, setTechnicianLayz, setTechnicians } from "@Store/technician_store";
 import TechnicianUser from "@Models/technician-user/technician_user";
 import TechnicianProcess from "@Features/summary/users/technician-users/entities/technician_process";
 import SnackCustomBar from "@Utils/snack_custom_bar";
@@ -107,6 +107,55 @@ class TechnicianRepository extends BaseRepository {
         const response = await this.delete(path);
         SnackCustomBar.status(response);
         return response.success;
+    }
+
+    /**
+     * Get Technician jobs
+     */
+    public async getTechnicianJobs(id: number): Promise<boolean> {
+        const path = Technician.jobs(id);
+        const filter = store.getState().technician.technicianJobsFilter;
+        store.dispatch(setTechnicianJobs({ rows: [], count: 0 }));
+        const response = await this.get(path, { params: filter });
+        const success = response.success;
+        SnackCustomBar.status(response, { display: !success });
+        if (success) {
+            const data = response.data?.['data']?.['job_technicians'];
+            store.dispatch(setTechnicianJobs(data));
+        }
+        return success;
+    }
+
+    /**
+     * Get Technician job roles
+     */
+    public async getTechnicianJobRoles(id: number): Promise<boolean> {
+        store.dispatch(setTechnicianJobRoles(null));
+        const path = Technician.jobRoles(id);
+        const response = await this.get(path);
+        const success = response.success;
+        SnackCustomBar.status(response, { display: !success });
+        if (success) {
+            const data = response.data?.['data']?.['job_roles'];
+            store.dispatch(setTechnicianJobRoles(data));
+        }
+        return success;
+    }
+
+    /**
+     * Get Technician job statuses
+     */
+    public async getTechnicianJobStatuses(id: number): Promise<boolean> {
+        store.dispatch(setTechnicianJobStatuses(null));
+        const path = Technician.jobStatuses(id);
+        const response = await this.get(path);
+        const success = response.success;
+        SnackCustomBar.status(response, { display: !success });
+        if (success) {
+            const data = response.data?.['data']?.['job_statuses'];
+            store.dispatch(setTechnicianJobStatuses(data));
+        }
+        return success;
     }
 }
 

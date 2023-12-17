@@ -5,7 +5,8 @@ import { createSlice } from "@reduxjs/toolkit";
 /// Internal user props
 interface Props {
     layzLoading: boolean,
-    filter: InternalUserFilter | null,
+    internalUserFilterDrawerStatus: boolean;
+    filter: InternalUserFilter,
     internalUsers: { rows: InternalUser[], count: number }
     internalUser: InternalUser | null,
 }
@@ -13,6 +14,7 @@ interface Props {
 /// Internal Users Initial state
 const initialState: Props = {
     layzLoading: true,
+    internalUserFilterDrawerStatus: false,
     filter: { limit: 10, offset: 0 },
     internalUsers: { rows: [], count: 0 },
     internalUser: null,
@@ -32,6 +34,9 @@ const internalUser = createSlice({
         setInternalUserLayz: (state, { payload }) => {
             state.layzLoading = payload;
         },
+        setInternalUserFilterDrawerStatus: (state, { payload }) => {
+            state.internalUserFilterDrawerStatus = payload;
+        },
         setFilter: (state, { payload }) => {
             state.filter = payload;
         }
@@ -39,5 +44,11 @@ const internalUser = createSlice({
 });
 
 export default internalUser.reducer;
-export const { setInternalUsers, setInternalUser, setInternalUserLayz, setFilter } = internalUser.actions;
+export const {
+    setInternalUsers,
+    setInternalUser,
+    setInternalUserLayz,
+    setInternalUserFilterDrawerStatus,
+    setFilter
+} = internalUser.actions;
 

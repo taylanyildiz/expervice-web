@@ -1,4 +1,4 @@
-import SelectRegions from "@Components/SelectRegions";
+import SelectRegions from "@Features/summary/components/SelectRegions";
 import VisibilityComp from "@Components/VisibilityComp";
 import { useUser } from "@Features/summary/company/helper/company_helper";
 import TranslateHelper from "@Local/index";
