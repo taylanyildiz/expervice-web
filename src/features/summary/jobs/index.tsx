@@ -6,9 +6,14 @@ import { useEffect } from "react";
 import { AppDispatch } from "@Store/index";
 import { useDispatch } from "react-redux";
 import { useQuery } from "@Utils/functions";
-import { setJobDialogStatus, setJobId } from "@Store/job_store";
+import {
+  setJobDialogStatus,
+  setJobId,
+  setJobsFilterDrawerStatus,
+} from "@Store/job_store";
 import { useAccount } from "../company/helper/company_helper";
 import TranslateHelper from "@Local/index";
+import JobsFilterDrawer from "./components/JobsFilterDrawer";
 
 function JobsPage() {
   /// Account store
@@ -19,7 +24,7 @@ function JobsPage() {
   const [path, deletePath, setPath] = useQuery();
 
   /// Job store
-  const { jobId } = useJob();
+  const { jobId, filterCount } = useJob();
 
   /// Dispatch
   const dispatch: AppDispatch = useDispatch<AppDispatch>();
@@ -27,6 +32,7 @@ function JobsPage() {
   /// Initialize component
   useEffect(() => {
     const id = parseInt(`${path.get("jobId")}`);
+
     dispatch(setJobId(null));
     dispatch(setJobDialogStatus(false));
     if (!id || isNaN(id)) deletePath("unitId");
@@ -52,10 +58,14 @@ function JobsPage() {
         onAdd={() => {
           openUnitDialog();
         }}
-        onFilter={() => {}}
+        onFilter={() => {
+          dispatch(setJobsFilterDrawerStatus(true));
+        }}
         onExport={() => {}}
+        filterCount={filterCount}
       />
       <JobsTable />
+      <JobsFilterDrawer />
     </div>
   );
 }

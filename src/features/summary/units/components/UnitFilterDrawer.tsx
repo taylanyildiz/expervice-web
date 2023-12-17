@@ -100,6 +100,7 @@ function UnitsFilterDrawer() {
     <Drawer anchor="right" open={open} onClose={handleClose}>
       <Box width={300} height="100%">
         <Stack spacing={1} height="100%">
+          {/* Header */}
           <Stack
             direction="row"
             justifyContent="space-between"
@@ -116,6 +117,7 @@ function UnitsFilterDrawer() {
             </IconButton>
           </Stack>
           <Divider />
+          {/* Content */}
           <Stack
             sx={{ borderBottom: 1, borderColor: "divider" }}
             p={1}
@@ -223,6 +225,7 @@ function UnitsFilterDrawer() {
               }}
             />
           </Stack>
+          {/* Actions */}
           <Stack p={1} justifyContent="end" spacing={1} direction="row">
             <PrimaryButton
               variant="outlined"

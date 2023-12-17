@@ -1,9 +1,11 @@
+import { EJobFilterType } from "@Features/summary/jobs/entities/job_enums";
 import Job from "@Models/job/job";
 import { createSlice } from "@reduxjs/toolkit";
 
 interface Props {
     layzLoading: boolean,
-    jobFilter: JobFilter | null;
+    jobFilter: JobFilter;
+    jobsFilterDrawerStatus: boolean;
     jobs: { count: number, rows: Job[] },
     jobDialogStatus: boolean;
     job: Job | null
@@ -12,7 +14,8 @@ interface Props {
 
 const initialState: Props = {
     layzLoading: false,
-    jobFilter: { limit: 10, offset: 0 },
+    jobsFilterDrawerStatus: false,
+    jobFilter: { limit: 10, offset: 0, filter_type: EJobFilterType.UnitName },
     jobs: { count: 0, rows: [] },
     jobDialogStatus: false,
     job: null,
@@ -26,6 +29,9 @@ const job = createSlice({
     reducers: {
         setJobLayzLoading: (state, { payload }) => {
             state.layzLoading = payload;
+        },
+        setJobsFilterDrawerStatus: (state, { payload }) => {
+            state.jobsFilterDrawerStatus = payload;
         },
         setJobFilter: (state, { payload }) => {
             state.jobFilter = payload;
@@ -48,6 +54,7 @@ const job = createSlice({
 export default job.reducer;
 export const {
     setJobLayzLoading,
+    setJobsFilterDrawerStatus,
     setJobFilter,
     setJobs,
     setJobDialogStatus,

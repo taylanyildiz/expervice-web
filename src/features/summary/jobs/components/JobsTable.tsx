@@ -13,6 +13,7 @@ function JobsTable() {
   const {
     layzLoading,
     jobs: { rows, count },
+    jobFilter,
   } = useJob();
 
   /// Dispatch
@@ -38,8 +39,12 @@ function JobsTable() {
   /// Initialize component
   useEffect(() => {
     dispatch(setJobFilter(filter));
-    jobRepo.getJobs();
   }, [filter]);
+
+  /// Initialize component
+  useEffect(() => {
+    jobRepo.getJobs();
+  }, [jobFilter]);
 
   return (
     <div className="jobs-grid">

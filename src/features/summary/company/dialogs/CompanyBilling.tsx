@@ -2,7 +2,7 @@ import LoadingComp from "@Components/LoadingComp";
 import { SubscriptionRepository, UserRepository } from "@Repo/index";
 import { Box, IconButton, Stack, Typography } from "@mui/material";
 import { useEffect, useMemo, useState } from "react";
-import { useUser } from "../helper/company_helper";
+import { useAccount, useUser } from "../helper/company_helper";
 import CompanySubscriptionOrder from "@Models/company/company_subscription_order";
 import { DataGrid } from "@mui/x-data-grid";
 import LocalPrintshopIcon from "@mui/icons-material/LocalPrintshop";
@@ -22,6 +22,9 @@ function CompanyBilling() {
   /// User store
   const { subscription } = useUser();
   const isCanceled: boolean = Boolean(subscription?.cancellation_date);
+
+  /// Account store
+  const { isOwner } = useAccount();
 
   /// Loading state
   const [loading, setLoading] = useState<boolean>(true);
@@ -62,7 +65,7 @@ function CompanyBilling() {
   return (
     <LoadingComp loading={loading} height={400}>
       <Stack direction="column" spacing={3}>
-        <VisibilityComp visibility={isCanceled}>
+        <VisibilityComp visibility={isCanceled && isOwner}>
           <SubscriptionCancelBox />
         </VisibilityComp>
         <SubscriptionInfoBox payment={nextPayment} />

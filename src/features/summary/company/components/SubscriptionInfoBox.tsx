@@ -8,7 +8,11 @@ import {
   Tooltip,
   Typography,
 } from "@mui/material";
-import { useCompanyDialog, useUser } from "../helper/company_helper";
+import {
+  useAccount,
+  useCompanyDialog,
+  useUser,
+} from "../helper/company_helper";
 import RichText from "@Components/RichText";
 import { Order } from "@Models/company/company_subscription_order";
 import PaymentOutlinedIcon from "@mui/icons-material/PaymentOutlined";
@@ -24,6 +28,9 @@ function SubscriptionInfoBox(props: { payment?: Order | null }) {
   /// User store
   const { subscription } = useUser();
   const isCanceled: boolean = Boolean(subscription?.cancellation_date);
+
+  ///
+  const { isOwner } = useAccount();
 
   /// User store
   const { language } = useUser();
@@ -88,7 +95,7 @@ function SubscriptionInfoBox(props: { payment?: Order | null }) {
                     children={TranslateHelper.experviceOfferings()}
                   />
                 </Stack>
-                <VisibilityComp visibility={!isCanceled}>
+                <VisibilityComp visibility={!isCanceled && isOwner}>
                   <Stack
                     height="100%"
                     display="flex"

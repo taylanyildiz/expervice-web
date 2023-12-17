@@ -1,5 +1,5 @@
 import TranslateHelper from "@Local/index";
-import { EFormStatuses, EJobStatuses } from "../entities/job_enums";
+import { EFormStatuses, EJobFilterType, EJobStatuses } from "../entities/job_enums";
 
 export function getJobFormStatusTitle(value?: number | null) {
     if (!value) return "";
@@ -30,4 +30,17 @@ export function notAvailableJobStatuses(): EJobStatuses[] {
 export function isAvailableJobStatus(status?: number): boolean {
     if (!status) return true;
     return !notAvailableJobStatuses().includes(status);
+}
+
+export function getJobFilterTypeTitle(type?: EJobFilterType): string {
+    switch (type) {
+        case EJobFilterType.UnitName:
+            return TranslateHelper.unitName();
+        case EJobFilterType.IdentityNumber:
+            return TranslateHelper.identityNumber();
+        case EJobFilterType.QRCode:
+            return TranslateHelper.qrCode();
+        default:
+            return "";
+    }
 }

@@ -6,7 +6,11 @@ import JobDialog from "../dialogs/JobDialog";
 import SelectUnitDialog from "../dialogs/SelectUnitDialog";
 import Unit from "@Models/units/unit";
 import Job from "@Models/job/job";
-import { EJobStatuses, EJobSubType } from "../entities/job_enums";
+import {
+  EJobFilterType,
+  EJobStatuses,
+  EJobSubType,
+} from "../entities/job_enums";
 import { useEffect, useState } from "react";
 import { FormikProps } from "formik";
 import JobProcess from "../entities/job_process";
@@ -19,7 +23,22 @@ import JobFormDialog from "../dialogs/JobFormDialog";
  * Job Store
  */
 export function useJob() {
-  return useSelector((state: RootState) => state.job);
+  const store = useSelector((state: RootState) => state.job);
+  const filter = store.jobFilter;
+  const [filterCount, setFilterCount] = useState<number>(0);
+  useEffect(() => {
+    let count = 0;
+    if (filter.filter_type !== EJobFilterType.UnitName) ++count;
+    if (filter.keyword && filter.keyword.length !== 0) ++count;
+    if (filter.type_ids && filter.type_ids.length !== 0) ++count;
+    if (filter.sub_type_ids && filter.sub_type_ids.length !== 0) ++count;
+    if (filter.statuses && filter.statuses.length !== 0) ++count;
+    if (filter.priorities && filter.priorities.length !== 0) ++count;
+    if (filter.region_ids && filter.region_ids.length !== 0) ++count;
+    if (filter.groups && filter.groups.length !== 0) ++count;
+    setFilterCount(count);
+  }, [filter]);
+  return { ...store, filterCount };
 }
 
 /**

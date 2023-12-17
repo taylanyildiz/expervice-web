@@ -12,6 +12,7 @@ const Constant = {
     unitTypes: "/unit-types",
     unitsubTypes: "/unit-sub-types",
     unitLabels: "/unit-labels",
+    jobTypes: "/job-types",
     jobSubTypes: "/job-sub-types",
     jobRoles: "/job-roles",
     jobPriorities: "/job-priorities",
