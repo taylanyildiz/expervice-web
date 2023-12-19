@@ -1,4 +1,4 @@
-import { Grid, Typography } from "@mui/material";
+import { Typography } from "@mui/material";
 import { ReactNode } from "react";
 import { VisibilityComp } from ".";
 
@@ -26,7 +26,6 @@ function RichText(props: RichTextProps) {
     title,
     content,
     color,
-    spacing,
     fontSize,
     titleProps,
     contentProps,
@@ -49,6 +48,7 @@ function RichText(props: RichTextProps) {
         fontWeight={titleFontWeight}
         fontSize={titleSize}
         color={titleColor}
+        alignItems={alignItems}
         children={
           <>
             {title}{" "}
