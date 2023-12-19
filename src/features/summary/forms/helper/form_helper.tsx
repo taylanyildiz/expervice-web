@@ -85,7 +85,7 @@ export function useFormProcess(formik: FormikProps<Form>, form: Form | null) {
             field_type_id: e.field_type?.id,
             label: e.label,
             order_number: e.order_number,
-            mandantory: e.mandantory,
+            mandatory: e.mandatory,
           } as FormField)
       ),
       name: values.name,
@@ -116,7 +116,7 @@ export function useFormProcess(formik: FormikProps<Form>, form: Form | null) {
             description: e.description,
             field_type_id: e.field_type_id,
             label: e.label,
-            mandantory: e.mandantory,
+            mandatory: e.mandatory,
             options: isDropdown(e.field_type_id) ? e.options : null,
             order_number: e.order_number,
           } as FormField)
@@ -153,7 +153,7 @@ export function useFormProcess(formik: FormikProps<Form>, form: Form | null) {
             description: e.description,
             field_type_id: e.field_type_id,
             label: e.label,
-            mandantory: e.mandantory,
+            mandatory: e.mandatory,
             options: isDropdown(e.field_type_id) ? e.options : null,
             order_number: e.order_number,
           } as FormField)

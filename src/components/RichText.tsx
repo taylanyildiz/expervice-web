@@ -10,13 +10,14 @@ interface Props {
 
 interface RichTextProps {
   visibility?: boolean;
-  title: ReactNode;
+  title?: ReactNode;
   titleProps?: Props;
   content: ReactNode;
   contentProps?: Props;
   color?: string;
   fontSize?: string | number;
   spacing?: number;
+  alignItems?: "center" | "start";
 }
 
 function RichText(props: RichTextProps) {
@@ -29,6 +30,7 @@ function RichText(props: RichTextProps) {
     fontSize,
     titleProps,
     contentProps,
+    alignItems,
   } = props;
   visibility ??= true;
 
@@ -42,30 +44,26 @@ function RichText(props: RichTextProps) {
 
   return (
     <VisibilityComp visibility={visibility}>
-      <Grid
-        direction="row"
-        container
-        alignItems="center"
-        spacing={spacing ?? 1}
-      >
-        <Grid item>
-          <Typography
-            variant="h1"
-            fontWeight={titleFontWeight}
-            fontSize={titleSize}
-            color={titleColor}
-            children={title}
-          />
-        </Grid>
-        <Grid item>
-          <Typography
-            fontSize={contentSize}
-            fontWeight={contentFontWeight}
-            color={contentColor}
-            children={content}
-          />
-        </Grid>
-      </Grid>
+      <Typography
+        variant="h1"
+        fontWeight={titleFontWeight}
+        fontSize={titleSize}
+        color={titleColor}
+        children={
+          <>
+            {title}{" "}
+            <span
+              style={{
+                fontSize: contentSize,
+                fontWeight: contentFontWeight,
+                color: contentColor,
+              }}
+            >
+              {content}
+            </span>
+          </>
+        }
+      />
     </VisibilityComp>
   );
 }

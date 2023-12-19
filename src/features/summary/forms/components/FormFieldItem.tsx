@@ -1,4 +1,3 @@
-import VisibilityComp from "@Components/VisibilityComp";
 import Field from "@Models/form/field";
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 import EditNoteOutlinedIcon from "@mui/icons-material/EditNoteOutlined";
@@ -14,6 +13,7 @@ import {
 import Colors from "@Themes/colors";
 import TranslateHelper from "@Local/index";
 import { useUser } from "@Features/summary/company/helper/company_helper";
+import RichText from "@Components/RichText";
 
 interface FormFieldItemProps {
   field: Field;
@@ -52,75 +52,48 @@ function FormFieldItem(props: FormFieldItemProps) {
         secondary={
           <Stack direction="row">
             <Stack direction="column">
-              <Typography
-                fontWeight="bold"
-                fontSize={11}
-                maxWidth={200}
-                overflow="clip"
-                textOverflow="ellipsis"
-                children={
-                  <>
-                    {TranslateHelper.label()} :{" "}
-                    <b style={{ fontWeight: "normal" }}>{field.label}</b>
-                  </>
-                }
+              <RichText
+                color="black"
+                visibility={Boolean(field.label)}
+                title={`${TranslateHelper.label()} :`}
+                content={field.label}
               />
-              <VisibilityComp visibility={Boolean(field.description)}>
-                <Typography
-                  fontWeight="bold"
-                  fontSize={11}
-                  maxWidth={200}
-                  overflow="clip"
-                  textOverflow="ellipsis"
-                  children={
-                    <>
-                      {TranslateHelper.description()} :{" "}
-                      <b style={{ fontWeight: "normal" }}>
-                        {field.description}
-                      </b>
-                    </>
-                  }
-                />
-              </VisibilityComp>
-
-              <VisibilityComp
+              <RichText
+                color="black"
+                visibility={Boolean(field.description)}
+                title={`${TranslateHelper.description()} :`}
+                content={field.description}
+              />
+              <RichText
+                alignItems="start"
+                color="black"
                 visibility={Boolean(
                   field.options && field.options?.length !== 0
                 )}
-              >
-                <Typography
-                  fontWeight="bold"
-                  fontSize={11}
-                  maxWidth={200}
-                  overflow="clip"
-                  textOverflow="ellipsis"
-                  children={
-                    <>
-                      {TranslateHelper.options()} :{" "}
-                      <b style={{ fontWeight: "normal" }}>
-                        {field.options?.map((e) => `${e.label}, `)}
-                      </b>
-                    </>
-                  }
-                />
-              </VisibilityComp>
-              <VisibilityComp visibility={Boolean(field.default_value)}>
-                <Typography
-                  fontWeight="bold"
-                  fontSize={11}
-                  maxWidth={200}
-                  overflow="clip"
-                  textOverflow="ellipsis"
-                  children={
-                    <>
-                      {TranslateHelper.defaultValue()} :{" "}
-                      <b style={{ fontWeight: "normal" }}>
-                        {field.default_value}
-                      </b>
-                    </>
-                  }
-                />
-              </VisibilityComp>
+                title={`${TranslateHelper.options()} :`}
+                content={
+                  <ul style={{ maxHeight: 100 }}>
+                    {field.options?.map((e) => (
+                      <li>{e.label}</li>
+                    ))}
+                  </ul>
+                }
+              />
+              <RichText
+                color="black"
+                visibility={Boolean(field.default_value)}
+                title={`${TranslateHelper.defaultValue()} :`}
+                content={field.default_value}
+              />
+              <RichText
+                contentProps={{
+                  color: "red",
+                  fontWeight: "bold",
+                  fontSize: 11,
+                }}
+                visibility={Boolean(field.mandatory)}
+                content={TranslateHelper.required()}
+              />
             </Stack>
           </Stack>
         }
