@@ -2,7 +2,7 @@ import { useJobDialog } from "@Features/summary/jobs/helper/job_helper";
 import TranslateHelper from "@Local/index";
 import JobTechnician from "@Models/job/job_technician";
 import { store } from "@Store/index";
-import { dateToFormat } from "@Utils/functions";
+import { dateRange, dateToFormat } from "@Utils/functions";
 import { GridColDef } from "@mui/x-data-grid";
 
 const technicianJobsColumns = (): GridColDef<JobTechnician>[] => [
@@ -82,6 +82,25 @@ const technicianJobsColumns = (): GridColDef<JobTechnician>[] => [
     valueGetter: (params) => {
       const date = new Date(params.row.job?.created_at!);
       return dateToFormat(date);
+    },
+  },
+  {
+    field: "updated_at",
+    minWidth: 200,
+    headerName: "Last Updated Date", // TODO: Translations
+    valueGetter: (params) => {
+      const date = new Date(params.row.job?.updated_at!);
+      return dateToFormat(date);
+    },
+  },
+  {
+    field: "elapsed_at",
+    minWidth: 200,
+    headerName: "Elapsed Duration", // TODO: Translations
+    valueGetter: (params) => {
+      const created = new Date(params.row.job?.created_at!);
+      const updated = new Date(params.row.job?.updated_at!);
+      return dateRange(created, updated);
     },
   },
 ];

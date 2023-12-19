@@ -1,4 +1,5 @@
 import { EUnitFilterType } from "@Features/summary/units/entities/unit_enums";
+import { ECustomDate } from "@Models/enums";
 import Job from "@Models/job/job";
 import TechnicianUser from "@Models/technician-user/technician_user";
 import Unit from "@Models/units/unit";
@@ -25,7 +26,13 @@ interface Props {
 const initialState: Props = {
     layzLoading: true,
     unitsFilterDrawerStatus: false,
-    filter: { limit: 10, offset: 0, filter_type: EUnitFilterType.Name },
+    filter: {
+        page: 0,
+        limit: 10,
+        offset: 0,
+        filter_type: EUnitFilterType.Name,
+        dateType: ECustomDate.All
+    },
     units: { rows: [], count: 0 },
     unit: null,
     unitDialogStatus: false,

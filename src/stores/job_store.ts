@@ -1,5 +1,7 @@
 import { EJobFilterType } from "@Features/summary/jobs/entities/job_enums";
+import { ECustomDate } from "@Models/enums";
 import Job from "@Models/job/job";
+import JobFilter from "@Models/job/job_filter";
 import { createSlice } from "@reduxjs/toolkit";
 
 interface Props {
@@ -15,7 +17,13 @@ interface Props {
 const initialState: Props = {
     layzLoading: false,
     jobsFilterDrawerStatus: false,
-    jobFilter: { limit: 10, offset: 0, filter_type: EJobFilterType.UnitName },
+    jobFilter: {
+        page: 0,
+        limit: 10,
+        offset: 0,
+        filter_type: EJobFilterType.UnitName,
+        dateType: ECustomDate.All,
+    },
     jobs: { count: 0, rows: [] },
     jobDialogStatus: false,
     job: null,

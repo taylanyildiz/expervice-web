@@ -2,7 +2,7 @@ import { CompanyGroup, CompanyRegion } from "@Models/index";
 import BaseRepository from "./base_repository";
 import CompanyRegionConst from "./end-points/company_region";
 import { store } from "@Store/index";
-import { setGroupInfo, setGroupsLoading, setGroups, setRegions, setRegionsLoading, setSelectedGroup, setSelectedRegion, setWeather, setGroupInfoLoading, setWeatherLoading } from "@Store/company_region_store";
+import { setGroupInfo, setGroupsLoading, setGroups, setRegions, setRegionsLoading, setSelectedGroup, setSelectedRegion, setWeather, setGroupInfoLoading, setWeatherLoading, setGroupJobsInfo, setGroupJobsInfoLoading, setGroupUnitsInfoLoading, setGroupUnitsInfo } from "@Store/company_region_store";
 import RegionProcess from "@Features/summary/base/entities/region_process";
 import SnackCustomBar from "@Utils/snack_custom_bar";
 
@@ -58,21 +58,47 @@ class CompanyRegionRepository extends BaseRepository {
     public async getGroupInfo(groupId: number): Promise<void> {
         store.dispatch(setGroupInfoLoading(true));
         store.dispatch(setGroupInfo(null));
-        const filter = store.getState().companyRegion.groupInfoFilter;
         const path = CompanyRegionConst.groupInfo;
-        const start_date = filter?.start_date;
-        const end_date = filter?.end_date;
-        const params = {
-            group_id: groupId,
-            start_date,
-            end_date,
-        };
-        const response = await this.get(path, { params });
+        const response = await this.get(path, { params: { group_id: groupId } });
         const status = response.status;
         if (status !== 200) return;
         const data = response.data['data']['group'];
         store.dispatch(setGroupInfo(data));
         store.dispatch(setGroupInfoLoading(false));
+    }
+
+    /**
+     * Get group jobs info
+     */
+    public async getGroupJobsInfo(groupId: number): Promise<void> {
+        store.dispatch(setGroupJobsInfoLoading(true));
+        store.dispatch(setGroupJobsInfo(null));
+        const filter = { ...store.getState().companyRegion.groupInfoFilter };
+        const path = CompanyRegionConst.groupJobsInfo(groupId);
+        delete filter.dateType;
+        const response = await this.get(path, { params: filter });
+        const status = response.status;
+        if (status !== 200) return;
+        const data = response.data['data']['jobs'];
+        store.dispatch(setGroupJobsInfo(data));
+        store.dispatch(setGroupJobsInfoLoading(false));
+    }
+
+    /**
+     * Get group units job info
+     */
+    public async getGroupUnitsJobInfo(groupId: number): Promise<void> {
+        store.dispatch(setGroupUnitsInfoLoading(true));
+        store.dispatch(setGroupUnitsInfo(null));
+        const filter = { ...store.getState().companyRegion.groupUnitsInfoFilter };
+        const path = CompanyRegionConst.groupUnitsJobInfo(groupId);
+        delete filter.dateType;
+        const response = await this.get(path, { params: filter });
+        const status = response.status;
+        if (status !== 200) return;
+        const data = response.data['data']['jobs'];
+        store.dispatch(setGroupUnitsInfo(data));
+        store.dispatch(setGroupUnitsInfoLoading(false));
     }
 
     /**

@@ -17,7 +17,8 @@ class InternalUserRepository extends BaseRepository {
      * Get Company internal user
      */
     public async getInternalUsers(): Promise<boolean> {
-        const { filter } = store.getState().internalUser;
+        const filter = { ...store.getState().internalUser.filter };
+        delete filter.page;
         store.dispatch(setInternalUserLayz(true));
         const response = await this.get("/", { params: filter });
         store.dispatch(setInternalUserLayz(false));

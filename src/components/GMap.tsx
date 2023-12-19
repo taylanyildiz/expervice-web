@@ -34,7 +34,7 @@ function GMap(props: GMapProps) {
     map.fitBounds(bounds);
   }, [locations]);
 
-  /// Load map
+  /// Load map api
   const { isLoaded } = useJsApiLoader({
     id: "google-map-script",
     googleMapsApiKey: import.meta.env.VITE_GOOGLE_MAP_KEY,
@@ -42,7 +42,7 @@ function GMap(props: GMapProps) {
   if (!isLoaded) return <></>;
 
   /// Load map
-  const onLoad = async (map: google.maps.Map) => {
+  const onLoad = (map: google.maps.Map) => {
     const bounds = new window.google.maps.LatLngBounds();
     onLoadMap?.(bounds);
     map.fitBounds(bounds);

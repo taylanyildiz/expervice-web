@@ -18,6 +18,7 @@ import JobImageDialog from "../dialogs/JobImageDialog";
 import JobImage from "@Models/job/job_image";
 import JobForm from "@Models/job/job_form";
 import JobFormDialog from "../dialogs/JobFormDialog";
+import { ECustomDate } from "@Models/enums";
 
 /**
  * Job Store
@@ -28,7 +29,8 @@ export function useJob() {
   const [filterCount, setFilterCount] = useState<number>(0);
   useEffect(() => {
     let count = 0;
-    if (filter.filter_type !== EJobFilterType.UnitName) ++count;
+    if (filter.filter_type && filter.filter_type !== EJobFilterType.UnitName)
+      ++count;
     if (filter.keyword && filter.keyword.length !== 0) ++count;
     if (filter.type_ids && filter.type_ids.length !== 0) ++count;
     if (filter.sub_type_ids && filter.sub_type_ids.length !== 0) ++count;
@@ -36,6 +38,7 @@ export function useJob() {
     if (filter.priorities && filter.priorities.length !== 0) ++count;
     if (filter.region_ids && filter.region_ids.length !== 0) ++count;
     if (filter.groups && filter.groups.length !== 0) ++count;
+    if (filter.dateType && filter.dateType !== ECustomDate.All) ++count;
     setFilterCount(count);
   }, [filter]);
   return { ...store, filterCount };

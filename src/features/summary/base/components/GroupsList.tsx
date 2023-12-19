@@ -1,6 +1,7 @@
 import CompanyRegionRepository from "@Repo/company_region_repository";
 import { AppDispatch, RootState } from "@Store/index";
 import {
+  Box,
   Divider,
   Grid,
   IconButton,
@@ -61,48 +62,50 @@ function GroupsList() {
   };
 
   return (
-    <Grid container>
-      <Grid item xs={12}>
-        <Grid container alignItems="center">
-          <Grid item flexGrow={1} p={2}>
-            <Typography
-              variant="h1"
-              fontSize={19}
-              children={TranslateHelper.groups()}
-            />
-          </Grid>
-          <Grid item>
-            <VisibilityComp visibility={isInternal || isOwner}>
-              <IconButton onClick={onCreateGroupHandle}>
-                <AddIcon />
-              </IconButton>
-            </VisibilityComp>
-          </Grid>
-        </Grid>
-      </Grid>
-      <Grid item xs={12} children={<Divider />} />
-      <Grid mt={1} item xs={12}>
-        <LoadingComp loading={groupsLoading}>
-          <Grid container>
-            <Grid item xs={12}>
-              <VisibilityComp
-                visibility={Boolean(group)}
-                children={<SelectedGroupBox />}
+    <Box className="summary-base-groups">
+      <Grid container>
+        <Grid item xs={12}>
+          <Grid container alignItems="center">
+            <Grid item flexGrow={1} p={2}>
+              <Typography
+                variant="h1"
+                fontSize={19}
+                children={TranslateHelper.groups()}
               />
-              {groups?.rows.map((item, index) => (
-                <ListItemButton
-                  onClick={() => onSelectGroup(item)}
-                  key={index}
-                  selected={item.id == group?.id}
-                >
-                  <ListItemText primary={item.name} />
-                </ListItemButton>
-              ))}
+            </Grid>
+            <Grid item>
+              <VisibilityComp visibility={isInternal || isOwner}>
+                <IconButton onClick={onCreateGroupHandle}>
+                  <AddIcon />
+                </IconButton>
+              </VisibilityComp>
             </Grid>
           </Grid>
-        </LoadingComp>
+        </Grid>
+        <Grid item xs={12} children={<Divider />} />
+        <Grid mt={1} item xs={12}>
+          <LoadingComp loading={groupsLoading}>
+            <Grid container>
+              <Grid item xs={12}>
+                <VisibilityComp
+                  visibility={Boolean(group)}
+                  children={<SelectedGroupBox />}
+                />
+                {groups?.rows.map((item, index) => (
+                  <ListItemButton
+                    onClick={() => onSelectGroup(item)}
+                    key={index}
+                    selected={item.id == group?.id}
+                  >
+                    <ListItemText primary={item.name} />
+                  </ListItemButton>
+                ))}
+              </Grid>
+            </Grid>
+          </LoadingComp>
+        </Grid>
       </Grid>
-    </Grid>
+    </Box>
   );
 }
 

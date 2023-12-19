@@ -1,7 +1,7 @@
 import { useDialog } from "@Utils/hooks/dialog_hook";
 import RegionDialog from "../dialogs/RegionDialog";
 import { CompanyGroup, CompanyRegion } from "@Models/index";
-import { store } from "@Store/index";
+import { RootState, store } from "@Store/index";
 import { setEditGroup, setEditRegion } from "@Store/company_region_store";
 import GroupDialog from "../dialogs/GroupDialog";
 import { ERegionFilterType, ERegionSortType } from "../entities/enums";
@@ -9,6 +9,21 @@ import SortByAlphaIcon from "@mui/icons-material/SortByAlpha";
 import CalendarTodayIcon from "@mui/icons-material/CalendarToday";
 import { ReactNode } from "react";
 import TranslateHelper from "@Local/index";
+import { useSelector } from "react-redux";
+
+/**
+ * Summary store
+ */
+export const useSummary = () => {
+  return useSelector((state: RootState) => state.summary);
+};
+
+/**
+ * Company region store
+ */
+export const useCompanyRegion = () => {
+  return useSelector((state: RootState) => state.companyRegion);
+};
 
 /**
  * Summary dialogs hook

@@ -40,7 +40,7 @@ function TechnicianFilterDrawer() {
 
   /// Submit handle
   const onSubmitHandle = async (values: TechnicianFilter) => {
-    dispatch(setFilter(values));
+    dispatch(setFilter({ ...values, limit: 10, offset: 0, page: 0 }));
   };
 
   /// Formik
@@ -160,13 +160,7 @@ function TechnicianFilterDrawer() {
               fontWeight="normal"
               children={TranslateHelper.clearFilter()}
               onClick={() => {
-                formik.resetForm({
-                  values: {
-                    ...initialValues,
-                    limit: filter.limit,
-                    offset: filter.offset,
-                  },
-                });
+                formik.resetForm();
               }}
             />
             <PrimaryButton

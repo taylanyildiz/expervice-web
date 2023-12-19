@@ -1,7 +1,7 @@
 import SelectUserRole from "@Components/SelectUserRole";
 import TextOutlineField from "@Components/TextOutlineField";
 import InternalUser from "@Models/internal-user/internal_user";
-import { Box, Grid, Typography } from "@mui/material";
+import { Box, FormHelperText, Grid, Typography } from "@mui/material";
 import { FormikProps } from "formik";
 import InternalUserStatusButton from "./InternalUserStatusButton";
 import TranslateHelper from "@Local/index";
@@ -93,6 +93,13 @@ function OverViewContent(props: { formik: FormikProps<InternalUser> }) {
                   formik.setFieldValue("role_id", value?.id);
                 }}
               />
+              <FormHelperText
+                margin="dense"
+                sx={{ m: 0, p: 0 }}
+                error={Boolean(formik.touched.regions && formik.errors.regions)}
+              >
+                {formik.touched.regions && formik.errors.regions}
+              </FormHelperText>
             </Grid>
           </Grid>
         </Grid>

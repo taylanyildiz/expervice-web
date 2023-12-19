@@ -287,14 +287,14 @@ function Address(props: { formik: FormikProps<Unit> }) {
     let latLng: LatLng | null = null;
     if (latitude && longitude) {
       latLng = {
-        lat: parseInt(latitude),
-        lng: parseInt(longitude),
+        lat: parseFloat(latitude),
+        lng: parseFloat(longitude),
       };
     }
     const result = await locationDialog(latLng);
     if (!result) return;
-    formik.setFieldValue(TranslateHelper.latitude(), result.lat.toFixed(4));
-    formik.setFieldValue(TranslateHelper.longitude(), result.lng.toFixed(4));
+    formik.setFieldValue("latitude", result.lat.toFixed(6));
+    formik.setFieldValue("longitude", result.lng.toFixed(6));
   };
 
   return (

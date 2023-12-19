@@ -71,8 +71,8 @@ function CustomerForms() {
   /// Handle delete customer form
   const handleDelete = async (id: number) => {
     const confirm = await openConfirm(
-      "Delete Customer Form",
-      "Are you sure to delete customer form?"
+      TranslateHelper.deleteCustomerForm(),
+      TranslateHelper.sureDeleteCustomerForm()
     );
     if (!confirm) return;
     const result = await openLoading(async () => {
