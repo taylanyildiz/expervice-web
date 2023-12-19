@@ -4,6 +4,7 @@ import { PrimaryButton } from "..";
 import SelectLocation, { LatLng } from "@Components/SelectLocation";
 import { useEffect, useState } from "react";
 import { useDialog } from "@Utils/hooks/dialog_hook";
+import TranslateHelper from "@Local/index";
 
 interface SelectLocationDialogProps {
   value: LatLng | null;
@@ -78,7 +79,7 @@ function SelectLocationDialog(props: SelectLocationDialogProps) {
             height={30}
             fontWeight="normal"
             color="white"
-            children="Save"
+            children={TranslateHelper.save()}
             onClick={() => {
               onDone(marker);
             }}

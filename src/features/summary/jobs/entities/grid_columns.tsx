@@ -2,7 +2,7 @@ import TranslateHelper from "@Local/index";
 import Job from "@Models/job/job";
 import { store } from "@Store/index";
 import { setJobId } from "@Store/job_store";
-import { dateToFormat } from "@Utils/functions";
+import { dateRange, dateToFormat } from "@Utils/functions";
 import { GridColDef } from "@mui/x-data-grid";
 
 const columns = (): GridColDef<Job>[] => [
@@ -119,6 +119,25 @@ const columns = (): GridColDef<Job>[] => [
     valueGetter: (params) => {
       const date = new Date(params.row.created_at!);
       return dateToFormat(date);
+    },
+  },
+  {
+    field: "updated_at",
+    minWidth: 200,
+    headerName: "Last Updated Date", // TODO: Translations
+    valueGetter: (params) => {
+      const date = new Date(params.row.updated_at!);
+      return dateToFormat(date);
+    },
+  },
+  {
+    field: "elapsed_at",
+    minWidth: 200,
+    headerName: "Elapsed Duration", // TODO: Translations
+    valueGetter: (params) => {
+      const created = new Date(params.row.created_at!);
+      const updated = new Date(params.row.updated_at!);
+      return dateRange(created, updated);
     },
   },
 ];

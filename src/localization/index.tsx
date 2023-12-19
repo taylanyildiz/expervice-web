@@ -926,7 +926,7 @@ export default class TranslateHelper {
     return "past7Days".tr();
   }
   public static past14Days(): string {
-    return "past7Days".tr();
+    return "past14Days".tr();
   }
   public static past30Days(): string {
     return "past30Days".tr();
@@ -1173,5 +1173,8 @@ export default class TranslateHelper {
   }
   public static userRoles(): string {
     return "userRoles".tr();
+  }
+  public static groupJobsFilter(): string {
+    return "groupJobsFilter".tr();
   }
 }

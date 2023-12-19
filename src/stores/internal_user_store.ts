@@ -15,7 +15,7 @@ interface Props {
 const initialState: Props = {
     layzLoading: true,
     internalUserFilterDrawerStatus: false,
-    filter: { limit: 10, offset: 0 },
+    filter: { page: 0, limit: 10, offset: 0 },
     internalUsers: { rows: [], count: 0 },
     internalUser: null,
 }

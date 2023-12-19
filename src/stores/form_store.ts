@@ -20,7 +20,7 @@ const initialState: Props = {
     formLayzLoading: true,
     formTemplateLoading: true,
     formFilterDrawerStatus: false,
-    formFilter: { limit: 10, offset: 0 },
+    formFilter: { page: 0, limit: 10, offset: 0 },
     forms: { rows: [], count: 0 },
     formDialogStatus: false,
     form: null,

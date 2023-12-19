@@ -167,6 +167,19 @@ function InternalUserDialog() {
     formik
   );
 
+  useEffect(() => {
+    if (internalUser?.role_id === formik.values.role_id) {
+      formik.setFieldValue(
+        "permission_sub_resources",
+        internalUser?.permission_sub_resources
+      );
+      formik.setFieldValue("regions", internalUser?.regions);
+      return;
+    }
+    formik.setFieldValue("permission_sub_resources", null);
+    formik.setFieldValue("regions", null);
+  }, [formik.values.role_id]);
+
   return (
     <>
       <DialogCustomTitle title={title} />
@@ -201,7 +214,7 @@ function InternalUserDialog() {
                 height={30}
                 fontWeight="normal"
                 color="black"
-                children="Delete"
+                children={TranslateHelper.delete()}
                 variant="outlined"
                 onClick={() => onChangedAction(EActionType.Delete)}
               />
@@ -211,21 +224,21 @@ function InternalUserDialog() {
             height={30}
             fontWeight="normal"
             color="white"
-            children="Save"
+            children={TranslateHelper.save()}
             onClick={() => onChangedAction(EActionType.Save)}
           />,
           <PrimaryButton
             height={30}
             fontWeight="normal"
             color="white"
-            children="Save & New"
+            children={TranslateHelper.saveNew()}
             onClick={() => onChangedAction(EActionType.SaveNew)}
           />,
           <PrimaryButton
             height={30}
             fontWeight="normal"
             color="white"
-            children="Save & Close"
+            children={TranslateHelper.saveClose()}
             onClick={() => onChangedAction(EActionType.SaveClose)}
           />,
         ]}
@@ -238,7 +251,9 @@ function InternalUserDialog() {
                   variant="body1"
                   fontSize={12}
                   color="grey"
-                  children={`Created by ${creatorDisplayName}`}
+                  children={TranslateHelper.createdBy({
+                    name: creatorDisplayName,
+                  })}
                 />
               </Grid>
               <Grid item>

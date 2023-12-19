@@ -18,7 +18,8 @@ class TechnicianRepository extends BaseRepository {
      */
     public async getTechnicians(): Promise<boolean> {
         store.dispatch(setTechnicianLayz(true));
-        const { filter } = store.getState().technician;
+        const filter = { ...store.getState().technician.filter };
+        delete filter.page;
         const response = await this.get("/", { params: filter });
         store.dispatch(setTechnicianLayz(false));
         if (response.success) {

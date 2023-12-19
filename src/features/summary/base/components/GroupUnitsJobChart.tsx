@@ -1,30 +1,23 @@
 import LoadingComp from "@Components/LoadingComp";
 import { Box, IconButton, Stack, Typography } from "@mui/material";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import ReactApexChart from "react-apexcharts";
-import Colors from "@Themes/colors";
-import TranslateHelper from "@Local/index";
 import { useUser } from "@Features/summary/company/helper/company_helper";
 import CompanyRegionRepository from "@Repo/company_region_repository";
 import { useCompanyRegion } from "../helper/summary_helper";
 import FilterAltIcon from "@mui/icons-material/FilterAlt";
 import { useDispatch } from "react-redux";
-import { setGroupInfoFilterDrawerStatus } from "@Store/company_region_store";
-import GroupJobsInfoFilterDrawer from "./GroupJobsInfoFilterDrawer";
+import TranslateHelper from "@Local/index";
+import { setGroupUnitsInfoDrawerStatus } from "@Store/company_region_store";
+import GroupUnitsJobsInfoFilterDrawer from "./GroupUnitsJobsInfoFilterDrawer";
 
-type DataSet = {
-  fault: number;
-  maintenance: number;
-  date: number;
-};
-
-function GroupJobsChart() {
+function GroupUnitsJobChart() {
   /// Company region store
   const {
     group,
-    groupJobsInfo,
-    groupJobsInfoLoading,
-    groupInfoFilter: filter,
+    groupUnitsInfo,
+    groupUnitsInfoLoading,
+    groupUnitsInfoFilter: filter,
   } = useCompanyRegion();
 
   /// Company region repository
@@ -37,45 +30,16 @@ function GroupJobsChart() {
   /// Dispatch
   const dispatch = useDispatch();
 
-  /// Data set of chart
-  const [dataset, setDataset] = useState<DataSet[]>([]);
-
-  /// Initialize chart values
-  const initChartValues = () => {
-    const values: DataSet[] = [];
-    if (!groupJobsInfo) return setDataset([]);
-    for (let job of groupJobsInfo) {
-      const isFault = job.type_id === 1;
-      const named = isFault ? "fault" : "maintenance";
-      const index = values.findIndex((e: any) => e.date === job.date);
-      if (index === -1) {
-        values.push({
-          fault: isFault ? job.count! : 0,
-          maintenance: !isFault ? job.count! : 0,
-          date: new Date(job.date!).getTime(),
-        });
-      } else {
-        values[index] = { ...values[index], [named]: job.count };
-      }
-    }
-    setDataset(values);
-  };
-
   /// Initialize component
   useEffect(() => {
     if (!group) return;
-    companyRegionRepo.getGroupJobsInfo(group!.id!);
+    companyRegionRepo.getGroupUnitsJobInfo(group!.id!);
   }, [group, filter]);
-
-  /// Initialize component
-  useEffect(() => {
-    initChartValues();
-  }, [groupJobsInfo]);
 
   return (
     <>
-      <Box sx={{ backgroundColor: "white" }}>
-        <Stack>
+      <Box flex={1} sx={{ backgroundColor: "white" }}>
+        <Stack direction="column">
           <Stack
             direction="row"
             m={1}
@@ -86,30 +50,24 @@ function GroupJobsChart() {
             <Typography
               variant="h1"
               fontSize={15}
-              children={TranslateHelper.groupJobs()}
+              children={"Units Job Info"} // TODO: Translations
             />
             <IconButton
               onClick={() => {
-                dispatch(setGroupInfoFilterDrawerStatus(true));
+                dispatch(setGroupUnitsInfoDrawerStatus(true));
               }}
             >
               <FilterAltIcon />
             </IconButton>
           </Stack>
-          <LoadingComp height={300} loading={groupJobsInfoLoading}>
+          <LoadingComp height={300} loading={groupUnitsInfoLoading}>
             <ReactApexChart
               type="bar"
               height={300}
               series={[
                 {
-                  name: TranslateHelper.fault(),
-                  data: dataset.map((e) => [e.date, e.fault]),
-                  color: Colors.error,
-                },
-                {
-                  name: TranslateHelper.maintenance(),
-                  data: dataset.map((e) => [e.date, e.maintenance]),
-                  color: Colors.info,
+                  name: "",
+                  data: groupUnitsInfo?.map((e) => e.count!) ?? [],
                 },
               ]}
               options={{
@@ -150,7 +108,7 @@ function GroupJobsChart() {
                           "Ek",
                           "Ey",
                           "Kas",
-                          "Ara",
+                          "Ar",
                         ],
                         days: [
                           "Pazar",
@@ -245,7 +203,7 @@ function GroupJobsChart() {
                       },
                     },
                   ],
-                  id: "area-datetime",
+                  id: "area-category",
                   type: "bar",
                   height: 350,
                   zoom: {
@@ -256,28 +214,26 @@ function GroupJobsChart() {
                   enabled: false,
                 },
                 xaxis: {
-                  type: "datetime",
-                  max: filter?.end_date && new Date(filter.end_date).getTime(),
-                  min:
-                    filter?.start_date && new Date(filter.start_date).getTime(),
-                  tickAmount: 1,
+                  type: "category",
+                  categories: groupUnitsInfo?.map((e) => e.unit?.name),
+                  labels: { show: false },
+                  position: "top",
                 },
                 tooltip: {
-                  x: {
-                    format: "dd MMM yyyy",
+                  y: {
+                    formatter: (val) => {
+                      return `${TranslateHelper.jobs()} ${val}`;
+                    },
                   },
-                },
-                fill: {
-                  colors: [Colors.error, Colors.info],
                 },
               }}
             />
           </LoadingComp>
         </Stack>
       </Box>
-      <GroupJobsInfoFilterDrawer />
+      <GroupUnitsJobsInfoFilterDrawer />
     </>
   );
 }
 
-export default GroupJobsChart;
+export default GroupUnitsJobChart;

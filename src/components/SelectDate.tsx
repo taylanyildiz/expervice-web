@@ -36,7 +36,6 @@ function SelectDate(props: SelectDateProps) {
     let value = Object.values(ECustomDate).filter(
       (e) => typeof e === "number"
     ) as number[];
-    value = value.filter((e) => e !== 2);
     setOptions(value);
   }, []);
 

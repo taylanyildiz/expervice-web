@@ -17,13 +17,16 @@ import TextOutlineField from "@Components/TextOutlineField";
 import SelectJobFilterType from "./SelectJobFilterType";
 import { EJobFilterType } from "../entities/job_enums";
 import { useEffect } from "react";
-import { SelectRegions } from "@Components/index";
+import { SelectDate, SelectRegions, VisibilityComp } from "@Components/index";
 import SelectUserGroups from "@Features/summary/components/SelectUserGroups";
 import SelectJobStatuses from "./SelectJobStatuses";
 import SelectJobPriorities from "./SelectJobPriorities";
 import SelectJobTypes from "./SelectJobTypes";
 import SelectJobSubTypes from "./SelectJobSubTypes";
-import { useQuery } from "@Utils/functions";
+import { getLastMonth, useQuery } from "@Utils/functions";
+import JobFilter from "@Models/job/job_filter";
+import { ECustomDate } from "@Models/enums";
+import CustomDateRangePicker from "@Components/CustomDateRangePicker";
 
 function JobsFilterDrawer() {
   /// Query hook
@@ -42,7 +45,14 @@ function JobsFilterDrawer() {
 
   /// Submit
   const handleSubmit = (values: JobFilter) => {
-    dispatch(setJobFilter(values));
+    dispatch(
+      setJobFilter({
+        ...values,
+        page: 0,
+        limit: 10,
+        offset: 0,
+      })
+    );
     if (!values.type_ids?.includes(parseInt(`${path.get("type")}`))) {
       deletePath("type");
     }
@@ -57,8 +67,9 @@ function JobsFilterDrawer() {
   /// Formik
   const initialValues: JobFilter = {
     keyword: "",
-    end_date: "",
-    start_date: "",
+    end_date: undefined,
+    start_date: undefined,
+    dateType: ECustomDate.All,
     filter_type: EJobFilterType.UnitName,
     groups: [],
     region_ids: [],
@@ -95,7 +106,7 @@ function JobsFilterDrawer() {
 
   return (
     <Drawer anchor="right" open={open} onClose={handleClose}>
-      <Box width={300} height="100%">
+      <Box overflow="hidden" width={300} height="100%">
         <Stack spacing={1} height="100%">
           {/* Header */}
           <Stack
@@ -116,7 +127,7 @@ function JobsFilterDrawer() {
           <Divider />
           {/* Content */}
           <Stack
-            sx={{ borderBottom: 1, borderColor: "divider" }}
+            sx={{ overflow: "scroll", borderBottom: 1, borderColor: "divider" }}
             p={1}
             height="100%"
           >
@@ -203,6 +214,33 @@ function JobsFilterDrawer() {
                 formik.setFieldValue("groups", values);
               }}
             />
+            <SelectDate
+              label={TranslateHelper.createdDate()}
+              value={formik.values.dateType}
+              onChanged={(dateType, start, end) => {
+                formik.setFieldValue("dateType", dateType);
+                formik.setFieldValue("start_date", start);
+                formik.setFieldValue("end_date", end);
+                if (dateType === ECustomDate.Custom) {
+                  console.log("test");
+
+                  formik.setFieldValue("start_date", getLastMonth());
+                  formik.setFieldValue("end_date", new Date());
+                }
+              }}
+            />
+            <VisibilityComp
+              visibility={formik.values.dateType === ECustomDate.Custom}
+            >
+              <CustomDateRangePicker
+                startDate={jobFilter?.start_date}
+                endDate={jobFilter?.end_date}
+                onChanged={(start, end) => {
+                  formik.setFieldValue("end_date", end);
+                  formik.setFieldValue("start_date", start);
+                }}
+              />
+            </VisibilityComp>
           </Stack>
           {/* Actions */}
           <Stack p={1} justifyContent="end" spacing={1} direction="row">
@@ -210,15 +248,7 @@ function JobsFilterDrawer() {
               variant="outlined"
               fontWeight="normal"
               children={TranslateHelper.clearFilter()}
-              onClick={() =>
-                formik.resetForm({
-                  values: {
-                    ...initialValues,
-                    limit: jobFilter?.limit,
-                    offset: jobFilter?.offset,
-                  },
-                })
-              }
+              onClick={() => formik.resetForm()}
             />
             <PrimaryButton
               variant="contained"

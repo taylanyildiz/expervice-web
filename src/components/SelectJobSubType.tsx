@@ -71,7 +71,7 @@ function SelectJobSubType(props: SelectJobSubTypeProps) {
     constantRepo.getJobSubTypes();
   }, []);
 
-  /// When chaged [unitSubTypes]
+  /// When changed [unitSubTypes]
   useEffect(() => {
     setOptions(jobSubTypes ?? []);
   }, [jobSubTypes]);

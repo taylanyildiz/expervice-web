@@ -52,7 +52,7 @@ function CustomerFilterDrawer() {
 
   /// Handle submit
   const handleSubmit = (values: CustomerFilter) => {
-    dispatch(setCustomerFilter(values));
+    dispatch(setCustomerFilter({ ...values, page: 0, limit: 10, offset: 0 }));
   };
 
   /// Formik
@@ -146,13 +146,7 @@ function CustomerFilterDrawer() {
               children={TranslateHelper.clearFilter()}
               fontWeight="normal"
               onClick={() => {
-                formik.resetForm({
-                  values: {
-                    ...initialValues,
-                    limit: customerFilter?.limit,
-                    offset: customerFilter?.offset,
-                  },
-                });
+                formik.resetForm();
               }}
             />
             <PrimaryButton

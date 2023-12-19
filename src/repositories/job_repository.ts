@@ -21,8 +21,9 @@ class JobRepository extends BaseRepository {
      */
     public async getJobs(): Promise<void> {
         const path = "/";
-        const filter = store.getState().job.jobFilter;
+        const filter = { ...store.getState().job.jobFilter };
         store.dispatch(setJobLayzLoading(true));
+        delete filter.page && filter.dateType   ;
         const response = await this.get(path, { params: filter });
         store.dispatch(setJobLayzLoading(false));
         const success = response.success;

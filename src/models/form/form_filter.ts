@@ -1,4 +1,5 @@
 export default interface FormFilter {
+    page?: number;
     limit?: number;
     offset?: number;
     name?: string;

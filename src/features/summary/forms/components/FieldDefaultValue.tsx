@@ -62,7 +62,9 @@ function FieldDefaultValue(props: FieldDefaultValueProps) {
             <FormControlLabel
               label={"True"}
               checked={formik.values.default_value === "true"}
-              onChange={(_) => formik.setFieldValue("default_value", "true")}
+              onChange={() => {
+                formik.setFieldValue("default_value", "true");
+              }}
               control={<Checkbox size="small" />}
             />
           </Grid>

@@ -8,7 +8,7 @@ interface Field {
     label?: string;
     description?: string;
     default_value?: string;
-    mandantory?: boolean;
+    mandatory?: boolean;
     options: { label?: string }[]
     field_type?: FieldType;
     created_at?: string;

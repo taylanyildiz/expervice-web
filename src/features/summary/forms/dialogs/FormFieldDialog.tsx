@@ -37,11 +37,11 @@ function FormFieldDialog(props: FormFieldDialogProps) {
   /// Formik
   const initialValues: Field = {
     options: [],
-    default_value: "",
+    default_value: undefined,
     field_type: undefined,
     label: "",
     description: "",
-    mandantory: false,
+    mandatory: false,
   };
   const formik = useFormik({
     initialValues,
@@ -78,6 +78,7 @@ function FormFieldDialog(props: FormFieldDialogProps) {
                   formik.touched.field_type && formik.errors.field_type
                 )}
                 onChanged={(type) => {
+                  formik.resetForm({ values: initialValues });
                   formik.setFieldValue("field_type", type);
                   formik.setFieldValue("field_type_id", type?.id);
                 }}
@@ -120,9 +121,9 @@ function FormFieldDialog(props: FormFieldDialogProps) {
             <VisibilityComp visibility={!isTitle}>
               <Grid item>
                 <FormControlLabel
-                  checked={formik.values.mandantory}
+                  checked={formik.values.mandatory}
                   onChange={(_, checked) =>
-                    formik.setFieldValue("mandantory", checked)
+                    formik.setFieldValue("mandatory", checked)
                   }
                   control={<Checkbox size="small" />}
                   label={TranslateHelper.isRequiredField()}

@@ -2,6 +2,7 @@ import { ECustomerFilterType, ECustomerSortTypes, ECustomerUserStatus } from "@F
 import { ESortDirection } from "@Models/enums";
 
 interface CustomerFilter {
+    page?: number;
     limit?: number;
     offset?: number;
     keyword?: string;

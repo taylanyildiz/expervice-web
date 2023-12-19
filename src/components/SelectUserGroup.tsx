@@ -47,28 +47,40 @@ function SelectUserGroup(props: SelectUserGroupProps) {
 
   /// Option - Options state
   const [options, setOptions] = useState<CompanyGroup[]>([]);
-  const [option, setOption] = useState<CompanyGroup | null | undefined>(null);
+  const [option, setOption] = useState<CompanyGroup | null>(null);
 
   /// Initialize component
+  useEffect(() => {
+    userRepo.getGroups();
+  }, []);
+
+  /// When changed [groups]
   useEffect(() => {
     setOptions(rows);
   }, [groups]);
 
   useEffect(() => {
-    userRepo.getGroups();
-  }, []);
-
-  ///
-  useEffect(() => {
-    setOption(value);
+    setOption(value ?? null);
   }, [value]);
 
   return (
     <Autocomplete
+      loading
+      fullWidth={fullWidth}
       options={options}
       value={option}
-      isOptionEqualToValue={(option, value) => option?.id === value?.id}
-      onChange={(_, value) => onChanged(value)}
+      groupBy={(option) => option?.region?.name ?? ""}
+      getOptionLabel={(option) => option?.name ?? ""}
+      isOptionEqualToValue={(value, option) => value?.id === option?.id}
+      renderGroup={(params) => (
+        <li key={params.key}>
+          <GroupHeader>{params.group}</GroupHeader>
+          <GroupItems>{params.children}</GroupItems>
+        </li>
+      )}
+      onChange={(_, v) => {
+        onChanged(v);
+      }}
       renderInput={(props) => {
         return (
           <FormControl fullWidth={fullWidth}>
@@ -95,14 +107,6 @@ function SelectUserGroup(props: SelectUserGroupProps) {
           </FormControl>
         );
       }}
-      groupBy={(option) => JSON.stringify(option.region) ?? ""}
-      getOptionLabel={(option) => option.name ?? ""}
-      renderGroup={(params) => (
-        <li key={params.key}>
-          <GroupHeader>{JSON.parse(params.group)["name"]}</GroupHeader>
-          <GroupItems>{params.children}</GroupItems>
-        </li>
-      )}
     />
   );
 }

@@ -392,6 +392,7 @@ const tr: ObjectString = {
     techniciansFilter: "Teknisyenler Filtre",
     technicianStatuses: "Teknisyen Durumları",
     groupRoles: "Grup Rolleri",
+    groupJobsFilter: "Grup İşler Filtre"
 }
 
 export default tr;

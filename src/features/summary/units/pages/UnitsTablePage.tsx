@@ -1,10 +1,9 @@
 import EmptyGrid from "@Components/EmptyGrid";
-import { DataGrid, GridPaginationModel } from "@mui/x-data-grid";
+import { DataGrid } from "@mui/x-data-grid";
 import columns from "../entities/grid_columns";
 import { AppDispatch } from "@Store/index";
 import { useDispatch } from "react-redux";
-import { useEffect, useMemo, useState } from "react";
-import UnitFilter from "@Models/units/unit_filter";
+import { useEffect } from "react";
 import UnitRepository from "@Repo/unit_repository";
 import { setSelectedUnits, setUnitFilter } from "@Store/unit_store";
 import { useUnit } from "../helper/unit_helper";
@@ -22,36 +21,11 @@ function UnitsTablePage() {
     selectedUnits,
   } = useUnit();
 
-  /// Unit repository
-  const unitRepo = new UnitRepository();
-
   /// Account store
   const { isOwner, isInternal } = useAccount();
 
-  /// Pagination mode
-  const [paginationMode, setPaginationMode] = useState<GridPaginationModel>({
-    page: 0,
-    pageSize: 10,
-  });
-
-  /// Filter
-  const pagination: UnitFilter = useMemo(
-    () => ({
-      limit: paginationMode.pageSize,
-      offset: paginationMode.pageSize * paginationMode.page,
-    }),
-    [paginationMode]
-  );
-
-  /// Listen pagination and filter
-  useEffect(() => {
-    dispatch(
-      setUnitFilter({
-        ...filter,
-        ...pagination,
-      })
-    );
-  }, [pagination]);
+  /// Unit repository
+  const unitRepo = new UnitRepository();
 
   /// Initialize component
   useEffect(() => {
@@ -80,11 +54,24 @@ function UnitsTablePage() {
         rows={rows}
         pageSizeOptions={[10, 50, 100]}
         slots={{ noRowsOverlay: EmptyGrid }}
-        paginationModel={paginationMode}
-        onPaginationModelChange={setPaginationMode}
         rowSelectionModel={selectedUnits ?? []}
         onRowSelectionModelChange={(selecteds) => {
           dispatch(setSelectedUnits(selecteds));
+        }}
+        paginationModel={{
+          page: filter?.page ?? 0,
+          pageSize: filter?.limit ?? 10,
+        }}
+        onPaginationModelChange={(paginationMode) => {
+          const page = paginationMode.page;
+          dispatch(
+            setUnitFilter({
+              ...filter,
+              page: page,
+              limit: paginationMode.pageSize,
+              offset: paginationMode.pageSize * page,
+            })
+          );
         }}
       />
     </div>

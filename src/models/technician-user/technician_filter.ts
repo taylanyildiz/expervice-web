@@ -2,6 +2,7 @@ import { ETechnicianUserStatus } from "@Features/summary/users/technician-users/
 import { ESortDirection } from "@Models/enums";
 
 interface TechnicianFilter {
+    page?: number;
     limit?: number;
     offset?: number;
     keyword?: string;

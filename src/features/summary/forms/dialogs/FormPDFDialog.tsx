@@ -19,10 +19,10 @@ import {
   setFormPdfTemplate,
 } from "@Store/form_store";
 import FormCustomersContent from "./FormCustomersContent";
-import { object, string } from "yup";
 import { useCustomEffect } from "@Utils/functions";
 import AnyUpdateBox from "@Components/AnyUpdateBox";
 import TranslateHelper from "@Local/index";
+import { formValidator } from "../validator/form_validator";
 
 function FormPDFDialog() {
   const { form, formId } = useForm();
@@ -106,12 +106,7 @@ function FormPDFDialog() {
   };
   const formik = useFormik({
     initialValues,
-    validationSchema: object({
-      name: string()
-        .nullable()
-        .required(TranslateHelper.required())
-        .min(2, TranslateHelper.invalid()),
-    }),
+    validationSchema: formValidator,
     onSubmit: onSubmitHandle,
   });
 

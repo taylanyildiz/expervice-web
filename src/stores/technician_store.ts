@@ -24,6 +24,7 @@ interface Props {
 const initialState: Props = {
     layzLoading: true,
     filter: {
+        page: 0,
         limit: 10,
         offset: 0,
         filter_type: ETechnicianFilterType.FirstName,

@@ -18,7 +18,7 @@ import TextOutlineField from "@Components/TextOutlineField";
 
 function FormFilterDrawer() {
   /// Form store
-  const { formFilterDrawerStatus: open, formFilter } = useForm();
+  const { formFilterDrawerStatus: open } = useForm();
 
   /// Dispatch
   const dispatch = useDispatch();
@@ -30,7 +30,7 @@ function FormFilterDrawer() {
 
   /// Submit
   const handleSubmit = (values: FormFilter) => {
-    dispatch(setFormFilter(values));
+    dispatch(setFormFilter({ ...values, page: 0, offset: 0, limit: 10 }));
   };
 
   /// Formik
@@ -86,13 +86,7 @@ function FormFilterDrawer() {
               children={TranslateHelper.clearFilter()}
               fontWeight="normal"
               onClick={() => {
-                formik.resetForm({
-                  values: {
-                    ...initialValues,
-                    limit: formFilter?.limit,
-                    offset: formFilter?.offset,
-                  },
-                });
+                formik.resetForm();
               }}
             />
             <PrimaryButton
