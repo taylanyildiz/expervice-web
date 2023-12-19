@@ -36,6 +36,11 @@ import {
 } from "../helper/unit_enum_helper";
 import SelectUserGroups from "../../components/SelectUserGroups";
 import SelectUnitJobStatus from "./SelectUnitJobStatus";
+import VisibilityComp from "@Components/VisibilityComp";
+import { ECustomDate } from "@Models/enums";
+import CustomDateRangePicker from "@Components/CustomDateRangePicker";
+import { getLastMonth } from "@Utils/functions";
+import SelectDate from "@Components/SelectDate";
 
 function UnitsFilterDrawer() {
   /// Unit store
@@ -61,7 +66,7 @@ function UnitsFilterDrawer() {
 
   /// Submit handle
   const onSubmitHandle = (value: UnitFilter) => {
-    dispatch(setUnitFilter(value));
+    dispatch(setUnitFilter({ ...value, limit: 10, offset: 0, page: 0 }));
   };
 
   /// Formik
@@ -69,13 +74,12 @@ function UnitsFilterDrawer() {
     keyword: "",
     region_ids: [],
     filter_type: EUnitFilterType.Name,
+    dateType: ECustomDate.All,
     unit_sub_types: [],
     unit_labels: [],
     unit_types: [],
     contract_end_date: "",
     contract_start_date: "",
-    end_date: "",
-    start_date: "",
     has_job: undefined,
     job_statuses: [],
     job_sub_types: [],
@@ -98,7 +102,7 @@ function UnitsFilterDrawer() {
 
   return (
     <Drawer anchor="right" open={open} onClose={handleClose}>
-      <Box width={300} height="100%">
+      <Box overflow="hidden" width={300} height="100%">
         <Stack spacing={1} height="100%">
           {/* Header */}
           <Stack
@@ -119,6 +123,7 @@ function UnitsFilterDrawer() {
           <Divider />
           {/* Content */}
           <Stack
+            overflow="scroll"
             sx={{ borderBottom: 1, borderColor: "divider" }}
             p={1}
             height="100%"
@@ -224,6 +229,33 @@ function UnitsFilterDrawer() {
                 formik.setFieldValue("groups", values);
               }}
             />
+            <SelectDate
+              label={TranslateHelper.createdDate()}
+              value={formik.values.dateType}
+              onChanged={(dateType, start, end) => {
+                formik.setFieldValue("dateType", dateType);
+                formik.setFieldValue("start_date", start);
+                formik.setFieldValue("end_date", end);
+                if (dateType === ECustomDate.Custom) {
+                  console.log("test");
+
+                  formik.setFieldValue("start_date", getLastMonth());
+                  formik.setFieldValue("end_date", new Date());
+                }
+              }}
+            />
+            <VisibilityComp
+              visibility={formik.values.dateType === ECustomDate.Custom}
+            >
+              <CustomDateRangePicker
+                startDate={filter?.start_date}
+                endDate={filter?.end_date}
+                onChanged={(start, end) => {
+                  formik.setFieldValue("end_date", end);
+                  formik.setFieldValue("start_date", start);
+                }}
+              />
+            </VisibilityComp>
           </Stack>
           {/* Actions */}
           <Stack p={1} justifyContent="end" spacing={1} direction="row">
@@ -231,16 +263,17 @@ function UnitsFilterDrawer() {
               variant="outlined"
               fontWeight="normal"
               children={TranslateHelper.clearFilter()}
-              onClick={() =>
+              onClick={() => {
                 formik.resetForm({
                   values: {
                     ...initialValues,
-                    has_job: filter?.has_job,
-                    limit: filter?.limit,
-                    offset: filter?.offset,
+                    status: undefined,
+                    has_job: undefined,
                   },
-                })
-              }
+                });
+                setUnitStatus(EUnitStatuses.All);
+                setUnitJobStatus(EUnitJobStatuses.All);
+              }}
             />
             <PrimaryButton
               variant="contained"

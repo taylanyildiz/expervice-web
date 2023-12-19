@@ -15,8 +15,10 @@ class UnitRepository extends BaseRepository {
     /**
      * Get Units of company
      */
-    public async getUnits(): Promise<boolean> {
-        const { filter } = store.getState().unit;
+    public async getUnits(withOutPagination?: boolean): Promise<boolean> {
+        const filter = { ...store.getState().unit.filter };
+        delete filter.page && filter.dateType;
+        if (withOutPagination) delete filter.limit && filter.offset;
         store.dispatch(setUnitLayz(true));
         const response = await this.get("/", { params: filter });
         store.dispatch(setUnitLayz(false));

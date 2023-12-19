@@ -8,7 +8,7 @@ import RolePermission from "@Models/permission/role_permission";
 import { RootState } from "@Store/index";
 import { Checkbox, FormControlLabel, Grid, Typography } from "@mui/material";
 import { FormikProps } from "formik";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useSelector } from "react-redux";
 
 interface InternalUserPermissionProps {
@@ -17,7 +17,7 @@ interface InternalUserPermissionProps {
 
 function InternalUserPermission(props: InternalUserPermissionProps) {
   const { formik } = props;
-  const [roleId, setRoleId] = useState(formik.values.role_id);
+  const roleId = formik.values.role_id;
 
   /// Constat store
   const { permissions } = useSelector((state: RootState) => state.constant);
@@ -28,13 +28,6 @@ function InternalUserPermission(props: InternalUserPermissionProps) {
 
   /// Selecteds sub-resource [sub-permission]
   const selecteds = formik.values.permission_sub_resources ?? [];
-
-  useEffect(() => {
-    if (roleId === formik.values.role_id) return;
-    setRoleId(formik.values.role_id);
-    formik.setFieldValue("permission_sub_resources", null);
-    formik.setFieldValue("regions", null);
-  }, [formik.values.role_id]);
 
   useEffect(() => {
     const selecteds = formik.values.permission_sub_resources;
@@ -93,7 +86,7 @@ function InternalUserPermission(props: InternalUserPermissionProps) {
               <Typography
                 variant="h1"
                 fontSize={13}
-                children={permission.name}
+                children={permission.translations?.name?.[lng]}
               />
             </Grid>
             <Grid item xs={12} mt={1}>

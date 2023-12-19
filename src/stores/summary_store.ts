@@ -28,9 +28,13 @@ const summary = createSlice({
         },
         setSummarySideBar: (state, { payload }) => {
             state.summarySidebar = payload;
-        }
+        },
     }
 });
 
 export default summary.reducer;
-export const { setLeftSideBarStatus, setCommonSideBar, setSummarySideBar } = summary.actions;
+export const {
+    setLeftSideBarStatus,
+    setCommonSideBar,
+    setSummarySideBar,
+} = summary.actions;

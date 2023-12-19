@@ -1,7 +1,13 @@
+import Unit from "@Models/units/unit";
 
-interface CompanyGroupJobInfo {
+export interface CompanyGroupJobInfo {
     type_id?: number;
     date?: string;
+    count?: number;
+}
+
+export interface CompanyGroupUnitsInfo {
+    unit?: Unit;
     count?: number;
 }
 
@@ -13,7 +19,6 @@ interface CompanyGroupInfo {
     unit_count?: number;
     job_count?: number;
     technician_count: number;
-    jobs: CompanyGroupJobInfo[];
     created_at?: string;
     updated_at?: string;
 }

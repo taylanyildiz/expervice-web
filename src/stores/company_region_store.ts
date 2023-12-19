@@ -1,4 +1,6 @@
 import GroupInfoFilter from "@Features/summary/base/entities/group_info_filter";
+import GroupUnitsInfoFilter from "@Features/summary/base/entities/group_units_info_filter";
+import { CompanyGroupJobInfo, CompanyGroupUnitsInfo } from "@Models/company-region/company_group_info";
 import { ECustomDate } from "@Models/enums";
 import { CompanyGroup, CompanyGroupInfo, CompanyRegion, CompanyRegionWeather } from "@Models/index";
 import { createSlice } from "@reduxjs/toolkit";
@@ -17,7 +19,14 @@ interface Props {
     groups: { rows: CompanyGroup[], count: number };
     group?: CompanyGroup | null;
     groupInfoLoading: boolean;
+    groupJobsInfoLoading: boolean;
+    groupJobsInfo: CompanyGroupJobInfo[] | null,
     groupInfo?: CompanyGroupInfo | null;
+    groupUnitsInfoLoading: boolean;
+    groupUnitsInfoDrawerStatus: boolean;
+    groupUnitsInfoFilter: GroupUnitsInfoFilter;
+    groupUnitsInfo?: CompanyGroupUnitsInfo[] | null;
+    groupInfoFilterDrawerStatus: boolean,
     groupInfoFilter: GroupInfoFilter | null;
     editRegion: CompanyRegion | null;
     editGroup: CompanyGroup | null;
@@ -34,12 +43,24 @@ const initialState: Props = {
     groups: { rows: [], count: 0 },
     group: null,
     groupInfoLoading: true,
+    groupJobsInfoLoading: true,
+    groupJobsInfo: null,
     groupInfo: null,
+    groupInfoFilterDrawerStatus: false,
     groupInfoFilter: {
         dateType: ECustomDate.Past30,
         start_date: new Date(new Date().setMonth(new Date().getMonth() - 1)),
         end_date: new Date(),
     },
+    groupUnitsInfoDrawerStatus: false,
+    groupUnitsInfoFilter: {
+        dateType: ECustomDate.Past30,
+        start_date: undefined,
+        end_date: undefined,
+        sub_type_id: undefined,
+    },
+    groupUnitsInfoLoading: true,
+    groupUnitsInfo: null,
     editRegion: null,
     editGroup: null,
 }
@@ -105,11 +126,32 @@ const companyRegion = createSlice({
         setGroupInfoLoading: (state, { payload }) => {
             state.groupInfoLoading = payload;
         },
+        setGroupJobsInfoLoading: (state, { payload }) => {
+            state.groupJobsInfoLoading = payload;
+        },
+        setGroupJobsInfo: (state, { payload }) => {
+            state.groupJobsInfo = payload;
+        },
         setGroupInfo: (state, { payload }) => {
             state.groupInfo = payload;
         },
+        setGroupUnitsInfoLoading: (state, { payload }) => {
+            state.groupUnitsInfoLoading = payload;
+        },
+        setGroupUnitsInfoDrawerStatus: (state, { payload }) => {
+            state.groupUnitsInfoDrawerStatus = payload;
+        },
+        setGroupUnitsInfo: (state, { payload }) => {
+            state.groupUnitsInfo = payload;
+        },
+        setGroupUnitsInfoFilter: (state, { payload }) => {
+            state.groupUnitsInfoFilter = payload;
+        },
         setEditGroup: (state, { payload }) => {
             state.editGroup = payload;
+        },
+        setGroupInfoFilterDrawerStatus: (state, { payload }) => {
+            state.groupInfoFilterDrawerStatus = payload;
         },
         setGroupInfoFilter: (state, { payload }) => {
             state.groupInfoFilter = payload;
@@ -128,8 +170,15 @@ export const {
     setGroups,
     setSelectedGroup,
     setGroupInfoLoading,
+    setGroupJobsInfoLoading,
     setGroupInfo,
+    setGroupJobsInfo,
     setEditRegion,
     setEditGroup,
-    setGroupInfoFilter
+    setGroupInfoFilterDrawerStatus,
+    setGroupInfoFilter,
+    setGroupUnitsInfoLoading,
+    setGroupUnitsInfoDrawerStatus,
+    setGroupUnitsInfo,
+    setGroupUnitsInfoFilter,
 } = companyRegion.actions;

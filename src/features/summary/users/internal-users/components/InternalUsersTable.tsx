@@ -1,11 +1,10 @@
 import EmptyGrid from "@Components/EmptyGrid";
-import { DataGrid, GridPaginationModel } from "@mui/x-data-grid";
+import { DataGrid } from "@mui/x-data-grid";
 import columns from "../entities/grid_columns";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "@Store/index";
 import InternalUserRepository from "@Repo/internal_user_repositoy";
-import { useEffect, useMemo, useState } from "react";
-import InternalUserFilter from "@Models/internal-user/internal_user_filter";
+import { useEffect } from "react";
 import { setFilter } from "@Store/internal_user_store";
 
 function InternalUsersTable() {
@@ -14,21 +13,6 @@ function InternalUsersTable() {
 
   /// Dispatch
   const dispatch: AppDispatch = useDispatch<AppDispatch>();
-
-  /// Pagination mode
-  const [paginationMode, setPaginationMode] = useState<GridPaginationModel>({
-    page: 0,
-    pageSize: 10,
-  });
-
-  /// filter
-  const filter: InternalUserFilter = useMemo(
-    () => ({
-      limit: paginationMode.pageSize,
-      offset: paginationMode.page * paginationMode.pageSize,
-    }),
-    [paginationMode]
-  );
 
   /// Internal user store
   const {
@@ -41,11 +25,6 @@ function InternalUsersTable() {
   const getInternalUsers = async () => {
     await internalUserRepo.getInternalUsers();
   };
-
-  /// Initialize component
-  useEffect(() => {
-    dispatch(setFilter(filter));
-  }, [filter]);
 
   /// Initialize component
   useEffect(() => {
@@ -64,8 +43,20 @@ function InternalUsersTable() {
         rowCount={count}
         pageSizeOptions={[10, 50, 100]}
         slots={{ noRowsOverlay: EmptyGrid }}
-        paginationModel={paginationMode}
-        onPaginationModelChange={setPaginationMode}
+        paginationModel={{
+          page: internalFilter.page ?? 0,
+          pageSize: internalFilter.limit ?? 10,
+        }}
+        onPaginationModelChange={(paginationMode) => {
+          dispatch(
+            setFilter({
+              ...internalFilter,
+              page: paginationMode.page,
+              limit: paginationMode.pageSize,
+              offset: paginationMode.page * paginationMode.pageSize,
+            })
+          );
+        }}
       />
     </div>
   );

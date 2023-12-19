@@ -25,7 +25,7 @@ import SelectUserRoles from "@Features/summary/components/SelectUserRoles";
 
 function InternalUserFilterDrawer() {
   /// Internal user store
-  const { internalUserFilterDrawerStatus: open, filter } = useInternal();
+  const { internalUserFilterDrawerStatus: open } = useInternal();
 
   /// Dispatch
   const dispatch = useDispatch();
@@ -125,13 +125,7 @@ function InternalUserFilterDrawer() {
               fontWeight="normal"
               children={TranslateHelper.clearFilter()}
               onClick={() => {
-                formik.resetForm({
-                  values: {
-                    ...initialValues,
-                    limit: filter.limit,
-                    offset: filter.offset,
-                  },
-                });
+                formik.resetForm();
               }}
             />
             <PrimaryButton

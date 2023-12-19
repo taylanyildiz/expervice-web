@@ -2,6 +2,7 @@ import { EInternalFilterType, EInternalSortType, EInternalUserStatus } from "@Fe
 import { ESortDirection } from "@Models/enums";
 
 interface InternalUserFilter {
+    page?: 0,
     offset?: number,
     limit?: number,
     role_ids?: number[],

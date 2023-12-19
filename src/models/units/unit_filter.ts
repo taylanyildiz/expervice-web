@@ -1,9 +1,10 @@
 import { EUnitFilterType } from "@Features/summary/units/entities/unit_enums";
-import { ESortDirection } from "@Models/enums";
+import { ECustomDate, ESortDirection } from "@Models/enums";
 
 interface UnitFilter {
-    limit?: number | null;
-    offset?: number | null;
+    page?: number;
+    limit?: number;
+    offset?: number;
     keyword?: string;
     filter_type?: EUnitFilterType;
     has_job?: boolean;
@@ -19,8 +20,9 @@ interface UnitFilter {
     status?: boolean;
     contract_start_date?: string;
     contract_end_date?: string;
-    start_date?: string;
-    end_date?: string;
+    dateType?: ECustomDate;
+    start_date?: Date;
+    end_date?: Date;
 }
 
 export default UnitFilter;

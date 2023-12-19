@@ -1,12 +1,11 @@
 import CompanyRegionRepository from "@Repo/company_region_repository";
-import { RootState } from "@Store/index";
 import { Box, Divider, Grid, Stack, Typography } from "@mui/material";
 import { ReactNode, useEffect } from "react";
-import { useSelector } from "react-redux";
 import WorkIcon from "@mui/icons-material/Work";
 import AssignmentIndIcon from "@mui/icons-material/AssignmentInd";
 import LoadingComp from "@Components/LoadingComp";
 import TranslateHelper from "@Local/index";
+import { useCompanyRegion } from "../helper/summary_helper";
 
 interface InfoProps {
   title: string;
@@ -42,9 +41,7 @@ function InfoBox(props: InfoProps) {
 
 function GroupInfoBox() {
   /// Company region store
-  const { group, groupInfo, groupInfoLoading, groupInfoFilter } = useSelector(
-    (state: RootState) => state.companyRegion
-  );
+  const { group, groupInfo, groupInfoLoading } = useCompanyRegion();
 
   /// Company region repository
   const companyRegionRepo = new CompanyRegionRepository();
@@ -58,7 +55,7 @@ function GroupInfoBox() {
   /// Initialize component
   useEffect(() => {
     getInfo();
-  }, [group, groupInfoFilter]);
+  }, [group]);
 
   return (
     <Box p={4} sx={{ backgroundColor: "white", borderRadius: 1 }}>

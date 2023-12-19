@@ -114,7 +114,7 @@ export function dateToFormat(
     weekday: "short",
     month: "short",
     day: "numeric",
-    timeZone: "UTC",
+    // timeZone: "UTC",
   };
   if (!(onlyDate ?? false)) {
     options = Object.assign({}, options, {
@@ -202,6 +202,7 @@ export function equalInterface<T extends Record<string, any>>(
       }
     } else {
       if (o1[key] !== o2[key]) {
+        if (!o1[key] && !o2[key]) return true;
         return false;
       }
     }
@@ -286,6 +287,38 @@ export function timeAgo(input?: Date | string) {
       );
     }
   }
+}
+
+export function dateRange(input1?: Date | string, input2?: Date | string) {
+  if (!input1 || !input2) return null;
+  const date1 = input1 instanceof Date ? input1 : new Date(input1);
+  const date2 = input2 instanceof Date ? input2 : new Date(input2);
+  const lng = store.getState().user.language?.language_code ?? "en";
+  const formatter = new Intl.RelativeTimeFormat(lng);
+  const ranges = {
+    years: 3600 * 24 * 365,
+    months: 3600 * 24 * 30,
+    weeks: 3600 * 24 * 7,
+    days: 3600 * 24,
+    hours: 3600,
+    minutes: 60,
+    seconds: 1,
+  };
+  const secondsElapsed = (date1.getTime() - date2.getTime()) / 1000;
+  for (let [key, value] of Object.entries(ranges)) {
+    if (value < Math.abs(secondsElapsed)) {
+      const delta = secondsElapsed / value;
+      const dateForm = formatter.format(
+        Math.round(delta),
+        key as Intl.RelativeTimeFormatUnit
+      );
+
+      const list = dateForm.split(" ");
+      let result = list.filter((_, index) => index !== list.length - 1);
+      return result.join(" ");
+    }
+  }
+  return "---";
 }
 
 /**
@@ -467,4 +500,12 @@ export function getCustomDate(type: ECustomDate | null): {
       break;
   }
   return { start, end };
+}
+
+/**
+ * Get Last Month date
+ */
+export function getLastMonth(): Date {
+  const date = new Date(new Date().setMonth(new Date().getMonth() - 1));
+  return date;
 }

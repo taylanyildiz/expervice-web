@@ -1,7 +1,7 @@
 import EmptyGrid from "@Components/EmptyGrid";
-import { DataGrid, GridPaginationModel } from "@mui/x-data-grid";
+import { DataGrid } from "@mui/x-data-grid";
 import columns from "../entities/grid_columns";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect } from "react";
 import { useJob } from "../helper/job_helper";
 import { AppDispatch } from "@Store/index";
 import { useDispatch } from "react-redux";
@@ -22,25 +22,6 @@ function JobsTable() {
   /// Job repository
   const jobRepo = new JobRepository();
 
-  /// Pagination mode
-  const [paginationMode, setPaginationMode] = useState<GridPaginationModel>({
-    page: 0,
-    pageSize: 10,
-  });
-  /// Filter
-  const filter: JobFilter = useMemo(
-    () => ({
-      limit: paginationMode.pageSize,
-      offset: paginationMode.pageSize * paginationMode.page,
-    }),
-    [paginationMode]
-  );
-
-  /// Initialize component
-  useEffect(() => {
-    dispatch(setJobFilter(filter));
-  }, [filter]);
-
   /// Initialize component
   useEffect(() => {
     jobRepo.getJobs();
@@ -59,8 +40,21 @@ function JobsTable() {
         rows={rows}
         pageSizeOptions={[10, 50, 100]}
         slots={{ noRowsOverlay: EmptyGrid }}
-        paginationModel={paginationMode}
-        onPaginationModelChange={setPaginationMode}
+        paginationModel={{
+          page: jobFilter.page ?? 0,
+          pageSize: jobFilter.limit ?? 10,
+        }}
+        onPaginationModelChange={(paginationMode) => {
+          const page = paginationMode.page;
+          dispatch(
+            setJobFilter({
+              ...jobFilter,
+              page: page,
+              limit: paginationMode.pageSize,
+              offset: paginationMode.pageSize * paginationMode.page,
+            })
+          );
+        }}
       />
     </div>
   );

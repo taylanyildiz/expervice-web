@@ -1,4 +1,7 @@
-interface JobFilter {
+import { ECustomDate } from "@Models/enums";
+
+export default interface JobFilter {
+    page?: number;
     limit?: number;
     offset?: number;
     keyword?: string;
@@ -11,6 +14,7 @@ interface JobFilter {
     sub_type_ids?: number[];
     groups?: number[];
     region_ids?: number[];
-    start_date?: string;
-    end_date?: string;
+    dateType?: ECustomDate;
+    start_date?: Date;
+    end_date?: Date;
 }

@@ -1,9 +1,8 @@
-import { DataGrid, GridPaginationModel } from "@mui/x-data-grid";
+import { DataGrid } from "@mui/x-data-grid";
 import columns from "../entities/grid_columns";
 import { useTechnician } from "../helper/technician_helper";
 import EmptyGrid from "@Components/EmptyGrid";
-import { useEffect, useMemo, useState } from "react";
-import TechnicianFilter from "@Models/technician-user/technician_filter";
+import { useEffect } from "react";
 import TechnicianRepository from "@Repo/technician_repository";
 import { AppDispatch } from "@Store/index";
 import { useDispatch } from "react-redux";
@@ -23,27 +22,6 @@ function TechnicianUsersTable() {
   /// Dispatch
   const dispatch: AppDispatch = useDispatch<AppDispatch>();
 
-  /// Pagination mode state
-  const [paginationMode, setPaginationMode] = useState<GridPaginationModel>({
-    page: 0,
-    pageSize: 10,
-  });
-
-  /// Technician filter
-  const filter = useMemo<TechnicianFilter>(
-    () => ({
-      limit: paginationMode.pageSize,
-      offset: paginationMode.page * paginationMode.pageSize,
-    }),
-    [paginationMode]
-  );
-
-  /// Initialize component
-  /// depends on [filter]
-  useEffect(() => {
-    dispatch(setFilter(filter));
-  }, [filter]);
-
   /// Initialize component
   useEffect(() => {
     technicianRepo.getTechnicians();
@@ -61,8 +39,20 @@ function TechnicianUsersTable() {
         rowCount={count}
         pageSizeOptions={[10, 50, 100]}
         slots={{ noRowsOverlay: EmptyGrid }}
-        paginationModel={paginationMode}
-        onPaginationModelChange={setPaginationMode}
+        paginationModel={{
+          page: technicianFilter.page ?? 0,
+          pageSize: technicianFilter.limit ?? 10,
+        }}
+        onPaginationModelChange={(paginationMode) => {
+          dispatch(
+            setFilter({
+              ...technicianFilter,
+              page: paginationMode.page,
+              limit: paginationMode.pageSize,
+              offset: paginationMode.page * paginationMode.pageSize,
+            })
+          );
+        }}
       />
     </div>
   );

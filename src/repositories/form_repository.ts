@@ -18,7 +18,8 @@ class FormRepository extends BaseRepository {
      */
     public async getForms(): Promise<boolean> {
         const path = "/";
-        const filter = store.getState().form.formFilter;
+        const filter = { ...store.getState().form.formFilter };
+        delete filter.page;
         store.dispatch(setFormLayzLoading(true));
         const response = await this.get(path, { params: filter });
         store.dispatch(setFormLayzLoading(false));

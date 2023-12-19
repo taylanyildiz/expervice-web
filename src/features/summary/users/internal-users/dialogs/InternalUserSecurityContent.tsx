@@ -50,7 +50,11 @@ function Header() {
     <Box>
       <Grid container>
         <Grid item flexGrow={1}>
-          <Typography variant="h1" fontSize={15} children="Security & Login" />
+          <Typography
+            variant="h1"
+            fontSize={15}
+            children={TranslateHelper.securityLogin()}
+          />
         </Grid>
       </Grid>
     </Box>

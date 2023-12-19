@@ -16,7 +16,7 @@ export const internalUserValidator = object({
             return per || role === 4;
         },
         then: () => array().nullable().notRequired(),
-        otherwise: () => array().nullable().required(TranslateHelper.required()),
+        otherwise: () => array().nullable().required(`${TranslateHelper.region()} ${TranslateHelper.required()}`),
     }),
     permission_sub_resources: array().nullable().notRequired(),
 });

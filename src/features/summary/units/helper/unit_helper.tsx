@@ -12,6 +12,7 @@ import { setUnitId } from "@Store/unit_store";
 import Customer from "@Models/customer/customer";
 import AssignCustomerDialog from "../dialogs/AssignCustomerDialog";
 import { EUnitFilterType } from "../entities/unit_enums";
+import { ECustomDate } from "@Models/enums";
 
 /**
  * Unit store
@@ -28,6 +29,7 @@ export function useUnit() {
     if (filter?.unit_labels && filter?.unit_labels?.length !== 0) ++count;
     if (filter?.unit_sub_types && filter?.unit_sub_types?.length !== 0) ++count;
     if (filter?.unit_types && filter?.unit_types?.length !== 0) ++count;
+    if (filter?.dateType !== ECustomDate.All) ++count;
     setCount(count);
   }, [filter]);
 

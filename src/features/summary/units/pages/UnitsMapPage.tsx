@@ -1,7 +1,7 @@
 import GMap from "@Components/GMap";
 import UnitRepository from "@Repo/unit_repository";
 import { AppDispatch } from "@Store/index";
-import { setUnitFilter, setUnitId } from "@Store/unit_store";
+import { setUnitId } from "@Store/unit_store";
 import { Divider, List, Typography } from "@mui/material";
 import { ReactNode, useEffect, useMemo, useRef, useState } from "react";
 import { useDispatch } from "react-redux";
@@ -89,19 +89,9 @@ function UnitsMapPage() {
     });
   }, [units]);
 
-  useEffect(() => {
-    dispatch(
-      setUnitFilter({
-        ...filter,
-        limit: null,
-        offset: null,
-      })
-    );
-  }, []);
-
   /// Initialize component
   useEffect(() => {
-    unitRepo.getUnits();
+    unitRepo.getUnits(true);
   }, [filter]);
 
   /// Ref of scroll

@@ -197,6 +197,7 @@ function FormCustomersContent() {
                       }}
                       sx={{
                         "& > *": { borderBottom: "unset" },
+                        cursor: "pointer",
                       }}
                     >
                       <TableCell>

@@ -1,12 +1,10 @@
-import { DataGrid, GridPaginationModel } from "@mui/x-data-grid";
+import { DataGrid } from "@mui/x-data-grid";
 import columns from "../entities/grid_columns";
 import EmptyGrid from "@Components/EmptyGrid";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect } from "react";
 import { useCustomer } from "../helpers/customer_user_helper";
 import CustomerUserRepository from "@Repo/customer_user_repository";
-import CustomerFilter from "@Models/customer/customer_filter";
 import { setCustomerFilter } from "@Store/customer_user_store";
-import { AppDispatch } from "@Store/index";
 import { useDispatch } from "react-redux";
 
 function CustomerUsersTable() {
@@ -17,31 +15,11 @@ function CustomerUsersTable() {
     customerFilter,
   } = useCustomer();
 
+  /// Dispatch
+  const dispatch = useDispatch();
+
   /// Customer repository
   const customerRepo = new CustomerUserRepository();
-
-  /// Dispatch
-  const dispatch: AppDispatch = useDispatch<AppDispatch>();
-
-  /// Pagination mode
-  const [paginationMode, setPaginationMode] = useState<GridPaginationModel>({
-    page: 0,
-    pageSize: 10,
-  });
-
-  /// Customer filter
-  const filter: CustomerFilter = useMemo(
-    () => ({
-      ...customerFilter,
-      limit: paginationMode.pageSize,
-      offset: paginationMode.pageSize * paginationMode.page,
-    }),
-    [paginationMode]
-  );
-
-  useEffect(() => {
-    dispatch(setCustomerFilter(filter));
-  }, [filter]);
 
   /// Initialize component
   useEffect(() => {
@@ -60,8 +38,20 @@ function CustomerUsersTable() {
         rowCount={count}
         pageSizeOptions={[10, 50, 100]}
         slots={{ noRowsOverlay: EmptyGrid }}
-        paginationModel={paginationMode}
-        onPaginationModelChange={setPaginationMode}
+        paginationModel={{
+          page: customerFilter?.page ?? 0,
+          pageSize: customerFilter?.limit ?? 10,
+        }}
+        onPaginationModelChange={(paginationMode) => {
+          dispatch(
+            setCustomerFilter({
+              ...customerFilter,
+              page: paginationMode.page,
+              limit: paginationMode.pageSize,
+              offset: paginationMode.page * paginationMode.pageSize,
+            })
+          );
+        }}
       />
     </div>
   );
