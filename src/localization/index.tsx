@@ -1177,4 +1177,16 @@ export default class TranslateHelper {
   public static groupJobsFilter(): string {
     return "groupJobsFilter".tr();
   }
+  public static unitJobs(): string {
+    return "unitJobs".tr();
+  }
+  public static lastUpdatedDate(): string {
+    return "lastUpdatedDate".tr();
+  }
+  public static elapsedDuration(): string {
+    return "elapsedDuration".tr();
+  }
+  public static groupUnitsFilter(): string {
+    return "groupUnitsFilter".tr();
+  }
 }

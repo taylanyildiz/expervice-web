@@ -96,7 +96,7 @@ function FieldDefaultValue(props: FieldDefaultValueProps) {
                       justifyContent="start"
                       fontSize={12}
                       fontWeight="bold"
-                      children={"Default Value"}
+                      children={TranslateHelper.defaultValue()}
                     />
                     <TextField
                       {...props}

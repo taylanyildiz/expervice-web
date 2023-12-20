@@ -64,6 +64,7 @@ function SelectUserRole(props: SelectUserRoleProps) {
     if (typeof value === "number") {
       const role = options.find((e) => e.id === value);
       setOption(role);
+      if (role) onChanged(role);
       return;
     }
     setOption(value);
