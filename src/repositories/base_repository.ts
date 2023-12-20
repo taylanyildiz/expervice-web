@@ -138,7 +138,6 @@ abstract class BaseRepository extends Axios {
             if (response.status === 200) {
                 const access_token = response.data['data']['access_token'];
                 store.dispatch(setAccessToken(access_token));
-
                 originalRequest.headers['x-access-token'] = access_token;
                 refreshSubscribers.forEach(({ callback }) => callback(access_token));
                 refreshSubscribers = [];

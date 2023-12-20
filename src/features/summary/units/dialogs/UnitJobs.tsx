@@ -123,7 +123,7 @@ function UnitJobs() {
     {
       field: "updated_at",
       minWidth: 200,
-      headerName: "Last Updated Date", // TODO: Translations
+      headerName: TranslateHelper.lastUpdatedDate(),
       valueGetter: (params) => {
         const date = new Date(params.row.updated_at!);
         return dateToFormat(date);
@@ -132,7 +132,7 @@ function UnitJobs() {
     {
       field: "elapsed_at",
       minWidth: 200,
-      headerName: "Elapsed Duration", // TODO: Translations
+      headerName: TranslateHelper.elapsedDuration(),
       valueGetter: (params) => {
         const created = new Date(params.row.created_at!);
         const updated = new Date(params.row.updated_at!);

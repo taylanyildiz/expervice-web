@@ -73,7 +73,7 @@ function GroupUnitsJobsInfoFilterDrawer() {
               p={1}
               variant="h1"
               fontSize={17}
-              children={"Group Units Info Filter"} // TODO: Translations
+              children={TranslateHelper.groupUnitsFilter()}
             />
             <IconButton onClick={handleClose}>
               <CloseIcon />

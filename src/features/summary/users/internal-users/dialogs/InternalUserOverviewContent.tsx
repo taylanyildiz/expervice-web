@@ -1,10 +1,13 @@
 import SelectUserRole from "@Components/SelectUserRole";
 import TextOutlineField from "@Components/TextOutlineField";
 import InternalUser from "@Models/internal-user/internal_user";
-import { Box, FormHelperText, Grid, Typography } from "@mui/material";
+import { Box, FormHelperText, Grid, Stack, Typography } from "@mui/material";
 import { FormikProps } from "formik";
 import InternalUserStatusButton from "./InternalUserStatusButton";
 import TranslateHelper from "@Local/index";
+import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
+import VisibilityComp from "@Components/VisibilityComp";
+import { useUser } from "@Features/summary/company/helper/company_helper";
 
 function Header(props: { formik: FormikProps<InternalUser> }) {
   const { formik } = props;
@@ -21,8 +24,16 @@ function Header(props: { formik: FormikProps<InternalUser> }) {
   );
 }
 
-function OverViewContent(props: { formik: FormikProps<InternalUser> }) {
-  const { formik } = props;
+function OverViewContent(props: {
+  formik: FormikProps<InternalUser>;
+  onRolePermission: () => void;
+}) {
+  const { formik, onRolePermission } = props;
+
+  /// User store
+  const { language } = useUser();
+  const lng = language?.language_code ?? "en";
+
   return (
     <div>
       <Grid container rowSpacing={2}>
@@ -81,25 +92,65 @@ function OverViewContent(props: { formik: FormikProps<InternalUser> }) {
                 onChange={formik.handleChange}
               />
             </Grid>
-            <Grid item xs={5}>
-              <SelectUserRole
-                fullWidth
-                label={TranslateHelper.role()}
-                roleType={3}
-                value={formik.values.role_id}
-                helperText={formik.touched.role_id && formik.errors.role_id}
-                error={Boolean(formik.touched.role_id && formik.errors.role_id)}
-                onChanged={(value) => {
-                  formik.setFieldValue("role_id", value?.id);
-                }}
-              />
-              <FormHelperText
-                margin="dense"
-                sx={{ m: 0, p: 0 }}
-                error={Boolean(formik.touched.regions && formik.errors.regions)}
-              >
-                {formik.touched.regions && formik.errors.regions}
-              </FormHelperText>
+            <Grid item xs={12}>
+              <Grid container>
+                <Grid item xs={5}>
+                  <SelectUserRole
+                    fullWidth
+                    label={TranslateHelper.role()}
+                    roleType={3}
+                    value={formik.values.role_id}
+                    helperText={formik.touched.role_id && formik.errors.role_id}
+                    error={Boolean(
+                      formik.touched.role_id && formik.errors.role_id
+                    )}
+                    onChanged={(value) => {
+                      formik.setFieldValue("role", value);
+                      formik.setFieldValue("role_id", value?.id);
+                    }}
+                  />
+                  <FormHelperText
+                    margin="dense"
+                    sx={{ m: 0, p: 0 }}
+                    error={Boolean(
+                      formik.touched.regions && formik.errors.regions
+                    )}
+                  >
+                    {formik.touched.regions && formik.errors.regions}
+                  </FormHelperText>
+                </Grid>
+                <VisibilityComp visibility={Boolean(formik.values.role)}>
+                  <Grid item xs={8}>
+                    <Box
+                      sx={{ cursor: "pointer" }}
+                      p={1}
+                      border={1}
+                      borderColor={"divider"}
+                      onClick={onRolePermission}
+                    >
+                      <Stack
+                        alignItems="center"
+                        direction="row"
+                        justifyContent="space-between"
+                      >
+                        <Stack>
+                          <Typography
+                            variant="h1"
+                            fontSize={14}
+                            children={`${formik.values.role?.translations?.role?.[lng]}`}
+                          />
+                          <Typography
+                            variant="body1"
+                            fontSize={14}
+                            children={`${formik.values.role?.translations?.description?.[lng]}`}
+                          />
+                        </Stack>
+                        <ArrowForwardIcon sx={{ color: "blue" }} />
+                      </Stack>
+                    </Box>
+                  </Grid>
+                </VisibilityComp>
+              </Grid>
             </Grid>
           </Grid>
         </Grid>

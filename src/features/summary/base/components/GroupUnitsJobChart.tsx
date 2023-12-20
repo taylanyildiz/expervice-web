@@ -50,7 +50,7 @@ function GroupUnitsJobChart() {
             <Typography
               variant="h1"
               fontSize={15}
-              children={"Units Job Info"} // TODO: Translations
+              children={TranslateHelper.unitJobs()}
             />
             <IconButton
               onClick={() => {

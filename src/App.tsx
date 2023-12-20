@@ -10,15 +10,10 @@ function App() {
   /// Constant repository
   const constantRepo = new ConstantRepository();
 
-  /// Get langauges & production
-  const getConstants = async () => {
-    constantRepo.getLanguages();
-  };
-
   /// Initialize Applicaiton
   useEffect(() => {
     Aos.init();
-    getConstants();
+    constantRepo.getLanguages();
   }, []);
 
   return (

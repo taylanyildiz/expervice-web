@@ -23,6 +23,7 @@ function InternalUserPermissionsContent(props: {
           error={Boolean(formik.touched.role_id && formik.errors.role_id)}
           onChanged={(value) => {
             formik.setFieldValue("role_id", value?.id);
+            formik.setFieldValue("role", value);
           }}
         />
       </Grid>

@@ -40,10 +40,34 @@ const columns = (): GridColDef<Job>[] => [
     },
   },
   {
+    field: "identity_number",
+    align: "center",
+    headerAlign: "center",
+    headerName: TranslateHelper.identityNumber(),
+    width: 130,
+    valueGetter: (params) => {
+      const job = params.row;
+      const unit = job.unit?.identity_number;
+      return unit;
+    },
+  },
+  {
+    field: "qr_code",
+    align: "center",
+    headerAlign: "center",
+    headerName: TranslateHelper.qrCode(),
+    valueGetter: (params) => {
+      const job = params.row;
+      const unit = job.unit?.qr_code;
+      return unit;
+    },
+  },
+  {
     field: "priority",
     align: "left",
     headerName: TranslateHelper.priority(),
     width: 150,
+    sortable: false,
     valueGetter: (params) => {
       const job = params.row;
       const lng = store.getState().user.language?.language_code ?? "en";
@@ -56,6 +80,7 @@ const columns = (): GridColDef<Job>[] => [
     align: "left",
     headerName: TranslateHelper.subType(),
     width: 220,
+    sortable: false,
     valueGetter: (params) => {
       const job = params.row;
       const lng = store.getState().user.language?.language_code ?? "en";
@@ -64,7 +89,7 @@ const columns = (): GridColDef<Job>[] => [
     },
   },
   {
-    field: "status",
+    field: "status_id",
     headerAlign: "left",
     align: "left",
     headerName: TranslateHelper.jobStatus(),
@@ -81,6 +106,7 @@ const columns = (): GridColDef<Job>[] => [
     align: "center",
     headerName: TranslateHelper.groupName(),
     width: 150,
+    sortable: false,
     valueGetter: (params) => {
       const job = params.row;
       const group = job.unit?.group?.name;
@@ -92,6 +118,7 @@ const columns = (): GridColDef<Job>[] => [
     align: "center",
     headerName: TranslateHelper.regionName(),
     minWidth: 150,
+    sortable: false,
     valueGetter: (params) => {
       const job = params.row;
       const region = job.unit?.group?.region?.name;
@@ -124,7 +151,7 @@ const columns = (): GridColDef<Job>[] => [
   {
     field: "updated_at",
     minWidth: 200,
-    headerName: "Last Updated Date", // TODO: Translations
+    headerName: TranslateHelper.lastUpdatedDate(),
     valueGetter: (params) => {
       const date = new Date(params.row.updated_at!);
       return dateToFormat(date);
@@ -133,7 +160,8 @@ const columns = (): GridColDef<Job>[] => [
   {
     field: "elapsed_at",
     minWidth: 200,
-    headerName: "Elapsed Duration", // TODO: Translations
+    sortable: false,
+    headerName: TranslateHelper.elapsedDuration(),
     valueGetter: (params) => {
       const created = new Date(params.row.created_at!);
       const updated = new Date(params.row.updated_at!);
