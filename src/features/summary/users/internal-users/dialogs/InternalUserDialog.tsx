@@ -1,11 +1,9 @@
-import PrimaryButton from "@Components/PrimaryButton";
 import TabBar from "@Components/TabBar";
-import VisibilityComp from "@Components/VisibilityComp";
-import { DialogCustomActions, DialogCustomTitle } from "@Components/dialogs";
+import { DialogCustomTitle } from "@Components/dialogs";
 import { EActionType } from "@Components/dialogs/DialogCustomActions";
 import { AppDispatch } from "@Store/index";
 import { setInternalUser } from "@Store/internal_user_store";
-import { Avatar, Box, DialogContent, Grid, Typography } from "@mui/material";
+import { Box, DialogContent } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import OverViewContent from "./InternalUserOverviewContent";
@@ -19,7 +17,6 @@ import InternalUser, {
 import InternalUserSecurityContent from "./InternalUserSecurityContent";
 import { internalUserValidator } from "../validator/internal_user_validator";
 import InternalUserRepository from "@Repo/internal_user_repositoy";
-import { caption, dateToFormat } from "@Utils/functions";
 import {
   useInternal,
   useInternalCreate,
@@ -28,12 +25,12 @@ import {
 import InternalUserInfo from "./InternalUserInfo";
 import TranslateHelper from "@Local/index";
 import AnyUpdateBox from "@Components/AnyUpdateBox";
+import InternalUserActions from "./InternalUserActions";
 
 function InternalUserDialog() {
   /// Internal user store
   const { internalUser } = useInternal();
   const isEdit = Boolean(internalUser);
-  const creatorDisplayName = `${internalUser?.creator?.first_name} ${internalUser?.creator?.last_name}`;
 
   /// Dialog hook
   const { openLoading, closeDialog, openConfirm } = useDialog();
@@ -54,6 +51,9 @@ function InternalUserDialog() {
 
   /// Action type state
   const [actionType, setActionType] = useState<number | null>(null);
+
+  /// Tabbar state
+  const [tabIndex, setTabIndex] = useState<number>(0);
 
   /// Click action
   const onChangedAction = async (type: EActionType) => {
@@ -188,10 +188,19 @@ function InternalUserDialog() {
         <InternalUserInfo />
         <Box mt={1} sx={{ backgroundColor: "transparent" }}>
           <TabBar
+            index={tabIndex}
+            onChanged={setTabIndex}
             tabs={[
               {
                 title: TranslateHelper.overView(),
-                panel: <OverViewContent formik={formik} />,
+                panel: (
+                  <OverViewContent
+                    onRolePermission={() => {
+                      setTabIndex(1);
+                    }}
+                    formik={formik}
+                  />
+                ),
               },
               {
                 title: TranslateHelper.permissions(),
@@ -205,81 +214,7 @@ function InternalUserDialog() {
           />
         </Box>
       </DialogContent>
-      <DialogCustomActions
-        actions={[
-          <VisibilityComp
-            visibility={isEdit}
-            children={
-              <PrimaryButton
-                height={30}
-                fontWeight="normal"
-                color="black"
-                children={TranslateHelper.delete()}
-                variant="outlined"
-                onClick={() => onChangedAction(EActionType.Delete)}
-              />
-            }
-          />,
-          <PrimaryButton
-            height={30}
-            fontWeight="normal"
-            color="white"
-            children={TranslateHelper.save()}
-            onClick={() => onChangedAction(EActionType.Save)}
-          />,
-          <PrimaryButton
-            height={30}
-            fontWeight="normal"
-            color="white"
-            children={TranslateHelper.saveNew()}
-            onClick={() => onChangedAction(EActionType.SaveNew)}
-          />,
-          <PrimaryButton
-            height={30}
-            fontWeight="normal"
-            color="white"
-            children={TranslateHelper.saveClose()}
-            onClick={() => onChangedAction(EActionType.SaveClose)}
-          />,
-        ]}
-        leading={{
-          visibility: isEdit,
-          children: (
-            <Grid container alignItems="center" columnSpacing={1}>
-              <Grid item>
-                <Typography
-                  variant="body1"
-                  fontSize={12}
-                  color="grey"
-                  children={TranslateHelper.createdBy({
-                    name: creatorDisplayName,
-                  })}
-                />
-              </Grid>
-              <Grid item>
-                <Avatar
-                  sx={{
-                    height: 30,
-                    width: 30,
-                    fontSize: 12,
-                    color: "white",
-                    backgroundColor: "grey",
-                  }}
-                  children={caption(creatorDisplayName)}
-                />
-              </Grid>
-              <Grid item>
-                <Typography
-                  variant="body1"
-                  fontSize={12}
-                  color="grey"
-                  children={dateToFormat(internalUser?.created_at)}
-                />
-              </Grid>
-            </Grid>
-          ),
-        }}
-      />
+      <InternalUserActions onChanged={onChangedAction} />
     </>
   );
 }

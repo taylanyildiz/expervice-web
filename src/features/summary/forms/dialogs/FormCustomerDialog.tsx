@@ -71,7 +71,7 @@ function FormCustomerDialog(props: FormCustomerDialogProps) {
           color="white"
           variant="h1"
           fontSize={14}
-          children="Attention"
+          children={TranslateHelper.attention()}
         />
         <Typography
           fontSize={11}

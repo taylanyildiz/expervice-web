@@ -392,7 +392,11 @@ const en: ObjectString = {
     techniciansFilter: "Technicians Filter",
     technicianStatuses: "Technician Statuses",
     groupRoles: "Group Roles",
-    groupJobsFilter: "Group Jobs Filter"
+    groupJobsFilter: "Group Jobs Filter",
+    unitJobs: "Unit Jobs",
+    lastUpdatedDate: "Last Updated Date",
+    elapsedDuration: "Elapsed Duration",
+    groupUnitsFilter: "Group Units Filter"
 }
 
 export default en;

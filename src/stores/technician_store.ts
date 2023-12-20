@@ -29,7 +29,7 @@ const initialState: Props = {
         offset: 0,
         filter_type: ETechnicianFilterType.FirstName,
         statuses: [],
-        group_roles: [1, 2, 3]
+        group_roles: []
     },
     technicians: { rows: [], count: 0 },
     technician: null,
