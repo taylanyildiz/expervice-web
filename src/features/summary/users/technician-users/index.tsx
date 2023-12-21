@@ -6,10 +6,14 @@ import TechnicianFilterDrawer from "./components/TechnicianFilterDrawer";
 import { useDispatch } from "react-redux";
 import { setTechnicianFilterDrawerStatus } from "@Store/technician_store";
 import "../../../../assets/css/technician_users.css";
+import { useAccount } from "@Features/summary/company/helper/company_helper";
 
 function TechnicianUsersPage() {
   /// Technician dialog
   const technicianDialog = useTechnicianDialog();
+
+  /// Account store
+  const { isOwner, isInternal } = useAccount();
 
   /// Technician store
   const { filterCount } = useTechnician();
@@ -27,6 +31,7 @@ function TechnicianUsersPage() {
         }}
         onExport={() => {}}
         filterCount={filterCount}
+        visibilityAdd={isOwner || isInternal}
       />
       <TechnicianUsersTable />
       <TechnicianFilterDrawer />

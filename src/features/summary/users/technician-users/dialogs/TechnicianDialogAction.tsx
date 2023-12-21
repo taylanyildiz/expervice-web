@@ -6,6 +6,7 @@ import { caption, dateToFormat } from "@Utils/functions";
 import { EActionType } from "@Components/dialogs/DialogCustomActions";
 import { useTechnician } from "../helper/technician_helper";
 import TranslateHelper from "@Local/index";
+import { useAccount } from "@Features/summary/company/helper/company_helper";
 
 interface TechnicianDialogActionProps {
   onChanged: (type: EActionType) => void;
@@ -13,6 +14,9 @@ interface TechnicianDialogActionProps {
 
 function TechnicianDialogAction(props: TechnicianDialogActionProps) {
   const { onChanged } = props;
+
+  /// Account store
+  const { isInternal, isOwner } = useAccount();
 
   const { technician } = useTechnician();
   const isEdit = Boolean(technician);
@@ -25,6 +29,7 @@ function TechnicianDialogAction(props: TechnicianDialogActionProps) {
 
   return (
     <DialogCustomActions
+      actionVisibility={isInternal || isOwner}
       actions={[
         <VisibilityComp
           visibility={isEdit}

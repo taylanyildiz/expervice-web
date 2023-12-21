@@ -49,7 +49,7 @@ function SummaryAppBar() {
   const navigate = useNavigate();
 
   /// Account store
-  const { user, isInternal, isOwner } = useAccount();
+  const { user, isInternal, isOwner, isTechnician } = useAccount();
   const displayName = `${user?.first_name} ${user?.last_name}`;
 
   /// User store
@@ -236,7 +236,7 @@ function SummaryAppBar() {
               </Tooltip>
             </Grid>
             {/* Users */}
-            <VisibilityComp visibility={isInternal || isOwner}>
+            <VisibilityComp visibility={isInternal || isOwner || isTechnician}>
               <Grid item>
                 <MenuCustomLink
                   color="white"
@@ -253,6 +253,7 @@ function SummaryAppBar() {
                       to: ERouter.InternalUsers,
                       prefix: <GroupOutlinedIcon />,
                       title: TranslateHelper.internalUsers(),
+                      visibility: isInternal || isOwner,
                     },
                     {
                       to: ERouter.CustomerUsers,

@@ -13,6 +13,8 @@ import AddIcon from "@mui/icons-material/Add";
 import { useUnitDialog } from "@Features/summary/units/helper/unit_helper";
 import RefreshIcon from "@mui/icons-material/Refresh";
 import TranslateHelper from "@Local/index";
+import { useAccount } from "@Features/summary/company/helper/company_helper";
+import VisibilityComp from "@Components/VisibilityComp";
 
 function CustomerUnits() {
   /// Customer store
@@ -66,6 +68,9 @@ function CustomerUnits() {
     openUnitDialog(undefined, { customer: customer });
   };
 
+  /// Account store
+  const { isOwner, isInternal } = useAccount();
+
   return (
     <>
       <Stack direction="row" alignItems="center">
@@ -80,14 +85,16 @@ function CustomerUnits() {
         >
           <RefreshIcon />
         </IconButton>
-        <PrimaryButton
-          prefix={<AddIcon />}
-          variant="contained"
-          children={TranslateHelper.addUnit()}
-          color="white"
-          fontWeight="normal"
-          onClick={handleCreateUnit}
-        />
+        <VisibilityComp visibility={isInternal || isOwner}>
+          <PrimaryButton
+            prefix={<AddIcon />}
+            variant="contained"
+            children={TranslateHelper.addUnit()}
+            color="white"
+            fontWeight="normal"
+            onClick={handleCreateUnit}
+          />
+        </VisibilityComp>
       </Stack>
       <Box height={400} mt={1}>
         <DataGrid
