@@ -13,6 +13,8 @@ import AddIcon from "@mui/icons-material/Add";
 import { useDialog } from "@Utils/hooks/dialog_hook";
 import { openBase64PDF } from "@Utils/functions";
 import TranslateHelper from "@Local/index";
+import { useAccount } from "@Features/summary/company/helper/company_helper";
+import VisibilityComp from "@Components/VisibilityComp";
 
 function CustomerForms() {
   /// Customer store
@@ -26,6 +28,9 @@ function CustomerForms() {
 
   /// Dialog hook
   const { openLoading, openConfirm } = useDialog();
+
+  /// Account store
+  const { isOwner, isInternal } = useAccount();
 
   /// Customer repository
   const customerRepo = new CustomerUserRepository();
@@ -101,16 +106,18 @@ function CustomerForms() {
             children={TranslateHelper.forms()}
           />
         </Grid>
-        <Grid item>
-          <PrimaryButton
-            prefix={<AddIcon />}
-            variant="contained"
-            children={TranslateHelper.addForm()}
-            color="white"
-            fontWeight="normal"
-            onClick={handleAddForm}
-          />
-        </Grid>
+        <VisibilityComp visibility={isInternal || isOwner}>
+          <Grid item>
+            <PrimaryButton
+              prefix={<AddIcon />}
+              variant="contained"
+              children={TranslateHelper.addForm()}
+              color="white"
+              fontWeight="normal"
+              onClick={handleAddForm}
+            />
+          </Grid>
+        </VisibilityComp>
       </Grid>
       <Box mt={2} height={400}>
         <DataGrid
@@ -120,7 +127,7 @@ function CustomerForms() {
           rows={rows}
           rowCount={count}
           columns={customerFormColumns({
-            onDelete: handleDelete,
+            onDelete: Boolean(isOwner || isInternal) ? handleDelete : null,
             onPDF: handlePDF,
           })}
           pageSizeOptions={[10, 50, 100]}

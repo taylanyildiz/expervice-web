@@ -122,8 +122,8 @@ const routes: RouteObject[] = [
         path: "users",
         element: <Outlet />,
         loader: () => {
-          const { isInternal, isOwner } = useAccount();
-          if (isInternal || isOwner) return null;
+          const { isInternal, isOwner, isTechnician } = useAccount();
+          if (isInternal || isOwner || isTechnician) return null;
           return redirect(ERouter.Summary);
         },
         children: [
@@ -134,6 +134,11 @@ const routes: RouteObject[] = [
           {
             path: "internal-users",
             element: <InternalUsersPage />,
+            loader: () => {
+              const { isInternal, isOwner, isTechnician } = useAccount();
+              if (isInternal || isOwner || isTechnician) return null;
+              return redirect(ERouter.Summary);
+            },
           },
           {
             path: "customer-users",

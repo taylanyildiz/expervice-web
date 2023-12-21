@@ -9,10 +9,14 @@ import { useDispatch } from "react-redux";
 import { setCustomerFilterDrawer } from "@Store/customer_user_store";
 import CustomerFilterDrawer from "./components/CustomerFilterDrawer";
 import TranslateHelper from "@Local/index";
+import { useAccount } from "@Features/summary/company/helper/company_helper";
 
 function CustomerUsersPage() {
   /// Customer dialog hook
   const { openCustomerDialog } = useCustomerDialog();
+
+  /// Account store
+  const { isOwner, isInternal } = useAccount();
 
   /// Customer filter count
   const filterCount = useCutomerFilterCount();
@@ -35,6 +39,7 @@ function CustomerUsersPage() {
         }}
         onExport={() => {}}
         filterCount={filterCount}
+        visibilityAdd={isOwner || isInternal}
       />
       <CustomerUsersTable />
       <CustomerFilterDrawer />
