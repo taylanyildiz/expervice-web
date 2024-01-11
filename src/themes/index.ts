@@ -187,8 +187,7 @@ const theme = createTheme({
                     paddingLeft: 10,
                     paddingRight: 10,
                     fontWeight: "normal"
-                }
-
+                },
             },
         },
 

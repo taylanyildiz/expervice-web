@@ -5,7 +5,7 @@ import { useJob, useJobDialog } from "./helper/job_helper";
 import { useEffect } from "react";
 import { AppDispatch } from "@Store/index";
 import { useDispatch } from "react-redux";
-import { useQuery } from "@Utils/functions";
+import { dateRange, dateToFormat, useQuery } from "@Utils/functions";
 import {
   setJobDialogStatus,
   setJobId,
@@ -14,6 +14,7 @@ import {
 import { useAccount } from "../company/helper/company_helper";
 import TranslateHelper from "@Local/index";
 import JobsFilterDrawer from "./components/JobsFilterDrawer";
+import columns from "./entities/grid_columns";
 
 function JobsPage() {
   /// Account store
@@ -24,7 +25,11 @@ function JobsPage() {
   const [path, deletePath, setPath] = useQuery();
 
   /// Job store
-  const { jobId, filterCount } = useJob();
+  const {
+    jobId,
+    filterCount,
+    jobs: { rows },
+  } = useJob();
 
   /// Dispatch
   const dispatch: AppDispatch = useDispatch<AppDispatch>();
@@ -50,6 +55,9 @@ function JobsPage() {
     dispatch(setJobDialogStatus(false));
   }, [jobId]);
 
+  /// Export jobs
+  const exportHandle = () => {};
+
   return (
     <div className="jobs-layout">
       <GridTableHeader
@@ -61,7 +69,7 @@ function JobsPage() {
         onFilter={() => {
           dispatch(setJobsFilterDrawerStatus(true));
         }}
-        onExport={() => {}}
+        onExport={exportHandle}
         filterCount={filterCount}
       />
       <JobsTable />

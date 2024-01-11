@@ -57,8 +57,8 @@ function ImageCropper(props: ImageCropperProps) {
     <ReactCrop
       ruleOfThirds
       maxHeight={200}
-      minHeight={200}
       maxWidth={200}
+      minHeight={200}
       minWidth={200}
       style={{ marginTop: 10 }}
       crop={crop}

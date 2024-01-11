@@ -11,6 +11,7 @@ function App() {
   const constantRepo = new ConstantRepository();
 
   /// Initialize Applicaiton
+  /// Initialize AOS
   useEffect(() => {
     Aos.init();
     constantRepo.getLanguages();
