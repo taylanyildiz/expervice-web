@@ -8,6 +8,7 @@ import technicianJobsColumns from "../entities/technician_jobs_column";
 import TechnicianJobsFilter from "../entities/technician_jobs_filter";
 import { useDispatch } from "react-redux";
 import { setTechnicianJobsFilter } from "@Store/technician_store";
+import { GridExportButton } from "@Components/index";
 
 function TechnicianJobs() {
   /// technician store
@@ -62,7 +63,7 @@ function TechnicianJobs() {
           sortingMode="server"
           paginationMode="server"
           pageSizeOptions={[10, 50, 100]}
-          slots={{ noRowsOverlay: EmptyGrid }}
+          slots={{ noRowsOverlay: EmptyGrid, toolbar: GridExportButton }}
           paginationModel={paginationMode}
           onPaginationModelChange={setPaginationMode}
         />

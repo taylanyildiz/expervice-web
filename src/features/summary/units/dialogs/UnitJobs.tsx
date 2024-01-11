@@ -13,6 +13,7 @@ import Job from "@Models/job/job";
 import { useJobDialog } from "@Features/summary/jobs/helper/job_helper";
 import TranslateHelper from "@Local/index";
 import { dateRange, dateToFormat } from "@Utils/functions";
+import { GridExportButton } from "@Components/index";
 
 function UnitJobs() {
   /// Dispatch
@@ -153,7 +154,7 @@ function UnitJobs() {
           rowCount={jobs?.count}
           rows={jobs?.rows ?? []}
           pageSizeOptions={[10, 50, 100]}
-          slots={{ noRowsOverlay: EmptyGrid }}
+          slots={{ noRowsOverlay: EmptyGrid, toolbar: GridExportButton }}
           paginationModel={paginationMode}
           onPaginationModelChange={setPaginationMode}
         />

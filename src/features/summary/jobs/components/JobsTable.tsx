@@ -7,6 +7,7 @@ import { AppDispatch } from "@Store/index";
 import { useDispatch } from "react-redux";
 import { setJobFilter } from "@Store/job_store";
 import JobRepository from "@Repo/job_repository";
+import { GridExportButton } from "@Components/index";
 
 function JobsTable() {
   /// Job store
@@ -39,7 +40,7 @@ function JobsTable() {
         rowCount={count}
         rows={rows}
         pageSizeOptions={[10, 50, 100]}
-        slots={{ noRowsOverlay: EmptyGrid }}
+        slots={{ noRowsOverlay: EmptyGrid, toolbar: GridExportButton }}
         paginationModel={{
           page: jobFilter.page ?? 0,
           pageSize: jobFilter.limit ?? 10,
