@@ -5,7 +5,7 @@ import { useJob, useJobDialog } from "./helper/job_helper";
 import { useEffect } from "react";
 import { AppDispatch } from "@Store/index";
 import { useDispatch } from "react-redux";
-import { dateRange, dateToFormat, useQuery } from "@Utils/functions";
+import { useQuery } from "@Utils/functions";
 import {
   setJobDialogStatus,
   setJobId,
@@ -14,7 +14,6 @@ import {
 import { useAccount } from "../company/helper/company_helper";
 import TranslateHelper from "@Local/index";
 import JobsFilterDrawer from "./components/JobsFilterDrawer";
-import columns from "./entities/grid_columns";
 
 function JobsPage() {
   /// Account store
@@ -25,11 +24,7 @@ function JobsPage() {
   const [path, deletePath, setPath] = useQuery();
 
   /// Job store
-  const {
-    jobId,
-    filterCount,
-    jobs: { rows },
-  } = useJob();
+  const { jobId, filterCount } = useJob();
 
   /// Dispatch
   const dispatch: AppDispatch = useDispatch<AppDispatch>();
