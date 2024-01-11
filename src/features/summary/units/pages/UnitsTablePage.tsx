@@ -8,6 +8,7 @@ import UnitRepository from "@Repo/unit_repository";
 import { setSelectedUnits, setUnitFilter } from "@Store/unit_store";
 import { useUnit } from "../helper/unit_helper";
 import { useAccount } from "@Features/summary/company/helper/company_helper";
+import { GridExportButton } from "@Components/index";
 
 function UnitsTablePage() {
   /// Dispatch
@@ -53,7 +54,7 @@ function UnitsTablePage() {
         rowCount={count}
         rows={rows}
         pageSizeOptions={[10, 50, 100]}
-        slots={{ noRowsOverlay: EmptyGrid }}
+        slots={{ noRowsOverlay: EmptyGrid, toolbar: GridExportButton }}
         rowSelectionModel={selectedUnits ?? []}
         onRowSelectionModelChange={(selecteds) => {
           dispatch(setSelectedUnits(selecteds));
