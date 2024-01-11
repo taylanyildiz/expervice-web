@@ -5,7 +5,6 @@ import AddIcon from "@mui/icons-material/Add";
 import Colors from "@Themes/colors";
 import { ReactNode } from "react";
 import TranslateHelper from "@Local/index";
-import saveAs from "file-saver";
 
 interface GridTableHeaderProps {
   title: string;
